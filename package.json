@@ -33,13 +33,7 @@
     "prettier": "3.1.0",
     "vite": "^5.0.0"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
-  },
   "lint-staged": {
-    "*.{js,jsx}": "prettier --write"
+    "*.{js,jsx,ts,tsx,json,css,scss,md}": "prettier --write"
   }
 }
