@@ -7,21 +7,22 @@ import {
   ShoppingCartOutlined,
   UserOutlined,
 } from '@ant-design/icons'
+import ButtonInputSearch from '../ButtonInputSearch/ButtonInputSearch'
 const { Search } = Input
 
 const HeaderComponent = () => {
   return (
     <div>
-      <Row className="header-container">
+      <Row className="header-container" gutter={16}>
         <Col span={6}>
           <span className="header-text">LapTrinhThatDe</span>
         </Col>
         <Col span={12}>
-          <Search
+          <ButtonInputSearch
+            size="large"
+            textButton="Tìm kiếm"
             placeholder="input search text"
             // onSearch={onSearch}
-            enterButton
-            allowClear
           />
         </Col>
         <Col span={6} className="header-action">
