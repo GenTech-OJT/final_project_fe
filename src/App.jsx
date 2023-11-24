@@ -9,7 +9,6 @@ import { Fragment } from 'react'
 function App() {
   return (
     <>
-      <Toan />
       <Router>
         <Routes>
           {routes.map((route, index) => {
