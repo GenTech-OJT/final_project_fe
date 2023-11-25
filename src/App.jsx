@@ -1,11 +1,5 @@
 import React, { useState } from 'react'
-import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
-} from '@ant-design/icons'
+import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
 import { Layout, Menu, Button, theme } from 'antd'
 import PageContent from '@components/PageContent'
 import AppHeader from '@components/AppHeader'
@@ -19,14 +13,9 @@ const App = () => {
   return (
     <Layout hasSider>
       <Sider
+        theme="light"
         style={{
           overflow: 'auto',
-          height: '100vh',
-          position: 'fixed',
-          left: 0,
-          top: 0,
-          bottom: 0,
-          zIndex: 100,
         }}
         trigger={null}
         collapsible
@@ -41,19 +30,19 @@ const App = () => {
             fontSize: '16px',
             width: 64,
             height: 64,
-            color: '#fff',
           }}
         />
         <SideMenu />
       </Sider>
       <Layout
-        style={{
-          marginLeft: 200,
-        }}
+      // style={{
+      //   marginLeft: 200,
+      // }}
       >
         <Header
           style={{
             background: colorBgContainer,
+            padding: 0,
           }}
         >
           <AppHeader />
