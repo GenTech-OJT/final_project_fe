@@ -41,6 +41,30 @@ body {
   position: relative;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
+.ant-popover {
+  margin-top: -20px;
+}
+.ant-menu {
+  margin-top: 30px;
+}
+.avatar-container {
+  padding: 20px 0 0 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+.ant-popover-arrow {
+  left: 106px !important;
+}
+.ant-popover-content {
+  width: 125%;
+}
+.avatar-dropdown {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 .search-header {
   color: #262626;
   position: absolute;
@@ -49,7 +73,9 @@ body {
 .header-input {
   width: 50%;
 }
-
+.logo {
+  height: 20px;
+}
 .AppFooter {
 }
 

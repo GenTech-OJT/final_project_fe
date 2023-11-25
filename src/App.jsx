@@ -1,10 +1,17 @@
 import React, { useState } from 'react'
-import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
-import { Layout, Menu, Button, theme } from 'antd'
+import {
+  DownOutlined,
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+} from '@ant-design/icons'
+import { FaChevronDown } from 'react-icons/fa'
+import { Layout, Menu, Button, theme, Popover, Avatar } from 'antd'
 import PageContent from '@components/PageContent'
 import AppHeader from '@components/AppHeader'
 import SideMenu from '@components/SideMenu'
+import AvatarGroup from '@components/AvatarGroup'
 const { Header, Content, Footer, Sider } = Layout
+
 const App = () => {
   const [collapsed, setCollapsed] = useState(false)
   const {
@@ -21,17 +28,25 @@ const App = () => {
         collapsible
         collapsed={collapsed}
       >
-        <div className="demo-logo-vertical" />
-        <Button
-          type="text"
-          icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-          onClick={() => setCollapsed(!collapsed)}
-          style={{
-            fontSize: '16px',
-            width: 64,
-            height: 64,
-          }}
-        />
+        {/* <div className="demo-logo-vertical" /> */}
+
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <Button
+            type="text"
+            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+            onClick={() => setCollapsed(!collapsed)}
+            style={{
+              fontSize: '16px',
+              width: 64,
+              height: 64,
+            }}
+          />
+          {!collapsed && (
+            <img src="../public/logo-white.png" alt="" className="logo" />
+          )}
+        </div>
+        {/* Avatar */}
+        <AvatarGroup collapsed={collapsed} />
         <SideMenu />
       </Sider>
       <Layout
