@@ -3,13 +3,20 @@ import { Avatar, Popover } from 'antd'
 import React from 'react'
 import { FaChevronDown } from 'react-icons/fa'
 import '../../App.css'
-const content = (
-  <div>
-    <p>My Account</p>
-    <p>Logout</p>
-  </div>
-)
+import { useNavigate } from 'react-router-dom'
 const AvatarGroup = ({ collapsed }) => {
+  const history = useNavigate()
+
+  const handleLogout = () => {
+    history('/users')
+  }
+
+  const content = (
+    <div className="popup-account">
+      <p>My Account</p>
+      <p onClick={handleLogout}>Logout</p>
+    </div>
+  )
   return (
     <Popover
       // style={{ marginTop: '-20px' }}
