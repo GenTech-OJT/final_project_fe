@@ -29,7 +29,7 @@ const AppHeader = () => {
         bordered={false}
         className="header-input"
       />
-      ;
+      {/* Translate */}
       <Dropdown
         menu={{
           items,
@@ -38,7 +38,7 @@ const AppHeader = () => {
       >
         <a onClick={e => e.preventDefault()}>
           <Space>
-            Hover me, Click menu item
+            <Avatar src="https://source.unsplash.com/random" />
             <DownOutlined />
           </Space>
         </a>
