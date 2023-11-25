@@ -1,37 +1,83 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import Toan from '@components/toan'
-
-function App() {
-  const [count, setCount] = useState(0)
-
+import React, { useState } from 'react'
+import {
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  UploadOutlined,
+  UserOutlined,
+  VideoCameraOutlined,
+} from '@ant-design/icons'
+import { Layout, Menu, Button, theme } from 'antd'
+import PageContent from '@components/PageContent'
+import AppHeader from '@components/AppHeader'
+import SideMenu from '@components/SideMenu'
+const { Header, Content, Footer, Sider } = Layout
+const App = () => {
+  const [collapsed, setCollapsed] = useState(false)
+  const {
+    token: { colorBgContainer },
+  } = theme.useToken()
   return (
-    <>
-      <div>
-        <Toan />
-        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount(count => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <Layout hasSider>
+      <Sider
+        style={{
+          overflow: 'auto',
+          height: '100vh',
+          position: 'fixed',
+          left: 0,
+          top: 0,
+          bottom: 0,
+          zIndex: 100,
+        }}
+        trigger={null}
+        collapsible
+        collapsed={collapsed}
+      >
+        <div className="demo-logo-vertical" />
+        <Button
+          type="text"
+          icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+          onClick={() => setCollapsed(!collapsed)}
+          style={{
+            fontSize: '16px',
+            width: 64,
+            height: 64,
+            color: '#fff',
+          }}
+        />
+        <SideMenu />
+      </Sider>
+      <Layout
+        style={{
+          marginLeft: 200,
+        }}
+      >
+        <Header
+          style={{
+            background: colorBgContainer,
+          }}
+        >
+          <AppHeader />
+        </Header>
+        <Content
+          style={{
+            margin: '24px 16px',
+            padding: 24,
+            minHeight: 280,
+            backgroundColor: '#f5f5f5',
+          }}
+        >
+          <PageContent />
+        </Content>
+        <Footer
+          style={{
+            textAlign: 'center',
+            background: colorBgContainer,
+          }}
+        >
+          Ant Design ©2023 Created by Ant UED
+        </Footer>
+      </Layout>
+    </Layout>
   )
 }
-
 export default App
