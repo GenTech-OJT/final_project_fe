@@ -40,7 +40,9 @@ a {
   align-items: center;
   justify-content: space-between;
   padding: 0 32px;
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 100;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 .ant-popover {

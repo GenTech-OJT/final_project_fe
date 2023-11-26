@@ -42,7 +42,7 @@ const App = () => {
             }}
           />
           {!collapsed && (
-            <img src="../public/logo-white.png" alt="" className="logo" />
+            <img src="../logo-white.png" alt="" className="logo" />
           )}
         </div>
         {/* Avatar */}

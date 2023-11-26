@@ -1,7 +1,11 @@
 import React, { useState } from 'react'
 import '../../App.css'
 import { Avatar, Button, Menu } from 'antd'
-import { DashboardOutlined, UserOutlined } from '@ant-design/icons'
+import {
+  DashboardOutlined,
+  DatabaseOutlined,
+  UserOutlined,
+} from '@ant-design/icons'
 import { useNavigate } from 'react-router'
 const SideMenu = () => {
   const navigate = useNavigate()
@@ -26,8 +30,20 @@ const SideMenu = () => {
             key: '/users',
           },
           // {
+          //   label: 'Products',
+          //   icon: <DatabaseOutlined />,
+          //   key: 'products',
+          //   type: 'group',
+          //   // children dropdown
+          //   children: [
+          //     { label: 'Revenue', key: 'rev' },
+          //     // { label: 'Express', key: '/users' },
+          //   ],
+          // },
+          // {
           //   label: 'Customers',
-          //   key: '/customers',
+          //   key: 'customers',
+          //   children: [{ label: 'Revenue', key: 'rev' }],
           // },
         ]}
       />
