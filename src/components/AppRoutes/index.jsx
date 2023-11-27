@@ -1,3 +1,4 @@
+import Profile from '@components/Profile/Profile'
 import Dashboard from '@pages/Dashboard'
 import UserManagement from '@pages/UsersManagement'
 import React from 'react'
@@ -8,6 +9,7 @@ const AppRoutes = () => {
     <Routes>
       <Route path="/" element={<Dashboard />}></Route>
       <Route path="/users" element={<UserManagement />}></Route>
+      <Route path="/profile" element={<Profile />}></Route>
     </Routes>
   )
 }

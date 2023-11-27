@@ -10,6 +10,7 @@ import PageContent from '@components/PageContent'
 import AppHeader from '@components/AppHeader'
 import SideMenu from '@components/SideMenu'
 import AvatarGroup from '@components/AvatarGroup'
+import AppFooter from '@components/AppFooter'
 const { Header, Content, Footer, Sider } = Layout
 
 const App = () => {
@@ -78,7 +79,7 @@ const App = () => {
             background: colorBgContainer,
           }}
         >
-          Ant Design ©2023 Created by Ant UED
+          <AppFooter />
         </Footer>
       </Layout>
     </Layout>

@@ -10,10 +10,13 @@ const AvatarGroup = ({ collapsed }) => {
   const handleLogout = () => {
     history('/users')
   }
+  const handleProfile = () => {
+    history('/profile')
+  }
 
   const content = (
     <div className="popup-account">
-      <p>My Account</p>
+      <p onClick={handleProfile}>My Account</p>
       <p onClick={handleLogout}>Logout</p>
     </div>
   )
