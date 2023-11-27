@@ -1,6 +1,6 @@
 import React from 'react'
 import '../AdminComponent.css'
-import AppRoutes from '@components/AppRoutes'
+import AppRoutes from '@routes/index'
 const PageContent = () => {
   return (
     <div className="PageContent">

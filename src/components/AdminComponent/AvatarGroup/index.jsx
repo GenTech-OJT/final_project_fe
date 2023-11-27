@@ -11,7 +11,7 @@ const AvatarGroup = ({ collapsed }) => {
   const navigate = useNavigate()
 
   const handleLogout = () => {
-    navigate('/users')
+    navigate('/logout')
   }
   const handleProfile = () => {
     navigate('/profile')

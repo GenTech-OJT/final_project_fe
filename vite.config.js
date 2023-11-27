@@ -9,6 +9,7 @@ export default defineConfig({
       '@components': '/src/components',
       '@utils': '/src/utils',
       '@pages': '/src/pages',
+      '@routes': '/src/routes',
       // Thêm các alias khác ở đây
     },
   },
