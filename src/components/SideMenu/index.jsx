@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../../App.css'
 import { Avatar, Button, Menu } from 'antd'
 import {
@@ -9,15 +9,31 @@ import {
 import { useNavigate } from 'react-router'
 const SideMenu = () => {
   const navigate = useNavigate()
+  const [selectedKey, setSelectedKey] = useState(
+    localStorage.getItem('selectedKey') || '1'
+  )
+
+  const handleMenuClick = item => {
+    setSelectedKey(item.key)
+    localStorage.setItem('selectedKey', item.key)
+    navigate(item.key)
+  }
+
+  useEffect(() => {
+    const storedKey = localStorage.getItem('selectedKey')
+    if (storedKey) {
+      setSelectedKey(storedKey)
+    }
+  }, [])
+
   return (
     <div className="SideMenu">
       <Menu
-        onClick={item => {
-          navigate(item.key)
-        }}
+        onClick={handleMenuClick}
         theme="light"
         mode="inline"
-        defaultSelectedKeys={['1']}
+        defaultSelectedKeys={[selectedKey]}
+        selectedKeys={[selectedKey]}
         items={[
           {
             label: 'Dashboard',
