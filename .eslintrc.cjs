@@ -17,6 +17,8 @@ module.exports = {
         map: [
           ['@components', './src/components'],
           ['@utils', './src/utils'],
+          ['@pages', './src/pages'],
+
           // Thêm các alias khác ở đây
         ],
         extensions: ['.js', '.jsx', '.json'],
@@ -36,4 +38,4 @@ module.exports = {
     'no-unused-vars': 'warn', // cảnh báo khi có biến không được sử dụng
     'no-multiple-empty-lines': ['warn', { max: 1 }], // không cho phép nhiều dòng trống liên tiếp
   },
-};
+}
