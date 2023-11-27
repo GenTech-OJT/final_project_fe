@@ -8,7 +8,7 @@ import AvatarGroup from '@components/AdminComponent/AvatarGroup'
 import AppFooter from '@components/AdminComponent/AppFooter'
 import { useNavigate } from 'react-router'
 const { Header, Content, Footer, Sider } = Layout
-
+import './App.css'
 const App = () => {
   const navigate = useNavigate()
   const [collapsed, setCollapsed] = useState(false)
