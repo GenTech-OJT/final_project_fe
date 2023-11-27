@@ -44,7 +44,5 @@ const AvatarGroup = ({ collapsed }) => {
     </Popover>
   )
 }
-AvatarGroup.propTypes = {
-  collapsed: PropTypes.bool.isRequired,
-}
+AvatarGroup.propTypes = {}
 export default AvatarGroup
