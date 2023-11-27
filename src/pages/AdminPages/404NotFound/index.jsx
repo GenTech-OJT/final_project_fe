@@ -1,5 +1,5 @@
 import React from 'react'
-import '../AdminPage.css'
+import './404.css'
 const NotFoundPage = () => {
   return <div>NotFoundPage</div>
 }

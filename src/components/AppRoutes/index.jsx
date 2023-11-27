@@ -1,4 +1,4 @@
-import Profile from '@components/AdminComponent/Profile/Profile'
+import Profile from '@pages/AdminPages/Profile'
 import NotFoundPage from '@pages/AdminPages/404NotFound'
 import Dashboard from '@pages/AdminPages/Dashboard'
 import UserManagement from '@pages/AdminPages/UsersManagement'
