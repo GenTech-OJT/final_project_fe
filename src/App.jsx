@@ -1,16 +1,11 @@
 import React, { useState } from 'react'
-import {
-  DownOutlined,
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-} from '@ant-design/icons'
-import { FaChevronDown } from 'react-icons/fa'
-import { Layout, Menu, Button, theme, Popover, Avatar } from 'antd'
-import PageContent from '@components/PageContent'
-import AppHeader from '@components/AppHeader'
-import SideMenu from '@components/SideMenu'
-import AvatarGroup from '@components/AvatarGroup'
-import AppFooter from '@components/AppFooter'
+import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
+import { Layout, Button, theme } from 'antd'
+import PageContent from '@components/AdminComponent/PageContent'
+import AppHeader from '@components/AdminComponent/AppHeader'
+import SideMenu from '@components/AdminComponent/SideMenu'
+import AvatarGroup from '@components/AdminComponent/AvatarGroup'
+import AppFooter from '@components/AdminComponent/AppFooter'
 import { useNavigate } from 'react-router'
 const { Header, Content, Footer, Sider } = Layout
 

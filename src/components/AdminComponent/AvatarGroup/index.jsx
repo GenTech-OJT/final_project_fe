@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { Avatar, Popover } from 'antd'
 import React from 'react'
-import '../../App.css'
+import '../../../App.css'
 import { useNavigate } from 'react-router-dom'
 import { DownOutlined } from '@ant-design/icons'
 const AvatarGroup = ({ collapsed }) => {

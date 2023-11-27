@@ -1,8 +1,8 @@
-import Profile from '@components/Profile/Profile'
-import Dashboard from '@pages/Dashboard'
-import UserManagement from '@pages/UsersManagement'
+import Profile from '@components/AdminComponent/Profile/Profile'
+import Dashboard from '@pages/AdminPages/Dashboard'
+import UserManagement from '@pages/AdminPages/UsersManagement'
 import React from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 
 const AppRoutes = () => {
   return (

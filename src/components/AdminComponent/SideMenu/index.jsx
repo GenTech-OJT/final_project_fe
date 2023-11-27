@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import '../../App.css'
-import { Avatar, Button, Menu } from 'antd'
-import {
-  DashboardOutlined,
-  DatabaseOutlined,
-  UserOutlined,
-} from '@ant-design/icons'
+import '../../../App.css'
+import { Menu } from 'antd'
+import { DashboardOutlined, UserOutlined } from '@ant-design/icons'
 import { useNavigate } from 'react-router'
 const SideMenu = () => {
   const navigate = useNavigate()
