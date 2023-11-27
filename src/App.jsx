@@ -1,36 +1,50 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { Select, Space } from 'antd'
+import i18n from 'i18next'
+import { useTranslation } from 'react-i18next'
 import './App.css'
-import Toan from '@components/toan'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const { t } = useTranslation('translation')
+  const changeLanguage = e => {
+    const languageValue = e.target.value
+    i18n.changeLanguage(languageValue)
+    console.log(`selected ${e}`)
+  }
 
   return (
-    <>
-      <div>
-        <Toan />
-        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount(count => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <Space wrap>
+      <h1>{t('title')}</h1>
+      {/* <select onChange={changeLanguage}>
+        <option className="flag en" value="eng">
+          {t('English')}
+        </option>
+        <option className="flag vi" value="vi">
+          {t('Vietnamese')}
+        </option>
+      </select> */}
+      <Select
+        defaultValue="eng"
+        style={{
+          width: 120,
+        }}
+        onChange={changeLanguage}
+        options={[
+          {
+            value: 'eng',
+            label: t('English'),
+          },
+          {
+            value: 'vi',
+            label: t('Vietnamese'),
+          },
+          {
+            value: 'disabled',
+            label: 'Disabled',
+            disabled: true,
+          },
+        ]}
+      />
+    </Space>
   )
 }
 
