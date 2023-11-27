@@ -11,9 +11,11 @@ import AppHeader from '@components/AppHeader'
 import SideMenu from '@components/SideMenu'
 import AvatarGroup from '@components/AvatarGroup'
 import AppFooter from '@components/AppFooter'
+import { useNavigate } from 'react-router'
 const { Header, Content, Footer, Sider } = Layout
 
 const App = () => {
+  const navigate = useNavigate()
   const [collapsed, setCollapsed] = useState(false)
   const {
     token: { colorBgContainer },
@@ -43,7 +45,14 @@ const App = () => {
             }}
           />
           {!collapsed && (
-            <img src="../logo-white.png" alt="" className="logo" />
+            <img
+              style={{ cursor: 'pointer' }}
+              src="../logo-white.png"
+              alt=""
+              className="logo"
+              onClick={() => navigate('/')}
+              onKeyDown={() => navigate('/')}
+            />
           )}
         </div>
         {/* Avatar */}
