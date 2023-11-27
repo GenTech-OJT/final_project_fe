@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
 import { Avatar, Popover } from 'antd'
 import React from 'react'
-import { FaChevronDown } from 'react-icons/fa'
 import '../../App.css'
 import { useNavigate } from 'react-router-dom'
+import { DownOutlined } from '@ant-design/icons'
 const AvatarGroup = ({ collapsed }) => {
   const history = useNavigate()
 
@@ -35,7 +35,7 @@ const AvatarGroup = ({ collapsed }) => {
         {!collapsed && (
           <div className="avatar-dropdown">
             Ngo Tan Khoa
-            <FaChevronDown />
+            <DownOutlined />
           </div>
         )}
       </div>

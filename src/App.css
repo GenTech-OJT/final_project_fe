@@ -48,6 +48,16 @@ a {
 .ant-popover {
   margin-top: -20px;
 }
+.ant-btn {
+  font-size: 16px !important;
+  width: 40px !important;
+  height: 40px !important;
+}
+.ant-layout-sider-children {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .popup-account {
   cursor: pointer;
 }
@@ -55,11 +65,13 @@ a {
   margin-top: 30px;
 }
 .avatar-container {
-  padding: 20px 0 0 20px;
+  padding: 20px 0 0 0;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   cursor: pointer;
+  border-bottom: 1px solid;
+  padding-bottom: 21px;
 }
 .ant-popover-arrow {
   left: 106px !important;

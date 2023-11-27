@@ -1,8 +1,7 @@
 import React from 'react'
 import '../../App.css'
-import { DownOutlined } from '@ant-design/icons'
+import { DownOutlined, SearchOutlined } from '@ant-design/icons'
 import { Avatar, Dropdown, Input, Space, message } from 'antd'
-import { CiSearch } from 'react-icons/ci'
 const onClick = ({ key }) => {
   message.info(`Click on item ${key}`)
 }
@@ -23,7 +22,7 @@ const items = [
 const AppHeader = () => {
   return (
     <div className="AppHeader">
-      <CiSearch className="search-header" />
+      <SearchOutlined className="search-header" />
       <Input
         placeholder="Basic usage"
         bordered={false}

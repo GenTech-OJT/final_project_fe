@@ -33,7 +33,9 @@ const App = () => {
       >
         {/* <div className="demo-logo-vertical" /> */}
 
-        <div style={{ display: 'flex', alignItems: 'center' }}>
+        <div
+          style={{ display: 'flex', alignItems: 'center', paddingTop: '11px' }}
+        >
           <Button
             type="text"
             icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
@@ -46,7 +48,7 @@ const App = () => {
           />
           {!collapsed && (
             <img
-              style={{ cursor: 'pointer' }}
+              style={{ cursor: 'pointer', marginLeft: '12px' }}
               src="../logo-white.png"
               alt=""
               className="logo"
