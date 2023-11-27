@@ -1,5 +1,5 @@
 import React from 'react'
-import '../../../App.css'
+import '../Admin.css'
 import AppRoutes from '@components/AppRoutes'
 const PageContent = () => {
   return (

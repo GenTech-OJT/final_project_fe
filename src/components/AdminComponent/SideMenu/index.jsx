@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import '../../../App.css'
+import '../Admin.css'
 import { Menu } from 'antd'
 import { DashboardOutlined, UserOutlined } from '@ant-design/icons'
 import { useNavigate } from 'react-router'
