@@ -1,29 +1,22 @@
 import { Select, Space } from 'antd'
-import i18n from 'i18next'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import './App.css'
 
 function App() {
-  const { t } = useTranslation('translation')
-  const changeLanguage = e => {
-    const languageValue = e.target.value
-    i18n.changeLanguage(languageValue)
-    console.log(`selected ${e}`)
+  const { t, i18n } = useTranslation('translation')
+  const [selectedLanguage, setSelectedLanguage] = useState('eng') // State để lưu giá trị ngôn ngữ được chọn
+
+  const changeLanguage = value => {
+    setSelectedLanguage(value) // Cập nhật giá trị ngôn ngữ được chọn
+    i18n.changeLanguage(value)
+    console.log(`Selected ${value}`)
   }
 
   return (
     <Space wrap>
       <h1>{t('title')}</h1>
-      {/* <select onChange={changeLanguage}>
-        <option className="flag en" value="eng">
-          {t('English')}
-        </option>
-        <option className="flag vi" value="vi">
-          {t('Vietnamese')}
-        </option>
-      </select> */}
       <Select
-        defaultValue="eng"
+        value={selectedLanguage} // Sử dụng giá trị state để đồng bộ với giá trị được chọn
         style={{
           width: 120,
         }}
