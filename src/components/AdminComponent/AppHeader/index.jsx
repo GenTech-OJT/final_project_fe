@@ -1,5 +1,5 @@
 import React from 'react'
-import '../Admin.css'
+import '../AdminComponent.css'
 import { DownOutlined, SearchOutlined } from '@ant-design/icons'
 import { Avatar, Dropdown, Input, Space, message } from 'antd'
 const onClick = ({ key }) => {
