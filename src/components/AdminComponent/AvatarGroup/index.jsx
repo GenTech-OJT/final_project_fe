@@ -10,10 +10,14 @@ const AvatarGroup = ({ collapsed }) => {
   const history = useNavigate()
 
   const handleLogout = () => {
-    history('/users')
+    history(
+      'https://final-project-fe-git-final-4-toan-nguyens-projects.vercel.app/users'
+    )
   }
   const handleProfile = () => {
-    history('/profile')
+    history(
+      'https://final-project-fe-git-final-4-toan-nguyens-projects.vercel.app/profile'
+    )
   }
 
   const content = (

@@ -8,8 +8,14 @@ const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<Dashboard />}></Route>
-      <Route path="/users" element={<UserManagement />}></Route>
-      <Route path="/profile" element={<Profile />}></Route>
+      <Route
+        path="https://final-project-fe-git-final-4-toan-nguyens-projects.vercel.app/users"
+        element={<UserManagement />}
+      ></Route>
+      <Route
+        path="https://final-project-fe-git-final-4-toan-nguyens-projects.vercel.app/profile"
+        element={<Profile />}
+      ></Route>
     </Routes>
   )
 }
