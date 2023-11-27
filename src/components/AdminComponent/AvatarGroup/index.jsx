@@ -4,6 +4,8 @@ import React from 'react'
 import '../../../App.css'
 import { useNavigate } from 'react-router-dom'
 import { DownOutlined } from '@ant-design/icons'
+import PropTypes from 'prop-types'
+
 const AvatarGroup = ({ collapsed }) => {
   const history = useNavigate()
 
@@ -42,5 +44,7 @@ const AvatarGroup = ({ collapsed }) => {
     </Popover>
   )
 }
-
+AvatarGroup.propTypes = {
+  collapsed: PropTypes.boolean,
+}
 export default AvatarGroup
