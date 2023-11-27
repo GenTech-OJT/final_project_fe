@@ -16,8 +16,12 @@ const AvatarGroup = ({ collapsed }) => {
 
   const content = (
     <div className="popup-account">
-      <p onClick={handleProfile}>My Account</p>
-      <p onClick={handleLogout}>Logout</p>
+      <div onClick={handleProfile} onKeyDown={handleProfile}>
+        My Account
+      </div>
+      <div onClick={handleLogout} onKeyDown={handleLogout}>
+        Logout
+      </div>
     </div>
   )
   return (

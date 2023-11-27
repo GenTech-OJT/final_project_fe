@@ -1,7 +1,7 @@
 import React from 'react'
 import '../../App.css'
 import { DownOutlined } from '@ant-design/icons'
-import { Avatar, Dropdown, Image, Input, Space, message } from 'antd'
+import { Avatar, Dropdown, Input, Space, message } from 'antd'
 import { CiSearch } from 'react-icons/ci'
 const onClick = ({ key }) => {
   message.info(`Click on item ${key}`)
@@ -36,7 +36,10 @@ const AppHeader = () => {
           onClick,
         }}
       >
-        <a onClick={e => e.preventDefault()}>
+        <a
+          onClick={e => e.preventDefault()}
+          onKeyDown={e => e.preventDefault()}
+        >
           <Space>
             <Avatar src="https://source.unsplash.com/random" />
             <DownOutlined />
