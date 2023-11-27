@@ -1,4 +1,5 @@
 import Profile from '@components/AdminComponent/Profile/Profile'
+import NotFoundPage from '@pages/AdminPages/404NotFound'
 import Dashboard from '@pages/AdminPages/Dashboard'
 import UserManagement from '@pages/AdminPages/UsersManagement'
 import React from 'react'
@@ -10,6 +11,7 @@ const AppRoutes = () => {
       <Route path="/" element={<Dashboard />}></Route>
       <Route path="/users" element={<UserManagement />}></Route>
       <Route path="/profile" element={<Profile />}></Route>
+      <Route path="*" element={<NotFoundPage />}></Route>
     </Routes>
   )
 }
