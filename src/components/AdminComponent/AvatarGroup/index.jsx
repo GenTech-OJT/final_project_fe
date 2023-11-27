@@ -45,6 +45,6 @@ const AvatarGroup = ({ collapsed }) => {
   )
 }
 AvatarGroup.propTypes = {
-  collapsed: PropTypes.bool,
+  collapsed: PropTypes.bool.isRequired,
 }
 export default AvatarGroup
