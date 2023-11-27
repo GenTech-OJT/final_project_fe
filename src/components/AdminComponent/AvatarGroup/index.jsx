@@ -7,17 +7,13 @@ import { DownOutlined } from '@ant-design/icons'
 import PropTypes from 'prop-types'
 
 const AvatarGroup = ({ collapsed }) => {
-  const history = useNavigate()
+  const navigate = useNavigate()
 
   const handleLogout = () => {
-    history(
-      'https://final-project-fe-git-final-4-toan-nguyens-projects.vercel.app/users'
-    )
+    navigate('/users')
   }
   const handleProfile = () => {
-    history(
-      'https://final-project-fe-git-final-4-toan-nguyens-projects.vercel.app/profile'
-    )
+    navigate('/profile')
   }
 
   const content = (
