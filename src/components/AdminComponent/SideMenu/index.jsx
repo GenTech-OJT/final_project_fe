@@ -1,13 +1,11 @@
+/* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react'
 import '../AdminComponent.css'
 import { Menu } from 'antd'
 import { DashboardOutlined, UserOutlined } from '@ant-design/icons'
 import { useNavigate } from 'react-router'
-const SideMenu = () => {
+const SideMenu = ({ selectedKey, setSelectedKey }) => {
   const navigate = useNavigate()
-  const [selectedKey, setSelectedKey] = useState(
-    localStorage.getItem('selectedKey') || '1'
-  )
 
   const handleMenuClick = item => {
     setSelectedKey(item.key)

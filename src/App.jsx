@@ -15,6 +15,9 @@ const App = () => {
   const {
     token: { colorBgContainer },
   } = theme.useToken()
+  const [selectedKey, setSelectedKey] = useState(
+    localStorage.getItem('selectedKey') || '1'
+  )
   return (
     <Layout hasSider>
       <Sider
@@ -53,8 +56,8 @@ const App = () => {
           )}
         </div>
         {/* Avatar */}
-        <AvatarGroup collapsed={collapsed} />
-        <SideMenu />
+        <AvatarGroup setSelectedKey={setSelectedKey} collapsed={collapsed} />
+        <SideMenu selectedKey={selectedKey} setSelectedKey={setSelectedKey} />
       </Sider>
       <Layout
       // style={{

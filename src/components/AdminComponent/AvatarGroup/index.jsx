@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { Avatar, Popover } from 'antd'
 import React from 'react'
@@ -7,13 +8,16 @@ import { useNavigate } from 'react-router-dom'
 import { DownOutlined } from '@ant-design/icons'
 import PropTypes from 'prop-types'
 
-const AvatarGroup = ({ collapsed }) => {
+const AvatarGroup = ({ collapsed, setSelectedKey }) => {
   const navigate = useNavigate()
 
   const handleLogout = () => {
+    setSelectedKey('')
     navigate('/logout')
   }
   const handleProfile = () => {
+    setSelectedKey('')
+
     navigate('/profile')
   }
 
