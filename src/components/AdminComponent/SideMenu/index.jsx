@@ -4,6 +4,8 @@ import '../AdminComponent.css'
 import { Menu } from 'antd'
 import { DashboardOutlined, UserOutlined } from '@ant-design/icons'
 import { useNavigate } from 'react-router'
+import PropTypes from 'prop-types'
+
 const SideMenu = ({ selectedKey, setSelectedKey }) => {
   const navigate = useNavigate()
 
@@ -59,6 +61,11 @@ const SideMenu = ({ selectedKey, setSelectedKey }) => {
       />
     </div>
   )
+}
+
+SideMenu.propTypes = {
+  selectedKey: PropTypes.string.isRequired,
+  setSelectedKey: PropTypes.string.isRequired,
 }
 
 export default SideMenu
