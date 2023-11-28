@@ -5,20 +5,6 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import '../AdminComponent.css'
 
-const items = [
-  {
-    label: '1st menu item',
-    key: '1',
-  },
-  {
-    label: '2nd menu item',
-    key: '2',
-  },
-  {
-    label: '3rd menu item',
-    key: '3',
-  },
-]
 const AppHeader = () => {
   const { t, i18n } = useTranslation('translation')
   const [selectedLanguage, setSelectedLanguage] = useState('eng') // State để lưu giá trị ngôn ngữ được chọn
@@ -58,11 +44,6 @@ const AppHeader = () => {
             {
               value: 'vi',
               label: t('Vietnamese'),
-            },
-            {
-              value: 'disabled',
-              label: 'Disabled',
-              disabled: true,
             },
           ]}
         />

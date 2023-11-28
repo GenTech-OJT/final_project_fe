@@ -44,22 +44,6 @@ const SideMenu = () => {
             icon: <UserOutlined />,
             key: '/users',
           },
-          // {
-          //   label: 'Products',
-          //   icon: <DatabaseOutlined />,
-          //   key: 'products',
-          //   type: 'group',
-          //   // children dropdown
-          //   children: [
-          //     { label: 'Revenue', key: 'rev' },
-          //     // { label: 'Express', key: '/users' },
-          //   ],
-          // },
-          // {
-          //   label: 'Customers',
-          //   key: 'customers',
-          //   children: [{ label: 'Revenue', key: 'rev' }],
-          // },
         ]}
       />
     </div>
