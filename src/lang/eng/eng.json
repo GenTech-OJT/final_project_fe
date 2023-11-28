@@ -1,3 +1,4 @@
 {
-  "title": "Welcome to React"
+  "dashboardLabel": "Dashboard",
+  "userManagementLabel": "User Management"
 }

@@ -39,9 +39,6 @@ const AppHeader = () => {
       {/* Translate */}
       <Space
         wrap
-        direction="vertical"
-        align="center" // Căn giữa theo chiều ngang
-        justify="center" // Căn giữa theo chiều dọc
         style={{
           height: '100vh', // Thiết lập chiều cao 100% của viewport
         }}

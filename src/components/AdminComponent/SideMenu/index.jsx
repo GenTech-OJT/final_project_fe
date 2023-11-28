@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from 'react'
-import '../AdminComponent.css'
-import { Menu } from 'antd'
 import { DashboardOutlined, UserOutlined } from '@ant-design/icons'
+import { Menu } from 'antd'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
+import '../AdminComponent.css'
 const SideMenu = () => {
   const navigate = useNavigate()
   const [selectedKey, setSelectedKey] = useState(
     localStorage.getItem('selectedKey') || '1'
   )
+
+  const { t } = useTranslation('translation')
 
   const handleMenuClick = item => {
     setSelectedKey(item.key)
@@ -32,12 +35,12 @@ const SideMenu = () => {
         selectedKeys={[selectedKey]}
         items={[
           {
-            label: 'Dashboard',
+            label: t('dashboardLabel'),
             icon: <DashboardOutlined />,
             key: '/',
           },
           {
-            label: 'User Management',
+            label: t('userManagementLabel'),
             icon: <UserOutlined />,
             key: '/users',
           },
