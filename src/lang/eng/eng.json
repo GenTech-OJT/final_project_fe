@@ -1,4 +1,6 @@
 {
   "dashboardLabel": "Dashboard",
-  "userManagementLabel": "User Management"
+  "userManagementLabel": "User Management",
+  "myAccount": "My Account",
+  "logout": "Logout"
 }

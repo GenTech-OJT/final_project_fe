@@ -1,4 +1,6 @@
 {
   "dashboardLabel": "Bảng điều khiển",
-  "userManagementLabel": "Quản lý người dùng"
+  "userManagementLabel": "Quản lý người dùng",
+  "myAccount": "Tài khoản của tôi",
+  "logout": "Đăng xuất"
 }
