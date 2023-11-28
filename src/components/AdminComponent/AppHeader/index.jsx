@@ -29,7 +29,6 @@ const AppHeader = () => {
           height: '100vh', // Thiết lập chiều cao 100% của viewport
         }}
       >
-        <h1>{t('title')}</h1>
         <Select
           value={selectedLanguage} // Sử dụng giá trị state để đồng bộ với giá trị được chọn
           style={{
