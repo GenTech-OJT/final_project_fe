@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import '../AdminComponent.css'
 import { Menu } from 'antd'
 import { DashboardOutlined, UserOutlined } from '@ant-design/icons'
