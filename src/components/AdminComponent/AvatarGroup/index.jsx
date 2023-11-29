@@ -12,13 +12,14 @@ const AvatarGroup = ({ collapsed, setSelectedKey }) => {
   const navigate = useNavigate()
 
   const handleLogout = () => {
-    setSelectedKey('')
     navigate('/logout')
+    setSelectedKey('')
+    localStorage.removeItem('selectedKey')
   }
   const handleProfile = () => {
-    setSelectedKey('')
-
     navigate('/profile')
+    setSelectedKey('')
+    localStorage.removeItem('selectedKey')
   }
 
   const content = (
