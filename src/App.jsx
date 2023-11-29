@@ -15,9 +15,13 @@ const App = () => {
   const {
     token: { colorBgContainer },
   } = theme.useToken()
+  const [selectedKey, setSelectedKey] = useState(
+    localStorage.getItem('selectedKey') || '1'
+  )
   return (
     <Layout hasSider>
       <Sider
+        className="sider-menu"
         theme="light"
         style={{
           overflow: 'auto',
@@ -32,14 +36,10 @@ const App = () => {
           style={{ display: 'flex', alignItems: 'center', paddingTop: '11px' }}
         >
           <Button
+            className="menu-btn"
             type="text"
             icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
             onClick={() => setCollapsed(!collapsed)}
-            style={{
-              fontSize: '16px',
-              width: 64,
-              height: 64,
-            }}
           />
           {!collapsed && (
             <img
@@ -53,8 +53,8 @@ const App = () => {
           )}
         </div>
         {/* Avatar */}
-        <AvatarGroup collapsed={collapsed} />
-        <SideMenu />
+        <AvatarGroup setSelectedKey={setSelectedKey} collapsed={collapsed} />
+        <SideMenu selectedKey={selectedKey} setSelectedKey={setSelectedKey} />
       </Sider>
       <Layout
       // style={{
@@ -71,8 +71,6 @@ const App = () => {
         </Header>
         <Content
           style={{
-            margin: '24px 16px',
-            padding: 24,
             minHeight: 280,
             backgroundColor: '#f5f5f5',
           }}
