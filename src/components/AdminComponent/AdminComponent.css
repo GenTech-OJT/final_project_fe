@@ -14,7 +14,7 @@
 .ant-popover {
   margin-top: -20px;
 }
-.ant-btn {
+.menu-btn {
   font-size: 16px !important;
   width: 40px !important;
   height: 40px !important;
@@ -40,12 +40,12 @@
   border-bottom: 1px solid;
   padding-bottom: 21px;
 }
-.ant-popover-arrow {
+/* .ant-popover-arrow {
   left: 106px !important;
 }
 .ant-popover-content {
   width: 125%;
-}
+} */
 .avatar-dropdown {
   display: flex;
   align-items: center;

@@ -21,6 +21,7 @@ const App = () => {
   return (
     <Layout hasSider>
       <Sider
+        className="sider-menu"
         theme="light"
         style={{
           overflow: 'auto',
@@ -35,6 +36,7 @@ const App = () => {
           style={{ display: 'flex', alignItems: 'center', paddingTop: '11px' }}
         >
           <Button
+            className="menu-btn"
             type="text"
             icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
             onClick={() => setCollapsed(!collapsed)}

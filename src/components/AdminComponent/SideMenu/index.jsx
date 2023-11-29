@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react'
 import '../AdminComponent.css'
 import { Menu } from 'antd'
-import { DashboardOutlined, UserOutlined } from '@ant-design/icons'
+import { ProjectOutlined, UserOutlined } from '@ant-design/icons'
 import { useNavigate } from 'react-router'
 import PropTypes from 'prop-types'
 
@@ -32,12 +32,12 @@ const SideMenu = ({ selectedKey, setSelectedKey }) => {
         selectedKeys={[selectedKey]}
         items={[
           {
-            label: 'Dashboard',
-            icon: <DashboardOutlined />,
+            label: 'Project Management',
+            icon: <ProjectOutlined />,
             key: '/',
           },
           {
-            label: 'User Management',
+            label: 'Employee Management',
             icon: <UserOutlined />,
             key: '/users',
           },
