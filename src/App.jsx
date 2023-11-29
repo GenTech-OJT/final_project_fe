@@ -1,14 +1,14 @@
-import React, { useState } from 'react'
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
-import { Layout, Button, theme } from 'antd'
-import PageContent from '@components/AdminComponent/PageContent'
-import AppHeader from '@components/AdminComponent/AppHeader'
-import SideMenu from '@components/AdminComponent/SideMenu'
-import AvatarGroup from '@components/AdminComponent/AvatarGroup'
 import AppFooter from '@components/AdminComponent/AppFooter'
+import AppHeader from '@components/AdminComponent/AppHeader'
+import AvatarGroup from '@components/AdminComponent/AvatarGroup'
+import PageContent from '@components/AdminComponent/PageContent'
+import SideMenu from '@components/AdminComponent/SideMenu'
+import { Button, Layout, theme } from 'antd'
+import { useState } from 'react'
 import { useNavigate } from 'react-router'
-const { Header, Content, Footer, Sider } = Layout
 import './App.css'
+const { Header, Content, Footer, Sider } = Layout
 const App = () => {
   const navigate = useNavigate()
   const [collapsed, setCollapsed] = useState(false)
@@ -71,8 +71,6 @@ const App = () => {
         </Header>
         <Content
           style={{
-            margin: '24px 16px',
-            padding: 24,
             minHeight: 280,
             backgroundColor: '#f5f5f5',
           }}

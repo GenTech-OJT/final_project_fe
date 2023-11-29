@@ -1,5 +1,5 @@
 import Profile from '@pages/AdminPages/Profile'
-import NotFoundPage from '@pages/AdminPages/404NotFound'
+import NotFoundPage from '@pages/AdminPages/404NotFound/NotFound'
 import Dashboard from '@pages/AdminPages/Dashboard'
 import UserManagement from '@pages/AdminPages/UsersManagement'
 import React from 'react'
