@@ -1,5 +1,5 @@
 import Profile from '@pages/AdminPages/Profile'
-import NotFoundPage from '@pages/AdminPages/404NotFound'
+import NotFoundPage from '@pages/AdminPages/404NotFound/NotFound'
 import ProjectManagement from '@pages/AdminPages/ProjectManagement'
 import EmployeeManagement from '@pages/AdminPages/EmployeeManagement'
 import React from 'react'

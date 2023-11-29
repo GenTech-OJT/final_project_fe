@@ -1,0 +1,43 @@
+.background {
+  background-image: url('../../../assets/img/Error404Page.png');
+  height: 90vh;
+  max-width: 100vw;
+  background-size: cover;
+}
+
+.content {
+  color: #365885;
+  padding-top: 13%;
+  font-family: 'Poppins', sans-serif;
+  font-size: 42px !important;
+  padding-left: 7%;
+}
+.content-h1 {
+  margin-bottom: 5px;
+  font-size: 60px !important;
+}
+.content-p {
+  margin-top: 2px;
+  margin-bottom: 35px;
+  font-size: 60px !important;
+  font-weight: bolder;
+}
+
+.back-to-home-btn {
+  font-weight: 500;
+  font-size: 20px;
+  outline: none;
+  border: none;
+  width: 180px !important;
+  height: 50px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #365885 !important;
+  color: white;
+}
+
+.back-to-home-btn:hover {
+  background-color: #738fb9 !important;
+  color: white;
+}
