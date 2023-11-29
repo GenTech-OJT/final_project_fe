@@ -1,13 +1,14 @@
-/* eslint-disable react/prop-types */
-import React, { useEffect } from 'react'
-import '../AdminComponent.css'
+import { DashboardOutlined, UserOutlined } from '@ant-design/icons'
 import { Menu } from 'antd'
-import { ProjectOutlined, UserOutlined } from '@ant-design/icons'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 import PropTypes from 'prop-types'
 
 const SideMenu = ({ selectedKey, setSelectedKey }) => {
   const navigate = useNavigate()
+
+  const { t } = useTranslation('translation')
 
   const handleMenuClick = item => {
     setSelectedKey(item.key)
@@ -32,31 +33,15 @@ const SideMenu = ({ selectedKey, setSelectedKey }) => {
         selectedKeys={[selectedKey]}
         items={[
           {
-            label: 'Project Management',
-            icon: <ProjectOutlined />,
+            label: t('dashboard_label'),
+            icon: <DashboardOutlined />,
             key: '/',
           },
           {
-            label: 'Employee Management',
+            label: t('user_management_label'),
             icon: <UserOutlined />,
             key: '/users',
           },
-          // {
-          //   label: 'Products',
-          //   icon: <DatabaseOutlined />,
-          //   key: 'products',
-          //   type: 'group',
-          //   // children dropdown
-          //   children: [
-          //     { label: 'Revenue', key: 'rev' },
-          //     // { label: 'Express', key: '/users' },
-          //   ],
-          // },
-          // {
-          //   label: 'Customers',
-          //   key: 'customers',
-          //   children: [{ label: 'Revenue', key: 'rev' }],
-          // },
         ]}
       />
     </div>
