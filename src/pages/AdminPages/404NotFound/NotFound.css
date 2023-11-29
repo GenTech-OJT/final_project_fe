@@ -33,14 +33,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: #365885 !important;
+  color: white;
 }
 
 .back-to-home-btn:hover {
   background-color: #738fb9 !important;
-  color: white;
-}
-
-.back-to-home-btn {
-  background-color: #365885 !important;
   color: white;
 }
