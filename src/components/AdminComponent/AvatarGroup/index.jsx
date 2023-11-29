@@ -14,7 +14,7 @@ const AvatarGroup = ({ collapsed, setSelectedKey }) => {
   const { t } = useTranslation('translation')
 
   const handleLogout = () => {
-    navigate('/logout')
+    navigate('/login')
     setSelectedKey('')
     localStorage.removeItem('selectedKey')
   }
