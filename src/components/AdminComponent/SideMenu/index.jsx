@@ -1,4 +1,8 @@
-import { DashboardOutlined, UserOutlined } from '@ant-design/icons'
+import {
+  DashboardOutlined,
+  ProjectOutlined,
+  UserOutlined,
+} from '@ant-design/icons'
 import { Menu } from 'antd'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -33,12 +37,12 @@ const SideMenu = ({ selectedKey, setSelectedKey }) => {
         selectedKeys={[selectedKey]}
         items={[
           {
-            label: t('dashboard_label'),
-            icon: <DashboardOutlined />,
+            label: t('project_management_label'),
+            icon: <ProjectOutlined />,
             key: '/',
           },
           {
-            label: t('user_management_label'),
+            label: t('employee_management_label'),
             icon: <UserOutlined />,
             key: '/users',
           },
