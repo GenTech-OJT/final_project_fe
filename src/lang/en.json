@@ -1,6 +1,6 @@
 {
   "dashboard_label": "Dashboard",
-  "userManagement_label": "User Management",
-  "myAccount": "My Account",
+  "user_management_label": "User Management",
+  "my_account": "My Account",
   "logout": "Logout"
 }

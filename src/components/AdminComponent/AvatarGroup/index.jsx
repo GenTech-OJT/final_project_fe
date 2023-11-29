@@ -22,7 +22,7 @@ const AvatarGroup = ({ collapsed }) => {
   const content = (
     <div className="popup-account">
       <div onClick={handleProfile} onKeyDown={handleProfile}>
-        {t('myAccount')}
+        {t('my_account')}
       </div>
       <div onClick={handleLogout} onKeyDown={handleLogout}>
         {t('logout')}
