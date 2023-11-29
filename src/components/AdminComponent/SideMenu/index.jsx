@@ -1,14 +1,12 @@
-import { DashboardOutlined, UserOutlined } from '@ant-design/icons'
+import { ProjectOutlined, UserOutlined } from '@ant-design/icons'
 import { Menu } from 'antd'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
-import '../AdminComponent.css'
-const SideMenu = () => {
+import PropTypes from 'prop-types'
+
+const SideMenu = ({ selectedKey, setSelectedKey }) => {
   const navigate = useNavigate()
-  const [selectedKey, setSelectedKey] = useState(
-    localStorage.getItem('selectedKey') || '1'
-  )
 
   const { t } = useTranslation('translation')
 
@@ -35,12 +33,12 @@ const SideMenu = () => {
         selectedKeys={[selectedKey]}
         items={[
           {
-            label: t('dashboard_label'),
-            icon: <DashboardOutlined />,
+            label: t('project_management_label'),
+            icon: <ProjectOutlined />,
             key: '/',
           },
           {
-            label: t('user_management_label'),
+            label: t('employee_management_label'),
             icon: <UserOutlined />,
             key: '/users',
           },
@@ -48,6 +46,11 @@ const SideMenu = () => {
       />
     </div>
   )
+}
+
+SideMenu.propTypes = {
+  selectedKey: PropTypes.string.isRequired,
+  setSelectedKey: PropTypes.string.isRequired,
 }
 
 export default SideMenu

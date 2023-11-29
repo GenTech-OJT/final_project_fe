@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { Avatar, Popover } from 'antd'
 import '../AdminComponent.css'
@@ -7,16 +8,20 @@ import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
-const AvatarGroup = ({ collapsed }) => {
+const AvatarGroup = ({ collapsed, setSelectedKey }) => {
   const navigate = useNavigate()
 
   const { t } = useTranslation('translation')
 
   const handleLogout = () => {
     navigate('/logout')
+    setSelectedKey('')
+    localStorage.removeItem('selectedKey')
   }
   const handleProfile = () => {
     navigate('/profile')
+    setSelectedKey('')
+    localStorage.removeItem('selectedKey')
   }
 
   const content = (
@@ -49,5 +54,7 @@ const AvatarGroup = ({ collapsed }) => {
 }
 AvatarGroup.propTypes = {
   collapsed: PropTypes.bool.isRequired,
+  setSelectedKey: PropTypes.string.isRequired,
 }
+
 export default AvatarGroup

@@ -8,7 +8,7 @@ const NotFoundPage = () => {
     <div className="background">
       <div className="content">
         <h1 className="content-h1">404</h1>
-        <p className="content-p"> {t('lost_in_space')}</p>
+        <p className="content-p">{t('notfound_content')}</p>
         <Button
           type="primary"
           href="../Dashboard/index.jsx"
