@@ -4,7 +4,7 @@ import ProjectManagement from '@pages/AdminPages/ProjectManagement'
 import EmployeeManagement from '@pages/AdminPages/EmployeeManagement'
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
-import Logout from '@pages/AdminPages/Logout'
+import Login from '@pages/AdminPages/Login'
 
 const AppRoutes = () => {
   return (
@@ -12,7 +12,7 @@ const AppRoutes = () => {
       <Route path="/" element={<ProjectManagement />}></Route>
       <Route path="/users" element={<EmployeeManagement />}></Route>
       <Route path="/profile" element={<Profile />}></Route>
-      <Route path="/logout" element={<Logout />}></Route>
+      <Route path="/login" element={<Login />}></Route>
       <Route path="*" element={<NotFoundPage />}></Route>
     </Routes>
   )

@@ -1,8 +1,10 @@
 import { Button } from 'antd'
 import './NotFound.css'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router'
 
 const NotFoundPage = () => {
+  const navigate = useNavigate()
   const { t } = useTranslation('translation')
   return (
     <div className="background">
@@ -11,8 +13,8 @@ const NotFoundPage = () => {
         <p className="content-p">{t('notfound_content')}</p>
         <Button
           type="primary"
-          href="../Dashboard/index.jsx"
           className="back-to-home-btn"
+          onClick={() => navigate('/')}
         >
           {t('back_to_home')}
         </Button>
