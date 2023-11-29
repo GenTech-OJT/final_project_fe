@@ -1,10 +1,6 @@
-import {
-  DashboardOutlined,
-  ProjectOutlined,
-  UserOutlined,
-} from '@ant-design/icons'
+import { ProjectOutlined, UserOutlined } from '@ant-design/icons'
 import { Menu } from 'antd'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 import PropTypes from 'prop-types'
