@@ -8,7 +8,7 @@
 .content {
   color: rgb(52, 52, 124);
   padding-top: 13%;
-  font-family: 'Poppins';
+  font-family: 'Poppins', sans-serif;
   font-size: 42px !important;
   padding-left: 7%;
 }
