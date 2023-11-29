@@ -13,7 +13,7 @@ const AppRoutes = () => {
       <Route path="/users" element={<UserManagement />}></Route>
       <Route path="/profile" element={<Profile />}></Route>
       <Route path="/logout" element={<Logout />}></Route>
-      <Route path="*" element={<NotFoundPage />}></Route>
+      <Route path="/pagenotfound" element={<NotFoundPage />}></Route>
     </Routes>
   )
 }
