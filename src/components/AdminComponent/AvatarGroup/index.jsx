@@ -1,14 +1,16 @@
 /* eslint-disable react/prop-types */
 import { Avatar, Popover } from 'antd'
-import React from 'react'
 import '../AdminComponent.css'
 
-import { useNavigate } from 'react-router-dom'
 import { DownOutlined } from '@ant-design/icons'
 import PropTypes from 'prop-types'
+import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
 
 const AvatarGroup = ({ collapsed }) => {
   const navigate = useNavigate()
+
+  const { t } = useTranslation('translation')
 
   const handleLogout = () => {
     navigate('/logout')
@@ -20,10 +22,10 @@ const AvatarGroup = ({ collapsed }) => {
   const content = (
     <div className="popup-account">
       <div onClick={handleProfile} onKeyDown={handleProfile}>
-        My Account
+        {t('my_account')}
       </div>
       <div onClick={handleLogout} onKeyDown={handleLogout}>
-        Logout
+        {t('logout')}
       </div>
     </div>
   )
