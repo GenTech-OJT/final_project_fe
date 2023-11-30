@@ -169,16 +169,16 @@ const EmployeeManagement = () => {
       render: (_, record) => (
         <>
           <Button
-            key={`edit-${record.id}`}
-            onClick={() => edit(record)}
-            style={{ marginRight: 8 }}
-            icon={<EditOutlined />}
-          />
-          <Button
             key={`view-${record.id}`}
             onClick={() => viewDetail(record)}
             style={{ marginRight: 8 }}
             icon={<EyeOutlined />}
+          />
+          <Button
+            key={`edit-${record.id}`}
+            onClick={() => edit(record)}
+            style={{ marginRight: 8 }}
+            icon={<EditOutlined />}
           />
           <Button
             key={`delete-${record.id}`}
