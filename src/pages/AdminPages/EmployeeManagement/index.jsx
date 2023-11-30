@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { Button, Spin, message } from 'antd'
+import { Button, Select, Spin, message } from 'antd'
 import EmployeeTable from '@components/EmployeeComponent/EmployeeTable'
 import EmployeeModal from '@components/EmployeeComponent/EmployeeModal'
 import EmployeeSearch from '@components/EmployeeComponent/EmployeeSearch'
@@ -12,8 +12,8 @@ const EmployeeManagement = () => {
   const [sortedInfo, setSortedInfo] = useState({})
   const [pagination, setPagination] = useState({
     current: 1,
-    pageSize: 10,
-    total: 0,
+    pageSize: 5,
+    total: 14,
   })
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [loadingData, setLoadingData] = useState(true)
@@ -107,7 +107,12 @@ const EmployeeManagement = () => {
 
   const handleTableChange = (pagination, filters, sorter) => {
     setSortedInfo(sorter)
-    setPagination({ ...pagination, current: pagination.current })
+    setPagination({ ...pagination })
+  }
+
+  const itemsPerPageOptions = [5, 10, 20]
+  const handleItemsPerPageChange = pageSize => {
+    setPagination({ ...pagination, pageSize, current: 1 })
   }
 
   const convertBooleanToString = isManager => (isManager ? 'true' : 'false')
@@ -210,7 +215,21 @@ const EmployeeManagement = () => {
           edit={edit}
           viewDetail={viewDetail}
           deleteRecord={deleteRecord}
+          pagination={pagination} // Ensure that you pass the pagination prop
         />
+        <div style={{ marginBottom: 16, float: 'right' }}>
+          Items per page:{' '}
+          <Select
+            defaultValue={pagination.pageSize}
+            onChange={handleItemsPerPageChange}
+          >
+            {itemsPerPageOptions.map(option => (
+              <Option key={option} value={option}>
+                {option}
+              </Option>
+            ))}
+          </Select>
+        </div>
 
         <EmployeeModal
           isModalVisible={isModalVisible}
