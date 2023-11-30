@@ -3,8 +3,6 @@ import { Table, Button, Modal, Form, Input, Spin, message } from 'antd'
 import {
   SearchOutlined,
   EditOutlined,
-  SaveOutlined,
-  CloseOutlined,
   EyeOutlined,
   DeleteOutlined,
 } from '@ant-design/icons'
@@ -43,7 +41,7 @@ const EmployeeManagement = () => {
         }
 
         const apiData = await response.json()
-        console.log(apiData) // In ra giá trị của apiData để kiểm tra
+        console.log(apiData)
         setGridData(apiData.data)
         setPagination({
           ...pagination,
@@ -125,6 +123,7 @@ const EmployeeManagement = () => {
       title: 'ID',
       align: 'center',
       dataIndex: 'id',
+      key: 'id',
       sorter: true,
       sortOrder: sortedInfo.columnKey === 'id' && sortedInfo.order,
     },
@@ -132,6 +131,7 @@ const EmployeeManagement = () => {
       title: 'Name',
       align: 'center',
       dataIndex: 'name',
+      key: 'name',
       sorter: true,
       sortOrder: sortedInfo.columnKey === 'name' && sortedInfo.order,
     },
@@ -139,6 +139,7 @@ const EmployeeManagement = () => {
       title: 'Status',
       align: 'center',
       dataIndex: 'status',
+      key: 'status',
       sorter: true,
       sortOrder: sortedInfo.columnKey === 'status' && sortedInfo.order,
       render: (_, record) => (
@@ -154,6 +155,7 @@ const EmployeeManagement = () => {
       title: 'Position',
       align: 'center',
       dataIndex: 'position',
+      key: 'position',
       sorter: true,
       sortOrder: sortedInfo.columnKey === 'position' && sortedInfo.order,
     },
@@ -161,25 +163,30 @@ const EmployeeManagement = () => {
       title: 'Is Manager',
       align: 'center',
       dataIndex: 'is_manager',
+      key: 'is_manager',
       sorter: true,
       sortOrder: sortedInfo.columnKey === 'is_manager' && sortedInfo.order,
     },
     {
       title: 'Action',
       align: 'center',
+      key: 'action',
       render: (_, record) => (
         <>
           <Button
+            key={`edit-${record.id}`}
             onClick={() => edit(record)}
             style={{ marginRight: 8 }}
             icon={<EditOutlined />}
           />
           <Button
+            key={`view-${record.id}`}
             onClick={() => viewDetail(record)}
             style={{ marginRight: 8 }}
             icon={<EyeOutlined />}
           />
           <Button
+            key={`delete-${record.id}`}
             onClick={() => deleteRecord(record.id)}
             icon={<DeleteOutlined />}
           />
@@ -210,6 +217,7 @@ const EmployeeManagement = () => {
           bordered
           onChange={handleTableChange}
           pagination={pagination}
+          rowKey="id" // Thêm rowKey cho bảng
         />
         <Modal
           title="Create"
