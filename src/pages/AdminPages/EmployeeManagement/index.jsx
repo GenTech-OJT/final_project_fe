@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { Table, Button, Modal, Form, Input, Spin, message } from 'antd'
+import { Button, Spin, message } from 'antd'
+import EmployeeTable from '@components/EmployeeComponent/EmployeeTable'
+import EmployeeModal from '@components/EmployeeComponent/EmployeeModal'
+import EmployeeSearch from '@components/EmployeeComponent/EmployeeSearch'
 import {
-  SearchOutlined,
   EditOutlined,
   EyeOutlined,
   DeleteOutlined,
+  SearchOutlined,
 } from '@ant-design/icons'
 import './employeeStyle.css'
-
-const { Search } = Input
 
 const EmployeeManagement = () => {
   const [gridData, setGridData] = useState([])
@@ -118,6 +119,8 @@ const EmployeeManagement = () => {
     setPagination({ ...pagination, current: pagination.current })
   }
 
+  const convertBooleanToString = isManager => (isManager ? 'true' : 'false')
+
   const columns = [
     {
       title: 'ID',
@@ -166,6 +169,7 @@ const EmployeeManagement = () => {
       key: 'is_manager',
       sorter: true,
       sortOrder: sortedInfo.columnKey === 'is_manager' && sortedInfo.order,
+      render: isManager => convertBooleanToString(isManager),
     },
     {
       title: 'Action',
@@ -205,36 +209,23 @@ const EmployeeManagement = () => {
         >
           Create
         </Button>
-        <Search
-          placeholder="Search"
-          onChange={handleChange}
-          style={{ width: 200, marginBottom: 16 }}
-          prefix={<SearchOutlined />}
-        />
-        <Table
+
+        <EmployeeSearch handleChange={handleChange} />
+
+        <EmployeeTable
           columns={columns}
-          dataSource={gridData}
-          bordered
-          onChange={handleTableChange}
-          pagination={pagination}
-          rowKey="id" // Thêm rowKey cho bảng
+          data={gridData}
+          handleTableChange={handleTableChange}
+          edit={edit}
+          viewDetail={viewDetail}
+          deleteRecord={deleteRecord}
         />
-        <Modal
-          title="Create"
-          open={isModalVisible}
-          onOk={save}
-          onCancel={() => setIsModalVisible(false)}
-        >
-          <Form ref={formRef}>
-            <Form.Item
-              label="Name"
-              name="name"
-              rules={[{ required: true, message: 'Vui lòng nhập tên!' }]}
-            >
-              <Input />
-            </Form.Item>
-          </Form>
-        </Modal>
+
+        <EmployeeModal
+          isModalVisible={isModalVisible}
+          save={save}
+          formRef={formRef}
+        />
       </Spin>
     </div>
   )
