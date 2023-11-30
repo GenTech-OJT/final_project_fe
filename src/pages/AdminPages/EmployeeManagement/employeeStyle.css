@@ -4,10 +4,9 @@
 }
 
 /* Định dạng ô tìm kiếm */
-.ant-input-search {
+
+.ant-input-affix-wrapper {
   float: right !important;
-  margin-bottom: 16px;
-  /* left: 77%; */
 }
 
 /* Định dạng kích thước biểu tượng trong ant-space */
