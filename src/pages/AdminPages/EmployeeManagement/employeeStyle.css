@@ -1,0 +1,34 @@
+/* Tăng kích thước của nút */
+.ant-button {
+  max-width: 90px !important;
+}
+
+/* Định dạng ô tìm kiếm */
+.ant-input-search {
+  float: right;
+  margin-bottom: 16px;
+}
+
+/* Định dạng kích thước biểu tượng trong ant-space */
+.ant-space .anticon {
+  font-size: 18px;
+}
+
+/* Hiệu ứng hover cho biểu tượng trong ant-space */
+.ant-space-item:hover .anticon {
+  color: #ff18be; /* Màu sắc mới khi hover */
+}
+
+/* Hiệu ứng hover cho biểu tượng Delete trong ant-popover */
+.ant-popover-message-title .anticon:hover {
+  color: rgb(0, 255, 17); /* Màu sắc mới khi hover */
+}
+
+/* Hiệu ứng hover cho biểu tượng Save và Close trong ant-space */
+.ant-space-item > span:hover .anticon {
+  color: green; /* Màu sắc mới khi hover */
+}
+
+.employeeLayout {
+  margin: 30px 20px;
+}
