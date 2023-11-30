@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Modal, Form, Input } from 'antd'
 
 const EmployeeModal = ({ isModalVisible, save, formRef }) => {
@@ -20,6 +21,12 @@ const EmployeeModal = ({ isModalVisible, save, formRef }) => {
       </Form>
     </Modal>
   )
+}
+
+EmployeeModal.propTypes = {
+  isModalVisible: PropTypes.bool.isRequired,
+  save: PropTypes.func.isRequired,
+  formRef: PropTypes.object.isRequired,
 }
 
 export default EmployeeModal

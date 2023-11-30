@@ -1,7 +1,9 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Input, Button } from 'antd'
 import { SearchOutlined } from '@ant-design/icons'
 import '../../pages/AdminPages/EmployeeManagement/employeeStyle.css'
+
 const EmployeeSearch = ({ handleChange }) => {
   return (
     <>
@@ -13,6 +15,10 @@ const EmployeeSearch = ({ handleChange }) => {
       />
     </>
   )
+}
+
+EmployeeSearch.propTypes = {
+  handleChange: PropTypes.func.isRequired,
 }
 
 export default EmployeeSearch

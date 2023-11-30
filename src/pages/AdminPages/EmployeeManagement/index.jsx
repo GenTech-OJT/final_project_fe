@@ -3,12 +3,7 @@ import { Button, Spin, message } from 'antd'
 import EmployeeTable from '@components/EmployeeComponent/EmployeeTable'
 import EmployeeModal from '@components/EmployeeComponent/EmployeeModal'
 import EmployeeSearch from '@components/EmployeeComponent/EmployeeSearch'
-import {
-  EditOutlined,
-  EyeOutlined,
-  DeleteOutlined,
-  SearchOutlined,
-} from '@ant-design/icons'
+import { EditOutlined, EyeOutlined, DeleteOutlined } from '@ant-design/icons'
 import './employeeStyle.css'
 
 const EmployeeManagement = () => {
@@ -20,7 +15,7 @@ const EmployeeManagement = () => {
     pageSize: 10,
     total: 0,
   })
-  const [editRowKey, setEditRowKey] = useState('')
+  const [setEditRowKey] = useState('')
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [loadingData, setLoadingData] = useState(true)
 
@@ -66,7 +61,6 @@ const EmployeeManagement = () => {
 
   const save = async key => {
     try {
-      const row = await formRef.current.validateFields()
       // Handle the logic to update data if needed
       setEditRowKey('')
     } catch (error) {
@@ -78,8 +72,6 @@ const EmployeeManagement = () => {
     formRef.current.setFieldsValue({ ...record })
     setEditRowKey(record.id)
   }
-
-  const cancel = () => setEditRowKey('')
 
   const viewDetail = record => {
     // Handle logic to view details for the selected record
