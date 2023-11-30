@@ -15,7 +15,6 @@ const EmployeeManagement = () => {
     pageSize: 10,
     total: 0,
   })
-  const [setEditRowKey] = useState('')
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [loadingData, setLoadingData] = useState(true)
 

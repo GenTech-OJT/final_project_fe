@@ -18,9 +18,6 @@ EmployeeTable.propTypes = {
   columns: PropTypes.array.isRequired,
   data: PropTypes.array.isRequired,
   handleTableChange: PropTypes.func.isRequired,
-  edit: PropTypes.func.isRequired,
-  viewDetail: PropTypes.func.isRequired,
-  deleteRecord: PropTypes.func.isRequired,
 }
 
 export default EmployeeTable
