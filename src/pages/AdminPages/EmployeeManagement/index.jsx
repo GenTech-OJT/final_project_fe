@@ -168,35 +168,18 @@ const EmployeeManagement = () => {
         const editable = isEditing(record)
         return (
           <Space>
-            <Popconfirm
-              title="Bạn chắc chắn chứ?"
-              onConfirm={() => handleDelete(record)}
-            >
-              <DeleteOutlined style={{ color: 'red' }} />
-            </Popconfirm>
-            {editable ? (
-              <span>
-                <SaveOutlined
-                  onClick={() => save(record.id)}
-                  style={{ color: 'green', cursor: 'pointer' }}
-                />
-                <CloseOutlined
-                  onClick={cancel}
-                  style={{ color: 'red', cursor: 'pointer' }}
-                />
-              </span>
-            ) : (
-              <>
-                <EyeOutlined
-                  onClick={() => viewDetails(record)}
-                  style={{ color: 'blue', cursor: 'pointer' }}
-                />
-                <EditOutlined
-                  onClick={() => edit(record)}
-                  style={{ color: 'green', cursor: 'pointer' }}
-                />
-              </>
-            )}
+            <EyeOutlined
+              onClick={() => viewDetails(record)}
+              style={{ color: 'blue', cursor: 'pointer' }}
+            />
+            <EditOutlined
+              onClick={() => edit(record)}
+              style={{ color: 'green', cursor: 'pointer' }}
+            />
+            <DeleteOutlined
+              onClick={() => handleDelete(record)}
+              style={{ color: 'red', cursor: 'pointer' }}
+            />
           </Space>
         )
       },
