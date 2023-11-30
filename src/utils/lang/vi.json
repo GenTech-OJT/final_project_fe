@@ -4,5 +4,6 @@
   "my_account": "Tài khoản của tôi",
   "logout": "Đăng xuất",
   "notfound_content": "Đã xảy ra sự cố",
-  "back_to_home": "Trở về trang chủ"
+  "back_to_home": "Trở về trang chủ",
+  "spinners": "Đang tải"
 }
