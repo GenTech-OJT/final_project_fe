@@ -1,10 +1,15 @@
-import Profile from '@pages/AdminPages/Profile'
 import NotFoundPage from '@pages/AdminPages/404NotFound/NotFound'
-import ProjectManagement from '@pages/AdminPages/ProjectManagement'
-import EmployeeManagement from '@pages/AdminPages/EmployeeManagement'
-import React from 'react'
+import Profile from '@pages/AdminPages/Profile'
+import { lazy } from 'react'
 import { Route, Routes } from 'react-router-dom'
-import Login from '@pages/AdminPages/Login'
+
+const ProjectManagement = lazy(
+  () => import('@pages/AdminPages/ProjectManagement')
+)
+const EmployeeManagement = lazy(
+  () => import('@pages/AdminPages/EmployeeManagement')
+)
+const Login = lazy(() => import('@pages/AdminPages/Login'))
 
 const AppRoutes = () => {
   return (

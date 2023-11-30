@@ -1,5 +1,5 @@
-import { Flex, Spin } from 'antd'
 import './Spinner.css'
+import { Flex, Spin } from 'antd'
 import { useTranslation } from 'react-i18next'
 
 const Spinner = () => {

@@ -4,8 +4,9 @@ import AppHeader from '@components/AdminComponent/AppHeader'
 import AvatarGroup from '@components/AdminComponent/AvatarGroup'
 import PageContent from '@components/AdminComponent/PageContent'
 import SideMenu from '@components/AdminComponent/SideMenu'
+import Spinner from '@components/AdminComponent/Spinner/index.jsx'
 import { Button, Layout, theme } from 'antd'
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
 import { useNavigate } from 'react-router'
 import './App.css'
 const { Header, Content, Footer, Sider } = Layout
@@ -75,7 +76,9 @@ const App = () => {
             backgroundColor: '#f5f5f5',
           }}
         >
-          <PageContent />
+          <Suspense fallback={<Spinner />}>
+            <PageContent />
+          </Suspense>
         </Content>
         <Footer
           style={{
