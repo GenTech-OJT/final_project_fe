@@ -1,7 +1,7 @@
 import { Typography } from 'antd'
 
 const EmployeeManagement = () => {
-  return <Typography.Text>User Management</Typography.Text>
+  return <Typography.Text>Employee Management</Typography.Text>
 }
 
 export default EmployeeManagement
