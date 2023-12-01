@@ -4,5 +4,6 @@
   "my_account": "My Account",
   "logout": "Logout",
   "notfound_content": "Lost in Space",
-  "back_to_home": "Back to Home"
+  "back_to_home": "Back to Home",
+  "spinners": "Loading"
 }
