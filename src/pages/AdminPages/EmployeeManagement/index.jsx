@@ -1,5 +1,3 @@
-/* eslint-disable no-undef */
-/* eslint-disable react/jsx-no-undef */
 import { DeleteOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons'
 import { Button, Select, Spin, message } from 'antd'
 import { useEffect, useRef, useState } from 'react'
@@ -7,8 +5,12 @@ import { useNavigate } from 'react-router'
 import {
   EmployeeSearch,
   EmployeeTable,
+  SortableTable,
 } from '../../../components/EmployeeComponent/EmployeeTable'
 import './employeeStyle.css'
+
+const { Option } = Select
+
 const EmployeeManagement = () => {
   const [gridData, setGridData] = useState([])
   const [searchText, setSearchText] = useState('')
@@ -104,8 +106,18 @@ const EmployeeManagement = () => {
   }
 
   const handleTableChange = (pagination, filters, sorter) => {
-    setSortedInfo(sorter)
-    setPagination({ ...pagination })
+    const isSameColumn = sortedInfo.columnKey === sorter.columnKey
+    const order = isSameColumn && sortedInfo.order === 'asc' ? 'desc' : 'asc'
+
+    setSortedInfo({
+      columnKey: sorter.columnKey,
+      order: order,
+    })
+
+    setPagination({
+      ...pagination,
+      current: isSameColumn ? pagination.current : 1,
+    })
   }
 
   const handlePaginationChange = (current, pageSize) => {
@@ -217,21 +229,16 @@ const EmployeeManagement = () => {
           edit={edit}
           viewDetail={viewDetail}
           deleteRecord={deleteRecord}
-          pagination={{ ...pagination, onChange: handlePaginationChange }}
+          pagination={{
+            ...pagination,
+            showSizeChanger: true,
+            onShowSizeChange: handleItemsPerPageChange,
+            pageSizeOptions: itemsPerPageOptions.map(option =>
+              option.toString()
+            ),
+            onChange: handlePaginationChange,
+          }}
         />
-        <div style={{ marginBottom: 16, float: 'right' }}>
-          Items per page:{' '}
-          <Select
-            defaultValue={pagination.pageSize}
-            onChange={handleItemsPerPageChange}
-          >
-            {itemsPerPageOptions.map(option => (
-              <Option key={option} value={option}>
-                {option}
-              </Option>
-            ))}
-          </Select>
-        </div>
       </Spin>
     </div>
   )

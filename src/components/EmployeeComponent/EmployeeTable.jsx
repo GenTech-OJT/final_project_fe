@@ -38,4 +38,38 @@ EmployeeSearch.propTypes = {
   handleChange: PropTypes.func.isRequired,
 }
 
-export { EmployeeSearch, EmployeeTable }
+const SortableTable = ({
+  columns,
+  data,
+  handleTableChange,
+  pagination,
+  handleChange,
+}) => {
+  return (
+    <>
+      <Input
+        placeholder="Search"
+        onChange={handleChange}
+        style={{ width: 200, marginBottom: 16 }}
+        prefix={<SearchOutlined />}
+      />
+      <Table
+        columns={columns}
+        dataSource={data}
+        bordered
+        onChange={handleTableChange}
+        pagination={pagination}
+      />
+    </>
+  )
+}
+
+SortableTable.propTypes = {
+  columns: PropTypes.array.isRequired,
+  data: PropTypes.array.isRequired,
+  handleTableChange: PropTypes.func.isRequired,
+  pagination: PropTypes.object.isRequired,
+  handleChange: PropTypes.func.isRequired,
+}
+
+export { EmployeeSearch, EmployeeTable, SortableTable }
