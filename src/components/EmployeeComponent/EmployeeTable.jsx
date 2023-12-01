@@ -1,6 +1,8 @@
-import React from 'react'
+/* eslint-disable react/prop-types */
+import { SearchOutlined } from '@ant-design/icons'
+import { Input, Table } from 'antd'
 import PropTypes from 'prop-types'
-import { Table } from 'antd'
+import '../../pages/AdminPages/EmployeeManagement/employeeStyle.css'
 
 const EmployeeTable = ({ columns, data, handleTableChange, pagination }) => {
   return (
@@ -21,4 +23,19 @@ EmployeeTable.propTypes = {
   pagination: PropTypes.object.isRequired,
 }
 
-export default EmployeeTable
+const EmployeeSearch = ({ handleChange }) => {
+  return (
+    <Input
+      placeholder="Search"
+      onChange={handleChange}
+      style={{ width: 200, marginBottom: 16 }}
+      prefix={<SearchOutlined />}
+    />
+  )
+}
+
+EmployeeSearch.propTypes = {
+  handleChange: PropTypes.func.isRequired,
+}
+
+export { EmployeeSearch, EmployeeTable }

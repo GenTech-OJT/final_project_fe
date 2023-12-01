@@ -1,11 +1,14 @@
-import React, { useState, useEffect, useRef } from 'react'
+/* eslint-disable no-undef */
+/* eslint-disable react/jsx-no-undef */
+import { DeleteOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons'
 import { Button, Select, Spin, message } from 'antd'
-import EmployeeTable from '@components/EmployeeComponent/EmployeeTable'
-import EmployeeModal from '@components/EmployeeComponent/EmployeeModal'
-import EmployeeSearch from '@components/EmployeeComponent/EmployeeSearch'
-import { EditOutlined, EyeOutlined, DeleteOutlined } from '@ant-design/icons'
+import { useEffect, useRef, useState } from 'react'
+import { useNavigate } from 'react-router'
+import {
+  EmployeeSearch,
+  EmployeeTable,
+} from '../../../components/EmployeeComponent/EmployeeTable'
 import './employeeStyle.css'
-
 const EmployeeManagement = () => {
   const [gridData, setGridData] = useState([])
   const [searchText, setSearchText] = useState('')
@@ -15,7 +18,8 @@ const EmployeeManagement = () => {
     pageSize: 5,
     total: 14,
   })
-  const [isModalVisible, setIsModalVisible] = useState(false)
+  const navigate = useNavigate()
+
   const [loadingData, setLoadingData] = useState(true)
 
   const formRef = useRef(null)
@@ -51,12 +55,6 @@ const EmployeeManagement = () => {
 
     fetchData()
   }, [pagination.current, pagination.pageSize, sortedInfo, searchText])
-
-  useEffect(() => {
-    if (!isModalVisible && formRef.current) {
-      formRef.current.resetFields()
-    }
-  }, [isModalVisible])
 
   const save = async key => {
     try {
@@ -108,6 +106,10 @@ const EmployeeManagement = () => {
   const handleTableChange = (pagination, filters, sorter) => {
     setSortedInfo(sorter)
     setPagination({ ...pagination })
+  }
+
+  const handlePaginationChange = (current, pageSize) => {
+    setPagination({ ...pagination, current, pageSize })
   }
 
   const itemsPerPageOptions = [5, 10, 20]
@@ -175,13 +177,13 @@ const EmployeeManagement = () => {
         <>
           <Button
             key={`view-${record.id}`}
-            onClick={() => viewDetail(record)}
+            onClick={() => navigate('/employee/create')}
             style={{ marginRight: 8 }}
             icon={<EyeOutlined />}
           />
           <Button
             key={`edit-${record.id}`}
-            onClick={() => edit(record)}
+            onClick={() => navigate('/employee/create')}
             style={{ marginRight: 8 }}
             icon={<EditOutlined />}
           />
@@ -200,7 +202,7 @@ const EmployeeManagement = () => {
       <Spin spinning={loadingData}>
         <Button
           type="primary"
-          onClick={() => setIsModalVisible(true)}
+          onClick={() => navigate('/employee/create')}
           style={{ marginBottom: 16 }}
         >
           Create
@@ -215,7 +217,7 @@ const EmployeeManagement = () => {
           edit={edit}
           viewDetail={viewDetail}
           deleteRecord={deleteRecord}
-          pagination={pagination} // Ensure that you pass the pagination prop
+          pagination={{ ...pagination, onChange: handlePaginationChange }}
         />
         <div style={{ marginBottom: 16, float: 'right' }}>
           Items per page:{' '}
@@ -230,12 +232,6 @@ const EmployeeManagement = () => {
             ))}
           </Select>
         </div>
-
-        <EmployeeModal
-          isModalVisible={isModalVisible}
-          save={save}
-          formRef={formRef}
-        />
       </Spin>
     </div>
   )
