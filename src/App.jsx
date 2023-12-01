@@ -8,6 +8,7 @@ import { Button, Layout, theme } from 'antd'
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
 import './App.css'
+import BreadCrumb from './components/AdminComponent/Breadcrumb/index'
 const { Header, Content, Footer, Sider } = Layout
 const App = () => {
   const navigate = useNavigate()
@@ -75,6 +76,7 @@ const App = () => {
             backgroundColor: '#f5f5f5',
           }}
         >
+          <BreadCrumb />
           <PageContent />
         </Content>
         <Footer

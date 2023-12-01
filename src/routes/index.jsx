@@ -14,7 +14,7 @@ const Login = lazy(() => import('@pages/AdminPages/Login'))
 const AppRoutes = () => {
   return (
     <Routes>
-      <Route path="/" element={<ProjectManagement />}></Route>
+      <Route path="/projects" element={<ProjectManagement />}></Route>
       <Route path="/users" element={<EmployeeManagement />}></Route>
       <Route path="/profile" element={<Profile />}></Route>
       <Route path="/login" element={<Login />}></Route>
