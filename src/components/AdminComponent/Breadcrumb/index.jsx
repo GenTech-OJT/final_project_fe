@@ -27,11 +27,18 @@ const BreadCrumb = () => {
     <Breadcrumb style={{ margin: '16px' }}>
       {pathSnippets.map((snippet, index) => {
         const url = `/${pathSnippets.slice(0, index + 1).join('/')}`
-        const displayText = customBreadcrumbNames[snippet] || snippet // Use the snippet directly
+        const displayText = customBreadcrumbNames[snippet] || snippet
+
+        // Kiểm tra xem đó có phải là mục breadcrumb cuối cùng không
+        const isLastItem = index === pathSnippets.length - 1
 
         return (
           <Breadcrumb.Item key={url}>
-            <Link to={url}>{displayText}</Link>
+            {isLastItem ? (
+              <span>{displayText}</span>
+            ) : (
+              <Link to={url}>{displayText}</Link>
+            )}
           </Breadcrumb.Item>
         )
       })}
