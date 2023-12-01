@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import React, { useState } from 'react'
 import {
   Button,
@@ -18,7 +19,7 @@ import {
   LoadingOutlined,
   UploadOutlined,
 } from '@ant-design/icons'
-import './create.css'
+import './edit.css'
 
 const { Title, Text } = Typography
 
@@ -46,7 +47,10 @@ const Edit = () => {
     gender: 'male',
     status: true,
   }
-
+  const testClick = () => {
+    const empData = { name1, code, phone }
+    console.log(empData)
+  }
   const handleFormSubmit = async values => {
     console.log(values)
     try {
@@ -88,7 +92,9 @@ const Edit = () => {
         <ArrowLeftOutlined style={{ marginRight: '7px' }} />
         Back
       </button>
-      <Title className="page-title">ADD EMPLOYEE</Title>
+      <Title className="page-title" onClick={testClick}>
+        Edit EMPLOYEE
+      </Title>
       <div className="create-container">
         <Form
           form={form}
@@ -100,7 +106,7 @@ const Edit = () => {
           <Form.Item label="Code" name="code">
             <Input />
           </Form.Item>
-          <Form.Item label="Name" name="name">
+          <Form.Item label="Name" name="name1">
             <Input />
           </Form.Item>
           <Form.Item label="Phone" name="phone">
