@@ -51,7 +51,7 @@
   width: 100px;
 }
 
-@media screen and (min-width: 300px) {
+@media screen and (min-width: 300px) and (max-width: 360px) {
   .ant-input-affix-wrapper {
     width: 150px !important;
   }
