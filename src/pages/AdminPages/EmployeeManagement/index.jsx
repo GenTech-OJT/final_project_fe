@@ -58,15 +58,6 @@ const EmployeeManagement = () => {
     fetchData()
   }, [pagination.current, pagination.pageSize, sortedInfo, searchText])
 
-  const save = async key => {
-    try {
-      // Handle the logic to update data if needed
-      setEditRowKey('')
-    } catch (error) {
-      console.error('Lỗi khi lưu dữ liệu:', error)
-    }
-  }
-
   const edit = record => {
     formRef.current.setFieldsValue({ ...record })
     setEditRowKey(record.id)
