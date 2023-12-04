@@ -9,7 +9,8 @@ import {
   EmployeeTable,
 } from '../../../components/EmployeeComponent/EmployeeTable'
 import './employeeStyle.css'
-
+import { toast } from 'react-toastify'
+import { showToast } from '@components/Toast/toast'
 const EmployeeManagement = () => {
   const [gridData, setGridData] = useState([])
   const [searchText, setSearchText] = useState('')
@@ -85,11 +86,9 @@ const EmployeeManagement = () => {
       return item
     })
     setGridData(updatedGridData)
-    message.success(
-      record.status === 'active'
-        ? t('deactivated_successfully')
-        : t('activated_successfully')
-    )
+    record.status === 'active'
+      ? showToast(t('deactivated_successfully'), 'success')
+      : showToast(t('activated_successfully'), 'success')
   }
 
   const handleChange = e => {
@@ -220,23 +219,32 @@ const EmployeeManagement = () => {
 
         <EmployeeSearch handleChange={handleChange} />
 
-        <EmployeeTable
-          columns={columns}
-          data={gridData}
-          handleTableChange={handleTableChange}
-          edit={edit}
-          viewDetail={viewDetail}
-          deleteRecord={deleteRecord}
-          pagination={{
-            ...pagination,
-            showSizeChanger: true,
-            onShowSizeChange: handleItemsPerPageChange,
-            pageSizeOptions: itemsPerPageOptions.map(option =>
-              option.toString()
-            ),
-            onChange: handlePaginationChange,
+        <div
+          style={{
+            overflow: 'auto',
+            width: '100%',
+            background: 'white',
+            whiteSpace: 'nowrap',
           }}
-        />
+        >
+          <EmployeeTable
+            columns={columns}
+            data={gridData}
+            handleTableChange={handleTableChange}
+            edit={edit}
+            viewDetail={viewDetail}
+            deleteRecord={deleteRecord}
+            pagination={{
+              ...pagination,
+              showSizeChanger: true,
+              onShowSizeChange: handleItemsPerPageChange,
+              pageSizeOptions: itemsPerPageOptions.map(option =>
+                option.toString()
+              ),
+              onChange: handlePaginationChange,
+            }}
+          ></EmployeeTable>
+        </div>
       </Spin>
     </div>
   )
