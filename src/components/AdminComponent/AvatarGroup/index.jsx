@@ -38,6 +38,7 @@ const AvatarGroup = ({ collapsed, setSelectedKey, setIsLogin }) => {
   )
   return (
     <Popover
+      placement="bottomRight"
       // style={{ marginTop: '-20px' }}
       content={content}
       trigger="click"

@@ -213,15 +213,17 @@ const EmployeeManagement = () => {
 
         <EmployeeSearch handleChange={handleChange} />
 
-        <EmployeeTable
-          columns={columns}
-          data={gridData}
-          handleTableChange={handleTableChange}
-          edit={edit}
-          viewDetail={viewDetail}
-          deleteRecord={deleteRecord}
-          pagination={pagination} // Ensure that you pass the pagination prop
-        />
+        <div style={{ overflow: 'auto', width: '100%', background: 'white' }}>
+          <EmployeeTable
+            columns={columns}
+            data={gridData}
+            handleTableChange={handleTableChange}
+            edit={edit}
+            viewDetail={viewDetail}
+            deleteRecord={deleteRecord}
+            pagination={pagination} // Ensure that you pass the pagination prop
+          ></EmployeeTable>
+        </div>
         <div style={{ marginBottom: 16, float: 'right' }}>
           Items per page:{' '}
           <Select
