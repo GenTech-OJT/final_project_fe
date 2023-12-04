@@ -289,7 +289,7 @@ const Create = () => {
                         block
                         icon={<PlusOutlined />}
                       >
-                        Add field
+                        Add Skill
                       </Button>
                     </Form.Item>
                   </>
