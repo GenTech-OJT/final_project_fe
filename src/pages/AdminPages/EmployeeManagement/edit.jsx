@@ -48,13 +48,29 @@ const Edit = () => {
 
     return false // Prevent automatic upload by returning false
   }
+
   useEffect(() => {
     fetch('http://localhost:3000/employees/' + empid)
       .then(res => {
         return res.json()
       })
       .then(res => {
+        console.log(res.avatar)
         empdataChange(res)
+        form.setFieldsValue({
+          dob: moment(res.dob, 'YYYY-MM-DD'),
+          gender: res.gender,
+          status: res.status,
+          isManager: res.is_manager,
+          position: res.position,
+          skills: res?.skills?.map(skill => ({
+            skill: skill.name,
+            experience: skill.year,
+          })),
+          avatar: res?.avatar,
+
+          // ... set other fields similarly
+        })
       })
   }, [])
 
@@ -112,123 +128,249 @@ const Edit = () => {
             form={form}
             layout="vertical"
             onFinish={handleFormSubmit}
-            onFinishFailed={onFinishFailed}
+            initialValues={{
+              dob: moment(empdata.dob, 'YYYY-MM-DD'),
+              gender: empdata.gender,
+              status: empdata.status,
+              isManager: empdata.is_manager,
+              position: empdata.position,
+              skills: empdata?.skills?.map(skill => ({
+                skill: skill.name,
+                experience: skill.year,
+              })),
+              avatar: empdata?.avatar,
+
+              // ... set other fields similarly
+            }}
           >
-            <Form.Item label="Code" name="code">
-              <Input value={empdata?.code || ''} />{' '}
-            </Form.Item>
-            <Form.Item label="Name" name="name">
-              <Input value={empdata?.name || ''} />{' '}
-            </Form.Item>
-            <Form.Item label="Phone" name="phone">
-              <Input value={empdata?.phone || ''} />{' '}
-            </Form.Item>
+            <div className="input-container">
+              <Form.Item
+                label="Name"
+                name="name"
+                className="text-input-form"
+                rules={[
+                  {
+                    required: true,
+                    pattern: new RegExp('^([a-zA-Z]\\s*)+$'),
+                    message: 'Please input the employee name !',
+                  },
+                  {
+                    min: 3,
+                    max: 40,
+                    message: 'Name must be between 3 and 40 characters',
+                  },
+                ]}
+              >
+                <Input value={empdata?.name || ''} />{' '}
+              </Form.Item>
+              <Form.Item label="Code" name="code" className="text-input-form">
+                <Input value={empdata?.code || ''} />{' '}
+              </Form.Item>
+            </div>
+            <div className="input-container">
+              <Form.Item
+                label="Phone"
+                name="phone"
+                className="text-input-form"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please input your phone number!',
+                  },
+                  {
+                    pattern: /^[0-9-]{10,}$/,
+                    message: 'Please enter a valid 10-digit phone number!',
+                  },
+                ]}
+              >
+                <Input value={empdata?.phone || ''} />{' '}
+              </Form.Item>
+              <Form.Item
+                label="Citizen Identity Card"
+                name="identity"
+                className="text-input-form"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please input your Citizen Identity Card!',
+                  },
+                  {
+                    pattern: /^[a-zA-Z0-9]{1,20}$/,
+                    message: 'Please enter a valid Citizen Identity Card!',
+                  },
+                ]}
+              >
+                <Input value={empdata?.identity || ''} />{' '}
+              </Form.Item>
+            </div>
+            <div className="select-container-lg">
+              <div className="select-container">
+                <Form.Item
+                  label="Date of Birth"
+                  name="dob"
+                  className="select-width-dobgs"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please select your Date of Birth!',
+                    },
+                  ]}
+                >
+                  <DatePicker
+                    placement="bottomRight"
+                    style={{ width: '100%' }}
+                  />
+                </Form.Item>
+                <Form.Item
+                  label="Gender"
+                  name="gender"
+                  className="select-width-dobgs"
+                >
+                  <Select>
+                    <Select.Option value="male">Male</Select.Option>
+                    <Select.Option value="female">Female</Select.Option>
+                  </Select>
+                </Form.Item>
+                <Form.Item
+                  label="Status"
+                  name="status"
+                  className="select-width-dobgs"
+                >
+                  <Select>
+                    <Select.Option value={true}>Active</Select.Option>
+                    <Select.Option value={false}>Inactive</Select.Option>
+                  </Select>
+                </Form.Item>
+              </div>
+              <div className="select-container">
+                <Form.Item
+                  label="is Manager?"
+                  name="isManager"
+                  className="select-width-im"
+                >
+                  <Select>
+                    <Select.Option value={true}>Yes</Select.Option>
+                    <Select.Option value={false}>No</Select.Option>
+                  </Select>
+                </Form.Item>
+                <Form.Item
+                  label="Position"
+                  name="position"
+                  className="select-width-p"
+                >
+                  <Select>
+                    <Select.Option value="Developer">Developer</Select.Option>
+                    <Select.Option value="Quality Assurance">
+                      Tester
+                    </Select.Option>
+                    <Select.Option value="CEO">CEO</Select.Option>
+                    <Select.Option value="President">President</Select.Option>
+                  </Select>
+                </Form.Item>
 
-            <Form.Item label="Citizen Identity Card" name="identity">
-              <Input value={empdata?.identity || ''} />{' '}
-              {/* Đảm bảo rằng value không phải là null hoặc undefined */}
-            </Form.Item>
-            <Form.Item label="Date of Birth" name="dob">
-              <DatePicker value={empdata?.dob || ''} />
-            </Form.Item>
-            <Form.Item label="Gender" name="gender">
-              <Select defaultValue="male">
-                <Select.Option value="male">{empdata?.gender}</Select.Option>
-                <Select.Option value="female">{empdata?.gender}</Select.Option>
-              </Select>
-            </Form.Item>
-            <Form.Item label="Status" name="status">
-              <Select defaultValue={true}>
-                <Select.Option value={true}>{empdata?.status}</Select.Option>
-                <Select.Option value={false}>{empdata?.status}</Select.Option>
-              </Select>
-            </Form.Item>
-            <Form.Item label="is Manager?" name="isManager">
-              <Select defaultValue={true}>
-                <Select.Option value={true}>
-                  {empdata?.is_manager ? 'true' : 'false'}
-                </Select.Option>
-                <Select.Option value={false}>
-                  {' '}
-                  {empdata?.is_manager ? 'true' : 'false'}
-                </Select.Option>
-              </Select>
-            </Form.Item>
-            <Form.Item label="Position" name="position">
-              <Select defaultValue="1">
-                <Select.Option value="1">{empdata?.position}</Select.Option>
-                <Select.Option value="2">Tester</Select.Option>
-              </Select>
-            </Form.Item>
-
-            <Form.Item label="Manager" name="manager">
-              <Input />
-            </Form.Item>
-            {/* <Form.Item></Form.Item> */}
-            <Form.List name="skills">
-              {(fields, { add, remove }) => (
-                <>
-                  {fields.map(({ key, name, ...restField }) => (
-                    <Space
-                      key={key}
-                      style={{
-                        display: 'flex',
-                        marginBottom: 8,
-                      }}
-                      align="baseline"
-                    >
-                      <Form.Item
-                        {...restField}
-                        name={[name, 'skill']}
-                        rules={[
-                          {
-                            required: true,
-                            message: 'Missing Skill',
-                          },
-                        ]}
-                      >
-                        <Input placeholder="Skill" />
+                <Form.Item
+                  label="Manager"
+                  name="manager"
+                  className="manager-input-width"
+                >
+                  <Input />
+                </Form.Item>
+              </div>
+            </div>
+            <div className="input-container">
+              <div className="skill-input">
+                <p style={{ marginBottom: '8px' }}>Skills</p>
+                <Form.List name="skills">
+                  {(fields, { add, remove }) => (
+                    <>
+                      {fields.map(({ key, name, ...restField }) => (
+                        <Space
+                          key={key}
+                          style={{
+                            display: 'flex',
+                            marginBottom: 8,
+                          }}
+                          align="baseline"
+                        >
+                          <Form.Item
+                            {...restField}
+                            name={[name, 'skill']}
+                            rules={[
+                              {
+                                required: true,
+                                whitespace: true,
+                                message: 'Please input skill!',
+                              },
+                            ]}
+                          >
+                            <Input
+                              value={empdata?.skills.name || ''}
+                              placeholder="Skill"
+                            />
+                          </Form.Item>
+                          <Form.Item
+                            {...restField}
+                            name={[name, 'experience']}
+                            rules={[
+                              {
+                                required: true,
+                                whitespace: true,
+                                message: 'Please input experience!',
+                              },
+                            ]}
+                          >
+                            <Input placeholder="Experience (Years)" />
+                          </Form.Item>
+                          <MinusCircleOutlined
+                            onClick={() => {
+                              if (fields.length > 1) {
+                                remove(name)
+                              }
+                            }}
+                            disabled={fields.length === 1}
+                          />
+                        </Space>
+                      ))}
+                      <Form.Item>
+                        <Button
+                          type="dashed"
+                          onClick={() => add()}
+                          block
+                          icon={<PlusOutlined />}
+                        >
+                          Add field
+                        </Button>
                       </Form.Item>
-                      <Form.Item
-                        {...restField}
-                        name={[name, 'last']}
-                        rules={[
-                          {
-                            required: true,
-                            message: 'Missing Experience',
-                          },
-                        ]}
-                      >
-                        <Input placeholder="Experience (Years)" />
-                      </Form.Item>
-                      <MinusCircleOutlined onClick={() => remove(name)} />
-                    </Space>
-                  ))}
-                  <Form.Item>
-                    <Button
-                      type="dashed"
-                      onClick={() => add()}
-                      block
-                      icon={<PlusOutlined />}
-                    >
-                      Add field
-                    </Button>
-                  </Form.Item>
-                </>
+                    </>
+                  )}
+                </Form.List>
+              </div>
+              <Form.Item
+                label="Description"
+                name="description"
+                className="text-input-form"
+              >
+                <Input.TextArea rows={4} value={empdata?.description || ''} />{' '}
+              </Form.Item>
+            </div>
+            <Form.Item>
+              <p style={{ marginBottom: '8px' }}>Avatar</p>
+              {empdata.avatar ? (
+                <img
+                  src={empdata?.avatar} // Đặt đường dẫn hình ảnh của avatar vào đây
+                  alt="Avatar"
+                  style={{
+                    width: '100px',
+                    height: '100px',
+                    objectFit: 'cover',
+                    borderRadius: '50%',
+                  }}
+                />
+              ) : (
+                <Button icon={<UploadOutlined />}>Upload Avatar</Button>
               )}
-            </Form.List>
-            <Upload
-              name="avatar"
-              listType="picture"
-              maxCount={1}
-              action="http://localhost:3000/employees"
-              beforeUpload={checkFile}
-            >
-              <Button icon={<UploadOutlined />}>Upload Avatar (Max: 1)</Button>
-            </Upload>
-            <Form.Item label="Description" name="description">
-              <Input.TextArea value={empdata?.description || ''} />{' '}
             </Form.Item>
+
             <Form.Item>
               <Button type="primary" htmlType="submit">
                 Submit
