@@ -9,7 +9,7 @@
 .back-to-list-button {
   position: relative;
   display: inline-block;
-  padding: 7px;
+  padding: 20px;
   text-decoration: none;
   color: black; /* Set the text color */
 }
@@ -73,6 +73,12 @@
 .skill-input,
 .text-input-form {
   width: 49%;
+}
+
+.select-lang {
+  position: absolute;
+  right: 5px;
+  top: 18px;
 }
 
 @media only screen and (max-width: 1000px) {

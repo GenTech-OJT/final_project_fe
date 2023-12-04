@@ -23,17 +23,13 @@ const AppHeader = () => {
         className="header-input"
       />
       {/* Translate */}
-      <Space
-        wrap
-        style={{
-          height: '100vh', // Thiết lập chiều cao 100% của viewport
-        }}
-      >
+      <Space wrap style={{}}>
         <Select
           value={selectedLanguage} // Sử dụng giá trị state để đồng bộ với giá trị được chọn
           style={{
             width: 120,
           }}
+          className="select-lang"
           onChange={changeLanguage}
           options={[
             {

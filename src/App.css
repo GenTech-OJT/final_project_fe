@@ -30,16 +30,7 @@ body {
 a {
   color: inherit;
 }
-.btn-open {
-  /* position: absolute; */
-  height: 30px;
-  width: 20px;
 
-  font-size: 31px;
-  position: relative;
-  top: 93px;
-  left: 23px;
-}
 .menu-mobile {
   width: 270px !important;
 }
@@ -61,5 +52,8 @@ a {
   }
   .close-icon .anticon-close {
     font-size: 21px;
+  }
+  .header-input {
+    display: none;
   }
 }

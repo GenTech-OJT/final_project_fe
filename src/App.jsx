@@ -68,6 +68,7 @@ const App = () => {
           type="primary"
           className="btn-open"
           onClick={showDrawer}
+          style={{ margin: '20px' }}
         />
         <Layout hasSider>
           <Drawer

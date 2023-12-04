@@ -6,6 +6,7 @@ import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 
 import Edit from '@pages/AdminPages/EmployeeManagement/edit'
+import Detail from '@pages/AdminPages/EmployeeManagement/detail'
 
 const AppRoutes = () => {
   return (
@@ -14,6 +15,7 @@ const AppRoutes = () => {
       <Route path="/users" element={<EmployeeManagement />}></Route>
       <Route path="/profile" element={<Profile />}></Route>
       <Route path="/employe/edit/:empid" element={<Edit />}></Route>
+      <Route path="/employe/:empid" element={<Detail />}></Route>
 
       <Route path="*" element={<NotFoundPage />}></Route>
     </Routes>

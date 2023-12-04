@@ -77,9 +77,9 @@ const EmployeeManagement = () => {
     navigate('/employe/edit/' + id)
   }
 
-  const viewDetail = record => {
+  const viewDetail = id => {
     // Handle logic to view details for the selected record
-    console.log('View Detail:', record)
+    navigate('/employe/' + id)
   }
 
   const deleteRecord = recordId => {
@@ -180,7 +180,7 @@ const EmployeeManagement = () => {
         <>
           <Button
             key={`view-${record.id}`}
-            onClick={() => viewDetail(record)}
+            onClick={() => viewDetail(record.id)}
             style={{ marginRight: 8 }}
             icon={<EyeOutlined />}
           />
