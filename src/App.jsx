@@ -1,4 +1,5 @@
 import {
+  CloseOutlined,
   MenuFoldOutlined,
   MenuOutlined,
   MenuUnfoldOutlined,
@@ -93,6 +94,7 @@ const App = () => {
                 display: 'flex',
                 alignItems: 'center',
                 paddingTop: '11px',
+                justifyContent: 'space-between',
               }}
             >
               {/* <Button
@@ -109,6 +111,9 @@ const App = () => {
                 onClick={() => navigate('/')}
                 onKeyDown={() => navigate('/')}
               />
+              <div className="close-icon" onClick={onClose}>
+                <CloseOutlined />
+              </div>
             </div>
             {/* Avatar */}
             <AvatarGroup

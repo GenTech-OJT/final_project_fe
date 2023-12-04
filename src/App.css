@@ -52,4 +52,10 @@ a {
     max-width: 50px !important;
     min-width: 50px !important;
   }
+  .logo {
+    margin-left: 0;
+  }
+  .close-icon .anticon-close {
+    font-size: 21px;
+  }
 }
