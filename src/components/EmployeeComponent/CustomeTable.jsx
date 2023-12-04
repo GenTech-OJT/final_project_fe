@@ -3,9 +3,8 @@ import { SearchOutlined } from '@ant-design/icons'
 import { Input, Table } from 'antd'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
-import '../../pages/AdminPages/EmployeeManagement/employeeStyle.css'
 
-const EmployeeTable = ({ columns, data, handleTableChange, pagination }) => {
+const CustomeTable = ({ columns, data, handleTableChange, pagination }) => {
   return (
     <Table
       columns={columns}
@@ -17,7 +16,7 @@ const EmployeeTable = ({ columns, data, handleTableChange, pagination }) => {
   )
 }
 
-EmployeeTable.propTypes = {
+CustomeTable.propTypes = {
   columns: PropTypes.array.isRequired,
   data: PropTypes.array.isRequired,
   handleTableChange: PropTypes.func.isRequired,
@@ -75,4 +74,4 @@ SortableTable.propTypes = {
   handleChange: PropTypes.func.isRequired,
 }
 
-export { EmployeeSearch, EmployeeTable, SortableTable }
+export { EmployeeSearch, CustomeTable, SortableTable }

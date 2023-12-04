@@ -33,20 +33,6 @@
   margin: 30px 20px;
 }
 
-.Hoang {
-  padding: 5px;
-  cursor: pointer;
-}
-
-.Nguyen {
-  color: rgb(101, 177, 243);
-}
-
-.Nguyen:hover {
-  color: #ff18be;
-  border-color: rgb(196, 128, 128);
-}
-
 .ant-table-column-title {
   width: 100px;
 }

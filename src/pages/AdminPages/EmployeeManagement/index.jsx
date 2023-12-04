@@ -6,10 +6,11 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 import {
   EmployeeSearch,
-  EmployeeTable,
-} from '../../../components/EmployeeComponent/EmployeeTable'
+  CustomeTable,
+} from '@components/EmployeeComponent/CustomeTable'
 import './employeeStyle.css'
 import { showToast } from '@components/Toast/toast'
+
 const EmployeeManagement = () => {
   const [gridData, setGridData] = useState([])
   const [searchText, setSearchText] = useState('')
@@ -222,11 +223,10 @@ const EmployeeManagement = () => {
           style={{
             overflow: 'auto',
             width: '100%',
-            background: 'white',
             whiteSpace: 'nowrap',
           }}
         >
-          <EmployeeTable
+          <CustomeTable
             columns={columns}
             data={gridData}
             handleTableChange={handleTableChange}
@@ -242,7 +242,7 @@ const EmployeeManagement = () => {
               ),
               onChange: handlePaginationChange,
             }}
-          ></EmployeeTable>
+          ></CustomeTable>
         </div>
       </Spin>
     </div>

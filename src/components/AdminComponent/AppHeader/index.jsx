@@ -30,8 +30,7 @@ const AppHeader = () => {
         bordered={false}
         className="header-input"
       />
-      {/* Translate */}
-      <Space wrap style={{}}>
+      <Space wrap>
         <Select
           value={selectedLanguage}
           style={{
