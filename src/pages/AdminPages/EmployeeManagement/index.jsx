@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import { DeleteOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons'
-import { Button, Spin, message } from 'antd'
+import { Button, Spin } from 'antd'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
@@ -9,7 +9,6 @@ import {
   EmployeeTable,
 } from '../../../components/EmployeeComponent/EmployeeTable'
 import './employeeStyle.css'
-import { toast } from 'react-toastify'
 import { showToast } from '@components/Toast/toast'
 const EmployeeManagement = () => {
   const [gridData, setGridData] = useState([])
