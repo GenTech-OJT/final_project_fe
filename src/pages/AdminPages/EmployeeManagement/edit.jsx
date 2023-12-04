@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Button,
   DatePicker,
@@ -11,7 +11,7 @@ import {
   message,
   Upload,
 } from 'antd'
-import { useNavigate } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 import {
   ArrowLeftOutlined,
   MinusCircleOutlined,
@@ -20,6 +20,7 @@ import {
   UploadOutlined,
 } from '@ant-design/icons'
 import './edit.css'
+import moment from 'moment'
 
 const { Title, Text } = Typography
 
@@ -27,7 +28,14 @@ const Edit = () => {
   const navigate = useNavigate()
   const [avatar, setAvatar] = useState(null)
   const [form] = Form.useForm()
+  const { empid } = useParams()
+  const [empdata, empdataChange] = useState({})
 
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 5,
+    total: 14,
+  })
   const checkFile = file => {
     const isImage = file.type.startsWith('image/')
     file.setType('image/png')
@@ -40,13 +48,16 @@ const Edit = () => {
 
     return false // Prevent automatic upload by returning false
   }
+  useEffect(() => {
+    fetch('http://localhost:3000/employees/' + empid)
+      .then(res => {
+        return res.json()
+      })
+      .then(res => {
+        empdataChange(res)
+      })
+  }, [])
 
-  const initialValues = {
-    isManager: true,
-    position: '1',
-    gender: 'male',
-    status: true,
-  }
   const testClick = () => {
     const empData = { name1, code, phone }
     console.log(empData)
@@ -96,127 +107,135 @@ const Edit = () => {
         Edit EMPLOYEE
       </Title>
       <div className="create-container">
-        <Form
-          form={form}
-          layout="vertical"
-          onFinish={handleFormSubmit}
-          onFinishFailed={onFinishFailed}
-          initialValues={initialValues}
-        >
-          <Form.Item label="Code" name="code">
-            <Input />
-          </Form.Item>
-          <Form.Item label="Name" name="name1">
-            <Input />
-          </Form.Item>
-          <Form.Item label="Phone" name="phone">
-            <Input />
-          </Form.Item>
-          <Form.Item label="Citizen Identity Card" name="identity">
-            <Input />
-          </Form.Item>
-          <Form.Item label="Date of Birth" name="dob">
-            <DatePicker />
-          </Form.Item>
-          <Form.Item label="Gender" name="gender">
-            <Select defaultValue="male">
-              <Select.Option value="male">Male</Select.Option>
-              <Select.Option value="female">Female</Select.Option>
-            </Select>
-          </Form.Item>
-          <Form.Item label="Status" name="status">
-            <Select defaultValue={true}>
-              <Select.Option value={true}>Active</Select.Option>
-              <Select.Option value={false}>Inactive</Select.Option>
-            </Select>
-          </Form.Item>
-          <Form.Item label="is Manager?" name="isManager">
-            <Select defaultValue={true}>
-              <Select.Option value={true}>Yes</Select.Option>
-              <Select.Option value={false}>No</Select.Option>
-            </Select>
-          </Form.Item>
-          <Form.Item label="Position" name="position">
-            <Select defaultValue="1">
-              <Select.Option value="1">Dev</Select.Option>
-              <Select.Option value="2">Tester</Select.Option>
-            </Select>
-          </Form.Item>
-
-          <Form.Item label="Manager" name="manager">
-            <Input />
-          </Form.Item>
-          {/* <Form.Item></Form.Item> */}
-          <Form.List name="skills">
-            {(fields, { add, remove }) => (
-              <>
-                {fields.map(({ key, name, ...restField }) => (
-                  <Space
-                    key={key}
-                    style={{
-                      display: 'flex',
-                      marginBottom: 8,
-                    }}
-                    align="baseline"
-                  >
-                    <Form.Item
-                      {...restField}
-                      name={[name, 'skill']}
-                      rules={[
-                        {
-                          required: true,
-                          message: 'Missing Skill',
-                        },
-                      ]}
-                    >
-                      <Input placeholder="Skill" />
-                    </Form.Item>
-                    <Form.Item
-                      {...restField}
-                      name={[name, 'last']}
-                      rules={[
-                        {
-                          required: true,
-                          message: 'Missing Experience',
-                        },
-                      ]}
-                    >
-                      <Input placeholder="Experience (Years)" />
-                    </Form.Item>
-                    <MinusCircleOutlined onClick={() => remove(name)} />
-                  </Space>
-                ))}
-                <Form.Item>
-                  <Button
-                    type="dashed"
-                    onClick={() => add()}
-                    block
-                    icon={<PlusOutlined />}
-                  >
-                    Add field
-                  </Button>
-                </Form.Item>
-              </>
-            )}
-          </Form.List>
-          <Upload
-            name="avatar"
-            listType="picture"
-            maxCount={1}
-            action="http://localhost:3000/employees"
-            beforeUpload={checkFile}
+        {empdata && (
+          <Form
+            form={form}
+            layout="vertical"
+            onFinish={handleFormSubmit}
+            onFinishFailed={onFinishFailed}
           >
-            <Button icon={<UploadOutlined />}>Upload Avatar (Max: 1)</Button>
-          </Upload>
-          <Form.Item label="Description" name="description">
-            <Input.TextArea />
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
-        </Form>
+            <Form.Item label="Code" name="code">
+              <Input value={empdata?.code || ''} />{' '}
+            </Form.Item>
+            <Form.Item label="Name" name="name">
+              <Input value={empdata?.name || ''} />{' '}
+            </Form.Item>
+            <Form.Item label="Phone" name="phone">
+              <Input value={empdata?.phone || ''} />{' '}
+            </Form.Item>
+
+            <Form.Item label="Citizen Identity Card" name="identity">
+              <Input value={empdata?.identity || ''} />{' '}
+              {/* Đảm bảo rằng value không phải là null hoặc undefined */}
+            </Form.Item>
+            <Form.Item label="Date of Birth" name="dob">
+              <DatePicker value={empdata?.dob || ''} />
+            </Form.Item>
+            <Form.Item label="Gender" name="gender">
+              <Select defaultValue="male">
+                <Select.Option value="male">{empdata?.gender}</Select.Option>
+                <Select.Option value="female">{empdata?.gender}</Select.Option>
+              </Select>
+            </Form.Item>
+            <Form.Item label="Status" name="status">
+              <Select defaultValue={true}>
+                <Select.Option value={true}>{empdata?.status}</Select.Option>
+                <Select.Option value={false}>{empdata?.status}</Select.Option>
+              </Select>
+            </Form.Item>
+            <Form.Item label="is Manager?" name="isManager">
+              <Select defaultValue={true}>
+                <Select.Option value={true}>
+                  {empdata?.is_manager ? 'true' : 'false'}
+                </Select.Option>
+                <Select.Option value={false}>
+                  {' '}
+                  {empdata?.is_manager ? 'true' : 'false'}
+                </Select.Option>
+              </Select>
+            </Form.Item>
+            <Form.Item label="Position" name="position">
+              <Select defaultValue="1">
+                <Select.Option value="1">{empdata?.position}</Select.Option>
+                <Select.Option value="2">Tester</Select.Option>
+              </Select>
+            </Form.Item>
+
+            <Form.Item label="Manager" name="manager">
+              <Input />
+            </Form.Item>
+            {/* <Form.Item></Form.Item> */}
+            <Form.List name="skills">
+              {(fields, { add, remove }) => (
+                <>
+                  {fields.map(({ key, name, ...restField }) => (
+                    <Space
+                      key={key}
+                      style={{
+                        display: 'flex',
+                        marginBottom: 8,
+                      }}
+                      align="baseline"
+                    >
+                      <Form.Item
+                        {...restField}
+                        name={[name, 'skill']}
+                        rules={[
+                          {
+                            required: true,
+                            message: 'Missing Skill',
+                          },
+                        ]}
+                      >
+                        <Input placeholder="Skill" />
+                      </Form.Item>
+                      <Form.Item
+                        {...restField}
+                        name={[name, 'last']}
+                        rules={[
+                          {
+                            required: true,
+                            message: 'Missing Experience',
+                          },
+                        ]}
+                      >
+                        <Input placeholder="Experience (Years)" />
+                      </Form.Item>
+                      <MinusCircleOutlined onClick={() => remove(name)} />
+                    </Space>
+                  ))}
+                  <Form.Item>
+                    <Button
+                      type="dashed"
+                      onClick={() => add()}
+                      block
+                      icon={<PlusOutlined />}
+                    >
+                      Add field
+                    </Button>
+                  </Form.Item>
+                </>
+              )}
+            </Form.List>
+            <Upload
+              name="avatar"
+              listType="picture"
+              maxCount={1}
+              action="http://localhost:3000/employees"
+              beforeUpload={checkFile}
+            >
+              <Button icon={<UploadOutlined />}>Upload Avatar (Max: 1)</Button>
+            </Upload>
+            <Form.Item label="Description" name="description">
+              <Input.TextArea value={empdata?.description || ''} />{' '}
+            </Form.Item>
+            <Form.Item>
+              <Button type="primary" htmlType="submit">
+                Submit
+              </Button>
+            </Form.Item>
+          </Form>
+        )}
       </div>
     </div>
   )

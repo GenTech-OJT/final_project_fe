@@ -30,3 +30,10 @@ body {
 a {
   color: inherit;
 }
+
+@media screen and (max-width: 900px) {
+  .ant-layout-sider-collapsed {
+    max-width: 50px !important;
+    min-width: 50px !important;
+  }
+}

@@ -63,7 +63,7 @@ const App = () => {
               {!collapsed && (
                 <img
                   style={{ cursor: 'pointer', marginLeft: '12px' }}
-                  src="../logo-white.png"
+                  src="https://wieldy.g-axon.work/assets/images/logo-white.png"
                   alt=""
                   className="logo"
                   onClick={() => navigate('/')}
