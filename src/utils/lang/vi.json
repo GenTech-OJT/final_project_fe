@@ -4,5 +4,16 @@
   "my_account": "Tài khoản của tôi",
   "logout": "Đăng xuất",
   "notfound_content": "Đã xảy ra sự cố",
-  "back_to_home": "Trở về trang chủ"
+  "back_to_home": "Trở về trang chủ",
+  "name": "Họ Và Tên",
+  "status": "Trạng Thái",
+  "position": "Vị trí",
+  "is_manager": "Quản lí",
+  "action": "Thao Tác",
+  "create": "Tạo mới",
+  "search": "Tìm Kiếm",
+  "active": "Kích Hoạt",
+  "inactive": "Vô Hiêu Hóa",
+  "activated_successfully": "Đã Kích Hoạt Thành Công",
+  "deactivated_successfully": "Đã Vô Hiệu Hóa Thành Công"
 }

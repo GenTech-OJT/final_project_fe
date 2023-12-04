@@ -1,15 +1,14 @@
+/* eslint-disable no-undef */
 import { DeleteOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons'
-import { Button, Select, Spin, message } from 'antd'
+import { Button, Spin, message } from 'antd'
 import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 import {
   EmployeeSearch,
   EmployeeTable,
-  SortableTable,
 } from '../../../components/EmployeeComponent/EmployeeTable'
 import './employeeStyle.css'
-
-const { Option } = Select
 
 const EmployeeManagement = () => {
   const [gridData, setGridData] = useState([])
@@ -21,6 +20,7 @@ const EmployeeManagement = () => {
     total: 14,
   })
   const navigate = useNavigate()
+  const { t } = useTranslation('translation')
 
   const [loadingData, setLoadingData] = useState(true)
 
@@ -95,7 +95,9 @@ const EmployeeManagement = () => {
     })
     setGridData(updatedGridData)
     message.success(
-      `${record.status === 'active' ? 'Deactivated' : 'Activated'} successfully`
+      record.status === 'active'
+        ? t('deactivated_successfully')
+        : t('activated_successfully')
     )
   }
 
@@ -141,7 +143,7 @@ const EmployeeManagement = () => {
       sortOrder: sortedInfo.columnKey === 'id' && sortedInfo.order,
     },
     {
-      title: 'Name',
+      title: t('name'),
       align: 'center',
       dataIndex: 'name',
       key: 'name',
@@ -149,7 +151,7 @@ const EmployeeManagement = () => {
       sortOrder: sortedInfo.columnKey === 'name' && sortedInfo.order,
     },
     {
-      title: 'Status',
+      title: t('status'),
       align: 'center',
       dataIndex: 'status',
       key: 'status',
@@ -159,13 +161,18 @@ const EmployeeManagement = () => {
         <Button
           type={record.status === 'active' ? 'primary' : 'danger'}
           onClick={() => toggleStatus(record)}
+          style={{
+            backgroundColor: record.status === 'active' ? '#1890ff' : '#ff4d4f',
+            borderColor: 'transparent',
+            color: 'white',
+          }}
         >
-          {record.status === 'active' ? 'Active' : 'Inactive'}
+          {record.status === 'active' ? t('active') : t('inactive')}
         </Button>
       ),
     },
     {
-      title: 'Position',
+      title: t('position'),
       align: 'center',
       dataIndex: 'position',
       key: 'position',
@@ -173,7 +180,7 @@ const EmployeeManagement = () => {
       sortOrder: sortedInfo.columnKey === 'position' && sortedInfo.order,
     },
     {
-      title: 'Is Manager',
+      title: t('is_manager'),
       align: 'center',
       dataIndex: 'is_manager',
       key: 'is_manager',
@@ -182,7 +189,7 @@ const EmployeeManagement = () => {
       render: isManager => convertBooleanToString(isManager),
     },
     {
-      title: 'Action',
+      title: t('action'),
       align: 'center',
       key: 'action',
       render: (_, record) => (
@@ -217,7 +224,7 @@ const EmployeeManagement = () => {
           onClick={() => navigate('/employee/create')}
           style={{ marginBottom: 16 }}
         >
-          Create
+          {t('create')}
         </Button>
 
         <EmployeeSearch handleChange={handleChange} />

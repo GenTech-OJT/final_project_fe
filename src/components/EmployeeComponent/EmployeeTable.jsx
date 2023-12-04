@@ -2,6 +2,7 @@
 import { SearchOutlined } from '@ant-design/icons'
 import { Input, Table } from 'antd'
 import PropTypes from 'prop-types'
+import { useTranslation } from 'react-i18next'
 import '../../pages/AdminPages/EmployeeManagement/employeeStyle.css'
 
 const EmployeeTable = ({ columns, data, handleTableChange, pagination }) => {
@@ -24,9 +25,10 @@ EmployeeTable.propTypes = {
 }
 
 const EmployeeSearch = ({ handleChange }) => {
+  const { t } = useTranslation('translation')
   return (
     <Input
-      placeholder="Search"
+      placeholder={t('search')}
       onChange={handleChange}
       style={{ width: 200, marginBottom: 16 }}
       prefix={<SearchOutlined />}
@@ -45,10 +47,11 @@ const SortableTable = ({
   pagination,
   handleChange,
 }) => {
+  const { t } = useTranslation('translation')
   return (
     <>
       <Input
-        placeholder="Search"
+        placeholder={t('position')}
         onChange={handleChange}
         style={{ width: 200, marginBottom: 16 }}
         prefix={<SearchOutlined />}
