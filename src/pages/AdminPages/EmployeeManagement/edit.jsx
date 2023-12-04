@@ -355,7 +355,7 @@ const Edit = () => {
             </div>
             <Form.Item>
               <p style={{ marginBottom: '8px' }}>Avatar</p>
-              {empdata.avatar ? (
+              {empdata?.avatar ? (
                 <img
                   src={empdata?.avatar} // Đặt đường dẫn hình ảnh của avatar vào đây
                   alt="Avatar"
