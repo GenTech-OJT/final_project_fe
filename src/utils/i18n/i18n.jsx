@@ -12,10 +12,13 @@ const resources = {
   },
 }
 
+//Lấy ngôn ngữ đã lưu từ localStorage hoặc sử dụng  mặc định ('en')
+const savedLanguage = localStorage.getItem('selectedLanguage') || 'en'
+
 i18n.use(initReactI18next).init({
   resources,
-  lng: 'en', // Set the default language
-  fallbackLng: 'en', // Fallback language
+  lng: savedLanguage, // Set language từ localStorage
+  fallbackLng: 'en',
   interpolation: {
     escapeValue: false,
   },

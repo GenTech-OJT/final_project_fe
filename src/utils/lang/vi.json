@@ -15,5 +15,6 @@
   "active": "Kích Hoạt",
   "inactive": "Vô Hiệu Hóa",
   "activated_successfully": "Đã Kích Hoạt Thành Công",
-  "deactivated_successfully": "Đã Vô Hiệu Hóa Thành Công"
+  "deactivated_successfully": "Đã Vô Hiệu Hóa Thành Công",
+  "spinners": "Đang tải"
 }

@@ -1,9 +1,9 @@
 import { ProjectOutlined, UserOutlined } from '@ant-design/icons'
 import { Menu } from 'antd'
+import PropTypes from 'prop-types'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
-import PropTypes from 'prop-types'
 
 const SideMenu = ({ selectedKey, setSelectedKey }) => {
   const navigate = useNavigate()
@@ -35,7 +35,7 @@ const SideMenu = ({ selectedKey, setSelectedKey }) => {
           {
             label: t('project_management_label'),
             icon: <ProjectOutlined />,
-            key: '/',
+            key: '/projects',
           },
           {
             label: t('employee_management_label'),
