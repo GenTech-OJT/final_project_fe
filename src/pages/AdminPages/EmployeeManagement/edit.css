@@ -12,6 +12,7 @@
   padding: 7px;
   text-decoration: none;
   color: black; /* Set the text color */
+  margin-top: 20px;
 }
 
 .back-to-list-button::after {

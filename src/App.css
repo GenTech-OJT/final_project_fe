@@ -47,6 +47,10 @@ a {
   width: 270px !important;
 }
 
+.sider-menu {
+  overflow: hidden !important;
+}
+
 @media screen and (max-width: 900px) {
   .ant-layout-sider-collapsed {
     max-width: 50px !important;
