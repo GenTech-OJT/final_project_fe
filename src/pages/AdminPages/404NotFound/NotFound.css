@@ -7,10 +7,11 @@
 }
 
 .content {
-  color: #365885;
+  color: #1673c6;
   padding-top: 16%;
   font-family: 'Poppins', sans-serif;
   padding-left: 55%;
+  width: 95%;
 }
 
 .content-h1 {
@@ -36,12 +37,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #365885 !important;
+  background-color: #167ec5 !important;
   color: white;
 }
 
 .back-to-home-btn:hover {
-  background-color: #738fb9 !important;
+  background-color: #365885 !important;
   color: white;
 }
 
@@ -53,12 +54,13 @@
   .content {
     padding-left: 52%;
     padding-top: 10%;
+    width: 90%;
   }
   .content-h1 {
     font-size: 40px !important;
   }
   .content-p {
-    font-size: 20px !important;
+    font-size: 18px !important;
     margin-bottom: 18px;
   }
   .back-to-home-btn {
