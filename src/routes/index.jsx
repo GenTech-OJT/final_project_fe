@@ -34,7 +34,6 @@ const AppRoutes = () => {
       <Route path="/projects/edit/:id" element={<EditProject />}></Route>
       <Route path="/projects/detail/:id" element={<DetailProject />}></Route>
       <Route path="/profile" element={<Profile />}></Route>
-      <Route path="/login" element={<Login />}></Route>
       <Route path="*" element={<NotFoundPage />}></Route>
     </Routes>
   )

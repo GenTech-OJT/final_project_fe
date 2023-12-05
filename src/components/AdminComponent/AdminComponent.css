@@ -6,13 +6,24 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 32px;
-  position: sticky;
+  position: relative;
   top: 0;
   z-index: 100;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 .ant-popover {
   margin-top: -20px;
+}
+.btn-open {
+  /* position: absolute; */
+  height: 30px;
+  width: 20px;
+
+  font-size: 31px;
+  color: black;
+  position: relative;
+  top: -1px;
+  z-index: 200;
 }
 .menu-btn {
   font-size: 16px !important;
@@ -81,4 +92,10 @@
 
 ::-webkit-scrollbar-track {
   background: #eee;
+}
+
+@media screen and (max-width: 900px) {
+  .search-header {
+    display: none;
+  }
 }

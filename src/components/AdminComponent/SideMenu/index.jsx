@@ -1,11 +1,12 @@
+/* eslint-disable react/prop-types */
 import { ProjectOutlined, UserOutlined } from '@ant-design/icons'
 import { Menu } from 'antd'
-import PropTypes from 'prop-types'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
+import PropTypes from 'prop-types'
 
-const SideMenu = ({ selectedKey, setSelectedKey }) => {
+const SideMenu = ({ selectedKey, setSelectedKey, setOpen }) => {
   const navigate = useNavigate()
 
   const { t } = useTranslation('translation')
@@ -14,6 +15,7 @@ const SideMenu = ({ selectedKey, setSelectedKey }) => {
     setSelectedKey(item.key)
     localStorage.setItem('selectedKey', item.key)
     navigate(item.key)
+    setOpen(false)
   }
 
   useEffect(() => {
@@ -35,12 +37,12 @@ const SideMenu = ({ selectedKey, setSelectedKey }) => {
           {
             label: t('project_management_label'),
             icon: <ProjectOutlined />,
-            key: '/projects',
+            key: '/',
           },
           {
             label: t('employee_management_label'),
             icon: <UserOutlined />,
-            key: '/users',
+            key: '/employees',
           },
         ]}
       />
@@ -51,6 +53,7 @@ const SideMenu = ({ selectedKey, setSelectedKey }) => {
 SideMenu.propTypes = {
   selectedKey: PropTypes.string.isRequired,
   setSelectedKey: PropTypes.string.isRequired,
+  setOpen: PropTypes.bool.isRequired,
 }
 
 export default SideMenu

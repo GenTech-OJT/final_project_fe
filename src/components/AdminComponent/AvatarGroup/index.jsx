@@ -8,12 +8,14 @@ import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
-const AvatarGroup = ({ collapsed, setSelectedKey }) => {
+const AvatarGroup = ({ collapsed, setSelectedKey, setIsLogin }) => {
   const navigate = useNavigate()
 
   const { t } = useTranslation('translation')
 
   const handleLogout = () => {
+    setIsLogin(false)
+    localStorage.removeItem('isLogin')
     navigate('/login')
     setSelectedKey('')
     localStorage.removeItem('selectedKey')
@@ -36,6 +38,7 @@ const AvatarGroup = ({ collapsed, setSelectedKey }) => {
   )
   return (
     <Popover
+      placement="bottomRight"
       // style={{ marginTop: '-20px' }}
       content={content}
       trigger="click"
@@ -55,6 +58,7 @@ const AvatarGroup = ({ collapsed, setSelectedKey }) => {
 AvatarGroup.propTypes = {
   collapsed: PropTypes.bool.isRequired,
   setSelectedKey: PropTypes.string.isRequired,
+  setIsLogin: PropTypes.bool.isRequired,
 }
 
 export default AvatarGroup
