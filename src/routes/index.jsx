@@ -25,7 +25,7 @@ const AppRoutes = () => {
       <Route path="/employees" element={<EmployeeManagement />}></Route>
       <Route path="/employees/create" element={<CreateEmployee />}></Route>
       {/* 2 route dưới đây tạm hiển thị employee management page */}
-      <Route path="/employe/edit/:empid" element={<EditEmployee />}></Route>
+      <Route path="/employe/edit/:id" element={<EditEmployee />}></Route>
       <Route
         path="/employees/detail/:id"
         element={<EmployeeManagement />}

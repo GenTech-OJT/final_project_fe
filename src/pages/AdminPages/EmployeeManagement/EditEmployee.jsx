@@ -1,26 +1,24 @@
 /* eslint-disable no-undef */
-import React, { useEffect, useState } from 'react'
+import {
+  ArrowLeftOutlined,
+  MinusCircleOutlined,
+  PlusOutlined,
+  UploadOutlined,
+} from '@ant-design/icons'
 import {
   Button,
   DatePicker,
   Form,
   Input,
   Select,
-  Typography,
   Space,
+  Typography,
   message,
-  Upload,
 } from 'antd'
-import { useNavigate, useParams } from 'react-router'
-import {
-  ArrowLeftOutlined,
-  MinusCircleOutlined,
-  PlusOutlined,
-  LoadingOutlined,
-  UploadOutlined,
-} from '@ant-design/icons'
-import './editEmployee.css'
 import moment from 'moment'
+import { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router'
+import './editEmployee.css'
 
 const { Title, Text } = Typography
 
@@ -28,7 +26,7 @@ const EditEmployee = () => {
   const navigate = useNavigate()
   const [avatar, setAvatar] = useState(null)
   const [form] = Form.useForm()
-  const { empid } = useParams()
+  const { id } = useParams()
   const [empdata, empdataChange] = useState({})
 
   const [pagination, setPagination] = useState({
@@ -50,14 +48,18 @@ const EditEmployee = () => {
   }
 
   useEffect(() => {
-    fetch('http://localhost:3000/employees/' + empid)
+    fetch('http://localhost:3000/employees/' + id)
       .then(res => {
         return res.json()
       })
       .then(res => {
-        console.log(res.avatar)
+        console.log(res)
         empdataChange(res)
         form.setFieldsValue({
+          name: res.name,
+          code: res.code,
+          phone: res.phone,
+          identity: res.identity,
           dob: moment(res.dob, 'YYYY-MM-DD'),
           gender: res.gender,
           status: res.status,
@@ -68,6 +70,8 @@ const EditEmployee = () => {
             experience: skill.year,
           })),
           avatar: res?.avatar,
+          description: res?.description,
+          manager: res?.manager,
 
           // ... set other fields similarly
         })
@@ -78,36 +82,30 @@ const EditEmployee = () => {
     const empData = { name1, code, phone }
     console.log(empData)
   }
-  const handleFormSubmit = async values => {
-    console.log(values)
-    try {
-      // Handle file upload first
-      const formData = new FormData()
-      if (avatar) {
-        formData.append('avatar', avatar.originFileObj)
-      }
-
-      // Add other form data to the FormData
-      Object.entries(values).forEach(([key, value]) => {
-        formData.append(key, value)
+  const handleFormSubmit = () => {
+    const editForm = { name, code, phone, identity, dob, gender }
+    fetch('http://localhost:3000/employees/' + id, {
+      method: 'PUT',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(editForm),
+    })
+      .then(res => {
+        alert('Saved successfully.')
+        navigate('/employees')
       })
-
-      // Now, submit the form data with the file to the appropriate endpoint
-      await fetch('http://localhost:3000/employees', {
-        method: 'POST',
-        body: formData,
+      .catch(err => {
+        console.log(err.message)
       })
-
-      message.success('Employee created successfully!')
-      // navigate('/users')
-    } catch (error) {
-      console.error('Error creating employee:', error)
-      message.error('Error creating employee. Please try again.')
-    }
   }
 
   const onFinishFailed = errorInfo => {
     console.log('Failed:', errorInfo)
+  }
+  const initialValues = {
+    gender: form.getFieldValue('gender') || empdata?.gender,
+    status: form.getFieldValue('status') || empdata?.status,
+    isManager: form.getFieldValue('isManager') || empdata?.isManager,
+    position: form.getFieldValue('position') || empdata?.position,
   }
 
   return (
@@ -128,20 +126,7 @@ const EditEmployee = () => {
             form={form}
             layout="vertical"
             onFinish={handleFormSubmit}
-            initialValues={{
-              dob: moment(empdata.dob, 'YYYY-MM-DD'),
-              gender: empdata.gender,
-              status: empdata.status,
-              isManager: empdata.is_manager,
-              position: empdata.position,
-              skills: empdata?.skills?.map(skill => ({
-                skill: skill.name,
-                experience: skill.year,
-              })),
-              avatar: empdata?.avatar,
-
-              // ... set other fields similarly
-            }}
+            initialValues={initialValues}
           >
             <div className="input-container">
               <Form.Item
@@ -161,10 +146,16 @@ const EditEmployee = () => {
                   },
                 ]}
               >
-                <Input value={empdata?.name || ''} />{' '}
+                <Input
+                  value={form.getFieldValue('name') || empdata?.name}
+                  onChange={e => form.setFieldsValue({ name: e.target.value })}
+                />
               </Form.Item>
               <Form.Item label="Code" name="code" className="text-input-form">
-                <Input value={empdata?.code || ''} />{' '}
+                <Input
+                  value={form.getFieldValue('code') || empdata?.code}
+                  onChange={e => form.setFieldsValue({ code: e.target.value })}
+                />
               </Form.Item>
             </div>
             <div className="input-container">
@@ -183,7 +174,10 @@ const EditEmployee = () => {
                   },
                 ]}
               >
-                <Input value={empdata?.phone || ''} />{' '}
+                <Input
+                  value={form.getFieldValue('phone') || empdata?.phone}
+                  onChange={e => form.setFieldsValue({ phone: e.target.value })}
+                />
               </Form.Item>
               <Form.Item
                 label="Citizen Identity Card"
@@ -200,7 +194,12 @@ const EditEmployee = () => {
                   },
                 ]}
               >
-                <Input value={empdata?.identity || ''} />{' '}
+                <Input
+                  value={form.getFieldValue('identity') || empdata?.identity}
+                  onChange={e =>
+                    form.setFieldsValue({ identity: e.target.value })
+                  }
+                />
               </Form.Item>
             </div>
             <div className="select-container-lg">
@@ -273,7 +272,12 @@ const EditEmployee = () => {
                   name="manager"
                   className="manager-input-width"
                 >
-                  <Input />
+                  <Input
+                    value={form.getFieldValue('manager') || empdata?.manager}
+                    onChange={e =>
+                      form.setFieldsValue({ manager: e.target.value })
+                    }
+                  />
                 </Form.Item>
               </div>
             </div>
@@ -304,8 +308,15 @@ const EditEmployee = () => {
                             ]}
                           >
                             <Input
-                              value={empdata?.skills.name || ''}
-                              placeholder="Skill"
+                              value={
+                                form.getFieldValue('skills') || empdata?.skills
+                              }
+                              onChange={e =>
+                                form.setFieldsValue({
+                                  skill: e.target.value,
+                                  experience: e.target.value,
+                                })
+                              }
                             />
                           </Form.Item>
                           <Form.Item
@@ -350,7 +361,14 @@ const EditEmployee = () => {
                 name="description"
                 className="text-input-form"
               >
-                <Input.TextArea rows={4} value={empdata?.description || ''} />{' '}
+                <Input
+                  value={
+                    form.getFieldValue('description') || empdata?.description
+                  }
+                  onChange={e =>
+                    form.setFieldsValue({ description: e.target.value })
+                  }
+                />
               </Form.Item>
             </div>
             <Form.Item>
@@ -358,7 +376,7 @@ const EditEmployee = () => {
               {empdata?.avatar && (
                 <div>
                   <img
-                    src={empdata?.avatar} // Đặt đường dẫn hình ảnh của avatar vào đây
+                    src={form.getFieldValue('avatar') || empdata?.avatar} // Đặt đường dẫn hình ảnh của avatar vào đây
                     alt="Avatar"
                     style={{
                       width: '100px',
