@@ -15,7 +15,7 @@
 }
 
 .content-h1 {
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   font-size: 65px !important;
   font-weight: bolder;
 }
@@ -66,6 +66,7 @@
   .back-to-home-btn {
     font-size: 14px !important;
     width: 130px !important;
+    height: 40px !important;
   }
 }
 
@@ -76,6 +77,7 @@
   .content {
     padding-left: 10%;
     margin-top: 8%;
+    width: 70%;
   }
   .content-h1 {
     font-size: 32px !important;
