@@ -56,4 +56,7 @@ a {
   .header-input {
     display: none;
   }
+  .ant-layout-has-sider {
+    margin-top: -68px;
+  }
 }

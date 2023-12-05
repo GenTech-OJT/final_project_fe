@@ -78,7 +78,7 @@
 .select-lang {
   position: absolute;
   right: 5px;
-  top: 18px;
+  top: 15px;
 }
 
 @media only screen and (max-width: 1000px) {

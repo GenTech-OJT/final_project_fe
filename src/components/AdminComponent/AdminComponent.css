@@ -22,7 +22,7 @@
   font-size: 31px;
   color: black;
   position: relative;
-  top: 65px;
+  top: -1px;
   z-index: 200;
 }
 .menu-btn {
@@ -96,6 +96,6 @@
 
 @media screen and (max-width: 900px) {
   .search-header {
-    left: 18%;
+    display: none;
   }
 }
