@@ -34,21 +34,20 @@
 }
 
 .ant-table-column-title {
-  width: 160px;
-}
-
-@media screen and (min-width: 300px) and (max-width: 360px) {
-  .ant-input-affix-wrapper {
-    width: 150px !important;
-  }
-
-  .ant-table-content {
-    background-color: white !important;
-    width: fit-content !important;
-  }
+  width: 130px;
 }
 
 .ant-table-content {
   background-color: white !important;
-  width: fit-content !important;
+  width: 100% !important;
+}
+
+.ant-pagination {
+  padding: 0 15px;
+}
+
+@media screen and (min-width: 300px) and (max-width: 400px) {
+  .ant-input-affix-wrapper {
+    width: 150px !important;
+  }
 }

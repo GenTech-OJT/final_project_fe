@@ -8,7 +8,7 @@ import {
   CustomSearch,
   CustomTable,
 } from '@components/CustomComponent/CustomTable'
-import './employeeStyle.css'
+import './index.css'
 import { showToast } from '@components/Toast/toast'
 
 const EmployeeManagement = () => {
@@ -122,7 +122,7 @@ const EmployeeManagement = () => {
     setPagination({ ...pagination, pageSize, current: 1 })
   }
 
-  const convertBooleanToString = isManager => (isManager ? 'true' : 'false')
+  const convertBooleanToString = isManager => (isManager ? 'Yes' : 'No')
 
   const columns = [
     {
@@ -187,13 +187,13 @@ const EmployeeManagement = () => {
         <>
           <Button
             key={`view-${record.id}`}
-            onClick={() => navigate('/employee/create')}
+            onClick={() => navigate('/employees/detail')}
             style={{ marginRight: 8 }}
             icon={<EyeOutlined />}
           />
           <Button
             key={`edit-${record.id}`}
-            onClick={() => navigate('/employee/create')}
+            onClick={() => navigate('/employees/edit')}
             style={{ marginRight: 8 }}
             icon={<EditOutlined />}
           />
@@ -212,7 +212,7 @@ const EmployeeManagement = () => {
       <Spin spinning={loadingData}>
         <Button
           type="primary"
-          onClick={() => navigate('/employee/create')}
+          onClick={() => navigate('/employees/create')}
           style={{ marginBottom: 16 }}
         >
           {t('create')}
@@ -225,6 +225,7 @@ const EmployeeManagement = () => {
             overflow: 'auto',
             width: '100%',
             whiteSpace: 'nowrap',
+            backgroundColor: 'white',
           }}
         >
           <CustomTable
