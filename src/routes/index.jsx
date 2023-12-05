@@ -1,6 +1,7 @@
 import NotFoundPage from '@pages/AdminPages/404NotFound/NotFound'
 import Dashboard from '@pages/AdminPages/Dashboard'
 import CreateEmployee from '@pages/AdminPages/EmployeeManagement/create'
+import EditEmployee from '@pages/AdminPages/EmployeeManagement/editEmployee'
 import Profile from '@pages/AdminPages/Profile'
 import CreateProject from '@pages/AdminPages/ProjectManagement/create'
 import DetailProject from '@pages/AdminPages/ProjectManagement/detail'
@@ -24,10 +25,7 @@ const AppRoutes = () => {
       <Route path="/employees" element={<EmployeeManagement />}></Route>
       <Route path="/employees/create" element={<CreateEmployee />}></Route>
       {/* 2 route dưới đây tạm hiển thị employee management page */}
-      <Route
-        path="/employees/edit/:id"
-        element={<EmployeeManagement />}
-      ></Route>
+      <Route path="/employe/edit/:empid" element={<EditEmployee />}></Route>
       <Route
         path="/employees/detail/:id"
         element={<EmployeeManagement />}

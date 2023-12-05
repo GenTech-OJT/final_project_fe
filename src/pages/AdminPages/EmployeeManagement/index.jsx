@@ -60,11 +60,9 @@ const EmployeeManagement = () => {
     fetchData()
   }, [pagination.current, pagination.pageSize, sortedInfo, searchText])
 
-  const edit = record => {
-    formRef.current.setFieldsValue({ ...record })
-    setEditRowKey(record.id)
+  const edit = id => {
+    navigate('/employe/edit/' + id)
   }
-
   const viewDetail = record => {
     // Handle logic to view details for the selected record
     console.log('View Detail:', record)
@@ -193,7 +191,7 @@ const EmployeeManagement = () => {
           />
           <Button
             key={`edit-${record.id}`}
-            onClick={() => navigate('/employee/create')}
+            onClick={() => edit(record.id)}
             style={{ marginRight: 8 }}
             icon={<EditOutlined />}
           />
