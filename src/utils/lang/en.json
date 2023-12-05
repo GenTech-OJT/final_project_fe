@@ -5,5 +5,16 @@
   "logout": "Logout",
   "notfound_content": "Lost in Space",
   "back_to_home": "Back to Home",
+  "name": "Name",
+  "status": "Status",
+  "position": "Position",
+  "is_manager": "Is Manager",
+  "action": "Action",
+  "create": "Create",
+  "search": "Search",
+  "active": "Active",
+  "inactive": "Inactive",
+  "activated_successfully": "Activated Successfully",
+  "deactivated_successfully": "Deactivated Successfully",
   "spinners": "Loading"
 }
