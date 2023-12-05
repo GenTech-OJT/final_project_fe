@@ -1,4 +1,3 @@
-import './Spinner.css'
 import { Flex, Spin } from 'antd'
 import { useTranslation } from 'react-i18next'
 
@@ -7,7 +6,7 @@ const Spinner = () => {
 
   return (
     <Flex gap="small" vertical>
-      <Spin tip={t('spinners')} size="large">
+      <Spin tip={t('spinners')} size="large" fullscreen={true}>
         <div className="content" />
       </Spin>
     </Flex>
