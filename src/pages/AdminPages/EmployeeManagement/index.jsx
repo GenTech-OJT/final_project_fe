@@ -5,9 +5,9 @@ import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 import {
-  EmployeeSearch,
-  CustomeTable,
-} from '@components/EmployeeComponent/CustomeTable'
+  CustomSearch,
+  CustomTable,
+} from '@components/CustomComponent/CustomTable'
 import './employeeStyle.css'
 import { showToast } from '@components/Toast/toast'
 
@@ -20,6 +20,7 @@ const EmployeeManagement = () => {
     pageSize: 5,
     total: 14,
   })
+
   const navigate = useNavigate()
   const { t } = useTranslation('translation')
 
@@ -217,7 +218,7 @@ const EmployeeManagement = () => {
           {t('create')}
         </Button>
 
-        <EmployeeSearch handleChange={handleChange} />
+        <CustomSearch handleChange={handleChange} />
 
         <div
           style={{
@@ -226,7 +227,7 @@ const EmployeeManagement = () => {
             whiteSpace: 'nowrap',
           }}
         >
-          <CustomeTable
+          <CustomTable
             columns={columns}
             data={gridData}
             handleTableChange={handleTableChange}
@@ -242,7 +243,7 @@ const EmployeeManagement = () => {
               ),
               onChange: handlePaginationChange,
             }}
-          ></CustomeTable>
+          ></CustomTable>
         </div>
       </Spin>
     </div>

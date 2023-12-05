@@ -4,7 +4,7 @@ import { Input, Table } from 'antd'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 
-const CustomeTable = ({ columns, data, handleTableChange, pagination }) => {
+const CustomTable = ({ columns, data, handleTableChange, pagination }) => {
   return (
     <Table
       columns={columns}
@@ -16,14 +16,14 @@ const CustomeTable = ({ columns, data, handleTableChange, pagination }) => {
   )
 }
 
-CustomeTable.propTypes = {
+CustomTable.propTypes = {
   columns: PropTypes.array.isRequired,
   data: PropTypes.array.isRequired,
   handleTableChange: PropTypes.func.isRequired,
   pagination: PropTypes.object.isRequired,
 }
 
-const EmployeeSearch = ({ handleChange }) => {
+const CustomSearch = ({ handleChange }) => {
   const { t } = useTranslation('translation')
   return (
     <Input
@@ -35,7 +35,7 @@ const EmployeeSearch = ({ handleChange }) => {
   )
 }
 
-EmployeeSearch.propTypes = {
+CustomSearch.propTypes = {
   handleChange: PropTypes.func.isRequired,
 }
 
@@ -74,4 +74,4 @@ SortableTable.propTypes = {
   handleChange: PropTypes.func.isRequired,
 }
 
-export { EmployeeSearch, CustomeTable, SortableTable }
+export { CustomSearch, CustomTable, SortableTable }
