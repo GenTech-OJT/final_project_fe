@@ -18,11 +18,13 @@ import {
   UploadOutlined,
 } from '@ant-design/icons'
 import './create.css'
+import { useTranslation } from 'react-i18next'
 
 const { Title } = Typography
 
 const Create = () => {
   const navigate = useNavigate()
+  const { t } = useTranslation('translation')
   const [avatar, setAvatar] = useState(null)
   const [form] = Form.useForm()
 
@@ -60,6 +62,8 @@ const Create = () => {
       const formData = new FormData()
       if (avatar != null) {
         formData.append('avatar', avatar)
+      } else {
+        formData.append('avatar', null)
       }
 
       Object.entries(values).forEach(([key, value]) => {
@@ -309,6 +313,7 @@ const Create = () => {
             <Upload
               name="avatar"
               listType="picture"
+              accept="image/*"
               maxCount={1}
               action="http://localhost:3000/employees"
               beforeUpload={checkFile}
