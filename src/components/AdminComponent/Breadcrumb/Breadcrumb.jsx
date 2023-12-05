@@ -26,7 +26,7 @@ const BreadCrumb = () => {
   }
 
   return (
-    <Breadcrumb style={{ margin: '16px' }}>
+    <Breadcrumb style={{ margin: '20px', fontWeight: '500', color: '#123ec7' }}>
       {pathSnippets.map((snippet, index) => {
         const url = `/${pathSnippets.slice(0, index + 1).join('/')}`
         const displayText = customBreadcrumbNames[snippet] || snippet
