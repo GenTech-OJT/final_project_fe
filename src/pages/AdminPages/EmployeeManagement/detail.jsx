@@ -68,6 +68,7 @@ const Detail = () => {
             experience: skill.year,
           })),
           avatar: res?.avatar,
+          manager: res?.manager,
 
           // ... set other fields similarly
         })
@@ -139,6 +140,7 @@ const Detail = () => {
                 experience: skill.year,
               })),
               avatar: empdata?.avatar,
+              manager: empdata?.manager,
 
               // ... set other fields similarly
             }}

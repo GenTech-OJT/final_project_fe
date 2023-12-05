@@ -123,6 +123,7 @@ const App = () => {
               collapsed={collapsed}
             />
             <SideMenu
+              setOpen={setOpen}
               selectedKey={selectedKey}
               setSelectedKey={setSelectedKey}
             />
