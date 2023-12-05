@@ -355,19 +355,21 @@ const Edit = () => {
             </div>
             <Form.Item>
               <p style={{ marginBottom: '8px' }}>Avatar</p>
-              {empdata?.avatar ? (
-                <img
-                  src={empdata?.avatar} // Đặt đường dẫn hình ảnh của avatar vào đây
-                  alt="Avatar"
-                  style={{
-                    width: '100px',
-                    height: '100px',
-                    objectFit: 'cover',
-                    borderRadius: '50%',
-                  }}
-                />
-              ) : (
-                <Button icon={<UploadOutlined />}>Upload Avatar</Button>
+              {empdata?.avatar && (
+                <div>
+                  <img
+                    src={empdata?.avatar} // Đặt đường dẫn hình ảnh của avatar vào đây
+                    alt="Avatar"
+                    style={{
+                      width: '100px',
+                      height: '100px',
+                      objectFit: 'cover',
+                      borderRadius: '50%',
+                      marginBottom: '20px',
+                    }}
+                  />
+                  <Button icon={<UploadOutlined />}>Upload Avatar</Button>
+                </div>
               )}
             </Form.Item>
 
