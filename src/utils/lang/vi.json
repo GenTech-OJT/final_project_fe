@@ -16,5 +16,10 @@
   "inactive": "Vô Hiệu Hóa",
   "activated_successfully": "Đã Kích Hoạt Thành Công",
   "deactivated_successfully": "Đã Vô Hiệu Hóa Thành Công",
-  "spinners": "Đang tải"
+  "spinners": "Đang tải",
+  "projects_breadcrumb": "Danh sách dự án",
+  "employees_breadcrumb": "Danh sách nhân viên",
+  "detail_breadcrumb": "Chi tiết",
+  "create_breadcrumb": "Tạo mới",
+  "edit_breadcrumb": "Chỉnh sửa"
 }

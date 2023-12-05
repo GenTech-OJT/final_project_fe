@@ -1,16 +1,18 @@
 import { Breadcrumb } from 'antd'
+import { useTranslation } from 'react-i18next'
 import { Link, useLocation } from 'react-router-dom'
 
-const customBreadcrumbNames = {
-  projects: 'Projects',
-  projectdetail: 'Project Detail',
-  users: 'Users',
-  userdetail: 'User Detail',
-  profile: 'Profile',
-  login: 'Login',
-}
-
 const BreadCrumb = () => {
+  const { t } = useTranslation('translation')
+
+  const customBreadcrumbNames = {
+    projects: t('projects_breadcrumb'),
+    employees: t('employees_breadcrumb'),
+    detail: t('detail_breadcrumb'),
+    create: t('create_breadcrumb'),
+    edit: t('edit_breadcrumb'),
+  }
+
   const location = useLocation()
   const pathSnippets = location.pathname.split('/').filter(i => i)
 
@@ -24,7 +26,7 @@ const BreadCrumb = () => {
   }
 
   return (
-    <Breadcrumb style={{ margin: '16px' }}>
+    <Breadcrumb style={{ margin: '20px', fontWeight: '500', color: '#123ec7' }}>
       {pathSnippets.map((snippet, index) => {
         const url = `/${pathSnippets.slice(0, index + 1).join('/')}`
         const displayText = customBreadcrumbNames[snippet] || snippet

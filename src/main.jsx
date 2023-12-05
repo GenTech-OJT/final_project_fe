@@ -1,4 +1,4 @@
-import Spinner from '@components/AdminComponent/Spinner/index.jsx'
+import Spinner from '@components/AdminComponent/Spinner/Spinner.jsx'
 import '@utils/i18n/i18n.jsx'
 import React, { Suspense } from 'react'
 import ReactDOM from 'react-dom/client'

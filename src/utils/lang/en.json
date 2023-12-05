@@ -16,5 +16,10 @@
   "inactive": "Inactive",
   "activated_successfully": "Activated Successfully",
   "deactivated_successfully": "Deactivated Successfully",
-  "spinners": "Loading"
+  "spinners": "Loading",
+  "projects_breadcrumb": "Projects",
+  "employees_breadcrumb": "Employees",
+  "detail_breadcrumb": "Details",
+  "create_breadcrumb": "Create",
+  "edit_breadcrumb": "Edit"
 }
