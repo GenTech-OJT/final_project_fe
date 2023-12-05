@@ -5,5 +5,16 @@
   "logout": "Đăng xuất",
   "notfound_content": "Trang bạn đang cố truy cập không thể được tìm thấy vào lúc này.",
   "back_to_home": "Trở về trang chủ",
+  "name": "Họ và Tên",
+  "status": "Trạng Thái",
+  "position": "Vị trí",
+  "is_manager": "Quản lí",
+  "action": "Thao Tác",
+  "create": "Tạo mới",
+  "search": "Tìm Kiếm",
+  "active": "Kích Hoạt",
+  "inactive": "Vô Hiệu Hóa",
+  "activated_successfully": "Đã Kích Hoạt Thành Công",
+  "deactivated_successfully": "Đã Vô Hiệu Hóa Thành Công",
   "spinners": "Đang tải"
 }
