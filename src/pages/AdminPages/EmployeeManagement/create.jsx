@@ -84,7 +84,7 @@ const CreateEmployee = () => {
     <div className="page-container">
       <button
         className="back-to-list-button"
-        onClick={() => navigate('/users')}
+        onClick={() => navigate('/employees')}
       >
         <ArrowLeftOutlined style={{ marginRight: '7px' }} />
         Back
