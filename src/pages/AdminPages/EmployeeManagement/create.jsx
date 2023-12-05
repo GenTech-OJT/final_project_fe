@@ -18,13 +18,11 @@ import {
   UploadOutlined,
 } from '@ant-design/icons'
 import './create.css'
-import { useTranslation } from 'react-i18next'
 
 const { Title } = Typography
 
 const Create = () => {
   const navigate = useNavigate()
-  const { t } = useTranslation('translation')
   const [avatar, setAvatar] = useState(null)
   const [form] = Form.useForm()
 
@@ -57,7 +55,6 @@ const Create = () => {
   }
 
   const handleFormSubmit = async values => {
-    console.log(values)
     try {
       const formData = new FormData()
       if (avatar != null) {
@@ -70,17 +67,13 @@ const Create = () => {
         formData.append(key, value)
       })
 
-      formData.forEach((value, key) => {
-        console.log('Form Data: ', `${key}: ${value}`)
-      })
-
       await fetch('http://localhost:3000/employees', {
         method: 'POST',
         body: formData,
       })
 
       message.success('Employee created successfully!')
-      // navigate('/users')
+      navigate('/users')
     } catch (error) {
       console.error('Error creating employee:', error)
       message.error('Error creating employee. Please try again.')
