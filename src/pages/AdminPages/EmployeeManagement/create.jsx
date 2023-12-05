@@ -105,7 +105,7 @@ const Create = () => {
               rules={[
                 {
                   required: true,
-                  pattern: new RegExp('^([a-zA-Z]\\s*)+$'),
+                  pattern: /^([a-zA-Z]\s*)+$/,
                   message: 'Please input the employee name !',
                 },
                 {
