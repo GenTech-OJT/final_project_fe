@@ -3,7 +3,7 @@
   "employee_management_label": "Employee Management",
   "my_account": "My Account",
   "logout": "Logout",
-  "notfound_content": "Lost in Space",
+  "notfound_content": "The page you are trying to access cannot be found at the moment.",
   "back_to_home": "Back to Home",
   "spinners": "Loading"
 }

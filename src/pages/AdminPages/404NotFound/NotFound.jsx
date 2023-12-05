@@ -9,7 +9,7 @@ const NotFoundPage = () => {
   return (
     <div className="background">
       <div className="content">
-        <h1 className="content-h1">404</h1>
+        <h1 className="content-h1">Oops,</h1>
         <p className="content-p">{t('notfound_content')}</p>
         <Button
           type="primary"

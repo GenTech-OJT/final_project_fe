@@ -3,7 +3,7 @@
   "employee_management_label": "Quản lý nhân viên",
   "my_account": "Tài khoản của tôi",
   "logout": "Đăng xuất",
-  "notfound_content": "Đã xảy ra sự cố",
+  "notfound_content": "Trang bạn đang cố truy cập không thể được tìm thấy vào lúc này.",
   "back_to_home": "Trở về trang chủ",
   "spinners": "Đang tải"
 }
