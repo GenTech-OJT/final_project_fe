@@ -21,7 +21,7 @@ import './create.css'
 
 const { Title } = Typography
 
-const Create = () => {
+const CreateEmployee = () => {
   const navigate = useNavigate()
   const [avatar, setAvatar] = useState(null)
   const [form] = Form.useForm()
@@ -327,4 +327,4 @@ const Create = () => {
   )
 }
 
-export default Create
+export default CreateEmployee
