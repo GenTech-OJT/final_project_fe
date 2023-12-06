@@ -73,7 +73,7 @@ const CreateEmployee = () => {
       })
 
       message.success('Employee created successfully!')
-      navigate('/users')
+      navigate('/employees')
     } catch (error) {
       console.error('Error creating employee:', error)
       message.error('Error creating employee. Please try again.')

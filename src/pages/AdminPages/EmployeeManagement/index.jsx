@@ -185,7 +185,7 @@ const EmployeeManagement = () => {
         <>
           <Button
             key={`view-${record.id}`}
-            onClick={() => navigate('/employee/create')}
+            onClick={() => navigate('/employees/create')}
             style={{ marginRight: 8 }}
             icon={<EyeOutlined />}
           />
@@ -210,7 +210,7 @@ const EmployeeManagement = () => {
       <Spin spinning={loadingData}>
         <Button
           type="primary"
-          onClick={() => navigate('/employee/create')}
+          onClick={() => navigate('/employees/create')}
           style={{ marginBottom: 16 }}
         >
           {t('create')}
