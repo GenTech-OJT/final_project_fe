@@ -4,7 +4,13 @@ import { Input, Table } from 'antd'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 
-const CustomTable = ({ columns, data, handleTableChange, pagination }) => {
+const CustomTable = ({
+  columns,
+  data,
+  handleTableChange,
+  pagination,
+  locale,
+}) => {
   return (
     <Table
       columns={columns}
@@ -12,6 +18,7 @@ const CustomTable = ({ columns, data, handleTableChange, pagination }) => {
       bordered
       onChange={handleTableChange}
       pagination={pagination}
+      locale={locale}
     />
   )
 }

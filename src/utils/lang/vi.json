@@ -16,5 +16,6 @@
   "inactive": "Vô Hiệu Hóa",
   "activated_successfully": "Đã Kích Hoạt Thành Công",
   "deactivated_successfully": "Đã Vô Hiệu Hóa Thành Công",
-  "spinners": "Đang tải"
+  "spinners": "Đang tải",
+  "no_data": "Không có dữ liệu"
 }

@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import { DeleteOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons'
-import { Button, Spin } from 'antd'
+import { Button, Spin, Empty } from 'antd'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
@@ -22,11 +22,18 @@ const EmployeeManagement = () => {
   })
 
   const navigate = useNavigate()
+
   const { t } = useTranslation('translation')
 
   const [loadingData, setLoadingData] = useState(true)
 
   const formRef = useRef(null)
+
+  const locale = {
+    emptyText: (
+      <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={t('no_data')} />
+    ),
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -244,6 +251,7 @@ const EmployeeManagement = () => {
               ),
               onChange: handlePaginationChange,
             }}
+            locale={locale}
           ></CustomTable>
         </div>
       </Spin>

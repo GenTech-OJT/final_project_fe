@@ -16,5 +16,6 @@
   "inactive": "Inactive",
   "activated_successfully": "Activated Successfully",
   "deactivated_successfully": "Deactivated Successfully",
-  "spinners": "Loading"
+  "spinners": "Loading",
+  "no_data": "No Data"
 }
