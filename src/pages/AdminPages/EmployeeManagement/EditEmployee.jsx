@@ -28,7 +28,7 @@ const EditEmployee = () => {
   const [form] = Form.useForm()
   const { id } = useParams()
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const [empdata, setEmpData] = useState([])
+  const [empData, setEmpData] = useState([])
 
   useEffect(() => {
     fetch('http://localhost:3000/employees/' + id)
@@ -62,7 +62,7 @@ const EditEmployee = () => {
   const handleFormSubmit = () => {
     form.validateFields().then(values => {
       const updatedData = {
-        ...empdata,
+        ...empData,
         ...values,
         name: values.name,
         code: values.code,
@@ -118,27 +118,27 @@ const EditEmployee = () => {
       </button>
       <Title className="page-title">Edit EMPLOYEE</Title>
       <div className="create-container">
-        {empdata && (
+        {empData && (
           <Form
             form={form}
             layout="vertical"
             onFinish={handleFormSubmit}
             initialValues={{
-              name: empdata.name,
-              code: empdata.code,
-              phone: empdata.phone,
-              identity: empdata.identity,
-              dob: moment(empdata.dob, 'YYYY-MM-DD'),
-              gender: empdata.gender,
-              status: empdata.status,
-              isManager: empdata.is_manager,
-              position: empdata.position,
-              skills: empdata?.skills?.map(skill => ({
+              name: empData.name,
+              code: empData.code,
+              phone: empData.phone,
+              identity: empData.identity,
+              dob: moment(empData.dob, 'YYYY-MM-DD'),
+              gender: empData.gender,
+              status: empData.status,
+              isManager: empData.is_manager,
+              position: empData.position,
+              skills: empData?.skills?.map(skill => ({
                 skill: skill.name,
                 experience: skill.year,
               })),
-              avatar: empdata?.avatar,
-              manager: empdata?.manager,
+              avatar: empData?.avatar,
+              manager: empData?.manager,
 
               // ... set other fields similarly
             }}
@@ -161,19 +161,19 @@ const EditEmployee = () => {
                 ]}
               >
                 <Input
-                  value={empdata?.name || ''}
+                  value={empData?.name || ''}
                   onChange={e => {
                     form.setFieldsValue({ name: e.target.value }) // Cập nhật giá trị trường input trong form
-                    setEmpData({ ...empdata, name: e.target.value }) // Cập nhật state 'empdata'
+                    setEmpData({ ...empData, name: e.target.value }) // Cập nhật state 'empdata'
                   }}
                 />{' '}
               </Form.Item>
               <Form.Item label="Code" name="code" className="text-input-form">
                 <Input
-                  value={empdata?.code || ''}
+                  value={empData?.code || ''}
                   onChange={e => {
                     form.setFieldsValue({ code: e.target.value }) // Cập nhật giá trị trường input trong form
-                    setEmpData({ ...empdata, code: e.target.value }) // Cập nhật state 'empdata'
+                    setEmpData({ ...empData, code: e.target.value }) // Cập nhật state 'empdata'
                   }}
                 />{' '}
               </Form.Item>
@@ -195,10 +195,10 @@ const EditEmployee = () => {
                 ]}
               >
                 <Input
-                  value={empdata?.phone || ''}
+                  value={empData?.phone || ''}
                   onChange={e => {
                     form.setFieldsValue({ phone: e.target.value }) // Cập nhật giá trị trường input trong form
-                    setEmpData({ ...empdata, phone: e.target.value }) // Cập nhật state 'empdata'
+                    setEmpData({ ...empData, phone: e.target.value }) // Cập nhật state 'empdata'
                   }}
                 />{' '}
               </Form.Item>
@@ -218,10 +218,10 @@ const EditEmployee = () => {
                 ]}
               >
                 <Input
-                  value={empdata?.identity || ''}
+                  value={empData?.identity || ''}
                   onChange={e => {
                     form.setFieldsValue({ identity: e.target.value }) // Cập nhật giá trị trường input trong form
-                    setEmpData({ ...empdata, identity: e.target.value }) // Cập nhật state 'empdata'
+                    setEmpData({ ...empData, identity: e.target.value }) // Cập nhật state 'empdata'
                   }}
                 />{' '}
               </Form.Item>
@@ -372,20 +372,20 @@ const EditEmployee = () => {
               >
                 <Input.TextArea
                   rows={4}
-                  value={empdata?.description || ''}
+                  value={empData?.description || ''}
                   onChange={e => {
                     form.setFieldsValue({ description: e.target.value }) // Cập nhật giá trị trường input trong form
-                    setEmpData({ ...empdata, description: e.target.value }) // Cập nhật state 'empdata'
+                    setEmpData({ ...empData, description: e.target.value }) // Cập nhật state 'empdata'
                   }}
                 />{' '}
               </Form.Item>
             </div>
             <Form.Item>
               <p style={{ marginBottom: '8px' }}>Avatar</p>
-              {empdata?.avatar && (
+              {empData?.avatar && (
                 <>
                   <img
-                    src={empdata?.avatar || ''} // Đặt đường dẫn hình ảnh của avatar vào đây
+                    src={empData?.avatar || ''} // Đặt đường dẫn hình ảnh của avatar vào đây
                     alt="Avatar"
                     style={{
                       width: '100px',
