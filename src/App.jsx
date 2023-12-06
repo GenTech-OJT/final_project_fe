@@ -5,11 +5,11 @@ import AvatarGroup from '@components/AdminComponent/AvatarGroup'
 import PageContent from '@components/AdminComponent/PageContent'
 import SideMenu from '@components/AdminComponent/SideMenu'
 import { Button, Layout, theme } from 'antd'
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
 import { useNavigate } from 'react-router'
 import './App.css'
-import BreadCrumb from './components/AdminComponent/Breadcrumb/index'
-
+import BreadCrumb from '@components/AdminComponent/Breadcrumb/Breadcrumb'
+import Spinner from '@components/AdminComponent/Spinner/Spinner'
 const { Header, Content, Footer, Sider } = Layout
 const App = () => {
   const navigate = useNavigate()
@@ -77,8 +77,10 @@ const App = () => {
             backgroundColor: '#f5f5f5',
           }}
         >
-          <BreadCrumb />
-          <PageContent />
+          <Suspense fallback={<Spinner />}>
+            <BreadCrumb />
+            <PageContent />
+          </Suspense>
         </Content>
         <Footer
           style={{

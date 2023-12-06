@@ -30,12 +30,7 @@ const AppHeader = () => {
         bordered={false}
         className="header-input"
       />
-      <Space
-        wrap
-        style={{
-          height: '100vh',
-        }}
-      >
+      <Space wrap>
         <Select
           value={selectedLanguage}
           style={{
