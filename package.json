@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^5.2.6",
-    "antd": "^5.11.3",
+    "antd": "^5.11.5",
     "i18next": "^23.7.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
