@@ -11,7 +11,7 @@ import PageContent from '@components/AdminComponent/PageContent'
 import SideMenu from '@components/AdminComponent/SideMenu'
 import { Button, Drawer, Layout, theme } from 'antd'
 import { useEffect, useState } from 'react'
-import { Route, Routes, useNavigate, useLocation } from 'react-router'
+import { Route, Routes, useNavigate } from 'react-router'
 import './App.css'
 import Login from '@pages/AdminPages/Login'
 const { Header, Content, Footer, Sider } = Layout
@@ -26,9 +26,6 @@ const App = () => {
   }
   const onClose = () => {
     setOpen(false)
-  }
-  const onChange = e => {
-    setPlacement(e.target.value)
   }
 
   const {

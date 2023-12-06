@@ -125,10 +125,6 @@ const EditEmployee = () => {
     })
   }
 
-  const onFinishFailed = errorInfo => {
-    console.log('Failed:', errorInfo)
-  }
-
   return (
     <div className="page-container">
       <button
@@ -173,7 +169,6 @@ const EditEmployee = () => {
                 rules={[
                   {
                     required: true,
-                    pattern: new RegExp('^([a-zA-Z]\\s*)+$'),
                     message: 'Please input the employee name !',
                   },
                   {

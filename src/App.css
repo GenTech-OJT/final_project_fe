@@ -60,10 +60,9 @@ a {
   .header-input {
     display: none;
   }
+
   .ant-layout-has-sider {
     margin-top: -68px;
-  }
-  .ant-layout-has-sider {
     height: 100vh;
   }
 }
