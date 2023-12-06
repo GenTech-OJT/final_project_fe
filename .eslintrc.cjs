@@ -38,4 +38,9 @@ module.exports = {
     'no-unused-vars': 'warn', // cảnh báo khi có biến không được sử dụng
     'no-multiple-empty-lines': ['warn', { max: 1 }], // không cho phép nhiều dòng trống liên tiếp
   },
+  'react/destructuring-assignment': [
+    'error',
+    'always',
+    { ignoreClassFields: true },
+  ],
 }
