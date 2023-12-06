@@ -112,7 +112,7 @@ const App = () => {
                 onClick={() => navigate('/')}
                 onKeyDown={() => navigate('/')}
               />
-              <div className="close-icon" onClick={onClose}>
+              <div className="close-icon" onClick={onClose} onKeyDown={onClose}>
                 <CloseOutlined />
               </div>
             </div>
@@ -161,12 +161,6 @@ const App = () => {
         </Layout>
       </>
     )
-  } else {
-    ;<Routes>
-      <Route path="/login" element={<Login setIsLogin={handleLogin} />} />
-      {/* Các route khác */}
-      {/* <Route path="*" element={<NotFoundPage />} /> */}
-    </Routes>
   }
   return (
     <>
