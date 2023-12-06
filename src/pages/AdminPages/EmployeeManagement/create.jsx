@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Button,
   DatePicker,
@@ -9,6 +9,8 @@ import {
   Space,
   message,
   Upload,
+  Checkbox,
+  Card,
 } from 'antd'
 import { useNavigate } from 'react-router'
 import {
@@ -17,14 +19,37 @@ import {
   PlusOutlined,
   UploadOutlined,
 } from '@ant-design/icons'
+import { Formik } from 'formik'
+import * as Yup from 'yup'
 import './create.css'
 
 const { Title } = Typography
 
 const CreateEmployee = () => {
   const navigate = useNavigate()
+  const [isManager, setIsManager] = useState(false)
+  const [formLayout, setFormLayout] = useState('horizontal')
   const [avatar, setAvatar] = useState(null)
   const [form] = Form.useForm()
+
+  useEffect(() => {
+    const handleResize = () => {
+      setFormLayout(window.innerWidth < 700 ? 'vertical' : 'horizontal')
+    }
+
+    handleResize()
+    window.addEventListener('resize', handleResize)
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
+
+  const onChange = e => {
+    const checked = e.target.checked
+    setIsManager(checked)
+    console.log(`checked = ${checked}`)
+  }
 
   const checkFile = file => {
     const isImage = file.type.startsWith('image/')
@@ -39,22 +64,52 @@ const CreateEmployee = () => {
   }
 
   const initialValues = {
-    code: '',
     name: '',
+    email: '',
+    code: '',
     phone: '',
     identity: '',
     dob: null,
     gender: 'male',
     status: true,
-    isManager: true,
     position: 'Developer',
     manager: '',
     skills: [{ skill: '', experience: '' }],
-    avatar: null,
     description: '',
   }
 
+  const validationSchema = Yup.object().shape({
+    name: Yup.string()
+      .matches(/^([a-zA-Z]\s*)+$/, 'Please input a valid name!')
+      .min(3, 'Name must be at least 3 characters')
+      .max(40, 'Name must be at most 40 characters')
+      .required('Name is required'),
+    // email: Yup.string()
+    //   .email('Email không hợp lệ')
+    //   .required('Vui lòng nhập email'),
+    // code: Yup.string(),
+    // phone: Yup.string()
+    //   .required('Phone number is required')
+    //   .matches(/^[0-9-]{10,}$/, 'Please enter a valid 10-digit phone number!'),
+    // identity: Yup.string()
+    //   .required('Citizen Identity Card is required')
+    //   .matches(
+    //     /^[a-zA-Z0-9]{1,20}$/,
+    //     'Please enter a valid Citizen Identity Card!'
+    //   ),
+    // dob: Yup.date().required('Date of Birth is required'),
+    // manager: Yup.string(),
+    // skills: Yup.array().of(
+    //   Yup.object().shape({
+    //     skill: Yup.string().required('Skill is required'),
+    //     experience: Yup.string().required('Experience is required'),
+    //   })
+    // ),
+    // description: Yup.string(),
+  })
+
   const handleFormSubmit = async values => {
+    console.log(values)
     try {
       const formData = new FormData()
       if (avatar != null) {
@@ -67,13 +122,19 @@ const CreateEmployee = () => {
         formData.append(key, value)
       })
 
+      formData.append('isManager', isManager)
+
+      formData.forEach((value, key) => {
+        console.log('Form Data: ', `${key}: ${value}`)
+      })
+
       await fetch('http://localhost:3000/employees', {
         method: 'POST',
         body: formData,
       })
 
       message.success('Employee created successfully!')
-      navigate('/users')
+      navigate('/employees')
     } catch (error) {
       console.error('Error creating employee:', error)
       message.error('Error creating employee. Please try again.')
@@ -81,7 +142,13 @@ const CreateEmployee = () => {
   }
 
   return (
-    <div className="page-container">
+    <Card
+      title="CREATE EMPLOYEE"
+      bordered={false}
+      style={{
+        width: '100%',
+      }}
+    >
       <button
         className="back-to-list-button"
         onClick={() => navigate('/employees')}
@@ -89,148 +156,97 @@ const CreateEmployee = () => {
         <ArrowLeftOutlined style={{ marginRight: '7px' }} />
         Back
       </button>
-      <Title className="page-title">CREATE EMPLOYEE</Title>
-      <div className="create-container">
-        <Form
-          form={form}
-          layout="vertical"
-          onFinish={handleFormSubmit}
-          initialValues={initialValues}
-        >
-          <div className="input-container">
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={handleFormSubmit}
+      >
+        {({
+          values,
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+        }) => (
+          <Form
+            labelCol={{
+              span: formLayout === 'vertical' ? 24 : 6,
+            }}
+            wrapperCol={{
+              span: formLayout === 'vertical' ? 24 : 18,
+            }}
+            labelAlign="left"
+            style={{
+              maxWidth: 700,
+            }}
+            form={form}
+            layout={formLayout}
+            onFinish={handleSubmit}
+          >
             <Form.Item
               label="Name"
               name="name"
-              className="text-input-form"
-              rules={[
-                {
-                  required: true,
-                  pattern: /^([a-zA-Z]\s*)+$/,
-                  message: 'Please input the employee name !',
-                },
-                {
-                  min: 3,
-                  max: 40,
-                  message: 'Name must be between 3 and 40 characters',
-                },
-              ]}
+              validateStatus={errors.name && touched.name ? 'error' : ''}
+              help={errors.name && touched.name && errors.name}
             >
-              <Input />
-            </Form.Item>
-            <Form.Item label="Code" name="code" className="text-input-form">
-              <Input />
-            </Form.Item>
-          </div>
-          <div className="input-container">
-            <Form.Item
-              label="Phone"
-              name="phone"
-              className="text-input-form"
-              rules={[
-                {
-                  required: true,
-                  message: 'Please input your phone number!',
-                },
-                {
-                  pattern: /^[0-9-]{10,}$/,
-                  message: 'Please enter a valid 10-digit phone number!',
-                },
-              ]}
-            >
-              <Input />
+              <Input
+                value={values.name}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
             </Form.Item>
             <Form.Item
-              label="Citizen Identity Card"
-              name="identity"
-              className="text-input-form"
-              rules={[
-                {
-                  required: true,
-                  message: 'Please input your Citizen Identity Card!',
-                },
-                {
-                  pattern: /^[a-zA-Z0-9]{1,20}$/,
-                  message: 'Please enter a valid Citizen Identity Card!',
-                },
-              ]}
+              label="Email"
+              name="email"
+              // validateStatus={errors.email && touched.email ? 'error' : ''}
+              // help={errors.email && touched.email && errors.email}
             >
+              <Input
+              // value={values.email}
+              // onChange={handleChange}
+              // onBlur={handleBlur}
+              />
+            </Form.Item>
+            <Form.Item label="Code" name="code">
               <Input />
             </Form.Item>
-          </div>
-          <div className="select-container-lg">
-            <div className="select-container">
-              <Form.Item
-                label="Date of Birth"
-                name="dob"
-                className="select-width-dobgs"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please select your Date of Birth!',
-                  },
-                ]}
-              >
-                <DatePicker placement="bottomRight" style={{ width: '100%' }} />
-              </Form.Item>
-              <Form.Item
-                label="Gender"
-                name="gender"
-                className="select-width-dobgs"
-              >
-                <Select>
-                  <Select.Option value="male">Male</Select.Option>
-                  <Select.Option value="female">Female</Select.Option>
-                </Select>
-              </Form.Item>
-              <Form.Item
-                label="Status"
-                name="status"
-                className="select-width-dobgs"
-              >
-                <Select>
-                  <Select.Option value={true}>Active</Select.Option>
-                  <Select.Option value={false}>Inactive</Select.Option>
-                </Select>
-              </Form.Item>
-            </div>
-            <div className="select-container">
-              <Form.Item
-                label="is Manager?"
-                name="isManager"
-                className="select-width-im"
-              >
-                <Select>
-                  <Select.Option value={true}>Yes</Select.Option>
-                  <Select.Option value={false}>No</Select.Option>
-                </Select>
-              </Form.Item>
-              <Form.Item
-                label="Position"
-                name="position"
-                className="select-width-p"
-              >
-                <Select>
-                  <Select.Option value="Developer">Developer</Select.Option>
-                  <Select.Option value="Quality Assurance">
-                    Tester
-                  </Select.Option>
-                  <Select.Option value="CEO">CEO</Select.Option>
-                  <Select.Option value="President">President</Select.Option>
-                </Select>
-              </Form.Item>
-
-              <Form.Item
-                label="Manager"
-                name="manager"
-                className="manager-input-width"
-              >
-                <Input />
-              </Form.Item>
-            </div>
-          </div>
-          <div className="input-container">
-            <div className="skill-input">
-              <p style={{ marginBottom: '8px' }}>Skills</p>
+            <Form.Item label="Phone" name="phone">
+              <Input />
+            </Form.Item>
+            <Form.Item label="Identity Card" name="identity">
+              <Input />
+            </Form.Item>
+            <Form.Item label="Date of Birth" name="dob">
+              <DatePicker placement="bottomRight" />
+            </Form.Item>
+            <Form.Item label="Gender" name="gender">
+              <Select>
+                <Select.Option value="male">Male</Select.Option>
+                <Select.Option value="female">Female</Select.Option>
+              </Select>
+            </Form.Item>
+            <Form.Item label="Status" name="status">
+              <Select>
+                <Select.Option value={true}>Active</Select.Option>
+                <Select.Option value={false}>Inactive</Select.Option>
+              </Select>
+            </Form.Item>
+            <Form.Item label="Position" name="position">
+              <Select>
+                <Select.Option value="Developer">Developer</Select.Option>
+                <Select.Option value="Quality Assurance">Tester</Select.Option>
+                <Select.Option value="CEO">CEO</Select.Option>
+                <Select.Option value="President">President</Select.Option>
+              </Select>
+            </Form.Item>
+            <Form.Item label="is Manager" name="isManager">
+              <Checkbox onChange={onChange} checked={isManager}></Checkbox>
+            </Form.Item>
+            <Form.Item label="Manager" name="manager">
+              <Input />
+            </Form.Item>
+            <Form.Item label="List">
               <Form.List name="skills">
                 {(fields, { add, remove }) => (
                   <>
@@ -243,30 +259,10 @@ const CreateEmployee = () => {
                         }}
                         align="baseline"
                       >
-                        <Form.Item
-                          {...restField}
-                          name={[name, 'skill']}
-                          rules={[
-                            {
-                              required: true,
-                              whitespace: true,
-                              message: 'Please input skill!',
-                            },
-                          ]}
-                        >
+                        <Form.Item {...restField} name={[name, 'skill']}>
                           <Input placeholder="Skill" />
                         </Form.Item>
-                        <Form.Item
-                          {...restField}
-                          name={[name, 'experience']}
-                          rules={[
-                            {
-                              required: true,
-                              whitespace: true,
-                              message: 'Please input experience!',
-                            },
-                          ]}
-                        >
+                        <Form.Item {...restField} name={[name, 'experience']}>
                           <Input placeholder="Experience (Years)" />
                         </Form.Item>
                         <MinusCircleOutlined
@@ -292,38 +288,34 @@ const CreateEmployee = () => {
                   </>
                 )}
               </Form.List>
-            </div>
-            <Form.Item
-              label="Description"
-              name="description"
-              className="text-input-form"
-            >
+            </Form.Item>
+
+            <Form.Item label="Description" name="description">
               <Input.TextArea rows={4} />
             </Form.Item>
-          </div>
-          <Form.Item>
-            <p style={{ marginBottom: '8px' }}>Avatar</p>
-            <Upload
-              name="avatar"
-              listType="picture"
-              accept="image/*"
-              maxCount={1}
-              action="http://localhost:3000/employees"
-              beforeUpload={checkFile}
-              onRemove={() => setAvatar(null)}
-            >
-              <Button icon={<UploadOutlined />}>Upload Avatar</Button>
-            </Upload>
-          </Form.Item>
+            <Form.Item label="Avatar">
+              <Upload
+                name="avatar"
+                listType="picture"
+                accept="image/*"
+                maxCount={1}
+                action="http://localhost:3000/employees"
+                beforeUpload={checkFile}
+                onRemove={() => setAvatar(null)}
+              >
+                <Button icon={<UploadOutlined />}>Upload Avatar</Button>
+              </Upload>
+            </Form.Item>
 
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
-        </Form>
-      </div>
-    </div>
+            <Form.Item>
+              <Button type="primary" htmlType="submit">
+                Create
+              </Button>
+            </Form.Item>
+          </Form>
+        )}
+      </Formik>
+    </Card>
   )
 }
 
