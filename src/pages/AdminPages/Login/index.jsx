@@ -12,7 +12,7 @@ const Login = ({ setIsLogin }) => {
   }
   return (
     <div onClick={handleLogin} onKeyDown={handleLogin}>
-      Login 123
+      Login
     </div>
   )
 }
