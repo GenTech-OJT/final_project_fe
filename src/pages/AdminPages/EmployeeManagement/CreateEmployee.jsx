@@ -17,7 +17,7 @@ import {
   PlusOutlined,
   UploadOutlined,
 } from '@ant-design/icons'
-import './create.css'
+import './createEmployee.css'
 
 const { Title } = Typography
 
