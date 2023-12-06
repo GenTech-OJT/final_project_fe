@@ -34,7 +34,8 @@
 .create-container {
   width: 100%;
 }
-
+.page-container {
+}
 .input-container {
   display: flex;
   width: 100%;

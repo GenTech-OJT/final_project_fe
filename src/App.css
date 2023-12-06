@@ -16,6 +16,10 @@ video {
   max-width: 100%;
 }
 
+.ant-layout-sider-children {
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px I !important;
+}
+
 button {
   cursor: pointer;
   background-color: transparent;
