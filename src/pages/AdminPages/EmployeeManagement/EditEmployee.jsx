@@ -13,6 +13,7 @@ import {
   Select,
   Space,
   Typography,
+  Upload,
   message,
 } from 'antd'
 import moment from 'moment'
@@ -90,6 +91,7 @@ const EditEmployee = () => {
         status: values.status,
         is_manager: values.is_manager,
         position: values.position,
+        avatar: values.avatar,
         skills: values.skills.map(skill => ({
           name: skill.skill,
           year: skill.experience,
@@ -415,7 +417,17 @@ const EditEmployee = () => {
                       borderRadius: '50%',
                     }}
                   />
-                  <Button icon={<UploadOutlined />}>Upload Avatar</Button>
+                  <Upload
+                    name="avatar"
+                    listType="picture"
+                    accept="image/*"
+                    maxCount={1}
+                    action="http://localhost:3000/employees"
+                    beforeUpload={checkFile}
+                    onRemove={() => setAvatar(null)}
+                  >
+                    <Button icon={<UploadOutlined />}>Upload Avatar</Button>
+                  </Upload>
                 </>
               )}
             </Form.Item>
