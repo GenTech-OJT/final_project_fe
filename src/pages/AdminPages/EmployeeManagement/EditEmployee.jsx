@@ -27,6 +27,7 @@ const EditEmployee = () => {
   const navigate = useNavigate()
   const [form] = Form.useForm()
   const { id } = useParams()
+  // eslint-disable-next-line react/destructuring-assignment
   const [empdata, setEmpData] = useState({})
 
   useEffect(() => {
