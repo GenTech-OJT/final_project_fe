@@ -87,7 +87,6 @@ const App = () => {
             {/* <div className="demo-logo-vertical" /> */}
 
             <div
-              role="button"
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -101,22 +100,25 @@ const App = () => {
                 icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
                 onClick={() => setCollapsed(!collapsed)}
               /> */}
-              <img
-                style={{ cursor: 'pointer', marginLeft: '12px' }}
-                src="https://wieldy.g-axon.work/assets/images/logo-white.png"
-                alt=""
-                className="logo"
+              <a
+                href="/"
                 onClick={() => navigate('/')}
                 onKeyDown={() => navigate('/')}
-              />
-              <div
+              >
+                <img
+                  style={{ cursor: 'pointer', marginLeft: '12px' }}
+                  src="https://wieldy.g-axon.work/assets/images/logo-white.png"
+                  alt=""
+                  className="logo"
+                />
+              </a>
+              <button
                 className="close-icon"
                 onClick={onClose}
                 onKeyDown={onClose}
-                role="button"
               >
                 <CloseOutlined />
-              </div>
+              </button>
             </div>
             {/* Avatar */}
             <AvatarGroup

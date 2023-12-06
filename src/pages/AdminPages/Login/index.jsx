@@ -11,9 +11,9 @@ const Login = ({ setIsLogin }) => {
     navigate('/')
   }
   return (
-    <div onClick={handleLogin} onKeyDown={handleLogin}>
+    <button onClick={handleLogin} onKeyDown={handleLogin}>
       Login
-    </div>
+    </button>
   )
 }
 

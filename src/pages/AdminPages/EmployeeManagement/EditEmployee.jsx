@@ -27,20 +27,7 @@ const EditEmployee = () => {
   const navigate = useNavigate()
   const [form] = Form.useForm()
   const { id } = useParams()
-  const [empdata, empdataChange] = useState({})
-
-  // const checkFile = file => {
-  //   const isImage = file.type.startsWith('image/')
-  //   file.setType('image/png')
-
-  //   if (!isImage) {
-  //     message.error('You can only upload image files!')
-  //   } else {
-  //     setAvatar(file)
-  //   }
-
-  //   return false // Prevent automatic upload by returning false
-  // }
+  const [empdata, setEmpData] = useState({})
 
   useEffect(() => {
     fetch('http://localhost:3000/employees/' + id)
@@ -48,7 +35,7 @@ const EditEmployee = () => {
         return res.json()
       })
       .then(res => {
-        empdataChange(res)
+        setEmpData(res)
         form.setFieldsValue({
           name: res.name,
           code: res.code,
@@ -176,7 +163,7 @@ const EditEmployee = () => {
                   value={empdata?.name || ''}
                   onChange={e => {
                     form.setFieldsValue({ name: e.target.value }) // Cập nhật giá trị trường input trong form
-                    empdataChange({ ...empdata, name: e.target.value }) // Cập nhật state 'empdata'
+                    setEmpData({ ...empdata, name: e.target.value }) // Cập nhật state 'empdata'
                   }}
                 />{' '}
               </Form.Item>
@@ -185,7 +172,7 @@ const EditEmployee = () => {
                   value={empdata?.code || ''}
                   onChange={e => {
                     form.setFieldsValue({ code: e.target.value }) // Cập nhật giá trị trường input trong form
-                    empdataChange({ ...empdata, code: e.target.value }) // Cập nhật state 'empdata'
+                    setEmpData({ ...empdata, code: e.target.value }) // Cập nhật state 'empdata'
                   }}
                 />{' '}
               </Form.Item>
@@ -210,7 +197,7 @@ const EditEmployee = () => {
                   value={empdata?.phone || ''}
                   onChange={e => {
                     form.setFieldsValue({ phone: e.target.value }) // Cập nhật giá trị trường input trong form
-                    empdataChange({ ...empdata, phone: e.target.value }) // Cập nhật state 'empdata'
+                    setEmpData({ ...empdata, phone: e.target.value }) // Cập nhật state 'empdata'
                   }}
                 />{' '}
               </Form.Item>
@@ -233,7 +220,7 @@ const EditEmployee = () => {
                   value={empdata?.identity || ''}
                   onChange={e => {
                     form.setFieldsValue({ identity: e.target.value }) // Cập nhật giá trị trường input trong form
-                    empdataChange({ ...empdata, identity: e.target.value }) // Cập nhật state 'empdata'
+                    setEmpData({ ...empdata, identity: e.target.value }) // Cập nhật state 'empdata'
                   }}
                 />{' '}
               </Form.Item>
@@ -387,7 +374,7 @@ const EditEmployee = () => {
                   value={empdata?.description || ''}
                   onChange={e => {
                     form.setFieldsValue({ description: e.target.value }) // Cập nhật giá trị trường input trong form
-                    empdataChange({ ...empdata, description: e.target.value }) // Cập nhật state 'empdata'
+                    setEmpData({ ...empdata, description: e.target.value }) // Cập nhật state 'empdata'
                   }}
                 />{' '}
               </Form.Item>
@@ -412,8 +399,6 @@ const EditEmployee = () => {
                     accept="image/*"
                     maxCount={1}
                     action="http://localhost:3000/employees"
-                    beforeUpload={checkFile}
-                    // onRemove={() => setAvatar(null)}
                   >
                     <Button icon={<UploadOutlined />}>Upload Avatar</Button>
                   </Upload>
