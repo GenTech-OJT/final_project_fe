@@ -25,16 +25,11 @@ const { Title, Text } = Typography
 
 const EditEmployee = () => {
   const navigate = useNavigate()
-  const [avatar, setAvatar] = useState(null)
+  const [setAvatar] = useState(null)
   const [form] = Form.useForm()
   const { id } = useParams()
   const [empdata, empdataChange] = useState({})
 
-  const [pagination, setPagination] = useState({
-    current: 1,
-    pageSize: 5,
-    total: 14,
-  })
   const checkFile = file => {
     const isImage = file.type.startsWith('image/')
     file.setType('image/png')

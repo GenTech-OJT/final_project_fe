@@ -19,7 +19,7 @@ const App = () => {
   const navigate = useNavigate()
   const [collapsed, setCollapsed] = useState(false)
   const [open, setOpen] = useState(false)
-  const [placement, setPlacement] = useState('left')
+  const [placement] = useState('left')
   const [isMobile, setIsMobile] = useState(false)
   const showDrawer = () => {
     setOpen(true)
@@ -88,6 +88,7 @@ const App = () => {
             {/* <div className="demo-logo-vertical" /> */}
 
             <div
+              role="button"
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -109,7 +110,12 @@ const App = () => {
                 onClick={() => navigate('/')}
                 onKeyDown={() => navigate('/')}
               />
-              <div className="close-icon" onClick={onClose} onKeyDown={onClose}>
+              <div
+                className="close-icon"
+                onClick={onClose}
+                onKeyDown={onClose}
+                role="button"
+              >
                 <CloseOutlined />
               </div>
             </div>
@@ -160,9 +166,9 @@ const App = () => {
     )
   }
   return (
-    <>
+    <div>
       {isLogin ? (
-        <>
+        <div>
           <Layout hasSider>
             <Sider
               className="sider-menu"
@@ -244,7 +250,7 @@ const App = () => {
               </Footer>
             </Layout>
           </Layout>
-        </>
+        </div>
       ) : (
         <Routes>
           <Route path="/login" element={<Login setIsLogin={handleLogin} />} />
@@ -252,7 +258,7 @@ const App = () => {
           {/* <Route path="*" element={<NotFoundPage />} /> */}
         </Routes>
       )}
-    </>
+    </div>
   )
 }
 export default App
