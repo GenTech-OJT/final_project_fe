@@ -27,8 +27,8 @@ const EditEmployee = () => {
   const navigate = useNavigate()
   const [form] = Form.useForm()
   const { id } = useParams()
-  // eslint-disable-next-line react/destructuring-assignment
-  const [empdata, setEmpData] = useState({})
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const [empdata, setEmpData] = useState([])
 
   useEffect(() => {
     fetch('http://localhost:3000/employees/' + id)
