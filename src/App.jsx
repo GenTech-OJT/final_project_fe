@@ -19,7 +19,6 @@ const App = () => {
   const navigate = useNavigate()
   const [collapsed, setCollapsed] = useState(false)
   const [open, setOpen] = useState(false)
-  const [placement] = useState('left')
   const [isMobile, setIsMobile] = useState(false)
   const showDrawer = () => {
     setOpen(true)
@@ -78,11 +77,11 @@ const App = () => {
             // collapsible
             // collapsed={collapsed}
 
-            placement={placement}
+            placement="left"
             closable={false}
             onClose={onClose}
             open={open}
-            key={placement}
+            key="left"
             className="menu-mobile"
           >
             {/* <div className="demo-logo-vertical" /> */}

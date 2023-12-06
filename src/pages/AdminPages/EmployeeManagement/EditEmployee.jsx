@@ -25,23 +25,22 @@ const { Title, Text } = Typography
 
 const EditEmployee = () => {
   const navigate = useNavigate()
-  const [setAvatar] = useState(null)
   const [form] = Form.useForm()
   const { id } = useParams()
   const [empdata, empdataChange] = useState({})
 
-  const checkFile = file => {
-    const isImage = file.type.startsWith('image/')
-    file.setType('image/png')
+  // const checkFile = file => {
+  //   const isImage = file.type.startsWith('image/')
+  //   file.setType('image/png')
 
-    if (!isImage) {
-      message.error('You can only upload image files!')
-    } else {
-      setAvatar(file)
-    }
+  //   if (!isImage) {
+  //     message.error('You can only upload image files!')
+  //   } else {
+  //     setAvatar(file)
+  //   }
 
-    return false // Prevent automatic upload by returning false
-  }
+  //   return false // Prevent automatic upload by returning false
+  // }
 
   useEffect(() => {
     fetch('http://localhost:3000/employees/' + id)
@@ -414,7 +413,7 @@ const EditEmployee = () => {
                     maxCount={1}
                     action="http://localhost:3000/employees"
                     beforeUpload={checkFile}
-                    onRemove={() => setAvatar(null)}
+                    // onRemove={() => setAvatar(null)}
                   >
                     <Button icon={<UploadOutlined />}>Upload Avatar</Button>
                   </Upload>

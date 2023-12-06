@@ -10,7 +10,11 @@ const Login = ({ setIsLogin }) => {
     setIsLogin(true) // Đặt trạng thái đăng nhập thành true
     navigate('/')
   }
-  return <div onClick={handleLogin}>Login</div>
+  return (
+    <div onClick={handleLogin} onKeyDown={handleLogin}>
+      Login
+    </div>
+  )
 }
 
 Login.propTypes = {
