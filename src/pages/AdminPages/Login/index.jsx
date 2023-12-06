@@ -29,10 +29,10 @@ export default function App() {
         console.log('Login successful:', data)
         localStorage.setItem('admin', data.token)
         navigate('/')
-        showToast('đăng nhập thành công', 'success')
+        showToast('Login Successful !', 'success')
       } else {
         console.error('Login failed:', data.error)
-        showToast('Đăng nhập thất bại', 'error')
+        showToast('Login Failed !', 'error')
       }
     } catch (error) {
       console.error('An error occurred:', error)
