@@ -10,9 +10,15 @@ import {
 } from '@components/CustomComponent/CustomTable'
 import './index.css'
 import { showToast } from '@components/Toast/toast'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  fetchEmployees,
+  fetchEmployeesStart,
+  fetchEmployeesSuccess,
+  fetchEmployeesFailure,
+} from '../../../redux/slides/employeeSlice'
 
 const EmployeeManagement = () => {
-  const [gridData, setGridData] = useState([])
   const [searchText, setSearchText] = useState('')
   const [sortedInfo, setSortedInfo] = useState({})
   const [pagination, setPagination] = useState({
@@ -22,11 +28,9 @@ const EmployeeManagement = () => {
   })
 
   const navigate = useNavigate()
-
   const { t } = useTranslation('translation')
-
-  const [loadingData, setLoadingData] = useState(true)
-
+  const dispatch = useDispatch()
+  const { employees, loading } = useSelector(state => state.employee)
   const formRef = useRef(null)
 
   const locale = {
@@ -36,55 +40,53 @@ const EmployeeManagement = () => {
   }
 
   useEffect(() => {
+    dispatch(fetchEmployeesStart())
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:3000/employees?_page=${pagination.current}&_limit=${
-            pagination.pageSize
-          }&_sort=${sortedInfo.columnKey || 'id'}&_order=${
-            sortedInfo.order || 'asc'
-          }&q=${searchText}`
+        await dispatch(
+          fetchEmployees({
+            page: pagination.current,
+            limit: pagination.pageSize,
+            sort: sortedInfo.columnKey || 'id',
+            order: sortedInfo.order || 'asc',
+            query: searchText,
+          })
         )
 
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`)
-        }
-
-        const apiData = await response.json()
-        console.log(apiData)
-        setGridData(apiData.data)
-        setPagination({
-          ...pagination,
-          total: apiData.pagination.total,
-        })
+        // Update total from the state
+        setPagination(prev => ({
+          ...prev,
+          total: employees.length,
+        }))
       } catch (error) {
-        console.error('Lỗi khi gọi API:', error)
-      } finally {
-        setLoadingData(false)
+        console.error('Error calling API:', error)
+        dispatch(fetchEmployeesFailure(error.message))
       }
     }
 
     fetchData()
-  }, [pagination.current, pagination.pageSize, sortedInfo, searchText])
+  }, [
+    dispatch,
+    pagination.current,
+    pagination.pageSize,
+    sortedInfo,
+    searchText,
+  ])
 
   const edit = record => {
     formRef.current.setFieldsValue({ ...record })
-    setEditRowKey(record.id)
   }
 
   const viewDetail = record => {
-    // Handle logic to view details for the selected record
     console.log('View Detail:', record)
   }
 
   const deleteRecord = recordId => {
-    // Handle logic to delete the selected record
     console.log('Delete Record:', recordId)
   }
 
   const toggleStatus = record => {
-    // Handle logic to toggle status
-    const updatedGridData = gridData.map(item => {
+    const updatedEmployees = employees.map(item => {
       if (item.id === record.id) {
         return {
           ...item,
@@ -93,7 +95,7 @@ const EmployeeManagement = () => {
       }
       return item
     })
-    setGridData(updatedGridData)
+    dispatch(fetchEmployeesSuccess(updatedEmployees))
     record.status === 'active'
       ? showToast(t('deactivated_successfully'), 'success')
       : showToast(t('activated_successfully'), 'success')
@@ -194,13 +196,13 @@ const EmployeeManagement = () => {
         <>
           <Button
             key={`view-${record.id}`}
-            onClick={() => navigate('/employees/detail')}
+            onClick={() => viewDetail(record)}
             style={{ marginRight: 8 }}
             icon={<EyeOutlined />}
           />
           <Button
             key={`edit-${record.id}`}
-            onClick={() => navigate('/employees/edit')}
+            onClick={() => edit(record)}
             style={{ marginRight: 8 }}
             icon={<EditOutlined />}
           />
@@ -216,7 +218,7 @@ const EmployeeManagement = () => {
 
   return (
     <div className="employeeLayout">
-      <Spin spinning={loadingData}>
+      <Spin spinning={loading}>
         <Button
           type="primary"
           onClick={() => navigate('/employees/create')}
@@ -237,11 +239,8 @@ const EmployeeManagement = () => {
         >
           <CustomTable
             columns={columns}
-            data={gridData}
+            data={employees}
             handleTableChange={handleTableChange}
-            edit={edit}
-            viewDetail={viewDetail}
-            deleteRecord={deleteRecord}
             pagination={{
               ...pagination,
               showSizeChanger: true,

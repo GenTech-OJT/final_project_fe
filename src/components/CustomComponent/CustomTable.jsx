@@ -28,6 +28,7 @@ CustomTable.propTypes = {
   data: PropTypes.array.isRequired,
   handleTableChange: PropTypes.func.isRequired,
   pagination: PropTypes.object.isRequired,
+  locale: PropTypes.object.isRequired,
 }
 
 const CustomSearch = ({ handleChange }) => {
