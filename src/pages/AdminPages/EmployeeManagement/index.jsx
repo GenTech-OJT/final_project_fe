@@ -1,21 +1,20 @@
 /* eslint-disable no-undef */
 import { DeleteOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons'
-import { Button, Spin, Empty } from 'antd'
-import { useEffect, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router'
 import {
   CustomSearch,
   CustomTable,
 } from '@components/CustomComponent/CustomTable'
-import './index.css'
 import { showToast } from '@components/Toast/toast'
+import { Button, Empty, Spin } from 'antd'
+import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router'
 import {
   fetchEmployees,
   fetchEmployeesStart,
-  fetchEmployeesSuccess,
 } from '../../../redux/slides/employeeSlice'
+import './index.css'
 
 const EmployeeManagement = () => {
   const [searchText, setSearchText] = useState('')
@@ -81,20 +80,50 @@ const EmployeeManagement = () => {
     console.log('Delete Record:', recordId)
   }
 
-  const toggleStatus = record => {
-    const updatedEmployees = employees.map(item => {
-      if (item.id === record.id) {
-        return {
-          ...item,
-          status: item.status === 'active' ? 'inactive' : 'active',
+  const toggleStatus = async record => {
+    try {
+      // Dispatch action to update status in the database
+      const response = await fetch(
+        `http://localhost:3000/employees/${record.id}`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            status: record.status === 'active' ? 'inactive' : 'active',
+          }),
         }
+      )
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`)
       }
-      return item
-    })
-    dispatch(fetchEmployeesSuccess(updatedEmployees))
-    record.status === 'active'
-      ? showToast(t('deactivated_successfully'), 'success')
-      : showToast(t('activated_successfully'), 'success')
+
+      // Dispatch action to update status in Redux store
+      const updatedEmployees = employees.map(item => {
+        if (item.id === record.id) {
+          return {
+            ...item,
+            status: record.status === 'active' ? 'inactive' : 'active',
+          }
+        }
+        return item
+      })
+      dispatch({
+        type: 'employee/fetchEmployeesSuccess',
+        payload: { data: updatedEmployees },
+      })
+
+      // Show success toast
+      record.status === 'active'
+        ? showToast(t('deactivated_successfully'), 'success')
+        : showToast(t('activated_successfully'), 'success')
+    } catch (error) {
+      console.error('Error updating status:', error)
+      // Show error toast
+      showToast(t('status_update_failed'), 'error')
+    }
   }
 
   const handleChange = e => {

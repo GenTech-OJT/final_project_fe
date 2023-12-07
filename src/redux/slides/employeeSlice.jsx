@@ -33,11 +33,21 @@ const yourSortAndFilterLogic = (data, sortKey, sortOrder, searchQuery) => {
       const valueA = a[sortKey]
       const valueB = b[sortKey]
 
-      if (sortOrder === 'asc') {
-        return valueA.localeCompare(valueB, undefined, { sensitivity: 'base' })
-      } else {
-        return valueB.localeCompare(valueA, undefined, { sensitivity: 'base' })
+      // Hàm để so sánh chuỗi số có cả số hàng chục
+      const compareStrings = (str1, str2) => {
+        const numA = parseInt(str1.replace(/\D/g, ''), 10)
+        const numB = parseInt(str2.replace(/\D/g, ''), 10)
+
+        return numA - numB
       }
+
+      if (sortOrder === 'asc') {
+        return compareStrings(valueA, valueB)
+      } else if (sortOrder === 'desc') {
+        return compareStrings(valueB, valueA)
+      }
+
+      return 0
     })
   }
 
@@ -57,7 +67,7 @@ const employeeSlice = createSlice({
       // Kiểm tra xem data có phải là mảng không
       if (!Array.isArray(data)) {
         console.error('Error: data is not an array')
-        return { ...state, employees: [], loading: false }
+        return { ...state, loading: false }
       }
 
       // Gọi hàm mới để xử lý sắp xếp và tìm kiếm

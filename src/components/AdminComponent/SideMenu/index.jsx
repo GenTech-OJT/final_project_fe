@@ -40,7 +40,7 @@ const SideMenu = ({ selectedKey, setSelectedKey }) => {
           {
             label: t('employee_management_label'),
             icon: <UserOutlined />,
-            key: '/users',
+            key: '/employees',
           },
         ]}
       />
