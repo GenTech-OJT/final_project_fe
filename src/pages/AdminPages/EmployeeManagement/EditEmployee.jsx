@@ -21,8 +21,6 @@ import moment from 'moment'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 import './editEmployee.css'
-import { Formik } from 'formik'
-import * as Yup from 'yup'
 const { Title, Text } = Typography
 
 const EditEmployee = () => {
