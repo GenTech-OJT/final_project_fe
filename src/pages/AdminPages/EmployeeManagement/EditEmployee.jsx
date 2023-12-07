@@ -29,6 +29,7 @@ const EditEmployee = () => {
   const { id } = useParams()
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [empData, setEmpData] = useState([])
+  const [avatar, setAvatar] = useState(null)
 
   useEffect(() => {
     fetch('http://localhost:3000/employees/' + id)
@@ -73,7 +74,9 @@ const EditEmployee = () => {
         status: values.status,
         is_manager: values.is_manager,
         position: values.position,
-        avatar: values.avatar,
+        avatar: avatar
+          ? URL.createObjectURL(avatar.originFileObj)
+          : values.avatar, // Updated avatar value
         skills: values.skills.map(skill => ({
           name: skill.skill,
           year: skill.experience,
@@ -390,7 +393,7 @@ const EditEmployee = () => {
                 />{' '}
               </Form.Item>
             </div>
-            <Form.Item>
+            <Form.Item name="avatar">
               <p style={{ marginBottom: '8px' }}>Avatar</p>
               {empData?.avatar && (
                 <>
