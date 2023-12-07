@@ -25,41 +25,41 @@ import './create.css'
 
 const CreateEmployee = () => {
   const navigate = useNavigate()
-  const [isManager, setIsManager] = useState(false)
-  const [formLayout, setFormLayout] = useState('horizontal')
-  const [avatar, setAvatar] = useState(null)
-  const [form] = Form.useForm()
+  // const [isManager, setIsManager] = useState(false)
+  // const [formLayout, setFormLayout] = useState('horizontal')
+  // const [avatar, setAvatar] = useState(null)
+  // const [form] = Form.useForm()
 
-  useEffect(() => {
-    const handleResize = () => {
-      setFormLayout(window.innerWidth < 700 ? 'vertical' : 'horizontal')
-    }
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     setFormLayout(window.innerWidth < 700 ? 'vertical' : 'horizontal')
+  //   }
 
-    handleResize()
-    window.addEventListener('resize', handleResize)
+  //   handleResize()
+  //   window.addEventListener('resize', handleResize)
 
-    return () => {
-      window.removeEventListener('resize', handleResize)
-    }
-  }, [])
+  //   return () => {
+  //     window.removeEventListener('resize', handleResize)
+  //   }
+  // }, [])
 
-  const onChange = e => {
-    const checked = e.target.checked
-    setIsManager(checked)
-    console.log(`checked = ${checked}`)
-  }
+  // const onChange = e => {
+  //   const checked = e.target.checked
+  //   setIsManager(checked)
+  //   console.log(`checked = ${checked}`)
+  // }
 
-  const checkFile = file => {
-    const isImage = file.type.startsWith('image/')
+  // const checkFile = file => {
+  //   const isImage = file.type.startsWith('image/')
 
-    if (!isImage) {
-      message.error('You can only upload image files!')
-    } else {
-      setAvatar(file)
-    }
+  //   if (!isImage) {
+  //     message.error('You can only upload image files!')
+  //   } else {
+  //     setAvatar(file)
+  //   }
 
-    return false
-  }
+  //   return false
+  // }
 
   const initialValues = {
     name: '',
@@ -69,7 +69,8 @@ const CreateEmployee = () => {
     identity: '',
     dob: null,
     gender: 'male',
-    status: true,
+    status: false,
+    isManager: false,
     position: 'Developer',
     manager: '',
     skills: [{ skill: '', experience: '' }],
@@ -82,13 +83,18 @@ const CreateEmployee = () => {
       .min(3, 'Name must be at least 3 characters')
       .max(40, 'Name must be at most 40 characters')
       .required('Name is required'),
-    // email: Yup.string()
-    //   .email('Email không hợp lệ')
-    //   .required('Vui lòng nhập email'),
-    // code: Yup.string(),
-    // phone: Yup.string()
-    //   .required('Phone number is required')
-    //   .matches(/^[0-9-]{10,}$/, 'Please enter a valid 10-digit phone number!'),
+    email: Yup.string()
+      .email('Email không hợp lệ')
+      .required('Vui lòng nhập email'),
+    code: Yup.string().required('Vui lòng nhập code'),
+    phone: Yup.string()
+      .required('Vui lòng nhập phone')
+      .required('Phone number is required')
+      .matches(/^[0-9-]{10,}$/, 'Please enter a valid 10-digit phone number!'),
+    identity: Yup.string().required('Vui lòng nhập identity'),
+    dob: Yup.date().required('Vui lòng nhập ngày sinh'),
+    gender: Yup.string().required('Vui lòng chọn giới tính'),
+    isManager: Yup.bool(),
     // identity: Yup.string()
     //   .required('Citizen Identity Card is required')
     //   .matches(
@@ -106,37 +112,37 @@ const CreateEmployee = () => {
     // description: Yup.string(),
   })
 
-  const handleFormSubmit = async values => {
+  const handleFormSubmit = values => {
     console.log(values)
-    try {
-      const formData = new FormData()
-      if (avatar != null) {
-        formData.append('avatar', avatar)
-      } else {
-        formData.append('avatar', null)
-      }
+    // try {
+    //   const formData = new FormData()
+    //   if (avatar != null) {
+    //     formData.append('avatar', avatar)
+    //   } else {
+    //     formData.append('avatar', null)
+    //   }
 
-      Object.entries(values).forEach(([key, value]) => {
-        formData.append(key, value)
-      })
+    //   Object.entries(values).forEach(([key, value]) => {
+    //     formData.append(key, value)
+    //   })
 
-      formData.append('isManager', isManager)
+    //   formData.append('isManager', isManager)
 
-      formData.forEach((value, key) => {
-        console.log('Form Data: ', `${key}: ${value}`)
-      })
+    //   formData.forEach((value, key) => {
+    //     console.log('Form Data: ', `${key}: ${value}`)
+    //   })
 
-      await fetch('http://localhost:3000/employees', {
-        method: 'POST',
-        body: formData,
-      })
+    //    fetch('http://localhost:3000/employees', {
+    //     method: 'POST',
+    //     body: formData,
+    //   })
 
-      message.success('Employee created successfully!')
-      navigate('/employees')
-    } catch (error) {
-      console.error('Error creating employee:', error)
-      message.error('Error creating employee. Please try again.')
-    }
+    //   message.success('Employee created successfully!')
+    //   navigate('/employees')
+    // } catch (error) {
+    //   console.error('Error creating employee:', error)
+    //   message.error('Error creating employee. Please try again.')
+    // }
   }
 
   return (
@@ -167,29 +173,31 @@ const CreateEmployee = () => {
             handleChange,
             handleBlur,
             handleSubmit,
+            setFieldValue,
+            // isSubmitting,
           }) => (
             <Form
-              labelCol={{
-                span: formLayout === 'vertical' ? 24 : 6,
-              }}
-              wrapperCol={{
-                span: formLayout === 'vertical' ? 24 : 18,
-              }}
-              labelAlign="left"
-              style={{
-                maxWidth: 700,
-              }}
-              form={form}
-              layout={formLayout}
+              // labelCol={{
+              //   span: formLayout === 'vertical' ? 24 : 6,
+              // }}
+              // wrapperCol={{
+              //   span: formLayout === 'vertical' ? 24 : 18,
+              // }}
+              // labelAlign="left"
+              // style={{
+              //   maxWidth: 700,
+              // }}
+              // layout={formLayout}
               onFinish={handleSubmit}
             >
               <Form.Item
                 label="Name"
                 name="name"
                 validateStatus={errors.name && touched.name ? 'error' : ''}
-                help={errors.name && touched.name && errors.name}
+                help={errors.name && touched.name ? errors.name : ''}
               >
                 <Input
+                  name="name"
                   value={values.name}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -198,34 +206,90 @@ const CreateEmployee = () => {
               <Form.Item
                 label="Email"
                 name="email"
-                // validateStatus={errors.email && touched.email ? 'error' : ''}
-                // help={errors.email && touched.email && errors.email}
+                validateStatus={errors.email && touched.email ? 'error' : ''}
+                help={errors.email && touched.email ? errors.email : ''}
               >
                 <Input
-                // value={values.email}
-                // onChange={handleChange}
-                // onBlur={handleBlur}
+                  name="email"
+                  value={values.email}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
                 />
               </Form.Item>
-              <Form.Item label="Code" name="code">
-                <Input />
+              <Form.Item
+                label="Code"
+                name="code"
+                validateStatus={errors.code && touched.code ? 'error' : ''}
+                help={errors.code && touched.code ? errors.code : ''}
+              >
+                <Input
+                  name="code"
+                  value={values.code}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
               </Form.Item>
-              <Form.Item label="Phone" name="phone">
-                <Input />
+              <Form.Item
+                label="Phone"
+                name="phone"
+                validateStatus={errors.phone && touched.phone ? 'error' : ''}
+                help={errors.phone && touched.phone ? errors.phone : ''}
+              >
+                <Input
+                  name="phone"
+                  value={values.phone}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
               </Form.Item>
-              <Form.Item label="Identity Card" name="identity">
-                <Input />
+              <Form.Item
+                label="Identity Card"
+                name="identity"
+                validateStatus={
+                  errors.identity && touched.identity ? 'error' : ''
+                }
+                help={
+                  errors.identity && touched.identity ? errors.identity : ''
+                }
+              >
+                <Input
+                  name="identity"
+                  value={values.identity}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
               </Form.Item>
-              <Form.Item label="Date of Birth" name="dob">
-                <DatePicker placement="bottomRight" />
+              <Form.Item
+                label="Date of Birth"
+                name="dob"
+                validateStatus={errors.dob && touched.dob ? 'error' : ''}
+                help={errors.dob && touched.dob ? errors.dob : ''}
+              >
+                <DatePicker
+                  placement="bottomRight"
+                  name="dob"
+                  onChange={value => setFieldValue('dob', value)}
+                  onBlur={handleBlur}
+                  value={values.dob}
+                />
               </Form.Item>
-              <Form.Item label="Gender" name="gender">
-                <Select>
+              <Form.Item
+                label="Gender"
+                name="gender"
+                validateStatus={errors.gender && touched.gender ? 'error' : ''}
+                help={errors.gender && touched.gender && errors.gender}
+              >
+                <Select
+                  name="gender"
+                  onChange={value => setFieldValue('gender', value)}
+                  onBlur={handleBlur}
+                  defaultValue={values.gender}
+                >
                   <Select.Option value="male">Male</Select.Option>
                   <Select.Option value="female">Female</Select.Option>
                 </Select>
               </Form.Item>
-              <Form.Item label="Status" name="status">
+              {/* <Form.Item label="Status" name="status">
                 <Select>
                   <Select.Option value={true}>Active</Select.Option>
                   <Select.Option value={false}>Inactive</Select.Option>
@@ -240,14 +304,19 @@ const CreateEmployee = () => {
                   <Select.Option value="CEO">CEO</Select.Option>
                   <Select.Option value="President">President</Select.Option>
                 </Select>
-              </Form.Item>
+              </Form.Item> */}
               <Form.Item label="is Manager" name="isManager">
-                <Checkbox onChange={onChange} checked={isManager}></Checkbox>
+                <Checkbox
+                  name="isManager"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  checked={values.isManager}
+                ></Checkbox>
               </Form.Item>
-              <Form.Item label="Manager" name="manager">
+              {/* <Form.Item label="Manager" name="manager">
                 <Input />
-              </Form.Item>
-              <Form.Item label="List">
+              </Form.Item> */}
+              {/* <Form.Item label="List">
                 <Form.List name="skills">
                   {(fields, { add, remove }) => (
                     <>
@@ -289,12 +358,29 @@ const CreateEmployee = () => {
                     </>
                   )}
                 </Form.List>
-              </Form.Item>
+              </Form.Item> */}
 
-              <Form.Item label="Description" name="description">
-                <Input.TextArea rows={4} />
+              <Form.Item
+                label="Description"
+                name="description"
+                validateStatus={
+                  errors.description && touched.description ? 'error' : ''
+                }
+                help={
+                  errors.description &&
+                  touched.description &&
+                  errors.description
+                }
+              >
+                <Input.TextArea
+                  rows={4}
+                  name="description"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.description}
+                />
               </Form.Item>
-              <Form.Item label="Avatar">
+              {/* <Form.Item label="Avatar">
                 <Upload
                   name="avatar"
                   listType="picture"
@@ -306,7 +392,7 @@ const CreateEmployee = () => {
                 >
                   <Button icon={<UploadOutlined />}>Upload Avatar</Button>
                 </Upload>
-              </Form.Item>
+              </Form.Item> */}
 
               <Form.Item>
                 <Button type="primary" htmlType="submit">
