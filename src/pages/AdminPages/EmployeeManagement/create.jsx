@@ -25,23 +25,23 @@ import './create.css'
 
 const CreateEmployee = () => {
   const navigate = useNavigate()
+  const [formLayout, setFormLayout] = useState('horizontal')
   // const [isManager, setIsManager] = useState(false)
-  // const [formLayout, setFormLayout] = useState('horizontal')
   // const [avatar, setAvatar] = useState(null)
   // const [form] = Form.useForm()
 
-  // useEffect(() => {
-  //   const handleResize = () => {
-  //     setFormLayout(window.innerWidth < 700 ? 'vertical' : 'horizontal')
-  //   }
+  useEffect(() => {
+    const handleResize = () => {
+      setFormLayout(window.innerWidth < 700 ? 'vertical' : 'horizontal')
+    }
 
-  //   handleResize()
-  //   window.addEventListener('resize', handleResize)
+    handleResize()
+    window.addEventListener('resize', handleResize)
 
-  //   return () => {
-  //     window.removeEventListener('resize', handleResize)
-  //   }
-  // }, [])
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
 
   // const onChange = e => {
   //   const checked = e.target.checked
@@ -177,17 +177,17 @@ const CreateEmployee = () => {
             // isSubmitting,
           }) => (
             <Form
-              // labelCol={{
-              //   span: formLayout === 'vertical' ? 24 : 6,
-              // }}
-              // wrapperCol={{
-              //   span: formLayout === 'vertical' ? 24 : 18,
-              // }}
-              // labelAlign="left"
-              // style={{
-              //   maxWidth: 700,
-              // }}
-              // layout={formLayout}
+              labelCol={{
+                span: formLayout === 'vertical' ? 24 : 6,
+              }}
+              wrapperCol={{
+                span: formLayout === 'vertical' ? 24 : 18,
+              }}
+              labelAlign="left"
+              style={{
+                maxWidth: 600,
+              }}
+              layout={formLayout}
               onFinish={handleSubmit}
             >
               <Form.Item
