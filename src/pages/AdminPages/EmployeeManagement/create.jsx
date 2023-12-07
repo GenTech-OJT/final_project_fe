@@ -75,22 +75,21 @@ const CreateEmployee = () => {
       .matches(/^([a-zA-Z]\s*)+$/, 'Please input a valid name!')
       .min(3, 'Name must be at least 3 characters')
       .max(40, 'Name must be at most 40 characters')
-      .required('Name is required'),
+      .required('Please input name'),
     email: Yup.string()
-      .email('Email không hợp lệ')
-      .required('Vui lòng nhập email'),
-    code: Yup.string().required('Vui lòng nhập code'),
+      .email('Please input a valid email!')
+      .required('Please input name'),
+    code: Yup.string().required('Please input code'),
     phone: Yup.string()
-      .required('Vui lòng nhập phone')
-      .required('Phone number is required')
-      .matches(/^[0-9-]{10,}$/, 'Please enter a valid 10-digit phone number!'),
+      .required('Please input phone number')
+      .matches(/^[0-9-]{10,}$/, 'Please input a valid 10-digit phone number!'),
     identity: Yup.string()
-      .required('Vui lòng nhập identity')
+      .required('Please input the citizen identity card')
       .matches(
         /^[a-zA-Z0-9]{1,20}$/,
-        'Please enter a valid Citizen Identity Card!'
+        'Please input a valid citizen identity card!'
       ),
-    dob: Yup.date().required('Vui lòng nhập ngày sinh'),
+    dob: Yup.date().required('Please input date of birth'),
     gender: Yup.string(),
     status: Yup.string(),
     position: Yup.string(),
