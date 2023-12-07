@@ -1,16 +1,13 @@
 import { useNavigate } from 'react-router'
-import { Button, Checkbox, Form, Grid, Input, theme, Typography } from 'antd'
+import { Button, Checkbox, Form, Input, Typography } from 'antd'
 import { LockOutlined, MailOutlined } from '@ant-design/icons'
 import { showToast } from '@components/Toast/toast'
+import './login.css'
 
-const { useToken } = theme
-const { useBreakpoint } = Grid
 const { Text, Title } = Typography
 
 export default function App() {
   const navigate = useNavigate()
-  const { token } = useToken()
-  const screens = useBreakpoint()
   const onFinish = async values => {
     console.log('Received values of form: ', values)
     try {
@@ -38,48 +35,13 @@ export default function App() {
       console.error('An error occurred:', error)
     }
   }
-  const styles = {
-    container: {
-      margin: '0 auto',
-      padding: screens.md
-        ? `${token.paddingXL}px`
-        : `${token.sizeXXL}px ${token.padding}px`,
-      width: '380px',
-      border: '1px solid grey',
-      borderRadius: '10px',
-    },
-    footer: {
-      marginTop: token.marginLG,
-      textAlign: 'center',
-      width: '100%',
-    },
-    forgotPassword: {
-      float: 'right',
-    },
-    header: {
-      marginBottom: token.marginXL,
-    },
-    section: {
-      alignItems: 'center',
-      backgroundColor: token.colorBgContainer,
-      display: 'flex',
-      height: screens.sm ? '100vh' : 'auto',
-      padding: screens.md ? `${token.sizeXXL}px 0px` : '20px',
-    },
-    text: {
-      color: token.colorTextSecondary,
-    },
-    title: {
-      fontSize: screens.md ? token.fontSizeHeading2 : token.fontSizeHeading3,
-    },
-  }
 
   return (
-    <section style={styles.section}>
-      <div style={styles.container}>
-        <div style={styles.header}>
-          <Title style={styles.title}>Sign in</Title>
-          <Text style={styles.text}>
+    <section className="section">
+      <div className="container">
+        <div className="header">
+          <Title className="title">Sign in</Title>
+          <Text className="text">
             Please enter your details below to sign in.
           </Text>
         </div>
@@ -124,7 +86,7 @@ export default function App() {
               <Checkbox>Remember me</Checkbox>
             </Form.Item>
           </Form.Item>
-          <Form.Item style={{ marginBottom: '0px' }}>
+          <Form.Item>
             <Button block="true" type="primary" htmlType="submit">
               Log in
             </Button>

@@ -1,0 +1,47 @@
+.container {
+  margin: 0 auto;
+  padding: 32px 16px; /* Adjust these values as needed */
+  width: 380px;
+  border: 1px solid grey;
+  border-radius: 10px;
+}
+
+.footer {
+  margin-top: 24px; /* Adjust this value as needed */
+  text-align: center;
+  width: 100%;
+}
+
+.forgotPassword {
+  float: right;
+}
+
+.header {
+  margin-bottom: 30px; /* Adjust this value as needed */
+}
+
+.section {
+  align-items: center;
+  background-color: #f0f0f0; /* Replace with the actual color */
+  display: flex;
+  height: auto;
+  padding: 20px;
+}
+
+.text {
+  color: #666666; /* Replace with the actual color */
+}
+
+.title {
+  font-size: 18px; /* Replace with the actual font size for smaller screens */
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding: 40px 0px; /* Adjust these values as needed */
+  }
+
+  .title {
+    font-size: 24px; /* Replace with the actual font size for larger screens */
+  }
+}
