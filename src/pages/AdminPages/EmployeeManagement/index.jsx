@@ -15,7 +15,6 @@ import {
   fetchEmployees,
   fetchEmployeesStart,
   fetchEmployeesSuccess,
-  fetchEmployeesFailure,
 } from '../../../redux/slides/employeeSlice'
 
 const EmployeeManagement = () => {
@@ -41,9 +40,10 @@ const EmployeeManagement = () => {
 
   useEffect(() => {
     dispatch(fetchEmployeesStart())
+
     const fetchData = async () => {
       try {
-        await dispatch(
+        const response = await dispatch(
           fetchEmployees({
             page: pagination.current,
             limit: pagination.pageSize,
@@ -53,14 +53,10 @@ const EmployeeManagement = () => {
           })
         )
 
-        // Update total from the state
-        setPagination(prev => ({
-          ...prev,
-          total: employees.length,
-        }))
+        // Không cần phải setPagination ở đây
       } catch (error) {
         console.error('Error calling API:', error)
-        dispatch(fetchEmployeesFailure(error.message))
+        // Không cần phải dispatch(fetchEmployeesFailure(error.message)) ở đây
       }
     }
 
@@ -107,7 +103,7 @@ const EmployeeManagement = () => {
     setPagination({ ...pagination, current: 1 })
   }
 
-  const handleTableChange = (pagination, filters, sorter) => {
+  const handleTableChange = (pagination, sorter) => {
     const isSameColumn = sortedInfo.columnKey === sorter.columnKey
     const order = isSameColumn && sortedInfo.order === 'asc' ? 'desc' : 'asc'
 
