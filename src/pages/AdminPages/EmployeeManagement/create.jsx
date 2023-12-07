@@ -26,7 +26,6 @@ import './create.css'
 const CreateEmployee = () => {
   const navigate = useNavigate()
   const [formLayout, setFormLayout] = useState('horizontal')
-  // const [isManager, setIsManager] = useState(false)
   // const [avatar, setAvatar] = useState(null)
   // const [form] = Form.useForm()
 
@@ -42,12 +41,6 @@ const CreateEmployee = () => {
       window.removeEventListener('resize', handleResize)
     }
   }, [])
-
-  // const onChange = e => {
-  //   const checked = e.target.checked
-  //   setIsManager(checked)
-  //   console.log(`checked = ${checked}`)
-  // }
 
   // const checkFile = file => {
   //   const isImage = file.type.startsWith('image/')
@@ -69,7 +62,7 @@ const CreateEmployee = () => {
     identity: '',
     dob: null,
     gender: 'male',
-    status: false,
+    status: true,
     isManager: false,
     position: 'Developer',
     manager: '',
@@ -91,25 +84,25 @@ const CreateEmployee = () => {
       .required('Vui lòng nhập phone')
       .required('Phone number is required')
       .matches(/^[0-9-]{10,}$/, 'Please enter a valid 10-digit phone number!'),
-    identity: Yup.string().required('Vui lòng nhập identity'),
+    identity: Yup.string()
+      .required('Vui lòng nhập identity')
+      .matches(
+        /^[a-zA-Z0-9]{1,20}$/,
+        'Please enter a valid Citizen Identity Card!'
+      ),
     dob: Yup.date().required('Vui lòng nhập ngày sinh'),
-    gender: Yup.string().required('Vui lòng chọn giới tính'),
+    gender: Yup.string(),
+    status: Yup.string(),
+    position: Yup.string(),
     isManager: Yup.bool(),
-    // identity: Yup.string()
-    //   .required('Citizen Identity Card is required')
-    //   .matches(
-    //     /^[a-zA-Z0-9]{1,20}$/,
-    //     'Please enter a valid Citizen Identity Card!'
-    //   ),
-    // dob: Yup.date().required('Date of Birth is required'),
-    // manager: Yup.string(),
+    manager: Yup.string(),
     // skills: Yup.array().of(
     //   Yup.object().shape({
     //     skill: Yup.string().required('Skill is required'),
     //     experience: Yup.string().required('Experience is required'),
     //   })
     // ),
-    // description: Yup.string(),
+    description: Yup.string(),
   })
 
   const handleFormSubmit = values => {
@@ -125,8 +118,6 @@ const CreateEmployee = () => {
     //   Object.entries(values).forEach(([key, value]) => {
     //     formData.append(key, value)
     //   })
-
-    //   formData.append('isManager', isManager)
 
     //   formData.forEach((value, key) => {
     //     console.log('Form Data: ', `${key}: ${value}`)
@@ -289,22 +280,44 @@ const CreateEmployee = () => {
                   <Select.Option value="female">Female</Select.Option>
                 </Select>
               </Form.Item>
-              {/* <Form.Item label="Status" name="status">
-                <Select>
+              <Form.Item
+                label="Status"
+                name="status"
+                validateStatus={errors.status && touched.status ? 'error' : ''}
+                help={errors.status && touched.status && errors.status}
+              >
+                <Select
+                  name="status"
+                  onChange={value => setFieldValue('status', value)}
+                  onBlur={handleBlur}
+                  defaultValue={values.status}
+                >
                   <Select.Option value={true}>Active</Select.Option>
                   <Select.Option value={false}>Inactive</Select.Option>
                 </Select>
               </Form.Item>
-              <Form.Item label="Position" name="position">
-                <Select>
+              <Form.Item
+                label="Position"
+                name="position"
+                validateStatus={
+                  errors.position && touched.position ? 'error' : ''
+                }
+                help={errors.position && touched.position && errors.position}
+              >
+                <Select
+                  name="position"
+                  onChange={value => setFieldValue('position', value)}
+                  onBlur={handleBlur}
+                  defaultValue={values.position}
+                >
                   <Select.Option value="Developer">Developer</Select.Option>
                   <Select.Option value="Quality Assurance">
-                    Tester
+                    Quality Assurance
                   </Select.Option>
                   <Select.Option value="CEO">CEO</Select.Option>
                   <Select.Option value="President">President</Select.Option>
                 </Select>
-              </Form.Item> */}
+              </Form.Item>
               <Form.Item label="is Manager" name="isManager">
                 <Checkbox
                   name="isManager"
@@ -313,10 +326,22 @@ const CreateEmployee = () => {
                   checked={values.isManager}
                 ></Checkbox>
               </Form.Item>
-              {/* <Form.Item label="Manager" name="manager">
-                <Input />
-              </Form.Item> */}
-              {/* <Form.Item label="List">
+              <Form.Item
+                label="Manager"
+                name="manager"
+                validateStatus={
+                  errors.manager && touched.manager ? 'error' : ''
+                }
+                help={errors.manager && touched.manager ? errors.manager : ''}
+              >
+                <Input
+                  name="manager"
+                  value={values.manager}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+              </Form.Item>
+              <Form.Item label="List">
                 <Form.List name="skills">
                   {(fields, { add, remove }) => (
                     <>
@@ -358,7 +383,7 @@ const CreateEmployee = () => {
                     </>
                   )}
                 </Form.List>
-              </Form.Item> */}
+              </Form.Item>
 
               <Form.Item
                 label="Description"
