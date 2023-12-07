@@ -23,8 +23,6 @@ import { Formik } from 'formik'
 import * as Yup from 'yup'
 import './create.css'
 
-const { Title } = Typography
-
 const CreateEmployee = () => {
   const navigate = useNavigate()
   const [isManager, setIsManager] = useState(false)
@@ -142,180 +140,184 @@ const CreateEmployee = () => {
   }
 
   return (
-    <Card
-      title="CREATE EMPLOYEE"
-      bordered={false}
-      style={{
-        width: '100%',
-      }}
-    >
+    <>
       <button
         className="back-to-list-button"
         onClick={() => navigate('/employees')}
       >
-        <ArrowLeftOutlined style={{ marginRight: '7px' }} />
+        <ArrowLeftOutlined style={{ marginRight: '5px', fontSize: '12px' }} />
         Back
       </button>
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={handleFormSubmit}
+      <Card
+        title="CREATE EMPLOYEE"
+        bordered={false}
+        style={{
+          width: '100%',
+        }}
       >
-        {({
-          values,
-          errors,
-          touched,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-        }) => (
-          <Form
-            labelCol={{
-              span: formLayout === 'vertical' ? 24 : 6,
-            }}
-            wrapperCol={{
-              span: formLayout === 'vertical' ? 24 : 18,
-            }}
-            labelAlign="left"
-            style={{
-              maxWidth: 700,
-            }}
-            form={form}
-            layout={formLayout}
-            onFinish={handleSubmit}
-          >
-            <Form.Item
-              label="Name"
-              name="name"
-              validateStatus={errors.name && touched.name ? 'error' : ''}
-              help={errors.name && touched.name && errors.name}
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={handleFormSubmit}
+        >
+          {({
+            values,
+            errors,
+            touched,
+            handleChange,
+            handleBlur,
+            handleSubmit,
+          }) => (
+            <Form
+              labelCol={{
+                span: formLayout === 'vertical' ? 24 : 6,
+              }}
+              wrapperCol={{
+                span: formLayout === 'vertical' ? 24 : 18,
+              }}
+              labelAlign="left"
+              style={{
+                maxWidth: 700,
+              }}
+              form={form}
+              layout={formLayout}
+              onFinish={handleSubmit}
             >
-              <Input
-                value={values.name}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-            </Form.Item>
-            <Form.Item
-              label="Email"
-              name="email"
-              // validateStatus={errors.email && touched.email ? 'error' : ''}
-              // help={errors.email && touched.email && errors.email}
-            >
-              <Input
-              // value={values.email}
-              // onChange={handleChange}
-              // onBlur={handleBlur}
-              />
-            </Form.Item>
-            <Form.Item label="Code" name="code">
-              <Input />
-            </Form.Item>
-            <Form.Item label="Phone" name="phone">
-              <Input />
-            </Form.Item>
-            <Form.Item label="Identity Card" name="identity">
-              <Input />
-            </Form.Item>
-            <Form.Item label="Date of Birth" name="dob">
-              <DatePicker placement="bottomRight" />
-            </Form.Item>
-            <Form.Item label="Gender" name="gender">
-              <Select>
-                <Select.Option value="male">Male</Select.Option>
-                <Select.Option value="female">Female</Select.Option>
-              </Select>
-            </Form.Item>
-            <Form.Item label="Status" name="status">
-              <Select>
-                <Select.Option value={true}>Active</Select.Option>
-                <Select.Option value={false}>Inactive</Select.Option>
-              </Select>
-            </Form.Item>
-            <Form.Item label="Position" name="position">
-              <Select>
-                <Select.Option value="Developer">Developer</Select.Option>
-                <Select.Option value="Quality Assurance">Tester</Select.Option>
-                <Select.Option value="CEO">CEO</Select.Option>
-                <Select.Option value="President">President</Select.Option>
-              </Select>
-            </Form.Item>
-            <Form.Item label="is Manager" name="isManager">
-              <Checkbox onChange={onChange} checked={isManager}></Checkbox>
-            </Form.Item>
-            <Form.Item label="Manager" name="manager">
-              <Input />
-            </Form.Item>
-            <Form.Item label="List">
-              <Form.List name="skills">
-                {(fields, { add, remove }) => (
-                  <>
-                    {fields.map(({ key, name, ...restField }) => (
-                      <Space
-                        key={key}
-                        style={{
-                          display: 'flex',
-                          marginBottom: 8,
-                        }}
-                        align="baseline"
-                      >
-                        <Form.Item {...restField} name={[name, 'skill']}>
-                          <Input placeholder="Skill" />
-                        </Form.Item>
-                        <Form.Item {...restField} name={[name, 'experience']}>
-                          <Input placeholder="Experience (Years)" />
-                        </Form.Item>
-                        <MinusCircleOutlined
-                          onClick={() => {
-                            if (fields.length > 1) {
-                              remove(name)
-                            }
-                          }}
-                          disabled={fields.length === 1}
-                        />
-                      </Space>
-                    ))}
-                    <Form.Item>
-                      <Button
-                        type="dashed"
-                        onClick={() => add()}
-                        block
-                        icon={<PlusOutlined />}
-                      >
-                        Add Skill
-                      </Button>
-                    </Form.Item>
-                  </>
-                )}
-              </Form.List>
-            </Form.Item>
-
-            <Form.Item label="Description" name="description">
-              <Input.TextArea rows={4} />
-            </Form.Item>
-            <Form.Item label="Avatar">
-              <Upload
-                name="avatar"
-                listType="picture"
-                accept="image/*"
-                maxCount={1}
-                action="http://localhost:3000/employees"
-                beforeUpload={checkFile}
-                onRemove={() => setAvatar(null)}
+              <Form.Item
+                label="Name"
+                name="name"
+                validateStatus={errors.name && touched.name ? 'error' : ''}
+                help={errors.name && touched.name && errors.name}
               >
-                <Button icon={<UploadOutlined />}>Upload Avatar</Button>
-              </Upload>
-            </Form.Item>
+                <Input
+                  value={values.name}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+              </Form.Item>
+              <Form.Item
+                label="Email"
+                name="email"
+                // validateStatus={errors.email && touched.email ? 'error' : ''}
+                // help={errors.email && touched.email && errors.email}
+              >
+                <Input
+                // value={values.email}
+                // onChange={handleChange}
+                // onBlur={handleBlur}
+                />
+              </Form.Item>
+              <Form.Item label="Code" name="code">
+                <Input />
+              </Form.Item>
+              <Form.Item label="Phone" name="phone">
+                <Input />
+              </Form.Item>
+              <Form.Item label="Identity Card" name="identity">
+                <Input />
+              </Form.Item>
+              <Form.Item label="Date of Birth" name="dob">
+                <DatePicker placement="bottomRight" />
+              </Form.Item>
+              <Form.Item label="Gender" name="gender">
+                <Select>
+                  <Select.Option value="male">Male</Select.Option>
+                  <Select.Option value="female">Female</Select.Option>
+                </Select>
+              </Form.Item>
+              <Form.Item label="Status" name="status">
+                <Select>
+                  <Select.Option value={true}>Active</Select.Option>
+                  <Select.Option value={false}>Inactive</Select.Option>
+                </Select>
+              </Form.Item>
+              <Form.Item label="Position" name="position">
+                <Select>
+                  <Select.Option value="Developer">Developer</Select.Option>
+                  <Select.Option value="Quality Assurance">
+                    Tester
+                  </Select.Option>
+                  <Select.Option value="CEO">CEO</Select.Option>
+                  <Select.Option value="President">President</Select.Option>
+                </Select>
+              </Form.Item>
+              <Form.Item label="is Manager" name="isManager">
+                <Checkbox onChange={onChange} checked={isManager}></Checkbox>
+              </Form.Item>
+              <Form.Item label="Manager" name="manager">
+                <Input />
+              </Form.Item>
+              <Form.Item label="List">
+                <Form.List name="skills">
+                  {(fields, { add, remove }) => (
+                    <>
+                      {fields.map(({ key, name, ...restField }) => (
+                        <Space
+                          key={key}
+                          style={{
+                            display: 'flex',
+                            marginBottom: 8,
+                          }}
+                          align="baseline"
+                        >
+                          <Form.Item {...restField} name={[name, 'skill']}>
+                            <Input placeholder="Skill" />
+                          </Form.Item>
+                          <Form.Item {...restField} name={[name, 'experience']}>
+                            <Input placeholder="Experience (Years)" />
+                          </Form.Item>
+                          <MinusCircleOutlined
+                            onClick={() => {
+                              if (fields.length > 1) {
+                                remove(name)
+                              }
+                            }}
+                            disabled={fields.length === 1}
+                          />
+                        </Space>
+                      ))}
+                      <Form.Item>
+                        <Button
+                          type="dashed"
+                          onClick={() => add()}
+                          block
+                          icon={<PlusOutlined />}
+                        >
+                          Add Skill
+                        </Button>
+                      </Form.Item>
+                    </>
+                  )}
+                </Form.List>
+              </Form.Item>
 
-            <Form.Item>
-              <Button type="primary" htmlType="submit">
-                Create
-              </Button>
-            </Form.Item>
-          </Form>
-        )}
-      </Formik>
-    </Card>
+              <Form.Item label="Description" name="description">
+                <Input.TextArea rows={4} />
+              </Form.Item>
+              <Form.Item label="Avatar">
+                <Upload
+                  name="avatar"
+                  listType="picture"
+                  accept="image/*"
+                  maxCount={1}
+                  action="http://localhost:3000/employees"
+                  beforeUpload={checkFile}
+                  onRemove={() => setAvatar(null)}
+                >
+                  <Button icon={<UploadOutlined />}>Upload Avatar</Button>
+                </Upload>
+              </Form.Item>
+
+              <Form.Item>
+                <Button type="primary" htmlType="submit">
+                  Create
+                </Button>
+              </Form.Item>
+            </Form>
+          )}
+        </Formik>
+      </Card>
+    </>
   )
 }
 
