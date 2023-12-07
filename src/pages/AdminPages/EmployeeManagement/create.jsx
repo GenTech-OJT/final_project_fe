@@ -21,6 +21,7 @@ import {
 } from '@ant-design/icons'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
+import moment from 'moment'
 import './create.css'
 
 const CreateEmployee = () => {
@@ -105,22 +106,26 @@ const CreateEmployee = () => {
   })
 
   const handleFormSubmit = values => {
-    console.log(values)
+    const formattedValues = {
+      ...values,
+      dob: moment(values.dob.$d).format('YYYY-MM-DD'),
+    }
+    console.log(formattedValues)
     // try {
-    //   const formData = new FormData()
-    //   if (avatar != null) {
-    //     formData.append('avatar', avatar)
-    //   } else {
-    //     formData.append('avatar', null)
-    //   }
+    // const formData = new FormData()
+    // if (avatar != null) {
+    //   formData.append('avatar', avatar)
+    // } else {
+    //   formData.append('avatar', null)
+    // }
 
-    //   Object.entries(values).forEach(([key, value]) => {
-    //     formData.append(key, value)
-    //   })
+    // Object.entries(formattedValues).forEach(([key, value]) => {
+    //   formData.append(key, value)
+    // })
 
-    //   formData.forEach((value, key) => {
-    //     console.log('Form Data: ', `${key}: ${value}`)
-    //   })
+    // formData.forEach((value, key) => {
+    //   console.log('Form Data: ', `${key}: ${value}`)
+    // })
 
     //    fetch('http://localhost:3000/employees', {
     //     method: 'POST',
@@ -340,7 +345,7 @@ const CreateEmployee = () => {
                   onBlur={handleBlur}
                 />
               </Form.Item>
-              <Form.Item label="List">
+              <Form.Item label="Skills">
                 <Form.List name="skills">
                   {(fields, { add, remove }) => (
                     <>
