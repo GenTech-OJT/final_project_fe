@@ -53,7 +53,7 @@ const SideMenu = ({ selectedKey, setSelectedKey, setOpen }) => {
 SideMenu.propTypes = {
   selectedKey: PropTypes.string.isRequired,
   setSelectedKey: PropTypes.string.isRequired,
-  setOpen: PropTypes.bool.isRequired,
+  setOpen: PropTypes.bool,
 }
 
 export default SideMenu

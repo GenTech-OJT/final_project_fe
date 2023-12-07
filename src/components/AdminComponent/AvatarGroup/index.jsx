@@ -58,7 +58,7 @@ const AvatarGroup = ({ collapsed, setSelectedKey, setIsLogin }) => {
 AvatarGroup.propTypes = {
   collapsed: PropTypes.bool.isRequired,
   setSelectedKey: PropTypes.string.isRequired,
-  setIsLogin: PropTypes.bool.isRequired,
+  setIsLogin: PropTypes.func.isRequired,
 }
 
 export default AvatarGroup

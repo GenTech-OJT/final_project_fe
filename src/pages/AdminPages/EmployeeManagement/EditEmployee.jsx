@@ -106,7 +106,17 @@ const EditEmployee = () => {
         })
     })
   }
+  const checkFile = file => {
+    const isImage = file.type.startsWith('image/')
 
+    if (!isImage) {
+      message.error('You can only upload image files!')
+    } else {
+      setAvatar(file)
+    }
+
+    return false
+  }
   return (
     <div className="page-container">
       <button
@@ -400,6 +410,8 @@ const EditEmployee = () => {
                     accept="image/*"
                     maxCount={1}
                     action="http://localhost:3000/employees"
+                    beforeUpload={checkFile}
+                    onRemove={() => setAvatar(null)}
                   >
                     <Button icon={<UploadOutlined />}>Upload Avatar</Button>
                   </Upload>
