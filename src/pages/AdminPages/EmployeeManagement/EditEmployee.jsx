@@ -194,7 +194,6 @@ const EditEmployee = () => {
             <Form.Item
               label="Name"
               name="name"
-              className="text-input-form"
               rules={[
                 {
                   required: true,
@@ -215,7 +214,7 @@ const EditEmployee = () => {
                 }}
               />{' '}
             </Form.Item>
-            <Form.Item label="Code" name="code" className="text-input-form">
+            <Form.Item label="Code" name="code">
               <Input
                 value={empData?.code || ''}
                 onChange={e => {
@@ -227,7 +226,6 @@ const EditEmployee = () => {
             <Form.Item
               label="Phone"
               name="phone"
-              className="text-input-form"
               rules={[
                 {
                   required: true,
@@ -250,7 +248,6 @@ const EditEmployee = () => {
             <Form.Item
               label="Citizen Identity Card"
               name="identity"
-              className="text-input-form"
               rules={[
                 {
                   required: true,
@@ -273,7 +270,6 @@ const EditEmployee = () => {
             <Form.Item
               label="Date of Birth"
               name="dob"
-              className="select-width-dobgs"
               rules={[
                 {
                   required: true,
@@ -283,41 +279,25 @@ const EditEmployee = () => {
             >
               <DatePicker placement="bottomRight" style={{ width: '100%' }} />
             </Form.Item>
-            <Form.Item
-              label="Gender"
-              name="gender"
-              className="select-width-dobgs"
-            >
+            <Form.Item label="Gender" name="gender">
               <Select>
                 <Select.Option value="male">Male</Select.Option>
                 <Select.Option value="female">Female</Select.Option>
               </Select>
             </Form.Item>
-            <Form.Item
-              label="Status"
-              name="status"
-              className="select-width-dobgs"
-            >
+            <Form.Item label="Status" name="status">
               <Select>
                 <Select.Option value={true}>Active</Select.Option>
                 <Select.Option value={false}>Inactive</Select.Option>
               </Select>
             </Form.Item>
-            <Form.Item
-              label="is Manager?"
-              name="is_manager"
-              className="select-width-im"
-            >
+            <Form.Item label="is Manager?" name="is_manager">
               <Select>
                 <Select.Option value={true}>Yes</Select.Option>
                 <Select.Option value={false}>No</Select.Option>
               </Select>
             </Form.Item>
-            <Form.Item
-              label="Position"
-              name="position"
-              className="select-width-p"
-            >
+            <Form.Item label="Position" name="position">
               <Select>
                 <Select.Option value="Developer">Developer</Select.Option>
                 <Select.Option value="Quality Assurance">Tester</Select.Option>
@@ -326,12 +306,14 @@ const EditEmployee = () => {
               </Select>
             </Form.Item>
 
-            <Form.Item
-              label="Manager"
-              name="manager"
-              className="manager-input-width"
-            >
-              <Input />
+            <Form.Item label="Manager" name="manager">
+              <Input
+                value={empData?.manager || ''}
+                onChange={e => {
+                  form.setFieldsValue({ manager: e.target.value }) // Cập nhật giá trị trường input trong form
+                  setEmpData({ ...empData, manager: e.target.value }) // Cập nhật state 'empdata'
+                }}
+              />
             </Form.Item>
             <Form.Item label="Skills">
               <Form.List name="skills">
@@ -376,11 +358,7 @@ const EditEmployee = () => {
                 )}
               </Form.List>
             </Form.Item>
-            <Form.Item
-              label="Description"
-              name="description"
-              className="text-input-form"
-            >
+            <Form.Item label="Description" name="description">
               <Input.TextArea
                 rows={4}
                 value={empData?.description || ''}
