@@ -101,7 +101,7 @@ const CreateEmployee = () => {
           skill: Yup.string().required('Skill is required'),
           experience: Yup.string()
             .required('Experience is required')
-            .matches(/^[0-9]+(\.[0-9]+)?$/, 'Experience must be a number'),
+            .matches(/^\d+(\.\d+)?$/, 'Experience must be a number'),
         })
       )
       .required('Must have skills')
@@ -114,7 +114,7 @@ const CreateEmployee = () => {
       ...values,
       dob: moment(values.dob.$d).format('YYYY-MM-DD'),
     }
-    console.log(formattedValues)
+    // console.log(formattedValues)
     // try {
     const formData = new FormData()
     if (avatar != null) {
@@ -127,9 +127,9 @@ const CreateEmployee = () => {
       formData.append(key, value)
     })
 
-    formData.forEach((value, key) => {
-      console.log('Form Data: ', `${key}: ${value}`)
-    })
+    // formData.forEach((value, key) => {
+    //   console.log('Form Data: ', `${key}: ${value}`)
+    // })
 
     //    fetch('http://localhost:3000/employees', {
     //     method: 'POST',
