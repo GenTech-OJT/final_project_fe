@@ -1,6 +1,7 @@
 {
   "project_management_label": "Project Management",
   "employee_management_label": "Employee Management",
+  "dashboard_label": "Dashboard",
   "my_account": "My Account",
   "logout": "Logout",
   "notfound_content": "The page you are trying to access cannot be found at the moment.",

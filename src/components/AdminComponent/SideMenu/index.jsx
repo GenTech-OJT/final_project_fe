@@ -1,4 +1,4 @@
-import { ProjectOutlined, UserOutlined } from '@ant-design/icons'
+import { HomeOutlined, ProjectOutlined, UserOutlined } from '@ant-design/icons'
 import { Menu } from 'antd'
 import PropTypes from 'prop-types'
 import { useEffect } from 'react'
@@ -32,6 +32,11 @@ const SideMenu = ({ selectedKey, setSelectedKey }) => {
         defaultSelectedKeys={[selectedKey]}
         selectedKeys={[selectedKey]}
         items={[
+          {
+            label: t('dashboard_label'),
+            icon: <HomeOutlined />,
+            key: '/',
+          },
           {
             label: t('project_management_label'),
             icon: <ProjectOutlined />,
