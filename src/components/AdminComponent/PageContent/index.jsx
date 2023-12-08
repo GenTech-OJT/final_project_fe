@@ -1,10 +1,13 @@
 import React from 'react'
 import '../AdminComponent.css'
 import AppRoutes from '@routes/index'
+import { Card } from 'antd'
 const PageContent = () => {
   return (
     <div className="PageContent">
-      <AppRoutes />
+      <Card>
+        <AppRoutes />
+      </Card>
     </div>
   )
 }

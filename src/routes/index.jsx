@@ -14,7 +14,8 @@ const ProjectManagement = lazy(
 const EmployeeManagement = lazy(
   () => import('@pages/AdminPages/EmployeeManagement')
 )
-const Login = lazy(() => import('@pages/AdminPages/Login'))
+
+const Login = lazy(() => import('@pages/AdminPages/login/Login'))
 
 const AppRoutes = () => {
   return (
