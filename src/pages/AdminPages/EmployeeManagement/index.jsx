@@ -191,12 +191,6 @@ const EmployeeManagement = () => {
       key: 'action',
       render: (_, record) => (
         <>
-          {/* <Button
-            key={`view-${record.id}`}
-            onClick={() => navigate('/employees/detail')}
-            style={{ marginRight: 8 }}
-            icon={<EyeOutlined />}
-          /> */}
           <Button
             key={`view-${record.id}`}
             onClick={() => viewDetail(record)}

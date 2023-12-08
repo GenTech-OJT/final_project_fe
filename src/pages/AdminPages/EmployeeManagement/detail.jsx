@@ -1,16 +1,15 @@
 import { ArrowLeftOutlined } from '@ant-design/icons'
-import { Card, Col, Descriptions, Form, Row, Tabs } from 'antd'
+import { Card, Col, Descriptions, Row, Tabs } from 'antd'
 import Title from 'antd/es/skeleton/Title'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import Chartpie from './Chartpie'
+import Chartpie from '../../../components/Chartpie/Chartpie'
 import './detail.css'
 
 const { TabPane } = Tabs
 
 const EmployeeDetail = () => {
   const navigate = useNavigate()
-  const [form] = Form.useForm()
 
   const { id } = useParams()
   const [employee, setEmployee] = useState(null)
