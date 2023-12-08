@@ -55,9 +55,6 @@ const DeleteEmployee = ({ employeeId, onDeleteSuccess }) => {
 DeleteEmployee.propTypes = {
   employeeId: PropTypes.string.isRequired,
   onDeleteSuccess: PropTypes.func.isRequired,
-  buttonText: PropTypes.string,
-  confirmTitle: PropTypes.string,
-  confirmText: PropTypes.string,
 }
 
 export default DeleteEmployee
