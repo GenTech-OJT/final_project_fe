@@ -29,6 +29,16 @@ const CreateEmployee = () => {
   const [avatar, setAvatar] = useState(null)
   // const [form] = Form.useForm()
 
+  let labelCol, wrapperCol
+
+  if (formLayout === 'vertical') {
+    labelCol = { span: 24 }
+    wrapperCol = { span: 24 }
+  } else {
+    labelCol = { span: 6 }
+    wrapperCol = { span: 18 }
+  }
+
   useEffect(() => {
     const handleResize = () => {
       setFormLayout(window.innerWidth < 700 ? 'vertical' : 'horizontal')
@@ -114,7 +124,7 @@ const CreateEmployee = () => {
       ...values,
       dob: moment(values.dob.$d).format('YYYY-MM-DD'),
     }
-    // console.log(formattedValues)
+    console.log(formattedValues)
     // try {
     const formData = new FormData()
     if (avatar != null) {
@@ -177,12 +187,8 @@ const CreateEmployee = () => {
             // isSubmitting,
           }) => (
             <Form
-              labelCol={{
-                span: formLayout === 'vertical' ? 24 : 6,
-              }}
-              wrapperCol={{
-                span: formLayout === 'vertical' ? 24 : 18,
-              }}
+              labelCol={labelCol}
+              wrapperCol={wrapperCol}
               labelAlign="left"
               style={{
                 maxWidth: 600,
@@ -368,22 +374,14 @@ const CreateEmployee = () => {
                             {...restField}
                             name={[name, 'skill']}
                             validateStatus={
-                              errors.skills &&
-                              errors.skills[name] &&
-                              touched.skills &&
-                              touched.skills[name] &&
-                              errors.skills[name].skill &&
-                              touched.skills[name].skill
+                              errors?.skills?.[name]?.skill &&
+                              touched?.skills?.[name]?.skill
                                 ? 'error'
                                 : ''
                             }
                             help={
-                              errors.skills &&
-                              errors.skills[name] &&
-                              touched.skills &&
-                              touched.skills[name] &&
-                              errors.skills[name].skill &&
-                              touched.skills[name].skill
+                              errors?.skills?.[name]?.skill &&
+                              touched?.skills?.[name]?.skill
                                 ? errors.skills[name].skill
                                 : ''
                             }
@@ -403,22 +401,14 @@ const CreateEmployee = () => {
                             {...restField}
                             name={[name, 'experience']}
                             validateStatus={
-                              errors.skills &&
-                              errors.skills[name] &&
-                              touched.skills &&
-                              touched.skills[name] &&
-                              touched.skills[name].experience &&
-                              errors.skills[name].experience
+                              errors?.skills?.[name]?.experience &&
+                              touched?.skills?.[name]?.experience
                                 ? 'error'
                                 : ''
                             }
                             help={
-                              errors.skills &&
-                              errors.skills[name] &&
-                              touched.skills &&
-                              touched.skills[name] &&
-                              errors.skills[name].experience &&
-                              touched.skills[name].experience
+                              errors?.skills?.[name]?.experience &&
+                              touched?.skills?.[name]?.experience
                                 ? errors.skills[name].experience
                                 : ''
                             }
