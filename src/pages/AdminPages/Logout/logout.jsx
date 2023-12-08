@@ -33,7 +33,7 @@ const Logout = () => {
         onOk={handleOk}
         onCancel={handleCancel}
       >
-        <p>{t('Are you sure to logout ?')}</p>
+        <p>{t('logout_confirm')}</p>
       </Modal>
     </>
   )

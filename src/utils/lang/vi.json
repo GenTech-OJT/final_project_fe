@@ -22,5 +22,6 @@
   "detail_breadcrumb": "Chi tiết",
   "create_breadcrumb": "Tạo mới",
   "edit_breadcrumb": "Chỉnh sửa",
-  "are you sure to logout": "Bạn có chắc chắn muốn đăng xuất?"
+  "logout_confirm": "Bạn có chắc chắn muốn đăng xuất?",
+  "delete_confirm": "Bạn có chắc chắn muốn xóa?"
 }

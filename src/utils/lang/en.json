@@ -22,5 +22,6 @@
   "detail_breadcrumb": "Details",
   "create_breadcrumb": "Create",
   "edit_breadcrumb": "Edit",
-  "are you sure to logout": "Are you sure to logout?"
+  "logout_confirm": "Are you sure to logout?",
+  "delete_confirm": "Are you sure you want to delete this employee?"
 }
