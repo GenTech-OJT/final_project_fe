@@ -6,11 +6,11 @@ const BreadCrumb = () => {
   const { t } = useTranslation('translation')
 
   const customBreadcrumbNames = {
-    projects: t('projects_breadcrumb'),
-    employees: t('employees_breadcrumb'),
-    detail: t('detail_breadcrumb'),
-    create: t('create_breadcrumb'),
-    edit: t('edit_breadcrumb'),
+    projects: t('breadcrumbs.projects_breadcrumb'),
+    employees: t('breadcrumbs.employees_breadcrumb'),
+    detail: t('breadcrumbs.detail_breadcrumb'),
+    create: t('breadcrumbs.create_breadcrumb'),
+    edit: t('breadcrumbs.edit_breadcrumb'),
   }
 
   const location = useLocation()

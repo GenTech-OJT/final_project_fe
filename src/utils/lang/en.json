@@ -1,25 +1,86 @@
 {
-  "project_management_label": "Project Management",
-  "employee_management_label": "Employee Management",
-  "my_account": "My Account",
-  "logout": "Logout",
-  "notfound_content": "The page you are trying to access cannot be found at the moment.",
-  "back_to_home": "Back to Home",
-  "name": "Name",
-  "status": "Status",
-  "position": "Position",
-  "is_manager": "Is Manager",
-  "action": "Action",
-  "create": "Create",
-  "search": "Search",
-  "active": "Active",
-  "inactive": "Inactive",
-  "activated_successfully": "Activated Successfully",
-  "deactivated_successfully": "Deactivated Successfully",
-  "spinners": "Loading",
-  "projects_breadcrumb": "Projects",
-  "employees_breadcrumb": "Employees",
-  "detail_breadcrumb": "Details",
-  "create_breadcrumb": "Create",
-  "edit_breadcrumb": "Edit"
+  "button_input": {
+    "create": "Create",
+    "search": "Search",
+    "back_to_home": "Back to Home",
+    "active": "Active",
+    "inactive": "Inactive",
+    "login": "Log in"
+  },
+  "side_menu": {
+    "project_management_label": "Project Management",
+    "employee_management_label": "Employee Management",
+    "my_account": "My Account",
+    "logout": "Logout"
+  },
+  "table_header": {
+    "name": "Name",
+    "status": "Status",
+    "position": "Position",
+    "is_manager": "Is Manager",
+    "action": "Action"
+  },
+  "message": {
+    "activated_successfully": "Activated Successfully",
+    "deactivated_successfully": "Deactivated Successfully",
+    "notfound_content": "The page you are trying to access cannot be found at the moment.",
+    "spinners": "Loading"
+  },
+  "validate": {
+    "name_validate": "Please input a valid name!",
+    "name_validate_min": "Name must be at least 3 characters",
+    "name_validate_max": "Name must be at most 40 characters",
+    "name_require": "Please input name",
+    "email_validate": "Please input your email!",
+    "email_invalid": "Invalid email format!",
+    "password": "Please input your passoword!",
+    "phone_validate": "Please input phone number!",
+    "phone_valid": "Please enter a valid 10-digit phone number!",
+    "code_validate": "Please input code!",
+    "card_validate": "Please input the Citizen Identity Card!",
+    "dob_validate": "Please select Date of Birth!",
+    "skill_validate": "Please input skill!",
+    "experience_validate": "Please input experience!"
+  },
+  "breadcrumbs": {
+    "projects_breadcrumb": "Projects",
+    "employees_breadcrumb": "Employees",
+    "detail_breadcrumb": "Details",
+    "create_breadcrumb": "Create",
+    "edit_breadcrumb": "Edit"
+  },
+  "title": {
+    "create_employee": "CREATE EMPLOYEE",
+    "edit_employee": "EDIT EMPLOYEE",
+    "sign_in": "SIGN IN"
+  },
+  "employee": {
+    "name_employee": "Name",
+    "email_employee": "Email",
+    "phone_number_employee": "Phone",
+    "gender_employee": "Gender",
+    "date_of_birth_employee": "Date of Birth",
+    "position_employee": "Position",
+    "status_employee": "Status",
+    "is_manager": "Is Manager",
+    "manager": "Manager",
+    "skill": "Skills",
+    "experience": "Experience(Years)",
+    "description_employee": "Description",
+    "submit": "Submit",
+    "add_skill": "Add Skill",
+    "upload_avatar": "Upload Avatar",
+    "male": "Male",
+    "female": "Female",
+    "active": "Active",
+    "inactive": "Inactive",
+    "no_data": "No Data Available",
+    "back": "Back"
+  },
+  "sign_in_page": {
+    "enter_sign_in": "Please enter your details below to sign in.",
+    "email": "Email",
+    "password": "Password",
+    "remember_me": "Remember me"
+  }
 }
