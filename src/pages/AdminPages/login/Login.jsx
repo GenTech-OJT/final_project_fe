@@ -10,7 +10,7 @@ import './login.css'
 
 const { Text, Title } = Typography
 
-export default function App() {
+export default function Login() {
   const navigate = useNavigate()
   const initialValues = {
     email: '',
