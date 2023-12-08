@@ -27,7 +27,7 @@ const CustomSearch = ({ handleChange }) => {
   const { t } = useTranslation('translation')
   return (
     <Input
-      placeholder={t('search')}
+      placeholder={t('button_input.search')}
       onChange={handleChange}
       style={{ width: 200, marginBottom: 16 }}
       prefix={<SearchOutlined />}
