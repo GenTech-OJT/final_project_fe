@@ -21,5 +21,6 @@
   "employees_breadcrumb": "Employees",
   "detail_breadcrumb": "Details",
   "create_breadcrumb": "Create",
-  "edit_breadcrumb": "Edit"
+  "edit_breadcrumb": "Edit",
+  "are you sure to logout": "Are you sure to logout?"
 }

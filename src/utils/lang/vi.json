@@ -21,5 +21,6 @@
   "employees_breadcrumb": "Danh sách nhân viên",
   "detail_breadcrumb": "Chi tiết",
   "create_breadcrumb": "Tạo mới",
-  "edit_breadcrumb": "Chỉnh sửa"
+  "edit_breadcrumb": "Chỉnh sửa",
+  "are you sure to logout": "Bạn có chắc chắn muốn đăng xuất?"
 }

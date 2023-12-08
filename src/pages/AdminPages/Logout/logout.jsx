@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { Modal, Button } from 'antd'
 import { navigate } from '@reach/router'
-
+import { useTranslation } from 'react-i18next'
 const Logout = () => {
+  const { t } = useTranslation('translation')
   const [isModalVisible, setIsModalVisible] = useState(false)
 
   const showModal = () => {
@@ -32,7 +33,7 @@ const Logout = () => {
         onOk={handleOk}
         onCancel={handleCancel}
       >
-        <p>Are you sure to logout ?</p>
+        <p>{t('Are you sure to logout ?')}</p>
       </Modal>
     </>
   )

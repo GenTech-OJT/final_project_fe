@@ -1,36 +1,34 @@
 import React, { useState } from 'react'
-import { Descriptions, Avatar, Button, DatePicker } from 'antd'
+import { Descriptions, Avatar, Card, Space } from 'antd'
 import './profile.css'
 
 const Profile = () => {
-  const [joinedDate, setJoinedDate] = useState(null)
-
   return (
-    <div className="profile-container">
+    <Card className="card_container">
+      <h2 className="title">Profile Information </h2>
+      <hr style={{ margin: '20px 0' }} />
       <div className="profile-content">
         <div className="avatar-section">
-          <Avatar size={120} icon="user" />
+          <Avatar className="avt" icon="user" />
           <div className="username">Admin</div>
         </div>
         <div className="info-section">
-          <Descriptions title="Profile Information" column={1}>
+          <Descriptions column={1}>
             <Descriptions.Item label="Role">admin</Descriptions.Item>
             <Descriptions.Item label="Email Address">
               admin@gmail.com
             </Descriptions.Item>
             <Descriptions.Item label="Joined On">
-              <DatePicker
-                value={joinedDate}
-                onChange={date => setJoinedDate(date)}
-              />
+              09, May 2020
             </Descriptions.Item>
           </Descriptions>
-          <Button type="primary" className="change-password-button">
-            Change Password
-          </Button>
+          <Space className="profile_btn">
+            <button className="profile-button">Edit Profile</button>
+            <button className="profile-button">Change Password</button>
+          </Space>
         </div>
       </div>
-    </div>
+    </Card>
   )
 }
 

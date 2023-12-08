@@ -1,50 +1,73 @@
 /* Profile.css */
 
-/* Common styles */
-.profile-container {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 40px; /* Giảm padding để tránh quá nhiều khoảng trắng */
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Thêm đổ bóng nhẹ */
+.title {
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.card_container {
+  width: 45%;
+  margin: 30px auto;
 }
 
 .profile-content {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Căn giữa hai phần tử con */
-}
-.username {
-  margin-top: 10px; /* Giảm khoảng cách giữa avatar và username */
-  font-weight: bold;
+  justify-content: space-between;
+  margin-left: 25px;
 }
 
-.change-password-button {
-  margin-top: 20px;
-  width: 100%;
-  background-color: #1890ff; /* Màu nền nút */
-  color: #fff; /* Màu chữ nút */
-  border: none;
+.info-section {
+  margin: 10px 55px;
+}
+
+.info-section .label {
+  font-size: 66px !important;
+  font-weight: 500;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.profile_btn {
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.profile-button {
+  padding: 5px 10px;
+  background-color: #fff;
+  color: #1890ff;
+  border: 1px solid #1890ff;
   border-radius: 4px;
-  padding: 5px 15px; /* Kích thước padding theo ý muốn */
   font-size: 16px;
   cursor: pointer;
-  transition: background-color 0.3s; /* Hiệu ứng chuyển đổi màu nền */
+  transition: background-color 0.3s;
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  text-wrap: nowrap !important;
+}
 
-  /* Thêm kiểu khi hover */
-  &:hover {
-    background-color: #0953a3; /* Màu nền hover */
-  }
+.profile-button:hover {
+  background-color: #1890ff;
+  color: #fff;
+}
+
+.username {
+  margin-top: 10px;
+  /* Giảm khoảng cách giữa avatar và username */
+  font-weight: bold;
 }
 
 /* Responsive styles for phones */
 @media only screen and (max-width: 480px) {
   /* ... (các quy tắc khác giữ nguyên) */
 
-  .change-password-button {
+  .profile-button {
     margin-top: 15px;
-    font-size: 14px; /* Giảm kích thước font cho di động */
+    font-size: 14px;
+    /* Giảm kích thước font cho di động */
   }
 }
 
@@ -72,7 +95,8 @@
 
 /* Tăng kích thước avatar */
 .avatar-section .ant-avatar {
-  width: 150px; /* Điều chỉnh kích thước theo ý muốn */
+  width: 150px;
+  /* Điều chỉnh kích thước theo ý muốn */
   height: 150px;
   line-height: 150px;
   font-size: 60px;
@@ -82,6 +106,7 @@
 @media only screen and (max-width: 480px) {
   .avatar-section {
     margin-right: 0;
+
     /* Kích thước avatar trên điện thoại */
     .ant-avatar {
       width: 100px;
@@ -92,10 +117,92 @@
   }
 
   .info-section {
-    margin-top: 20px;
+    margin: 45px 20px;
   }
 }
-/* Thêm kiểu cho DatePicker */
-.ant-picker {
-  width: 100%;
+
+@media screen and (max-width: 1515px) {
+  .profile-button {
+    font-size: 16px;
+  }
+  .profile-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .info-section {
+    margin-left: 30px;
+  }
+
+  .avatar-section {
+    margin: auto auto 15px auto;
+  }
+
+  .avt {
+    width: 120px !important;
+    height: 120px !important;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+}
+
+@media screen and (max-width: 890px) {
+  .profile-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .info-section {
+    margin-left: 30px;
+  }
+
+  .avatar-section {
+    margin: auto auto 10px auto;
+  }
+  .card_container {
+    width: 80%;
+    margin: 30px auto;
+  }
+
+  .avt {
+    width: 100px !important;
+    height: 100px !important;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+}
+
+@media screen and (max-width: 470px) {
+  .profile-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .info-section {
+    margin: 30px;
+  }
+
+  .avatar-section {
+    margin: auto;
+  }
+  .card_container {
+    width: 90%;
+    margin: 30px auto;
+  }
+
+  .avt {
+    width: 80px !important;
+    height: 80px !important;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .profile-button {
+    padding: 5px 10px;
+    font-size: 13px;
+  }
+
+  .title {
+    font-size: 20px;
+  }
 }
