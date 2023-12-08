@@ -24,17 +24,16 @@ const EmployeeDetail = () => {
   }
 
   // Function to generate data for Chartpie from employee skills
+  // Function to generate data for Chartpie from employee skills
   const generateChartData = skills => {
-    const labels = skills.map(skill => `${skill.name} ${skill.year} years`)
+    const labels = skills.map(skill => `${skill.name} - ${skill.year} years`)
     const data = skills.map(skill => skill.year)
-    const backgroundColor = ['green', 'red'] // You can customize this array based on your design
 
     return {
       labels,
       datasets: [
         {
           data,
-          backgroundColor,
         },
       ],
     }
@@ -229,16 +228,14 @@ const EmployeeDetail = () => {
           <div className="detail-container">
             <Card>
               <Row gutter={16} justify="center" align="middle">
-                <Col span={23}>
-                  <Col span={8}>
-                    {employee.skills && employee.skills.length > 0 ? (
-                      <div>
-                        <Chartpie data={generateChartData(employee.skills)} />
-                      </div>
-                    ) : (
-                      <p>No skills available</p>
-                    )}
-                  </Col>
+                <Col span={22}>
+                  {employee.skills && employee.skills.length > 0 ? (
+                    <div>
+                      <Chartpie data={generateChartData(employee.skills)} />
+                    </div>
+                  ) : (
+                    <p>No skills available</p>
+                  )}
                 </Col>
               </Row>
             </Card>
