@@ -2,14 +2,14 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
 import AppFooter from '@components/AdminComponent/AppFooter'
 import AppHeader from '@components/AdminComponent/AppHeader'
 import AvatarGroup from '@components/AdminComponent/AvatarGroup'
+import BreadCrumb from '@components/AdminComponent/Breadcrumb/Breadcrumb'
 import PageContent from '@components/AdminComponent/PageContent'
 import SideMenu from '@components/AdminComponent/SideMenu'
+import Spinner from '@components/AdminComponent/Spinner/Spinner'
 import { Button, Layout, theme } from 'antd'
 import { Suspense, useState } from 'react'
 import { useNavigate } from 'react-router'
 import './App.css'
-import BreadCrumb from '@components/AdminComponent/Breadcrumb/Breadcrumb'
-import Spinner from '@components/AdminComponent/Spinner/Spinner'
 const { Header, Content, Footer, Sider } = Layout
 const App = () => {
   const navigate = useNavigate()

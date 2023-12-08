@@ -16,6 +16,9 @@ const EmployeeManagement = lazy(
 )
 
 const Login = lazy(() => import('@pages/AdminPages/login/Login'))
+const DetailEmployee = lazy(
+  () => import('@pages/AdminPages/EmployeeManagement/detail')
+)
 
 const AppRoutes = () => {
   return (
@@ -29,10 +32,7 @@ const AppRoutes = () => {
         path="/employees/edit/:id"
         element={<EmployeeManagement />}
       ></Route>
-      <Route
-        path="/employees/detail/:id"
-        element={<EmployeeManagement />}
-      ></Route>
+      <Route path="/employees/detail/:id" element={<DetailEmployee />}></Route>
       <Route path="/projects/create" element={<CreateProject />}></Route>
       <Route path="/projects/edit/:id" element={<EditProject />}></Route>
       <Route path="/projects/detail/:id" element={<DetailProject />}></Route>
