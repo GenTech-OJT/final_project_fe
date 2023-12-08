@@ -22,3 +22,7 @@
 .back-to-list-button:hover::after {
   transform: scaleX(1);
 }
+
+.dob {
+  width: 100%;
+}

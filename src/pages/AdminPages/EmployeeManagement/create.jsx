@@ -9,7 +9,6 @@ import {
   message,
   Upload,
   Checkbox,
-  Card,
 } from 'antd'
 import { useNavigate } from 'react-router'
 import {
@@ -25,32 +24,8 @@ import './create.css'
 
 const CreateEmployee = () => {
   const navigate = useNavigate()
-  const [formLayout, setFormLayout] = useState('horizontal')
   const [avatar, setAvatar] = useState(null)
   // const [form] = Form.useForm()
-
-  let labelCol, wrapperCol
-
-  if (formLayout === 'vertical') {
-    labelCol = { span: 24 }
-    wrapperCol = { span: 24 }
-  } else {
-    labelCol = { span: 6 }
-    wrapperCol = { span: 18 }
-  }
-
-  useEffect(() => {
-    const handleResize = () => {
-      setFormLayout(window.innerWidth < 700 ? 'vertical' : 'horizontal')
-    }
-
-    handleResize()
-    window.addEventListener('resize', handleResize)
-
-    return () => {
-      window.removeEventListener('resize', handleResize)
-    }
-  }, [])
 
   const checkFile = file => {
     const isImage = file.type.startsWith('image/')
@@ -124,7 +99,7 @@ const CreateEmployee = () => {
       ...values,
       dob: moment(values.dob.$d).format('YYYY-MM-DD'),
     }
-    console.log(formattedValues)
+    // console.log(formattedValues)
     // try {
     const formData = new FormData()
     if (avatar != null) {
@@ -163,339 +138,329 @@ const CreateEmployee = () => {
         <ArrowLeftOutlined style={{ marginRight: '5px', fontSize: '12px' }} />
         Back
       </button>
-      <Card
-        title="CREATE EMPLOYEE"
-        bordered={false}
-        style={{
-          width: '100%',
-        }}
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={handleFormSubmit}
       >
-        <Formik
-          initialValues={initialValues}
-          validationSchema={validationSchema}
-          onSubmit={handleFormSubmit}
-        >
-          {({
-            values,
-            errors,
-            touched,
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            setFieldValue,
-            validateField,
-            // isSubmitting,
-          }) => (
-            <Form
-              labelCol={labelCol}
-              wrapperCol={wrapperCol}
-              labelAlign="left"
-              style={{
-                maxWidth: 600,
-              }}
-              layout={formLayout}
-              onFinish={handleSubmit}
-              initialValues={initialValues}
+        {({
+          values,
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          setFieldValue,
+          validateField,
+          // isSubmitting,
+        }) => (
+          <Form
+            labelCol={{
+              span: 8,
+            }}
+            wrapperCol={{
+              span: 16,
+            }}
+            labelAlign="left"
+            style={{
+              maxWidth: 600,
+            }}
+            onFinish={handleSubmit}
+            initialValues={initialValues}
+          >
+            <Form.Item
+              label="Name"
+              name="name"
+              validateStatus={errors.name && touched.name ? 'error' : ''}
+              help={errors.name && touched.name ? errors.name : ''}
             >
-              <Form.Item
-                label="Name"
+              <Input
                 name="name"
-                validateStatus={errors.name && touched.name ? 'error' : ''}
-                help={errors.name && touched.name ? errors.name : ''}
-              >
-                <Input
-                  name="name"
-                  value={values.name}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
-              </Form.Item>
-              <Form.Item
-                label="Email"
+                value={values.name}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+            </Form.Item>
+            <Form.Item
+              label="Email"
+              name="email"
+              validateStatus={errors.email && touched.email ? 'error' : ''}
+              help={errors.email && touched.email ? errors.email : ''}
+            >
+              <Input
                 name="email"
-                validateStatus={errors.email && touched.email ? 'error' : ''}
-                help={errors.email && touched.email ? errors.email : ''}
-              >
-                <Input
-                  name="email"
-                  value={values.email}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
-              </Form.Item>
-              <Form.Item
-                label="Code"
+                value={values.email}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+            </Form.Item>
+            <Form.Item
+              label="Code"
+              name="code"
+              validateStatus={errors.code && touched.code ? 'error' : ''}
+              help={errors.code && touched.code ? errors.code : ''}
+            >
+              <Input
                 name="code"
-                validateStatus={errors.code && touched.code ? 'error' : ''}
-                help={errors.code && touched.code ? errors.code : ''}
-              >
-                <Input
-                  name="code"
-                  value={values.code}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
-              </Form.Item>
-              <Form.Item
-                label="Phone"
+                value={values.code}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+            </Form.Item>
+            <Form.Item
+              label="Phone"
+              name="phone"
+              validateStatus={errors.phone && touched.phone ? 'error' : ''}
+              help={errors.phone && touched.phone ? errors.phone : ''}
+            >
+              <Input
                 name="phone"
-                validateStatus={errors.phone && touched.phone ? 'error' : ''}
-                help={errors.phone && touched.phone ? errors.phone : ''}
-              >
-                <Input
-                  name="phone"
-                  value={values.phone}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
-              </Form.Item>
-              <Form.Item
-                label="Identity Card"
+                value={values.phone}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+            </Form.Item>
+            <Form.Item
+              label="Identity Card"
+              name="identity"
+              validateStatus={
+                errors.identity && touched.identity ? 'error' : ''
+              }
+              help={errors.identity && touched.identity ? errors.identity : ''}
+            >
+              <Input
                 name="identity"
-                validateStatus={
-                  errors.identity && touched.identity ? 'error' : ''
-                }
-                help={
-                  errors.identity && touched.identity ? errors.identity : ''
-                }
-              >
-                <Input
-                  name="identity"
-                  value={values.identity}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
-              </Form.Item>
-              <Form.Item
-                label="Date of Birth"
+                value={values.identity}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+            </Form.Item>
+            <Form.Item
+              label="Date of Birth"
+              name="dob"
+              validateStatus={errors.dob && touched.dob ? 'error' : ''}
+              help={errors.dob && touched.dob ? errors.dob : ''}
+            >
+              <DatePicker
+                placement="bottomRight"
                 name="dob"
-                validateStatus={errors.dob && touched.dob ? 'error' : ''}
-                help={errors.dob && touched.dob ? errors.dob : ''}
-              >
-                <DatePicker
-                  placement="bottomRight"
-                  name="dob"
-                  onChange={value => setFieldValue('dob', value)}
-                  onBlur={handleBlur}
-                  value={values.dob}
-                />
-              </Form.Item>
-              <Form.Item
-                label="Gender"
+                className="dob"
+                onChange={value => setFieldValue('dob', value)}
+                onBlur={handleBlur}
+                value={values.dob}
+              />
+            </Form.Item>
+            <Form.Item
+              label="Gender"
+              name="gender"
+              validateStatus={errors.gender && touched.gender ? 'error' : ''}
+              help={errors.gender && touched.gender && errors.gender}
+            >
+              <Select
                 name="gender"
-                validateStatus={errors.gender && touched.gender ? 'error' : ''}
-                help={errors.gender && touched.gender && errors.gender}
+                onChange={value => setFieldValue('gender', value)}
+                onBlur={handleBlur}
+                defaultValue={values.gender}
               >
-                <Select
-                  name="gender"
-                  onChange={value => setFieldValue('gender', value)}
-                  onBlur={handleBlur}
-                  defaultValue={values.gender}
-                >
-                  <Select.Option value="male">Male</Select.Option>
-                  <Select.Option value="female">Female</Select.Option>
-                </Select>
-              </Form.Item>
-              <Form.Item
-                label="Status"
+                <Select.Option value="male">Male</Select.Option>
+                <Select.Option value="female">Female</Select.Option>
+              </Select>
+            </Form.Item>
+            <Form.Item
+              label="Status"
+              name="status"
+              validateStatus={errors.status && touched.status ? 'error' : ''}
+              help={errors.status && touched.status && errors.status}
+            >
+              <Select
                 name="status"
-                validateStatus={errors.status && touched.status ? 'error' : ''}
-                help={errors.status && touched.status && errors.status}
+                onChange={value => setFieldValue('status', value)}
+                onBlur={handleBlur}
+                defaultValue={values.status}
               >
-                <Select
-                  name="status"
-                  onChange={value => setFieldValue('status', value)}
-                  onBlur={handleBlur}
-                  defaultValue={values.status}
-                >
-                  <Select.Option value={true}>Active</Select.Option>
-                  <Select.Option value={false}>Inactive</Select.Option>
-                </Select>
-              </Form.Item>
-              <Form.Item
-                label="Position"
+                <Select.Option value={true}>Active</Select.Option>
+                <Select.Option value={false}>Inactive</Select.Option>
+              </Select>
+            </Form.Item>
+            <Form.Item
+              label="Position"
+              name="position"
+              validateStatus={
+                errors.position && touched.position ? 'error' : ''
+              }
+              help={errors.position && touched.position && errors.position}
+            >
+              <Select
                 name="position"
-                validateStatus={
-                  errors.position && touched.position ? 'error' : ''
-                }
-                help={errors.position && touched.position && errors.position}
+                onChange={value => setFieldValue('position', value)}
+                onBlur={handleBlur}
+                defaultValue={values.position}
               >
-                <Select
-                  name="position"
-                  onChange={value => setFieldValue('position', value)}
-                  onBlur={handleBlur}
-                  defaultValue={values.position}
-                >
-                  <Select.Option value="Developer">Developer</Select.Option>
-                  <Select.Option value="Quality Assurance">
-                    Quality Assurance
-                  </Select.Option>
-                  <Select.Option value="CEO">CEO</Select.Option>
-                  <Select.Option value="President">President</Select.Option>
-                </Select>
-              </Form.Item>
-              <Form.Item label="is Manager" name="isManager">
-                <Checkbox
-                  name="isManager"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  checked={values.isManager}
-                ></Checkbox>
-              </Form.Item>
-              <Form.Item
-                label="Manager"
+                <Select.Option value="Developer">Developer</Select.Option>
+                <Select.Option value="Quality Assurance">
+                  Quality Assurance
+                </Select.Option>
+                <Select.Option value="CEO">CEO</Select.Option>
+                <Select.Option value="President">President</Select.Option>
+              </Select>
+            </Form.Item>
+            <Form.Item label="is Manager" name="isManager">
+              <Checkbox
+                name="isManager"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                checked={values.isManager}
+              ></Checkbox>
+            </Form.Item>
+            <Form.Item
+              label="Manager"
+              name="manager"
+              validateStatus={errors.manager && touched.manager ? 'error' : ''}
+              help={errors.manager && touched.manager ? errors.manager : ''}
+            >
+              <Input
                 name="manager"
-                validateStatus={
-                  errors.manager && touched.manager ? 'error' : ''
-                }
-                help={errors.manager && touched.manager ? errors.manager : ''}
-              >
-                <Input
-                  name="manager"
-                  value={values.manager}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
-              </Form.Item>
-              <Form.Item label="Skills">
-                <Form.List name="skills">
-                  {(fields, { add, remove }) => (
-                    <>
-                      {fields.map(({ key, name, ...restField }) => (
-                        <Space
-                          key={key}
-                          style={{
-                            display: 'flex',
-                            marginBottom: 8,
-                          }}
-                          align="baseline"
+                value={values.manager}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+            </Form.Item>
+            <Form.Item label="Skills">
+              <Form.List name="skills">
+                {(fields, { add, remove }) => (
+                  <>
+                    {fields.map(({ key, name, ...restField }) => (
+                      <Space
+                        key={key}
+                        style={{
+                          display: 'flex',
+                          marginBottom: 8,
+                        }}
+                        align="baseline"
+                      >
+                        <Form.Item
+                          {...restField}
+                          name={[name, 'skill']}
+                          validateStatus={
+                            errors?.skills?.[name]?.skill &&
+                            touched?.skills?.[name]?.skill
+                              ? 'error'
+                              : ''
+                          }
+                          help={
+                            errors?.skills?.[name]?.skill &&
+                            touched?.skills?.[name]?.skill
+                              ? errors.skills[name].skill
+                              : ''
+                          }
                         >
-                          <Form.Item
-                            {...restField}
-                            name={[name, 'skill']}
-                            validateStatus={
-                              errors?.skills?.[name]?.skill &&
-                              touched?.skills?.[name]?.skill
-                                ? 'error'
-                                : ''
-                            }
-                            help={
-                              errors?.skills?.[name]?.skill &&
-                              touched?.skills?.[name]?.skill
-                                ? errors.skills[name].skill
-                                : ''
-                            }
-                          >
-                            <Input
-                              placeholder="Skill"
-                              onChange={e => {
-                                setFieldValue(
-                                  `skills[${name}].skill`,
-                                  e.target.value
-                                )
-                                validateField(`skills[${name}].skill`)
-                              }}
-                            />
-                          </Form.Item>
-                          <Form.Item
-                            {...restField}
-                            name={[name, 'experience']}
-                            validateStatus={
-                              errors?.skills?.[name]?.experience &&
-                              touched?.skills?.[name]?.experience
-                                ? 'error'
-                                : ''
-                            }
-                            help={
-                              errors?.skills?.[name]?.experience &&
-                              touched?.skills?.[name]?.experience
-                                ? errors.skills[name].experience
-                                : ''
-                            }
-                          >
-                            <Input
-                              placeholder="Experience (Years)"
-                              onChange={e => {
-                                setFieldValue(
-                                  `skills[${name}].experience`,
-                                  e.target.value
-                                )
-                                validateField(`skills[${name}].experience`)
-                              }}
-                            />
-                          </Form.Item>
-                          <MinusCircleOutlined
-                            onClick={() => {
-                              if (fields.length > 1) {
-                                const newSkills = values.skills.filter(
-                                  (_, index) => index !== name
-                                )
-                                setFieldValue('skills', newSkills)
-                                remove(name, key)
-                              }
+                          <Input
+                            placeholder="Skill"
+                            onChange={e => {
+                              setFieldValue(
+                                `skills[${name}].skill`,
+                                e.target.value
+                              )
+                              validateField(`skills[${name}].skill`)
                             }}
-                            disabled={fields.length === 1}
                           />
-                        </Space>
-                      ))}
-                      <Form.Item>
-                        <Button
-                          type="dashed"
-                          onClick={() => add()}
-                          block
-                          icon={<PlusOutlined />}
+                        </Form.Item>
+                        <Form.Item
+                          {...restField}
+                          name={[name, 'experience']}
+                          validateStatus={
+                            errors?.skills?.[name]?.experience &&
+                            touched?.skills?.[name]?.experience
+                              ? 'error'
+                              : ''
+                          }
+                          help={
+                            errors?.skills?.[name]?.experience &&
+                            touched?.skills?.[name]?.experience
+                              ? errors.skills[name].experience
+                              : ''
+                          }
                         >
-                          Add Skill
-                        </Button>
-                      </Form.Item>
-                    </>
-                  )}
-                </Form.List>
-              </Form.Item>
+                          <Input
+                            placeholder="Experience (Years)"
+                            onChange={e => {
+                              setFieldValue(
+                                `skills[${name}].experience`,
+                                e.target.value
+                              )
+                              validateField(`skills[${name}].experience`)
+                            }}
+                          />
+                        </Form.Item>
+                        <MinusCircleOutlined
+                          onClick={() => {
+                            if (fields.length > 1) {
+                              const newSkills = values.skills.filter(
+                                (_, index) => index !== name
+                              )
+                              setFieldValue('skills', newSkills)
+                              remove(name, key)
+                            }
+                          }}
+                          disabled={fields.length === 1}
+                        />
+                      </Space>
+                    ))}
+                    <Form.Item>
+                      <Button
+                        type="dashed"
+                        onClick={() => add()}
+                        block
+                        icon={<PlusOutlined />}
+                      >
+                        Add Skill
+                      </Button>
+                    </Form.Item>
+                  </>
+                )}
+              </Form.List>
+            </Form.Item>
 
-              <Form.Item
-                label="Description"
+            <Form.Item
+              label="Description"
+              name="description"
+              validateStatus={
+                errors.description && touched.description ? 'error' : ''
+              }
+              help={
+                errors.description && touched.description && errors.description
+              }
+            >
+              <Input.TextArea
+                rows={4}
                 name="description"
-                validateStatus={
-                  errors.description && touched.description ? 'error' : ''
-                }
-                help={
-                  errors.description &&
-                  touched.description &&
-                  errors.description
-                }
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.description}
+              />
+            </Form.Item>
+            <Form.Item label="Avatar">
+              <Upload
+                name="avatar"
+                listType="picture"
+                accept="image/*"
+                maxCount={1}
+                action="http://localhost:3000/employees"
+                beforeUpload={checkFile}
+                onRemove={() => setAvatar(null)}
               >
-                <Input.TextArea
-                  rows={4}
-                  name="description"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.description}
-                />
-              </Form.Item>
-              <Form.Item label="Avatar">
-                <Upload
-                  name="avatar"
-                  listType="picture"
-                  accept="image/*"
-                  maxCount={1}
-                  action="http://localhost:3000/employees"
-                  beforeUpload={checkFile}
-                  onRemove={() => setAvatar(null)}
-                >
-                  <Button icon={<UploadOutlined />}>Upload Avatar</Button>
-                </Upload>
-              </Form.Item>
+                <Button icon={<UploadOutlined />}>Upload Avatar</Button>
+              </Upload>
+            </Form.Item>
 
-              <Form.Item>
-                <Button type="primary" htmlType="submit">
-                  Create
-                </Button>
-              </Form.Item>
-            </Form>
-          )}
-        </Formik>
-      </Card>
+            <Form.Item>
+              <Button type="primary" htmlType="submit">
+                Create
+              </Button>
+            </Form.Item>
+          </Form>
+        )}
+      </Formik>
     </>
   )
 }
