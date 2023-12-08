@@ -30,7 +30,22 @@ const EditEmployee = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [empData, setEmpData] = useState([])
   const [avatar, setAvatar] = useState(null)
+  const [formLayout, setFormLayout] = useState('horizontal')
+  // const [avatar, setAvatar] = useState(null)
+  // const [form] = Form.useForm()
 
+  useEffect(() => {
+    const handleResize = () => {
+      setFormLayout(window.innerWidth < 700 ? 'vertical' : 'horizontal')
+    }
+
+    handleResize()
+    window.addEventListener('resize', handleResize)
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
   useEffect(() => {
     fetch('http://localhost:3000/employees/' + id)
       .then(res => {
@@ -125,13 +140,7 @@ const EditEmployee = () => {
     return false
   }
   return (
-    <Card
-      title="Edit EMPLOYEE"
-      bordered={false}
-      style={{
-        width: '100%',
-      }}
-    >
+    <>
       <button
         className="back-to-list-button"
         onClick={() => navigate('/employees')}
@@ -139,33 +148,49 @@ const EditEmployee = () => {
         <ArrowLeftOutlined style={{ marginRight: '7px' }} />
         Back
       </button>
-      {empData && (
-        <Form
-          form={form}
-          layout="vertical"
-          onFinish={handleFormSubmit}
-          initialValues={{
-            name: empData.name,
-            code: empData.code,
-            phone: empData.phone,
-            identity: empData.identity,
-            dob: moment(empData.dob, 'YYYY-MM-DD'),
-            gender: empData.gender,
-            status: empData.status,
-            is_manager: empData.is_manager,
-            position: empData.position,
-            skills: empData?.skills?.map(skill => ({
-              skill: skill.name,
-              experience: skill.year,
-            })),
-            avatar: empData?.avatar,
-            manager: empData?.manager,
-            description: empData?.description,
+      <Card
+        title="Edit EMPLOYEE"
+        bordered={false}
+        style={{
+          width: '100%',
+        }}
+      >
+        {empData && (
+          <Form
+            labelCol={{
+              span: formLayout === 'vertical' ? 24 : 6,
+            }}
+            wrapperCol={{
+              span: formLayout === 'vertical' ? 24 : 18,
+            }}
+            labelAlign="left"
+            style={{
+              maxWidth: 600,
+            }}
+            form={form}
+            layout={formLayout}
+            onFinish={handleFormSubmit}
+            initialValues={{
+              name: empData.name,
+              code: empData.code,
+              phone: empData.phone,
+              identity: empData.identity,
+              dob: moment(empData.dob, 'YYYY-MM-DD'),
+              gender: empData.gender,
+              status: empData.status,
+              is_manager: empData.is_manager,
+              position: empData.position,
+              skills: empData?.skills?.map(skill => ({
+                skill: skill.name,
+                experience: skill.year,
+              })),
+              avatar: empData?.avatar,
+              manager: empData?.manager,
+              description: empData?.description,
 
-            // ... set other fields similarly
-          }}
-        >
-          <div className="input-container">
+              // ... set other fields similarly
+            }}
+          >
             <Form.Item
               label="Name"
               name="name"
@@ -199,8 +224,6 @@ const EditEmployee = () => {
                 }}
               />{' '}
             </Form.Item>
-          </div>
-          <div className="input-container">
             <Form.Item
               label="Phone"
               name="phone"
@@ -247,81 +270,70 @@ const EditEmployee = () => {
                 }}
               />{' '}
             </Form.Item>
-          </div>
-          <div className="select-container-lg">
-            <div className="select-container">
-              <Form.Item
-                label="Date of Birth"
-                name="dob"
-                className="select-width-dobgs"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please select your Date of Birth!',
-                  },
-                ]}
-              >
-                <DatePicker placement="bottomRight" style={{ width: '100%' }} />
-              </Form.Item>
-              <Form.Item
-                label="Gender"
-                name="gender"
-                className="select-width-dobgs"
-              >
-                <Select>
-                  <Select.Option value="male">Male</Select.Option>
-                  <Select.Option value="female">Female</Select.Option>
-                </Select>
-              </Form.Item>
-              <Form.Item
-                label="Status"
-                name="status"
-                className="select-width-dobgs"
-              >
-                <Select>
-                  <Select.Option value={true}>Active</Select.Option>
-                  <Select.Option value={false}>Inactive</Select.Option>
-                </Select>
-              </Form.Item>
-            </div>
-            <div className="select-container">
-              <Form.Item
-                label="is Manager?"
-                name="is_manager"
-                className="select-width-im"
-              >
-                <Select>
-                  <Select.Option value={true}>Yes</Select.Option>
-                  <Select.Option value={false}>No</Select.Option>
-                </Select>
-              </Form.Item>
-              <Form.Item
-                label="Position"
-                name="position"
-                className="select-width-p"
-              >
-                <Select>
-                  <Select.Option value="Developer">Developer</Select.Option>
-                  <Select.Option value="Quality Assurance">
-                    Tester
-                  </Select.Option>
-                  <Select.Option value="CEO">CEO</Select.Option>
-                  <Select.Option value="President">President</Select.Option>
-                </Select>
-              </Form.Item>
+            <Form.Item
+              label="Date of Birth"
+              name="dob"
+              className="select-width-dobgs"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please select your Date of Birth!',
+                },
+              ]}
+            >
+              <DatePicker placement="bottomRight" style={{ width: '100%' }} />
+            </Form.Item>
+            <Form.Item
+              label="Gender"
+              name="gender"
+              className="select-width-dobgs"
+            >
+              <Select>
+                <Select.Option value="male">Male</Select.Option>
+                <Select.Option value="female">Female</Select.Option>
+              </Select>
+            </Form.Item>
+            <Form.Item
+              label="Status"
+              name="status"
+              className="select-width-dobgs"
+            >
+              <Select>
+                <Select.Option value={true}>Active</Select.Option>
+                <Select.Option value={false}>Inactive</Select.Option>
+              </Select>
+            </Form.Item>
+            <Form.Item
+              label="is Manager?"
+              name="is_manager"
+              className="select-width-im"
+            >
+              <Select>
+                <Select.Option value={true}>Yes</Select.Option>
+                <Select.Option value={false}>No</Select.Option>
+              </Select>
+            </Form.Item>
+            <Form.Item
+              label="Position"
+              name="position"
+              className="select-width-p"
+            >
+              <Select>
+                <Select.Option value="Developer">Developer</Select.Option>
+                <Select.Option value="Quality Assurance">Tester</Select.Option>
+                <Select.Option value="CEO">CEO</Select.Option>
+                <Select.Option value="President">President</Select.Option>
+              </Select>
+            </Form.Item>
 
-              <Form.Item
-                label="Manager"
-                name="manager"
-                className="manager-input-width"
-              >
-                <Input />
-              </Form.Item>
-            </div>
-          </div>
-          <div className="input-container">
-            <div className="skill-input">
-              <p style={{ marginBottom: '8px' }}>Skills</p>
+            <Form.Item
+              label="Manager"
+              name="manager"
+              className="manager-input-width"
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item label="Skills">
               <Form.List name="skills">
                 {(fields, { add, remove }) => (
                   <>
@@ -334,31 +346,11 @@ const EditEmployee = () => {
                         }}
                         align="baseline"
                       >
-                        <Form.Item
-                          {...restField}
-                          name={[name, 'skill']}
-                          rules={[
-                            {
-                              required: true,
-                              whitespace: true,
-                              message: 'Please input skill!',
-                            },
-                          ]}
-                        >
-                          <Input />
+                        <Form.Item {...restField} name={[name, 'skill']}>
+                          <Input placeholder="Skill" />
                         </Form.Item>
-                        <Form.Item
-                          {...restField}
-                          name={[name, 'experience']}
-                          rules={[
-                            {
-                              required: true,
-                              whitespace: true,
-                              message: 'Please input experience!',
-                            },
-                          ]}
-                        >
-                          <Input />
+                        <Form.Item {...restField} name={[name, 'experience']}>
+                          <Input placeholder="Experience (Years)" />
                         </Form.Item>
                         <MinusCircleOutlined
                           onClick={() => {
@@ -377,13 +369,13 @@ const EditEmployee = () => {
                         block
                         icon={<PlusOutlined />}
                       >
-                        Add field
+                        Add Skill
                       </Button>
                     </Form.Item>
                   </>
                 )}
               </Form.List>
-            </div>
+            </Form.Item>
             <Form.Item
               label="Description"
               name="description"
@@ -398,44 +390,44 @@ const EditEmployee = () => {
                 }}
               />{' '}
             </Form.Item>
-          </div>
-          <Form.Item name="avatar">
-            <p style={{ marginBottom: '8px' }}>Avatar</p>
-            {empData?.avatar && (
-              <>
-                <img
-                  src={empData?.avatar || ''} // Đặt đường dẫn hình ảnh của avatar vào đây
-                  alt="Avatar"
-                  style={{
-                    width: '100px',
-                    height: '100px',
-                    objectFit: 'cover',
-                    borderRadius: '50%',
-                  }}
-                />
-                <Upload
-                  name="avatar"
-                  listType="picture"
-                  accept="image/*"
-                  maxCount={1}
-                  action="http://localhost:3000/employees"
-                  beforeUpload={checkFile}
-                  onRemove={() => setAvatar(null)}
-                >
-                  <Button icon={<UploadOutlined />}>Upload Avatar</Button>
-                </Upload>
-              </>
-            )}
-          </Form.Item>
+            <Form.Item name="avatar">
+              <p style={{ marginBottom: '8px' }}>Avatar</p>
+              {empData?.avatar && (
+                <>
+                  <img
+                    src={empData?.avatar || ''} // Đặt đường dẫn hình ảnh của avatar vào đây
+                    alt="Avatar"
+                    style={{
+                      width: '100px',
+                      height: '100px',
+                      objectFit: 'cover',
+                      borderRadius: '50%',
+                    }}
+                  />
+                  <Upload
+                    name="avatar"
+                    listType="picture"
+                    accept="image/*"
+                    maxCount={1}
+                    action="http://localhost:3000/employees"
+                    beforeUpload={checkFile}
+                    onRemove={() => setAvatar(null)}
+                  >
+                    <Button icon={<UploadOutlined />}>Upload Avatar</Button>
+                  </Upload>
+                </>
+              )}
+            </Form.Item>
 
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
-        </Form>
-      )}
-    </Card>
+            <Form.Item>
+              <Button type="primary" htmlType="submit">
+                Submit
+              </Button>
+            </Form.Item>
+          </Form>
+        )}
+      </Card>
+    </>
   )
 }
 

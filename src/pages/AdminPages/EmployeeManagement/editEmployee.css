@@ -23,11 +23,6 @@
   transform: scaleX(1);
 }
 
-.skill-input,
-.text-input-form {
-  width: 49%;
-}
-
 .select-lang {
   position: absolute;
   right: 5px;
