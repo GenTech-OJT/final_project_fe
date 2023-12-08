@@ -1,18 +1,9 @@
-.page-container {
-  padding: 25px 50px;
-  background-color: #f5f5f5;
-}
-.page-title {
-  text-align: center;
-  margin-bottom: 30px;
-}
-
 .back-to-list-button {
   position: relative;
   display: inline-block;
-  padding: 20px;
   text-decoration: none;
   color: black; /* Set the text color */
+  margin-bottom: 15px;
 }
 
 .back-to-list-button::after {
@@ -30,45 +21,6 @@
 
 .back-to-list-button:hover::after {
   transform: scaleX(1);
-}
-
-.create-container {
-  width: 100%;
-}
-
-.input-container {
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-}
-
-.select-container-lg {
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-}
-
-.select-container {
-  display: flex;
-  width: 49%;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-
-.select-width-dobgs {
-  width: 32%;
-}
-
-.select-width-im {
-  width: 25%;
-}
-
-.select-width-p {
-  width: 31%;
-}
-
-.manager-input-width {
-  width: 40%;
 }
 
 .skill-input,
