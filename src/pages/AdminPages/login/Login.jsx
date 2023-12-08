@@ -151,7 +151,7 @@ const Login = () => {
                     />
                   </Form.Item>
                 </div>
-                <div className="remember_me">
+                {/* <div className="remember_me">
                   <Field name="remember">
                     {({ field }) => (
                       <Form.Item valuePropName="checked">
@@ -159,7 +159,7 @@ const Login = () => {
                       </Form.Item>
                     )}
                   </Field>
-                </div>
+                </div> */}
                 <Button block type="primary" htmlType="submit">
                   Log in
                 </Button>

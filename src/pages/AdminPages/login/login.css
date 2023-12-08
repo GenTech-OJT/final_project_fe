@@ -1,6 +1,5 @@
 .section {
   align-items: center;
-  background-color: #f7f7f7; /* Soft gray background for a light and airy feel */
   display: flex;
   justify-content: center;
   flex-direction: column; /* Center the container horizontally */
