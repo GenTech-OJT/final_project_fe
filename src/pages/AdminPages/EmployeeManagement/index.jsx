@@ -65,11 +65,6 @@ const EmployeeManagement = () => {
     setEditRowKey(record.id)
   }
 
-  // const viewDetail = record => {
-  //   // Handle logic to view details for the selected record
-  //   console.log('View Detail:', record)
-  // }
-
   const viewDetail = record => {
     navigate(`/employees/detail/${record.id}`)
   }
