@@ -14,10 +14,11 @@ const ProjectManagement = lazy(
 const EmployeeManagement = lazy(
   () => import('@pages/AdminPages/EmployeeManagement')
 )
+
+const Login = lazy(() => import('@pages/AdminPages/login/Login'))
 const DetailEmployee = lazy(
   () => import('@pages/AdminPages/EmployeeManagement/detail')
 )
-const Login = lazy(() => import('@pages/AdminPages/Login'))
 
 const AppRoutes = () => {
   return (

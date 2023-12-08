@@ -29,10 +29,6 @@
   color: green; /* Màu sắc mới khi hover */
 }
 
-.employeeLayout {
-  margin: 30px 20px;
-}
-
 .ant-table-column-title {
   width: 130px;
 }
