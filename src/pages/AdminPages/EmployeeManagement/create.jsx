@@ -26,7 +26,7 @@ import './create.css'
 const CreateEmployee = () => {
   const navigate = useNavigate()
   const [formLayout, setFormLayout] = useState('horizontal')
-  // const [avatar, setAvatar] = useState(null)
+  const [avatar, setAvatar] = useState(null)
   // const [form] = Form.useForm()
 
   useEffect(() => {
@@ -42,17 +42,17 @@ const CreateEmployee = () => {
     }
   }, [])
 
-  // const checkFile = file => {
-  //   const isImage = file.type.startsWith('image/')
+  const checkFile = file => {
+    const isImage = file.type.startsWith('image/')
 
-  //   if (!isImage) {
-  //     message.error('You can only upload image files!')
-  //   } else {
-  //     setAvatar(file)
-  //   }
+    if (!isImage) {
+      message.error('You can only upload image files!')
+    } else {
+      setAvatar(file)
+    }
 
-  //   return false
-  // }
+    return false
+  }
 
   const initialValues = {
     name: '',
@@ -78,7 +78,7 @@ const CreateEmployee = () => {
       .required('Please input name'),
     email: Yup.string()
       .email('Please input a valid email!')
-      .required('Please input name'),
+      .required('Please input email'),
     code: Yup.string().required('Please input code'),
     phone: Yup.string()
       .required('Please input phone number')
@@ -95,12 +95,17 @@ const CreateEmployee = () => {
     position: Yup.string(),
     isManager: Yup.bool(),
     manager: Yup.string(),
-    // skills: Yup.array().of(
-    //   Yup.object().shape({
-    //     skill: Yup.string().required('Skill is required'),
-    //     experience: Yup.string().required('Experience is required'),
-    //   })
-    // ),
+    skills: Yup.array()
+      .of(
+        Yup.object().shape({
+          skill: Yup.string().required('Skill is required'),
+          experience: Yup.string()
+            .required('Experience is required')
+            .matches(/^[0-9]+(\.[0-9]+)?$/, 'Experience must be a number'),
+        })
+      )
+      .required('Must have skills')
+      .min(1, 'Minimum of 1 skill'),
     description: Yup.string(),
   })
 
@@ -111,20 +116,20 @@ const CreateEmployee = () => {
     }
     console.log(formattedValues)
     // try {
-    // const formData = new FormData()
-    // if (avatar != null) {
-    //   formData.append('avatar', avatar)
-    // } else {
-    //   formData.append('avatar', null)
-    // }
+    const formData = new FormData()
+    if (avatar != null) {
+      formData.append('avatar', avatar)
+    } else {
+      formData.append('avatar', null)
+    }
 
-    // Object.entries(formattedValues).forEach(([key, value]) => {
-    //   formData.append(key, value)
-    // })
+    Object.entries(formattedValues).forEach(([key, value]) => {
+      formData.append(key, value)
+    })
 
-    // formData.forEach((value, key) => {
-    //   console.log('Form Data: ', `${key}: ${value}`)
-    // })
+    formData.forEach((value, key) => {
+      console.log('Form Data: ', `${key}: ${value}`)
+    })
 
     //    fetch('http://localhost:3000/employees', {
     //     method: 'POST',
@@ -168,6 +173,7 @@ const CreateEmployee = () => {
             handleBlur,
             handleSubmit,
             setFieldValue,
+            validateField,
             // isSubmitting,
           }) => (
             <Form
@@ -183,6 +189,7 @@ const CreateEmployee = () => {
               }}
               layout={formLayout}
               onFinish={handleSubmit}
+              initialValues={initialValues}
             >
               <Form.Item
                 label="Name"
@@ -357,16 +364,84 @@ const CreateEmployee = () => {
                           }}
                           align="baseline"
                         >
-                          <Form.Item {...restField} name={[name, 'skill']}>
-                            <Input placeholder="Skill" />
+                          <Form.Item
+                            {...restField}
+                            name={[name, 'skill']}
+                            validateStatus={
+                              errors.skills &&
+                              errors.skills[name] &&
+                              touched.skills &&
+                              touched.skills[name] &&
+                              errors.skills[name].skill &&
+                              touched.skills[name].skill
+                                ? 'error'
+                                : ''
+                            }
+                            help={
+                              errors.skills &&
+                              errors.skills[name] &&
+                              touched.skills &&
+                              touched.skills[name] &&
+                              errors.skills[name].skill &&
+                              touched.skills[name].skill
+                                ? errors.skills[name].skill
+                                : ''
+                            }
+                          >
+                            <Input
+                              placeholder="Skill"
+                              onChange={e => {
+                                setFieldValue(
+                                  `skills[${name}].skill`,
+                                  e.target.value
+                                )
+                                validateField(`skills[${name}].skill`)
+                              }}
+                            />
                           </Form.Item>
-                          <Form.Item {...restField} name={[name, 'experience']}>
-                            <Input placeholder="Experience (Years)" />
+                          <Form.Item
+                            {...restField}
+                            name={[name, 'experience']}
+                            validateStatus={
+                              errors.skills &&
+                              errors.skills[name] &&
+                              touched.skills &&
+                              touched.skills[name] &&
+                              touched.skills[name].experience &&
+                              errors.skills[name].experience
+                                ? 'error'
+                                : ''
+                            }
+                            help={
+                              errors.skills &&
+                              errors.skills[name] &&
+                              touched.skills &&
+                              touched.skills[name] &&
+                              errors.skills[name].experience &&
+                              touched.skills[name].experience
+                                ? errors.skills[name].experience
+                                : ''
+                            }
+                          >
+                            <Input
+                              placeholder="Experience (Years)"
+                              onChange={e => {
+                                setFieldValue(
+                                  `skills[${name}].experience`,
+                                  e.target.value
+                                )
+                                validateField(`skills[${name}].experience`)
+                              }}
+                            />
                           </Form.Item>
                           <MinusCircleOutlined
                             onClick={() => {
                               if (fields.length > 1) {
-                                remove(name)
+                                const newSkills = values.skills.filter(
+                                  (_, index) => index !== name
+                                )
+                                setFieldValue('skills', newSkills)
+                                remove(name, key)
                               }
                             }}
                             disabled={fields.length === 1}
@@ -408,7 +483,7 @@ const CreateEmployee = () => {
                   value={values.description}
                 />
               </Form.Item>
-              {/* <Form.Item label="Avatar">
+              <Form.Item label="Avatar">
                 <Upload
                   name="avatar"
                   listType="picture"
@@ -420,7 +495,7 @@ const CreateEmployee = () => {
                 >
                   <Button icon={<UploadOutlined />}>Upload Avatar</Button>
                 </Upload>
-              </Form.Item> */}
+              </Form.Item>
 
               <Form.Item>
                 <Button type="primary" htmlType="submit">
