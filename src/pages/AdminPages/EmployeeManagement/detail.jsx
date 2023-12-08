@@ -24,7 +24,12 @@ const EmployeeDetail = () => {
 
   // Function to generate data for Chartpie from employee skills
   const generateChartData = skills => {
-    const labels = skills.map(skill => `${skill.name} - ${skill.year} years`)
+    const labels = skills.map(
+      skill =>
+        `${skill.name.charAt(0).toUpperCase()}${skill.name.slice(1)}   -   ${
+          skill.year
+        } years`
+    )
     const data = skills.map(skill => skill.year)
 
     return {
@@ -36,7 +41,6 @@ const EmployeeDetail = () => {
       ],
     }
   }
-
   const displayValue = value => {
     return value !== null && value !== undefined ? value : 'None'
   }
@@ -83,161 +87,156 @@ const EmployeeDetail = () => {
       >
         <TabPane tab={<span>Profile</span>} key="1">
           {/* Content for Profile tab */}
-          <div className="detail-container">
-            <Card>
-              <Row gutter={16} justify="center" align="middle">
-                <Col span={23} className="employee_avt">
-                  <img
-                    src={employee.avatar}
-                    alt="Employee Avatar"
-                    className="avt"
-                  />
-                  <div className="employee_title">
-                    <p className="employee_name">{employee.name}</p>
-                    <p className="employee_position">{employee.position}</p>
-                    <div className="status-show">
-                      <div
-                        className="status-dot"
-                        style={{ backgroundColor: getStatusDotColor() }}
-                      ></div>
-                      <p className="status-text">
-                        {employee.status === 'active' ? 'Active' : 'Inactive'}
-                      </p>
+          <Card style={{ backgroundColor: ' rgb(245, 245, 245)' }}>
+            <Row gutter={16} justify="center" align="middle">
+              <Col span={24} className="employee_avt">
+                <img
+                  src={employee.avatar}
+                  alt="Employee Avatar"
+                  className="avt"
+                />
+                <div className="employee_title">
+                  <p className="employee_name">{employee.name}</p>
+                  <p className="employee_position">{employee.position}</p>
+                  <div className="status-show">
+                    <div
+                      className="status-dot"
+                      style={{ backgroundColor: getStatusDotColor() }}
+                    ></div>
+                    <p className="status-text">
+                      {employee.status === 'active' ? 'Active' : 'Inactive'}
+                    </p>
+                  </div>
+                </div>
+                <div className="vertical-line"></div>
+                <Col span={14}>
+                  <div className="horizontal_container">
+                    <div className="content_1">
+                      <div className="employee_content">
+                        <p className="employee_label">Employee code: </p>
+                        <p className="employee_info">{employee.code}</p>
+                      </div>
+                      <div className="employee_content">
+                        <p className="employee_label">Line manager: </p>
+                        <p className="employee_info">
+                          {capitalizeFirstLetter(
+                            displayValue(employee.line_manager)
+                          )}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="content_2">
+                      <div className="employee_content">
+                        <p className="employee_label">Phone number: </p>
+                        <p className="employee_info">{employee.phone}</p>
+                      </div>
+                      <div className="employee_content">
+                        <p className="employee_label">Email: </p>
+                        <p className="employee_info">doeJane123@gmail.com</p>
+                      </div>
                     </div>
                   </div>
-                  <div className="vertical-line"></div>
-                  <Col span={14}>
-                    <div className="horizontal_container">
-                      <div className="content_1">
-                        <div className="employee_content">
-                          <p className="employee_label">Employee code: </p>
-                          <p className="employee_info">{employee.code}</p>
-                        </div>
-                        <div className="employee_content">
-                          <p className="employee_label">Line manager: </p>
-                          <p className="employee_info">
-                            {capitalizeFirstLetter(
-                              displayValue(employee.line_manager)
-                            )}
-                          </p>
-                        </div>
-                        <br />
-                      </div>
-                      <div className="content_2">
-                        <div className="employee_content">
-                          <p className="employee_label">Phone number: </p>
-                          <p className="employee_info">{employee.phone}</p>
-                        </div>
-                        <div className="employee_content">
-                          <p className="employee_label">Email: </p>
-                          <p className="employee_info">doeJane123@gmail.com</p>
-                        </div>
-                      </div>
-                    </div>
-                    {/* Add more view-only information as needed */}
-                  </Col>
+                  {/* Add more view-only information as needed */}
                 </Col>
-              </Row>
-            </Card>
-            <Card style={{ marginTop: 20, width: '100%' }}>
-              <Row gutter={16} justify="center" align="middle">
-                <Col span={23}>
-                  <p className="title">Personal Information</p>
-                  <hr className="profile_line" />
+              </Col>
+            </Row>
+          </Card>
+          <Card
+            style={{
+              marginTop: 20,
+              width: '100%',
+              backgroundColor: ' rgb(245, 245, 245)',
+            }}
+          >
+            <Row gutter={16} justify="center" align="middle">
+              <Col span={23}>
+                <p className="title">Personal Information</p>
+                <hr className="profile_line" />
 
-                  <Col span={26}>
-                    <Descriptions
-                      column={2}
-                      bordered
-                      className="custom-descriptions"
+                <Col span={26}>
+                  <Descriptions
+                    column={2}
+                    bordered
+                    className="custom-descriptions"
+                  >
+                    <Descriptions.Item
+                      label={<span style={{ fontWeight: 'bold' }}>Gender</span>}
+                      className="custom-label"
                     >
-                      <Descriptions.Item
-                        label={
-                          <span style={{ fontWeight: 'bold' }}>Gender</span>
-                        }
-                        className="custom-label"
-                      >
-                        {capitalizeFirstLetter(displayValue(employee.gender))}{' '}
-                      </Descriptions.Item>
-                      <Descriptions.Item
-                        label={
-                          <span style={{ fontWeight: 'bold' }}>
-                            Identity code
-                          </span>
-                        }
-                        className="custom-label"
-                      >
-                        {employee.identity}
-                      </Descriptions.Item>
-                      <Descriptions.Item
-                        label={
-                          <span style={{ fontWeight: 'bold' }}>
-                            Phone number
-                          </span>
-                        }
-                        className="custom-label"
-                      >
-                        {employee.phone}
-                      </Descriptions.Item>
-                      <Descriptions.Item
-                        label={
-                          <span style={{ fontWeight: 'bold' }}>Is manager</span>
-                        }
-                        className="custom-label"
-                      >
-                        {capitalizeFirstLetter(
-                          displayValue(employee.is_manager ? 'Yes' : 'No')
-                        )}
-                      </Descriptions.Item>
-                      <Descriptions.Item
-                        label={
-                          <span style={{ fontWeight: 'bold' }}>
-                            Date of birth
-                          </span>
-                        }
-                        className="custom-label"
-                      >
-                        {employee.dob}
-                      </Descriptions.Item>
-                      <Descriptions.Item
-                        label={
-                          <span style={{ fontWeight: 'bold' }}>
-                            Description
-                          </span>
-                        }
-                        span={2}
-                        className="custom-label"
-                      >
-                        {capitalizeFirstLetter(
-                          displayValue(employee.description)
-                        )}
-                      </Descriptions.Item>
-                    </Descriptions>
-                    {/* Add more view-only information as needed */}
-                  </Col>
+                      {capitalizeFirstLetter(displayValue(employee.gender))}{' '}
+                    </Descriptions.Item>
+                    <Descriptions.Item
+                      label={
+                        <span style={{ fontWeight: 'bold' }}>
+                          Identity code
+                        </span>
+                      }
+                      className="custom-label"
+                    >
+                      {employee.identity}
+                    </Descriptions.Item>
+                    <Descriptions.Item
+                      label={
+                        <span style={{ fontWeight: 'bold' }}>Phone number</span>
+                      }
+                      className="custom-label"
+                    >
+                      {employee.phone}
+                    </Descriptions.Item>
+                    <Descriptions.Item
+                      label={
+                        <span style={{ fontWeight: 'bold' }}>Is manager</span>
+                      }
+                      className="custom-label"
+                    >
+                      {capitalizeFirstLetter(
+                        displayValue(employee.is_manager ? 'Yes' : 'No')
+                      )}
+                    </Descriptions.Item>
+                    <Descriptions.Item
+                      label={
+                        <span style={{ fontWeight: 'bold' }}>
+                          Date of birth
+                        </span>
+                      }
+                      className="custom-label"
+                    >
+                      {employee.dob}
+                    </Descriptions.Item>
+                    <Descriptions.Item
+                      label={
+                        <span style={{ fontWeight: 'bold' }}>Description</span>
+                      }
+                      span={2}
+                      className="custom-label"
+                    >
+                      {capitalizeFirstLetter(
+                        displayValue(employee.description)
+                      )}
+                    </Descriptions.Item>
+                  </Descriptions>
+                  {/* Add more view-only information as needed */}
                 </Col>
-              </Row>
-            </Card>
-          </div>
+              </Col>
+            </Row>
+          </Card>
         </TabPane>
         {/* next page */}
         <TabPane tab={<span>Skill</span>} key="2">
           {/* Content for Skill tab */}
-          <div className="detail-container">
-            <Card>
-              <Row gutter={16} justify="center" align="middle">
-                <Col span={22}>
-                  {employee.skills && employee.skills.length > 0 ? (
-                    <div>
-                      <Chartpie data={generateChartData(employee.skills)} />
-                    </div>
-                  ) : (
-                    <p>No skills available</p>
-                  )}
-                </Col>
-              </Row>
-            </Card>
-          </div>
+          <Card style={{ backgroundColor: ' rgb(245, 245, 245)' }}>
+            <Row gutter={16} justify="center" align="middle">
+              <Col span={22}>
+                {employee.skills && employee.skills.length > 0 ? (
+                  <div>
+                    <Chartpie data={generateChartData(employee.skills)} />
+                  </div>
+                ) : (
+                  <p>No skills available</p>
+                )}
+              </Col>
+            </Row>
+          </Card>
         </TabPane>
         <TabPane tab={<span>Project</span>} key="3">
           {/* Content for Project tab */}

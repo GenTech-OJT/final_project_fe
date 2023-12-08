@@ -83,7 +83,7 @@ const Chartpie = ({ data }) => {
   return (
     <div
       ref={chartRef}
-      style={{ width: '800px', height: '420px', right: '200px' }}
+      style={{ width: '800px', height: '390px', right: '200px' }}
     />
   )
 }

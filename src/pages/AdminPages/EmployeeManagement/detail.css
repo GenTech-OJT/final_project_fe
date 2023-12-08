@@ -30,8 +30,9 @@
 }
 
 .employee_label {
-  color: grey;
+  color: rgb(105, 105, 105);
   font-size: 16px;
+  font-weight: 500;
 }
 
 .info {
@@ -52,6 +53,7 @@
 
 .horizontal_container {
   display: flex;
+  align-items: center;
 }
 
 .content1,
@@ -67,7 +69,6 @@
 
 .content_1 {
   margin-left: 40px;
-  align-items: center;
 }
 
 .employee_content {
@@ -77,7 +78,6 @@
 .employee_info {
   margin-left: 20px;
   font-size: 16px;
-  font-weight: 500;
 }
 
 .status-dot {
