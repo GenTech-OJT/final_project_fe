@@ -24,7 +24,6 @@ const EmployeeDetail = () => {
   }
 
   // Function to generate data for Chartpie from employee skills
-  // Function to generate data for Chartpie from employee skills
   const generateChartData = skills => {
     const labels = skills.map(skill => `${skill.name} - ${skill.year} years`)
     const data = skills.map(skill => skill.year)

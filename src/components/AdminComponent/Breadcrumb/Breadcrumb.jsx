@@ -16,6 +16,18 @@ const BreadCrumb = () => {
   const location = useLocation()
   const pathSnippets = location.pathname.split('/').filter(i => i)
 
+  // Find the index of 'detail' or 'edit' in pathSnippets
+  const detailIndex = pathSnippets.indexOf('detail')
+  const editIndex = pathSnippets.indexOf('edit')
+
+  // If 'detail' exists, remove elements after it
+  if (detailIndex !== -1) {
+    pathSnippets.splice(detailIndex + 1)
+  } else if (editIndex !== -1) {
+    // If 'edit' exists, remove elements after it
+    pathSnippets.splice(editIndex + 1)
+  }
+
   // Kiểm tra xem path có trùng với route không
   const isPathMatched =
     pathSnippets.length > 0 &&
@@ -26,7 +38,7 @@ const BreadCrumb = () => {
   }
 
   return (
-    <Breadcrumb style={{ margin: '20px', fontWeight: '500', color: '#123ec7' }}>
+    <Breadcrumb style={{ margin: '25px', fontWeight: '500', color: '#123ec7' }}>
       {pathSnippets.map((snippet, index) => {
         const url = `/${pathSnippets.slice(0, index + 1).join('/')}`
         const displayText = customBreadcrumbNames[snippet] || snippet
