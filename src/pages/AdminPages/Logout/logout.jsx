@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import { Modal, Button } from 'antd'
 import { navigate } from '@reach/router'
 import { useTranslation } from 'react-i18next'

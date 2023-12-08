@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Descriptions, Avatar, Card, Space } from 'antd'
 import './profile.css'
 
