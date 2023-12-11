@@ -4,7 +4,7 @@ import {
   CustomSearch,
   CustomTable,
 } from '@components/CustomComponent/CustomTable'
-import { showToast } from '@components/Toast/toast'
+import { showToast } from '@components/toast/Toast'
 import { Button, Spin } from 'antd'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'

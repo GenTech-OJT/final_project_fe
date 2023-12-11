@@ -10,6 +10,7 @@
   "side_menu": {
     "project_management_label": "Quản lý dự án",
     "employee_management_label": "Quản lý nhân viên",
+    "dashboard_label": "Trang Chủ",
     "my_account": "Tài khoản của tôi",
     "logout": "Đăng xuất"
   },
@@ -24,7 +25,10 @@
     "activated_successfully": "Đã Kích Hoạt Thành Công",
     "deactivated_successfully": "Đã Vô Hiệu Hóa Thành Công",
     "notfound_content": "Trang bạn đang cố truy cập không thể được tìm thấy vào lúc này.",
-    "spinners": "Đang tải"
+    "spinners": "Đang tải",
+    "logout_confirm": "Bạn có chắc chắn muốn đăng xuất?",
+    "delete_confirm": "Bạn có chắc chắn muốn xóa?",
+    "delete": "Xóa"
   },
   "validate": {
     "name_validate": "Vui lòng nhập tên nhân viên!",
@@ -82,5 +86,36 @@
     "email": "Email",
     "password": "Mật Khẩu",
     "remember_me": "Ghi Nhớ Mật Khẩu"
+  },
+  "profile_admin": {
+    "profile_Info": "Thông Tin Cá Nhân",
+    "change_password": "Đổi Mật Khẩu",
+    "edit_profile": "Chỉnh Sửa Thông Tin",
+    "logout": "Đăng Xuất"
+  },
+  "employee_details": {
+    "profile": "Hồ sơ",
+    "skill": "Kĩ năng",
+    "project": "Dự án",
+    "employee_code": "Mã nhân viên ",
+    "line_manager": "Người quản lí",
+    "phone_number": "Số điện thoại",
+    "personal_info": "Thông tin cá nhân",
+    "gender": "Giới tính",
+    "dob": "Ngày sinh",
+    "description_employee": "Mô tả",
+    "identity_code": "Căn cước công dân",
+    "active": "Kích hoạt",
+    "inactive": "Vô hiệu hóa",
+    "is_manager": "Quản lí"
+  },
+  "project_details": {
+    "project_name": "Tên dự án",
+    "team_member": "Thành viên",
+    "manager_name": "Người quản lí",
+    "start_date": "Ngày bắt đầu",
+    "end_date": "Ngày kết thúc",
+    "status": "Trạng thái",
+    "action": "Hành động"
   }
 }

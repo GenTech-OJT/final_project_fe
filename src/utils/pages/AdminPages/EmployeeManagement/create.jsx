@@ -57,7 +57,7 @@ const CreateEmployee = () => {
   const handleFormSubmit = async values => {
     try {
       const formData = new FormData()
-      if (avatar != null) {
+      if (avatar !== null) {
         formData.append('avatar', avatar)
       } else {
         formData.append('avatar', null)
