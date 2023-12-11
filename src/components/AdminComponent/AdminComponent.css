@@ -6,13 +6,23 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 32px;
-  position: sticky;
+  position: relative;
   top: 0;
   z-index: 100;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 .ant-popover {
   margin-top: -20px;
+}
+.btn-open {
+  height: 30px;
+  width: 20px;
+
+  font-size: 31px;
+  color: black;
+  position: relative;
+  top: -1px;
+  z-index: 200;
 }
 .menu-btn {
   font-size: 16px !important;
@@ -69,10 +79,6 @@
   height: 100vh;
 }
 
-.PageContent {
-  padding: 1rem;
-}
-
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
@@ -85,4 +91,17 @@
 
 ::-webkit-scrollbar-track {
   background: #eee;
+}
+
+@media screen and (max-width: 900px) {
+  .search-header {
+    display: none;
+  }
+  .ant-layout-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 6px;
+  }
 }

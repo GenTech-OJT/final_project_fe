@@ -1,27 +1,19 @@
+/* eslint-disable no-undef */
 import { SearchOutlined } from '@ant-design/icons'
 import { Input, Select, Space } from 'antd'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import '../AdminComponent.css'
 
 const AppHeader = () => {
   const { t, i18n } = useTranslation('translation')
-  const [selectedLanguage, setSelectedLanguage] = useState(
-    localStorage.getItem('selectedLanguage') || 'eng'
-  )
+  const [selectedLanguage, setSelectedLanguage] = useState('eng') // State để lưu giá trị ngôn ngữ được chọn
 
   const changeLanguage = value => {
-    setSelectedLanguage(value)
+    setSelectedLanguage(value) // Cập nhật giá trị ngôn ngữ được chọn
     i18n.changeLanguage(value)
-    // Save selected language to localStorage
-    localStorage.setItem('selectedLanguage', value)
+    console.log(`Selected ${value}`)
   }
-
-  // Update language
-  useEffect(() => {
-    i18n.changeLanguage(selectedLanguage)
-  }, [selectedLanguage, i18n])
-
   return (
     <div className="AppHeader">
       <SearchOutlined className="search-header" />
@@ -30,12 +22,14 @@ const AppHeader = () => {
         bordered={false}
         className="header-input"
       />
-      <Space wrap>
+      {/* Translate */}
+      <Space wrap style={{}}>
         <Select
-          value={selectedLanguage}
+          value={selectedLanguage} // Sử dụng giá trị state để đồng bộ với giá trị được chọn
           style={{
             width: 120,
           }}
+          className="select-lang"
           onChange={changeLanguage}
           options={[
             {
