@@ -6,7 +6,7 @@ import {
 } from '@components/CustomComponent/CustomTable'
 import { showToast } from '@components/Toast/toast'
 import { Button, Spin } from 'antd'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 import './index.css'
@@ -25,8 +25,6 @@ const EmployeeManagement = () => {
   const { t } = useTranslation('translation')
 
   const [loadingData, setLoadingData] = useState(true)
-
-  const formRef = useRef(null)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -60,9 +58,8 @@ const EmployeeManagement = () => {
     fetchData()
   }, [pagination.current, pagination.pageSize, sortedInfo, searchText])
 
-  const edit = record => {
-    formRef.current.setFieldsValue({ ...record })
-    setEditRowKey(record.id)
+  const edit = id => {
+    navigate('/employees/edit/' + id)
   }
 
   const viewDetail = record => {
@@ -194,7 +191,7 @@ const EmployeeManagement = () => {
           />
           <Button
             key={`edit-${record.id}`}
-            onClick={() => navigate('/employees/edit')}
+            onClick={() => edit(record.id)}
             style={{ marginRight: 8 }}
             icon={<EditOutlined />}
           />
