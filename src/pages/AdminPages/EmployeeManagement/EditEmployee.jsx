@@ -200,6 +200,10 @@ const EditEmployee = () => {
                   message: 'Please input the employee name !',
                 },
                 {
+                  pattern: /^[a-z ,.'-]+$/i,
+                  message: 'Please enter a valid name!',
+                },
+                {
                   min: 3,
                   max: 40,
                   message: 'Name must be between 3 and 40 characters',
