@@ -5,7 +5,7 @@ import {
   CustomTable,
 } from '@components/CustomComponent/CustomTable'
 import { showToast } from '@components/Toast/toast'
-import { Button, Spin } from 'antd'
+import { Button, Spin, Empty } from 'antd'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
@@ -26,17 +26,15 @@ const EmployeeManagement = () => {
 
   const [loadingData, setLoadingData] = useState(true)
 
-  const formRef = useRef(null)
-
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/employees?_page=${pagination.current}&_limit=${
-            pagination.pageSize
-          }&_sort=${sortedInfo.columnKey || 'id'}&_order=${
-            sortedInfo.order || 'asc'
-          }&q=${searchText}`
+          `https://final-project-be.onrender.com/employees?_page=${
+            pagination.current
+          }&_limit=${pagination.pageSize}&_sort=${
+            sortedInfo.columnKey || 'id'
+          }&_order=${sortedInfo.order || 'asc'}&q=${searchText}`
         )
 
         if (!response.ok) {
@@ -60,9 +58,8 @@ const EmployeeManagement = () => {
     fetchData()
   }, [pagination.current, pagination.pageSize, sortedInfo, searchText])
 
-  const edit = record => {
-    formRef.current.setFieldsValue({ ...record })
-    setEditRowKey(record.id)
+  const edit = id => {
+    navigate('/employees/edit/' + id)
   }
 
   const viewDetail = record => {
@@ -95,6 +92,15 @@ const EmployeeManagement = () => {
     const value = e.target.value
     setSearchText(value)
     setPagination({ ...pagination, current: 1 })
+  }
+
+  const locale = {
+    emptyText: (
+      <Empty
+        image={Empty.PRESENTED_IMAGE_SIMPLE}
+        description={t('employee.no_data')}
+      />
+    ),
   }
 
   const handleTableChange = (pagination, filters, sorter) => {
@@ -194,7 +200,7 @@ const EmployeeManagement = () => {
           />
           <Button
             key={`edit-${record.id}`}
-            onClick={() => navigate('/employees/edit')}
+            onClick={() => edit(record.id)}
             style={{ marginRight: 8 }}
             icon={<EditOutlined />}
           />
@@ -245,6 +251,7 @@ const EmployeeManagement = () => {
               ),
               onChange: handlePaginationChange,
             }}
+            locale={locale}
           ></CustomTable>
         </div>
       </Spin>
