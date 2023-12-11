@@ -10,6 +10,7 @@
   "side_menu": {
     "project_management_label": "Quản lý dự án",
     "employee_management_label": "Quản lý nhân viên",
+    "dashboard_label": "Trang Chủ",
     "my_account": "Tài khoản của tôi",
     "logout": "Đăng xuất"
   },
