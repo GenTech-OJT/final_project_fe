@@ -35,12 +35,12 @@ const SideMenu = ({ selectedKey, setSelectedKey, setOpen }) => {
         selectedKeys={[selectedKey]}
         items={[
           {
-            label: t('project_management_label'),
+            label: t('side_menu.project_management_label'),
             icon: <ProjectOutlined />,
             key: '/',
           },
           {
-            label: t('employee_management_label'),
+            label: t('side_menu.employee_management_label'),
             icon: <UserOutlined />,
             key: '/employees',
           },

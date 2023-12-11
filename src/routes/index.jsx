@@ -16,6 +16,10 @@ const EmployeeManagement = lazy(
   () => import('@pages/AdminPages/EmployeeManagement')
 )
 
+const DetailEmployee = lazy(
+  () => import('@pages/AdminPages/EmployeeManagement/detail')
+)
+
 const AppRoutes = () => {
   return (
     <Routes>
@@ -24,11 +28,11 @@ const AppRoutes = () => {
       <Route path="/employees" element={<EmployeeManagement />}></Route>
       <Route path="/employees/create" element={<CreateEmployee />}></Route>
       {/* 2 route dưới đây tạm hiển thị employee management page */}
-      <Route path="/employe/edit/:id" element={<EditEmployee />}></Route>
       <Route
-        path="/employees/detail/:id"
+        path="/employees/edit/:id"
         element={<EmployeeManagement />}
       ></Route>
+      <Route path="/employees/detail/:id" element={<DetailEmployee />}></Route>
       <Route path="/projects/create" element={<CreateProject />}></Route>
       <Route path="/projects/edit/:id" element={<EditProject />}></Route>
       <Route path="/projects/detail/:id" element={<DetailProject />}></Route>

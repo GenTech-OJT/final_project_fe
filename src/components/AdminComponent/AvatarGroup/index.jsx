@@ -29,10 +29,10 @@ const AvatarGroup = ({ collapsed, setSelectedKey, setIsLogin }) => {
   const content = (
     <div className="popup-account">
       <div onClick={handleProfile} onKeyDown={handleProfile}>
-        {t('my_account')}
+        {t('side_menu.my_account')}
       </div>
       <div onClick={handleLogout} onKeyDown={handleLogout}>
-        {t('logout')}
+        {t('side_menu.logout')}
       </div>
     </div>
   )
