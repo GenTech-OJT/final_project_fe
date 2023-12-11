@@ -47,7 +47,7 @@ const EditEmployee = () => {
     }
   }, [])
   useEffect(() => {
-    fetch('http://localhost:3000/employees/' + id)
+    fetch('https://final-project-be.onrender.com/employees/' + id)
       .then(res => {
         return res.json()
       })
@@ -104,7 +104,7 @@ const EditEmployee = () => {
       }
 
       // Gửi request PUT lên server
-      fetch(`http://localhost:3000/employees/${id}`, {
+      fetch(`https://final-project-be.onrender.com/employees/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -391,7 +391,7 @@ const EditEmployee = () => {
                     listType="picture"
                     accept="image/*"
                     maxCount={1}
-                    action="http://localhost:3000/employees"
+                    action="https://final-project-be.onrender.com/employees"
                     beforeUpload={checkFile}
                     onRemove={() => setAvatar(null)}
                   >

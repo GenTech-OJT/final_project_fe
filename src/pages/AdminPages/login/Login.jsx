@@ -42,16 +42,19 @@ const Login = () => {
   const onFinish = async values => {
     console.log('Received values of form: ', values)
     try {
-      const response = await fetch('http://localhost:3000/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: values.email,
-          password: values.password,
-        }),
-      })
+      const response = await fetch(
+        'https://final-project-be.onrender.com/login',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: values.email,
+            password: values.password,
+          }),
+        }
+      )
       const data = await response.json()
       if (response.ok) {
         console.log('Login successful:', data)
