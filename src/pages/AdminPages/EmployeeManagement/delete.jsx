@@ -9,9 +9,12 @@ const DeleteEmployee = ({ employeeId, onDeleteSuccess }) => {
 
   const handleDelete = async () => {
     try {
-      await fetch(`http://localhost:3000/employees/${employeeId}`, {
-        method: 'DELETE',
-      })
+      await fetch(
+        `https://final-project-be.onrender.com/employees/${employeeId}`,
+        {
+          method: 'DELETE',
+        }
+      )
 
       message.success('Employee deleted successfully!')
       setIsModalVisible(false)

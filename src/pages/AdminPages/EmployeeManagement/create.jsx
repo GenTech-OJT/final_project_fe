@@ -116,7 +116,7 @@ const CreateEmployee = () => {
     //   console.log('Form Data: ', `${key}: ${value}`)
     // })
 
-    //    fetch('http://localhost:3000/employees', {
+    //    fetch('https://final-project-be.onrender.com/employees', {
     //     method: 'POST',
     //     body: formData,
     //   })
@@ -445,7 +445,7 @@ const CreateEmployee = () => {
                 listType="picture"
                 accept="image/*"
                 maxCount={1}
-                action="http://localhost:3000/employees"
+                action="https://final-project-be.onrender.com/employees"
                 beforeUpload={checkFile}
                 onRemove={() => setAvatar(null)}
               >

@@ -48,7 +48,9 @@ const EmployeeDetail = () => {
   useEffect(() => {
     const fetchEmployeeDetail = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/employees/${id}`)
+        const response = await fetch(
+          `https://final-project-be.onrender.com/employees/${id}`
+        )
 
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`)
