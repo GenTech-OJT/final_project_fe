@@ -6,7 +6,7 @@ const Spinner = () => {
 
   return (
     <Flex gap="small" vertical>
-      <Spin tip={t('spinners')} size="large" fullscreen={true}>
+      <Spin tip={t('message.spinners')} size="large" fullscreen={true}>
         <div className="content" />
       </Spin>
     </Flex>
