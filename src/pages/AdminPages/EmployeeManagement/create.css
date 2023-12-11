@@ -1,9 +1,15 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 .back-to-list-button {
   position: relative;
   display: inline-block;
+  padding: 7px;
   text-decoration: none;
   color: black; /* Set the text color */
-  margin-bottom: 15px;
 }
 
 .back-to-list-button::after {
@@ -23,6 +29,61 @@
   transform: scaleX(1);
 }
 
+.create-container {
+  width: 100%;
+}
+
+.input-container {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
 .dob {
   width: 100%;
+}
+
+.select-container-lg {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.select-container {
+  display: flex;
+  width: 49%;
+  justify-content: space-between;
+}
+
+.select-width-dobgs {
+  width: 49%;
+}
+
+.text-input-form {
+  width: 49%;
+}
+
+@media only screen and (max-width: 965px) {
+  .select-container {
+    flex-direction: column;
+  }
+  .select-width-dobgs {
+    width: 150px;
+  }
+
+  .manager-input-width {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  .input-container,
+  .select-container-lg {
+    flex-direction: column;
+  }
+
+  .text-input-form,
+  .select-container {
+    width: 100%;
+  }
 }
