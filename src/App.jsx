@@ -7,7 +7,6 @@ import {
 import AppFooter from '@components/AdminComponent/AppFooter'
 import AppHeader from '@components/AdminComponent/AppHeader'
 import AvatarGroup from '@components/AdminComponent/AvatarGroup'
-import BreadCrumb from '@components/AdminComponent/Breadcrumb/Breadcrumb'
 import PageContent from '@components/AdminComponent/PageContent'
 import SideMenu from '@components/AdminComponent/SideMenu'
 import { Button, Col, Drawer, Layout, Row, theme } from 'antd'
