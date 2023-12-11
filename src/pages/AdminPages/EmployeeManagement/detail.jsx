@@ -1,7 +1,9 @@
-import { ArrowLeftOutlined } from '@ant-design/icons'
-import { Card, Col, Descriptions, Row, Tabs } from 'antd'
+import { ArrowLeftOutlined, EyeOutlined } from '@ant-design/icons'
+import { Button, Card, Col, Descriptions, Row, Table, Tabs } from 'antd'
 import Title from 'antd/es/skeleton/Title'
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+
 import { useNavigate, useParams } from 'react-router-dom'
 import Chartpie from '../../../components/Chartpie/Chartpie'
 import './detail.css'
@@ -10,6 +12,7 @@ const { TabPane } = Tabs
 
 const EmployeeDetail = () => {
   const navigate = useNavigate()
+  const { t } = useTranslation('translation')
 
   const { id } = useParams()
   const [employee, setEmployee] = useState(null)
@@ -20,6 +23,137 @@ const EmployeeDetail = () => {
 
   const capitalizeFirstLetter = string => {
     return string.charAt(0).toUpperCase() + string.slice(1)
+  }
+
+  const columns = [
+    {
+      title: t('project_details.project_name'),
+      dataIndex: 'name',
+      sorter: true,
+      width: '10%',
+    },
+    {
+      title: t('project_details.manager_name'),
+      dataIndex: 'manager',
+      width: '10%',
+    },
+    {
+      title: t('project_details.start_date'),
+      dataIndex: 'start_date',
+      width: '10%',
+    },
+    {
+      title: t('project_details.end_date'),
+      dataIndex: 'end_date',
+      width: '10%',
+      render: (end_date, record) => (
+        <span>{record.status === 'Done' ? end_date : null}</span>
+      ),
+    },
+    {
+      title: t('project_details.status'),
+      dataIndex: 'status',
+      width: '10%',
+      render: status => (
+        <span>
+          {status === 'In progress' && (
+            <Button style={{ backgroundColor: 'blue', color: 'white' }}>
+              {status}
+            </Button>
+          )}
+          {status === 'Done' && (
+            <Button style={{ backgroundColor: 'green', color: 'white' }}>
+              {status}
+            </Button>
+          )}
+        </span>
+      ),
+    },
+    {
+      title: t('project_details.action'),
+      align: 'center',
+      key: 'action',
+      width: '5%',
+      render: (_, record) => (
+        <>
+          <Button
+            key={`view-${record.id}`}
+            // onClick={() => viewDetail(record)}
+            style={{ marginRight: 8 }}
+            icon={<EyeOutlined />}
+          />
+        </>
+      ),
+    },
+  ]
+
+  // Hard-coded data for demonstration purposes
+  const hardCodedData = [
+    {
+      id: 'pro1',
+      name: 'Project 01',
+      description: 'A dedicated software engineer',
+      team_members: [
+        {
+          id: 'emp1',
+          name: 'Vy Nguyen',
+          position: 'Software Engineer',
+        },
+      ],
+      manager: 'John Doe',
+      start_date: '1990-01-01',
+      end_date: '1990-12-01',
+      status: 'In progress',
+      technicals: [
+        {
+          name: 'ReactJS',
+        },
+      ],
+    },
+    {
+      id: 'pro2',
+      name: 'Project 02',
+      description: 'This project is a project',
+      team_members: [
+        {
+          id: 'emp1',
+          name: 'Vy Nguyen',
+          position: 'Software Engineer',
+        },
+      ],
+      manager: 'Minh Toan',
+      start_date: '1993-01-01',
+      end_date: '1993-12-01',
+      status: 'Done',
+      technicals: [
+        {
+          name: 'Javascript',
+        },
+      ],
+    },
+    // Add more data as needed
+  ]
+
+  const [data, setData] = useState(hardCodedData) // Use hard-coded data initially
+  const [loading, setLoading] = useState(false)
+  const [tableParams, setTableParams] = useState({
+    pagination: {
+      current: 1,
+      pageSize: 10,
+    },
+  })
+
+  const handleTableChange = (pagination, filters, sorter) => {
+    setTableParams({
+      pagination,
+      filters,
+      ...sorter,
+    })
+
+    // `dataSource` is useless since `pageSize` changed
+    if (pagination.pageSize !== tableParams.pagination?.pageSize) {
+      setData(hardCodedData) // Reset to hard-coded data when pageSize changes
+    }
   }
 
   // Function to generate data for Chartpie from employee skills
@@ -42,7 +176,7 @@ const EmployeeDetail = () => {
     }
   }
   const displayValue = value => {
-    return value !== null && value !== undefined ? value : 'None'
+    return value !== null && value !== undefined ? value : ''
   }
 
   useEffect(() => {
@@ -75,7 +209,7 @@ const EmployeeDetail = () => {
         onClick={() => navigate('/employees')}
       >
         <ArrowLeftOutlined style={{ marginRight: '7px' }} />
-        Back
+        {t('employee.back')}
       </button>
       <Title className="page-title">EMPLOYEE DETAIL</Title>
 
@@ -85,7 +219,7 @@ const EmployeeDetail = () => {
         animated={true}
         style={{ height: '100%' }}
       >
-        <TabPane tab={<span>Profile</span>} key="1">
+        <TabPane tab={<span> {t('employee_details.profile')}</span>} key="1">
           {/* Content for Profile tab */}
           <Card style={{ backgroundColor: ' rgb(245, 245, 245)' }}>
             <Row gutter={16} justify="center" align="middle">
@@ -104,7 +238,9 @@ const EmployeeDetail = () => {
                       style={{ backgroundColor: getStatusDotColor() }}
                     ></div>
                     <p className="status-text">
-                      {employee.status === 'active' ? 'Active' : 'Inactive'}
+                      {employee.status === 'active'
+                        ? t('employee_details.active')
+                        : t('employee_details.inactive')}
                     </p>
                   </div>
                 </div>
@@ -113,11 +249,17 @@ const EmployeeDetail = () => {
                   <div className="horizontal_container">
                     <div className="content_1">
                       <div className="employee_content">
-                        <p className="employee_label">Employee code: </p>
+                        <p className="employee_label">
+                          {t('employee_details.employee_code')}
+                          {' : '}
+                        </p>
                         <p className="employee_info">{employee.code}</p>
                       </div>
                       <div className="employee_content">
-                        <p className="employee_label">Line manager: </p>
+                        <p className="employee_label">
+                          {t('employee_details.line_manager')}
+                          {' : '}
+                        </p>
                         <p className="employee_info">
                           {capitalizeFirstLetter(
                             displayValue(employee.line_manager)
@@ -127,12 +269,15 @@ const EmployeeDetail = () => {
                     </div>
                     <div className="content_2">
                       <div className="employee_content">
-                        <p className="employee_label">Phone number: </p>
+                        <p className="employee_label">
+                          {t('employee_details.phone_number')}
+                          {' : '}
+                        </p>
                         <p className="employee_info">{employee.phone}</p>
                       </div>
                       <div className="employee_content">
-                        <p className="employee_label">Email: </p>
-                        <p className="employee_info">doeJane123@gmail.com</p>
+                        <p className="employee_label">Email : </p>
+                        <p className="employee_info">{employee.email}</p>
                       </div>
                     </div>
                   </div>
@@ -150,7 +295,7 @@ const EmployeeDetail = () => {
           >
             <Row gutter={16} justify="center" align="middle">
               <Col span={23}>
-                <p className="title">Personal Information</p>
+                <p className="title">{t('employee_details.personal_info')}</p>
                 <hr className="profile_line" />
 
                 <Col span={26}>
@@ -160,7 +305,11 @@ const EmployeeDetail = () => {
                     className="custom-descriptions"
                   >
                     <Descriptions.Item
-                      label={<span style={{ fontWeight: 'bold' }}>Gender</span>}
+                      label={
+                        <span style={{ fontWeight: 'bold' }}>
+                          {t('employee_details.gender')}
+                        </span>
+                      }
                       className="custom-label"
                     >
                       {capitalizeFirstLetter(displayValue(employee.gender))}{' '}
@@ -168,7 +317,7 @@ const EmployeeDetail = () => {
                     <Descriptions.Item
                       label={
                         <span style={{ fontWeight: 'bold' }}>
-                          Identity code
+                          {t('employee_details.identity_code')}
                         </span>
                       }
                       className="custom-label"
@@ -177,7 +326,9 @@ const EmployeeDetail = () => {
                     </Descriptions.Item>
                     <Descriptions.Item
                       label={
-                        <span style={{ fontWeight: 'bold' }}>Phone number</span>
+                        <span style={{ fontWeight: 'bold' }}>
+                          {t('employee_details.phone_number')}
+                        </span>
                       }
                       className="custom-label"
                     >
@@ -185,7 +336,9 @@ const EmployeeDetail = () => {
                     </Descriptions.Item>
                     <Descriptions.Item
                       label={
-                        <span style={{ fontWeight: 'bold' }}>Is manager</span>
+                        <span style={{ fontWeight: 'bold' }}>
+                          {t('employee_details.is_manager')}
+                        </span>
                       }
                       className="custom-label"
                     >
@@ -196,7 +349,7 @@ const EmployeeDetail = () => {
                     <Descriptions.Item
                       label={
                         <span style={{ fontWeight: 'bold' }}>
-                          Date of birth
+                          {t('employee_details.dob')}
                         </span>
                       }
                       className="custom-label"
@@ -205,7 +358,9 @@ const EmployeeDetail = () => {
                     </Descriptions.Item>
                     <Descriptions.Item
                       label={
-                        <span style={{ fontWeight: 'bold' }}>Description</span>
+                        <span style={{ fontWeight: 'bold' }}>
+                          {t('employee_details.description_employee')}
+                        </span>
                       }
                       span={2}
                       className="custom-label"
@@ -222,7 +377,7 @@ const EmployeeDetail = () => {
           </Card>
         </TabPane>
         {/* next page */}
-        <TabPane tab={<span>Skill</span>} key="2">
+        <TabPane tab={<span>{t('employee_details.skill')}</span>} key="2">
           {/* Content for Skill tab */}
           <Card style={{ backgroundColor: ' rgb(245, 245, 245)' }}>
             <Row gutter={16} justify="center" align="middle">
@@ -238,9 +393,16 @@ const EmployeeDetail = () => {
             </Row>
           </Card>
         </TabPane>
-        <TabPane tab={<span>Project</span>} key="3">
+        <TabPane tab={<span>{t('employee_details.project')}</span>} key="3">
           {/* Content for Project tab */}
-          <div className="create-container">Project Content</div>
+          <Table
+            columns={columns}
+            rowKey={record => record.id}
+            dataSource={data}
+            pagination={tableParams.pagination}
+            loading={loading}
+            onChange={handleTableChange}
+          />
         </TabPane>
       </Tabs>
     </div>

@@ -82,5 +82,30 @@
     "email": "Email",
     "password": "Mật Khẩu",
     "remember_me": "Ghi Nhớ Mật Khẩu"
+  },
+  "employee_details": {
+    "profile": "Hồ sơ",
+    "skill": "Kĩ năng",
+    "project": "Dự án",
+    "employee_code": "Mã nhân viên ",
+    "line_manager": "Người quản lí",
+    "phone_number": "Số điện thoại",
+    "personal_info": "Thông tin cá nhân",
+    "gender": "Giới tính",
+    "dob": "Ngày sinh",
+    "description_employee": "Mô tả",
+    "identity_code": "Căn cước công dân",
+    "active": "Kích hoạt",
+    "inactive": "Vô hiệu hóa",
+    "is_manager": "Quản lí"
+  },
+  "project_details": {
+    "project_name": "Tên dự án",
+    "team_member": "Thành viên",
+    "manager_name": "Người quản lí",
+    "start_date": "Ngày bắt đầu",
+    "end_date": "Ngày kết thúc",
+    "status": "Trạng thái",
+    "action": "Hành động"
   }
 }

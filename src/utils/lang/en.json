@@ -82,5 +82,30 @@
     "email": "Email",
     "password": "Password",
     "remember_me": "Remember me"
+  },
+  "employee_details": {
+    "profile": "Profile",
+    "skill": "Skill",
+    "project": "Project",
+    "employee_code": "Employee Code ",
+    "line_manager": "Line Manager ",
+    "phone_number": "Phone Number ",
+    "personal_info": "Personal Information",
+    "gender": "Gender",
+    "dob": "Date of Birth",
+    "description_employee": "Description",
+    "identity_code": "Identity Code",
+    "active": "Active",
+    "inactive": "Inactive",
+    "is_manager": "Is manager"
+  },
+  "project_details": {
+    "project_name": "Project Name",
+    "team_member": "Team Member",
+    "manager_name": "Manager Name",
+    "start_date": "Start Date",
+    "end_date": "End Date",
+    "status": "Status",
+    "action": "Action"
   }
 }

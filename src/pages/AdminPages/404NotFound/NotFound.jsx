@@ -10,13 +10,13 @@ const NotFoundPage = () => {
     <div className="background">
       <div className="content">
         <h1 className="content-h1">Oops,</h1>
-        <p className="content-p">{t('notfound_content')}</p>
+        <p className="content-p">{t('message.notfound_content')}</p>
         <Button
           type="primary"
           className="back-to-home-btn"
           onClick={() => navigate('/')}
         >
-          {t('back_to_home')}
+          {t('button_input.back_to_home')}
         </Button>
       </div>
     </div>
