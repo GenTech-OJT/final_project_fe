@@ -11,9 +11,16 @@ import './detail.css'
 const { TabPane } = Tabs
 
 const EmployeeDetail = () => {
+  const [data, setData] = useState(hardCodedData) // Use hard-coded data initially
+  const [tableParams, setTableParams] = useState({
+    pagination: {
+      current: 1,
+      pageSize: 10,
+    },
+  })
+
   const navigate = useNavigate()
   const { t } = useTranslation('translation')
-
   const { id } = useParams()
   const [employee, setEmployee] = useState(null)
 
@@ -75,14 +82,12 @@ const EmployeeDetail = () => {
       key: 'action',
       width: '5%',
       render: (_, record) => (
-        <>
-          <Button
-            key={`view-${record.id}`}
-            // onClick={() => viewDetail(record)}
-            style={{ marginRight: 8 }}
-            icon={<EyeOutlined />}
-          />
-        </>
+        <Button
+          key={`view-${record.id}`}
+          // onClick={() => viewDetail(record)}
+          style={{ marginRight: 8 }}
+          icon={<EyeOutlined />}
+        />
       ),
     },
   ]
@@ -133,15 +138,6 @@ const EmployeeDetail = () => {
     },
     // Add more data as needed
   ]
-
-  const [data, setData] = useState(hardCodedData) // Use hard-coded data initially
-  const [loading, setLoading] = useState(false)
-  const [tableParams, setTableParams] = useState({
-    pagination: {
-      current: 1,
-      pageSize: 10,
-    },
-  })
 
   const handleTableChange = (pagination, filters, sorter) => {
     setTableParams({
@@ -402,7 +398,6 @@ const EmployeeDetail = () => {
             rowKey={record => record.id}
             dataSource={data}
             pagination={tableParams.pagination}
-            loading={loading}
             onChange={handleTableChange}
           />
         </TabPane>
