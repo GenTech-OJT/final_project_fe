@@ -7,7 +7,7 @@ const Profile = () => {
   const { t } = useTranslation('translation')
   return (
     <Card className="card_container">
-      <h2 className="title">{t('Profile Information')} </h2>
+      <h2 className="title">{t('Profile_admin.Profile Information')} </h2>
       <hr style={{ margin: '20px 0' }} />
       <div className="profile-content">
         <div className="avatar-section">
@@ -25,8 +25,12 @@ const Profile = () => {
             </Descriptions.Item>
           </Descriptions>
           <Space className="profile_btn">
-            <button className="profile-button">{t('Edit Profile')}</button>
-            <button className="profile-button">{t('Change Password')}</button>
+            <button className="profile-button">
+              {t('Profile_admin.Edit Profile')}
+            </button>
+            <button className="profile-button">
+              {t('Profile_admin.Change Password')}
+            </button>
           </Space>
         </div>
       </div>

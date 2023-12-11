@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 import './index.css'
+import DeleteEmployee from './delete'
 
 const EmployeeManagement = () => {
   const [gridData, setGridData] = useState([])
@@ -195,10 +196,18 @@ const EmployeeManagement = () => {
             style={{ marginRight: 8 }}
             icon={<EditOutlined />}
           />
-          <Button
+          {/* <DeleteEmployee key={`delete-${record.id}`}
+            onClick={() => deleteRecord(record.id)}
+            style={{ marginRight: 8 }}
+            employeeId={record.id}
+            icon={<DeleteOutlined />} /> */}
+
+          <DeleteEmployee
             key={`delete-${record.id}`}
             onClick={() => deleteRecord(record.id)}
+            style={{ marginRight: 8 }}
             icon={<DeleteOutlined />}
+            employeeId={record.id}
           />
         </>
       ),

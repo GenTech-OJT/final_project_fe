@@ -24,16 +24,14 @@ const Logout = () => {
   return (
     <>
       <Button type="primary" onClick={showModal}>
-        {t('Logout')}
+        {t('Profile_admin.Logout')}
       </Button>
       <Modal
-        title={t('logout_confirm')}
+        title={t('message.logout_confirm')}
         visible={isModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}
-      >
-        <p>{t('logout_confirm')}</p>
-      </Modal>
+      ></Modal>
     </>
   )
 }
