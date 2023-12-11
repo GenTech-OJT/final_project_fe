@@ -42,7 +42,7 @@
   padding: 0 15px;
 }
 
-@media screen and (min-width: 300px) and (max-width: 436px) {
+@media screen and (min-width: 360px) and (max-width: 436px) {
   .ant-input-affix-wrapper {
     width: 119px !important;
   }
