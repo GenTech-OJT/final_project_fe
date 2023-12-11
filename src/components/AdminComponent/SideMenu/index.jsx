@@ -1,4 +1,4 @@
-import { HomeOutlined, ProjectOutlined, UserOutlined } from '@ant-design/icons'
+import { ProjectOutlined, UserOutlined } from '@ant-design/icons'
 import { Menu } from 'antd'
 import PropTypes from 'prop-types'
 import { useEffect } from 'react'
