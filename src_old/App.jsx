@@ -32,8 +32,6 @@ const App = () => {
         collapsible
         collapsed={collapsed}
       >
-        {/* <div className="demo-logo-vertical" /> */}
-
         <div
           style={{ display: 'flex', alignItems: 'center', paddingTop: '11px' }}
         >
@@ -58,11 +56,7 @@ const App = () => {
         <AvatarGroup setSelectedKey={setSelectedKey} collapsed={collapsed} />
         <SideMenu selectedKey={selectedKey} setSelectedKey={setSelectedKey} />
       </Sider>
-      <Layout
-      // style={{
-      //   marginLeft: 200,
-      // }}
-      >
+      <Layout>
         <Header
           style={{
             background: colorBgContainer,
