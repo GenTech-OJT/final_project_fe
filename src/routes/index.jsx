@@ -1,5 +1,4 @@
 import NotFoundPage from '@pages/AdminPages/404NotFound/NotFound'
-import Dashboard from '@pages/AdminPages/Dashboard'
 import EditEmployee from '@pages/AdminPages/EmployeeManagement/EditEmployee'
 import CreateEmployee from '@pages/AdminPages/EmployeeManagement/create'
 import Profile from '@pages/AdminPages/Profile/Profile'
@@ -20,6 +19,7 @@ const Login = lazy(() => import('@pages/AdminPages/login/Login'))
 const DetailEmployee = lazy(
   () => import('@pages/AdminPages/EmployeeManagement/detail')
 )
+const Dashboard = lazy(() => import('@pages/AdminPages/Dashboard'))
 
 const AppRoutes = () => {
   return (
