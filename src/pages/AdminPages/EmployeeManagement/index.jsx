@@ -5,7 +5,7 @@ import {
   CustomTable,
 } from '@components/CustomComponent/CustomTable'
 import { showToast } from '@components/Toast/toast'
-import { Button, Spin } from 'antd'
+import { Button, Spin, Empty } from 'antd'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
@@ -95,6 +95,15 @@ const EmployeeManagement = () => {
     const value = e.target.value
     setSearchText(value)
     setPagination({ ...pagination, current: 1 })
+  }
+
+  const locale = {
+    emptyText: (
+      <Empty
+        image={Empty.PRESENTED_IMAGE_SIMPLE}
+        description={t('employee.no_data')}
+      />
+    ),
   }
 
   const handleTableChange = (pagination, filters, sorter) => {
@@ -245,6 +254,7 @@ const EmployeeManagement = () => {
               ),
               onChange: handlePaginationChange,
             }}
+            locale={locale}
           ></CustomTable>
         </div>
       </Spin>
