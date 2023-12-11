@@ -3,7 +3,7 @@
   display: flex;
   justify-content: center;
   flex-direction: column; /* Center the container horizontally */
-  min-height: 50vh; /* Full viewport height */
+  min-height: 80vh; /* Full viewport height */
   padding: 40px 20px; /* Slightly increased padding */
 }
 
