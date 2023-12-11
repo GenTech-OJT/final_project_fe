@@ -37,7 +37,7 @@ const DeleteEmployee = ({ employeeId, onDeleteSuccess }) => {
   return (
     <>
       <Button type="danger" icon={<DeleteOutlined />} onClick={showModal}>
-        Delete
+        {t('Delete')}
       </Button>
       <Modal
         title={t('delete_confirm')}

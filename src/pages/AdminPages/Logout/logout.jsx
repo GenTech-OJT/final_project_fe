@@ -24,7 +24,7 @@ const Logout = () => {
   return (
     <>
       <Button type="primary" onClick={showModal}>
-        Logout
+        {t('Logout')}
       </Button>
       <Modal
         title={t('logout_confirm')}
