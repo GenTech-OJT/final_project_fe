@@ -26,8 +26,6 @@ const EmployeeManagement = () => {
 
   const [loadingData, setLoadingData] = useState(true)
 
-  const formRef = useRef(null)
-
   useEffect(() => {
     const fetchData = async () => {
       try {
