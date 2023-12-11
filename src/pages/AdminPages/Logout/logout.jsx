@@ -27,7 +27,7 @@ const Logout = () => {
         Logout
       </Button>
       <Modal
-        title="Are you sure to logout?"
+        title={t('logout_confirm')}
         visible={isModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}
