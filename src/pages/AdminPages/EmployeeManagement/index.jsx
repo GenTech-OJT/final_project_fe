@@ -1,15 +1,15 @@
 /* eslint-disable no-undef */
 import { DeleteOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons'
-import { Button, Spin } from 'antd'
-import { useEffect, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router'
 import {
   CustomSearch,
   CustomTable,
 } from '@components/CustomComponent/CustomTable'
-import './employeeStyle.css'
 import { showToast } from '@components/Toast/toast'
+import { Button, Spin } from 'antd'
+import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router'
+import './index.css'
 
 const EmployeeManagement = () => {
   const [gridData, setGridData] = useState([])
@@ -66,8 +66,7 @@ const EmployeeManagement = () => {
   }
 
   const viewDetail = record => {
-    // Handle logic to view details for the selected record
-    console.log('View Detail:', record)
+    navigate(`/employees/detail/${record.id}`)
   }
 
   const deleteRecord = recordId => {
@@ -88,8 +87,8 @@ const EmployeeManagement = () => {
     })
     setGridData(updatedGridData)
     record.status === 'active'
-      ? showToast(t('deactivated_successfully'), 'success')
-      : showToast(t('activated_successfully'), 'success')
+      ? showToast(t('message.deactivated_successfully'), 'success')
+      : showToast(t('message.activated_successfully'), 'success')
   }
 
   const handleChange = e => {
@@ -122,7 +121,7 @@ const EmployeeManagement = () => {
     setPagination({ ...pagination, pageSize, current: 1 })
   }
 
-  const convertBooleanToString = isManager => (isManager ? 'true' : 'false')
+  const convertBooleanToString = isManager => (isManager ? 'Yes' : 'No')
 
   const columns = [
     {
@@ -134,7 +133,7 @@ const EmployeeManagement = () => {
       sortOrder: sortedInfo.columnKey === 'id' && sortedInfo.order,
     },
     {
-      title: t('name'),
+      title: t('table_header.name'),
       align: 'center',
       dataIndex: 'name',
       key: 'name',
@@ -142,7 +141,7 @@ const EmployeeManagement = () => {
       sortOrder: sortedInfo.columnKey === 'name' && sortedInfo.order,
     },
     {
-      title: t('status'),
+      title: t('table_header.status'),
       align: 'center',
       dataIndex: 'status',
       key: 'status',
@@ -158,12 +157,14 @@ const EmployeeManagement = () => {
             color: 'white',
           }}
         >
-          {record.status === 'active' ? t('active') : t('inactive')}
+          {record.status === 'active'
+            ? t('button_input.active')
+            : t('button_input.inactive')}
         </Button>
       ),
     },
     {
-      title: t('position'),
+      title: t('table_header.position'),
       align: 'center',
       dataIndex: 'position',
       key: 'position',
@@ -171,7 +172,7 @@ const EmployeeManagement = () => {
       sortOrder: sortedInfo.columnKey === 'position' && sortedInfo.order,
     },
     {
-      title: t('is_manager'),
+      title: t('table_header.is_manager'),
       align: 'center',
       dataIndex: 'is_manager',
       key: 'is_manager',
@@ -180,20 +181,20 @@ const EmployeeManagement = () => {
       render: isManager => convertBooleanToString(isManager),
     },
     {
-      title: t('action'),
+      title: t('table_header.action'),
       align: 'center',
       key: 'action',
       render: (_, record) => (
         <>
           <Button
             key={`view-${record.id}`}
-            onClick={() => navigate('/employee/create')}
+            onClick={() => viewDetail(record)}
             style={{ marginRight: 8 }}
             icon={<EyeOutlined />}
           />
           <Button
             key={`edit-${record.id}`}
-            onClick={() => navigate('/employee/create')}
+            onClick={() => navigate('/employees/edit')}
             style={{ marginRight: 8 }}
             icon={<EditOutlined />}
           />
@@ -212,10 +213,10 @@ const EmployeeManagement = () => {
       <Spin spinning={loadingData}>
         <Button
           type="primary"
-          onClick={() => navigate('/employee/create')}
+          onClick={() => navigate('/employees/create')}
           style={{ marginBottom: 16 }}
         >
-          {t('create')}
+          {t('button_input.create')}
         </Button>
 
         <CustomSearch handleChange={handleChange} />
@@ -225,6 +226,7 @@ const EmployeeManagement = () => {
             overflow: 'auto',
             width: '100%',
             whiteSpace: 'nowrap',
+            backgroundColor: 'white',
           }}
         >
           <CustomTable
