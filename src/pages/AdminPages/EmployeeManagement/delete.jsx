@@ -3,7 +3,7 @@ import { Button, Modal, message } from 'antd'
 import { DeleteOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 
-const DeleteEmployee = ({ employeeId, onDeleteSuccess }) => {
+const DeleteEmployee = ({ employeeId }) => {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const { t } = useTranslation('translation')
 
@@ -18,10 +18,10 @@ const DeleteEmployee = ({ employeeId, onDeleteSuccess }) => {
 
       message.success('Employee deleted successfully!')
       setIsModalVisible(false)
-      onDeleteSuccess()
     } catch (error) {
       console.error('Error deleting employee:', error)
       message.error('Error deleting employee. Please try again.')
+      setIsModalVisible(false)
     }
   }
 
@@ -39,25 +39,17 @@ const DeleteEmployee = ({ employeeId, onDeleteSuccess }) => {
 
   return (
     <>
-      <Button type="danger" icon={<DeleteOutlined />} onClick={showModal}>
-        {t('Delete')}
-      </Button>
+      <Button icon={<DeleteOutlined />} onClick={showModal}></Button>
       <Modal
-        title={t('delete_confirm')}
+        title={t('message.delete_confirm')}
         visible={isModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}
         okText="Yes"
         cancelText="No"
-      >
-        <p>{t('delete_confirm')}</p>
-      </Modal>
+      ></Modal>
     </>
   )
-}
-DeleteEmployee.propTypes = {
-  employeeId: PropTypes.string.isRequired,
-  onDeleteSuccess: PropTypes.func.isRequired,
 }
 
 export default DeleteEmployee
