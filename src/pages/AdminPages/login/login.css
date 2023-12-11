@@ -3,11 +3,12 @@
   display: flex;
   justify-content: center;
   flex-direction: column; /* Center the container horizontally */
-  min-height: 100vh; /* Full viewport height */
+  min-height: 80vh; /* Full viewport height */
   padding: 40px 20px; /* Slightly increased padding */
 }
 
 .container {
+  display: flow-root;
   background: white; /* Pure white background for the form */
   border: 1px solid #ddd; /* Lighter border for subtlety */
   border-radius: 12px; /* Slightly larger radius for rounded corners */
