@@ -84,5 +84,10 @@
     "email": "Email",
     "password": "Password",
     "remember_me": "Remember me"
+  },
+  "profile_admin": {
+    "profile_Info": "Profile Information",
+    "edit_profile": "Edit Profile",
+    "change_password": "Change Password"
   }
 }

@@ -84,5 +84,10 @@
     "email": "Email",
     "password": "Mật Khẩu",
     "remember_me": "Ghi Nhớ Mật Khẩu"
+  },
+  "profile_admin": {
+    "profile_Info": "Thông Tin Cá Nhân",
+    "change_password": "Đổi Mật Khẩu",
+    "edit_profile": "Chỉnh Sửa Thông Tin"
   }
 }

@@ -40,7 +40,7 @@ const DeleteEmployee = ({ employeeId, onDeleteSuccess }) => {
         Delete
       </Button>
       <Modal
-        title="Delete Confirmation"
+        title={t('delete_confirm')}
         visible={isModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}

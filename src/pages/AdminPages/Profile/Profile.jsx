@@ -1,11 +1,13 @@
 import React from 'react'
 import { Descriptions, Avatar, Card, Space } from 'antd'
 import './profile.css'
+import { useTranslation } from 'react-i18next'
 
+const { t } = useTranslation('translation')
 const Profile = () => {
   return (
     <Card className="card_container">
-      <h2 className="title">Profile Information </h2>
+      <h2 className="title">{t('Profile Information')} </h2>
       <hr style={{ margin: '20px 0' }} />
       <div className="profile-content">
         <div className="avatar-section">
@@ -23,8 +25,8 @@ const Profile = () => {
             </Descriptions.Item>
           </Descriptions>
           <Space className="profile_btn">
-            <button className="profile-button">Edit Profile</button>
-            <button className="profile-button">Change Password</button>
+            <button className="profile-button">{t('Edit Profile')}</button>
+            <button className="profile-button">{t('Change Password')}</button>
           </Space>
         </div>
       </div>
