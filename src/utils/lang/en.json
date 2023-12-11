@@ -24,7 +24,10 @@
     "activated_successfully": "Activated Successfully",
     "deactivated_successfully": "Deactivated Successfully",
     "notfound_content": "The page you are trying to access cannot be found at the moment.",
-    "spinners": "Loading"
+    "spinners": "Loading",
+    "logout_confirm": "Are you sure to logout?",
+    "delete_confirm": "Are you sure you want to delete this employee?",
+    "Delete": "Delete"
   },
   "validate": {
     "name_validate": "Please input a valid name!",
@@ -82,5 +85,11 @@
     "email": "Email",
     "password": "Password",
     "remember_me": "Remember me"
+  },
+  "profile_admin": {
+    "profile_Info": "Profile Information",
+    "edit_profile": "Edit Profile",
+    "change_password": "Change Password",
+    "logout": "Logout"
   }
 }
