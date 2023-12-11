@@ -21,6 +21,7 @@ import { Formik } from 'formik'
 import * as Yup from 'yup'
 import moment from 'moment'
 import './create.css'
+import { showToast } from '@components/Toast/toast'
 
 const CreateEmployee = () => {
   const navigate = useNavigate()
@@ -100,33 +101,32 @@ const CreateEmployee = () => {
       dob: moment(values.dob.$d).format('YYYY-MM-DD'),
     }
     // console.log(formattedValues)
-    // try {
-    const formData = new FormData()
-    if (avatar != null) {
-      formData.append('avatar', avatar)
-    } else {
-      formData.append('avatar', null)
+    try {
+      const formData = new FormData()
+      if (avatar != null) {
+        formData.append('avatar', avatar)
+      } else {
+        formData.append('avatar', null)
+      }
+
+      Object.entries(formattedValues).forEach(([key, value]) => {
+        formData.append(key, value)
+      })
+
+      formData.forEach((value, key) => {
+        console.log('Form Data: ', `${key}: ${value}`)
+      })
+
+      fetch('https://final-project-be.onrender.com/employees', {
+        method: 'POST',
+        body: formData,
+      })
+
+      showToast('Employee created successfully!', 'success')
+      navigate('/employees')
+    } catch (error) {
+      showToast('Error creating employee. Please try again.', 'error')
     }
-
-    Object.entries(formattedValues).forEach(([key, value]) => {
-      formData.append(key, value)
-    })
-
-    // formData.forEach((value, key) => {
-    //   console.log('Form Data: ', `${key}: ${value}`)
-    // })
-
-    //    fetch('https://final-project-be.onrender.com/employees', {
-    //     method: 'POST',
-    //     body: formData,
-    //   })
-
-    //   message.success('Employee created successfully!')
-    //   navigate('/employees')
-    // } catch (error) {
-    //   console.error('Error creating employee:', error)
-    //   message.error('Error creating employee. Please try again.')
-    // }
   }
 
   return (
@@ -171,6 +171,7 @@ const CreateEmployee = () => {
             <Form.Item
               label="Name"
               name="name"
+              required
               validateStatus={errors.name && touched.name ? 'error' : ''}
               help={errors.name && touched.name ? errors.name : ''}
             >
@@ -184,6 +185,7 @@ const CreateEmployee = () => {
             <Form.Item
               label="Email"
               name="email"
+              required
               validateStatus={errors.email && touched.email ? 'error' : ''}
               help={errors.email && touched.email ? errors.email : ''}
             >
@@ -197,6 +199,7 @@ const CreateEmployee = () => {
             <Form.Item
               label="Code"
               name="code"
+              required
               validateStatus={errors.code && touched.code ? 'error' : ''}
               help={errors.code && touched.code ? errors.code : ''}
             >
@@ -210,6 +213,7 @@ const CreateEmployee = () => {
             <Form.Item
               label="Phone"
               name="phone"
+              required
               validateStatus={errors.phone && touched.phone ? 'error' : ''}
               help={errors.phone && touched.phone ? errors.phone : ''}
             >
@@ -223,6 +227,7 @@ const CreateEmployee = () => {
             <Form.Item
               label="Identity Card"
               name="identity"
+              required
               validateStatus={
                 errors.identity && touched.identity ? 'error' : ''
               }
@@ -238,6 +243,7 @@ const CreateEmployee = () => {
             <Form.Item
               label="Date of Birth"
               name="dob"
+              required
               validateStatus={errors.dob && touched.dob ? 'error' : ''}
               help={errors.dob && touched.dob ? errors.dob : ''}
             >
@@ -325,7 +331,7 @@ const CreateEmployee = () => {
                 onBlur={handleBlur}
               />
             </Form.Item>
-            <Form.Item label="Skills">
+            <Form.Item label="Skills" required>
               <Form.List name="skills">
                 {(fields, { add, remove }) => (
                   <>
