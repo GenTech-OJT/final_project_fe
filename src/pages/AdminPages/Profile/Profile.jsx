@@ -3,8 +3,8 @@ import { Descriptions, Avatar, Card, Space } from 'antd'
 import './profile.css'
 import { useTranslation } from 'react-i18next'
 
-const { t } = useTranslation('translation')
 const Profile = () => {
+  const { t } = useTranslation('translation')
   return (
     <Card className="card_container">
       <h2 className="title">{t('Profile Information')} </h2>
