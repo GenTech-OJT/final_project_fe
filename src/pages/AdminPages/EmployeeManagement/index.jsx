@@ -26,8 +26,6 @@ const EmployeeManagement = () => {
 
   const [loadingData, setLoadingData] = useState(true)
 
-  const formRef = useRef(null)
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -60,9 +58,8 @@ const EmployeeManagement = () => {
     fetchData()
   }, [pagination.current, pagination.pageSize, sortedInfo, searchText])
 
-  const edit = record => {
-    formRef.current.setFieldsValue({ ...record })
-    setEditRowKey(record.id)
+  const edit = id => {
+    navigate('/employees/edit/' + id)
   }
 
   const viewDetail = record => {
@@ -203,7 +200,7 @@ const EmployeeManagement = () => {
           />
           <Button
             key={`edit-${record.id}`}
-            onClick={() => navigate('/employees/edit')}
+            onClick={() => edit(record.id)}
             style={{ marginRight: 8 }}
             icon={<EditOutlined />}
           />
