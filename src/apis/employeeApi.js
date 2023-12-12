@@ -25,3 +25,13 @@ export const getEmployeesApi = async ({
 
   return response.data
 }
+
+export const createEmployeeApi = async data => {
+  const response = await axios.post(API_URL.EMPLOYEES, data)
+
+  if (response.status !== 201) {
+    throw new Error(`HTTP error! Status: ${response.status}`)
+  }
+
+  return response.data
+}
