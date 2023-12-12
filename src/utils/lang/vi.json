@@ -28,23 +28,31 @@
     "spinners": "Đang tải",
     "logout_confirm": "Bạn có chắc chắn muốn đăng xuất?",
     "delete_confirm": "Bạn có chắc chắn muốn xóa?",
-    "delete": "Xóa"
+    "delete": "Xóa",
+    "success_login": "Đăng nhập thành công!",
+    "error_login": "Đăng nhập thất bại!",
+    "create_employee_success": "Tạo nhân viên thành công",
+    "create_employee_fail": "Tạo nhân viên thất bại, vui lòng thử lại!"
   },
   "validate": {
-    "name_validate": "Vui lòng nhập tên nhân viên!",
+    "name_validate": "Vui lòng nhập tên hợp lệ",
     "name_validate_min": "Tên phải có ít nhất 3 ký tự",
     "name_validate_max": "Tên phải có tối đa 40 ký tự",
-    "name_require": "Vui lòng nhập tên hợp lệ",
+    "name_require": "Vui lòng nhập tên nhân viên!",
     "email_validate": "Vui lòng nhập email!",
     "email_invalid": "Định dạng email không hợp lệ!",
     "password": "Vui lòng nhập mật khẩu của bạn!",
     "phone_validate": "Vui lòng nhập số điện thoại!",
     "phone_valid": "Vui lòng nhập số điện thoại hợp lệ gồm 10 chữ số",
     "code_validate": "Vui lòng nhập mã!",
-    "card_validate": "Vui lòng nhập Chứng minh nhân dân!",
+    "card_require": "Vui lòng nhập Chứng minh nhân dân!",
+    "card_validate": "Vui lòng nhập Chứng minh nhân dân hợp lệ!",
     "dob_validate": "Vui lòng chọn Ngày sinh!",
     "skill_validate": "Vui lòng nhập kỹ năng!",
-    "experience_validate": "Vui lòng nhập kinh nghiệm!"
+    "experience_require": "Vui lòng nhập kinh nghiệm!",
+    "experience_validate": "Kinh nghiệm phải là số năm!",
+    "skills_require": "Vui lòng nhập kinh nghiệm!",
+    "skills_validate": "Phải có ít nhất một kinh nghiệm!"
   },
   "breadcrumbs": {
     "projects_breadcrumb": "Danh sách dự án",
@@ -69,6 +77,8 @@
     "is_manager": "Quản Lí",
     "manager": "Người Quản Lí",
     "skill": "Kĩ Năng",
+    "code": "Mã nhân viên",
+    "identity": "CCCD",
     "experience": "Kinh Nghiệm(Năm)",
     "description_employee": "Mô Tả",
     "submit": "Xác Nhận",
@@ -79,7 +89,10 @@
     "active": "Kích Hoạt",
     "inactive": "Vô Hiệu Hóa",
     "no_data": "Không có dữ liệu",
-    "back": "Quay Lại"
+    "back": "Quay Lại",
+    "avatar": "Hình đại diện",
+    "skill_placeholder": "Kĩ năng",
+    "experience_placeholder": "Kinh nghiệm (Năm)"
   },
   "sign_in_page": {
     "enter_sign_in": "Vui lòng nhập thông tin chi tiết của bạn dưới đây để đăng nhập.",
