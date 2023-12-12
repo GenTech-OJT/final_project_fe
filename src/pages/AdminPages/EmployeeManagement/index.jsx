@@ -106,8 +106,8 @@ const EmployeeManagement = () => {
 
       // Show success toast
       record.status === 'active'
-        ? showToast(t('deactivated_successfully'), 'success')
-        : showToast(t('activated_successfully'), 'success')
+        ? showToast(t('message.deactivated_successfully'), 'success')
+        : showToast(t('message.activated_successfully'), 'success')
     } catch (error) {
       console.error('Error updating status:', error)
       // Show error toast
