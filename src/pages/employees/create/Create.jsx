@@ -21,24 +21,25 @@ import moment from 'moment'
 import { showToast } from '@components/Toast/toast'
 import { useTranslation } from 'react-i18next'
 import { Col, Row } from 'antd'
+import { useGetEmployees, useCreateEmployee } from '@hooks/useEmployee'
 import './create.css'
 
 const SelectManager = () => {
+  const { data } = useGetEmployees({
+    pageSize: 100,
+    sortColumn: 'id',
+    sortOrder: 'asc',
+  })
   const { setFieldValue, values } = useFormikContext()
   const [managers, setManagers] = useState([])
   const { t } = useTranslation('translation')
 
   useEffect(() => {
-    fetch('http://localhost:3000/employees')
-      .then(response => response.json())
-      .then(data => {
-        const managerNames = data.data.map(m => m.name)
-        setManagers(managerNames)
-      })
-      .catch(error => {
-        //  console.error('Error fetching data:', error)
-      })
-  }, [])
+    if (data) {
+      const managerNames = data.data.map(m => m.name)
+      setManagers(managerNames)
+    }
+  }, [data])
 
   const [field, meta] = useField('manager')
 
@@ -67,6 +68,12 @@ const SelectManager = () => {
 }
 
 const CreateEmployee = () => {
+  const {
+    mutate: createEmployeeApi,
+    isLoading,
+    isError,
+    error,
+  } = useCreateEmployee()
   const { t } = useTranslation('translation')
   const [avatar, setAvatar] = useState(null)
   // const [form] = Form.useForm()
@@ -136,7 +143,7 @@ const CreateEmployee = () => {
     description: Yup.string(),
   })
 
-  const handleFormSubmit = values => {
+  const handleFormSubmit = async values => {
     const formattedValues = {
       ...values,
       dob: moment(values.dob.$d).format('YYYY-MM-DD'),
@@ -154,29 +161,47 @@ const CreateEmployee = () => {
         formData.append(key, value)
       })
 
+      await createEmployeeApi(formattedValues, {
+        onSuccess: formattedValues => {
+          // const token =
+          //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NzBiOThiM2I2MTViZjIwYzdmODQzYSIsImlzQWRtaW4iOnRydWUsImlhdCI6MTcwMjMxNTk2MiwiZXhwIjoxNzAyMzE1OTkyfQ.HF-hz18XXtDSgxMJiJchsXiiFww6qQFfvrbHhMnZc3w'
+          // const refreshToken =
+          //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NzBiOThiM2I2MTViZjIwYzdmODQzYSIsImlzQWRtaW4iOnRydWUsImlhdCI6MTcwMjMxNTk2MiwiZXhwIjoxNzMzODUxOTYyfQ.D3Lq6_jL_N5Cie2BZDA4CisMv_m5BNg2CaTCWMUCJmk'
+          // dispatch(login({ token, refreshToken }))
+          // localStorage.setItem('isLoggedIn', 'true')
+          // navigate('/admin')
+          // showToast('Login Successful !', 'success')
+
+          message.success('Employee created successfully!')
+        },
+      })
+
       // formData.forEach((value, key) => {
       //   console.log('Form Data: ', `${key}: ${value}`)
       // })
 
-      fetch('http://localhost:3000/employees', {
-        method: 'POST',
-        body: formData,
-      })
-        .then(response => {
-          if (response.ok) {
-            showToast(t('message.create_employee_success'), 'success')
-            navigate('/employees')
-            return response.json()
-          } else {
-            showToast(t('message.create_employee_fail'), 'error')
-            throw new Error(`Request failed with status: ${response.status}`)
-          }
-        })
-        .then(data => {})
-        .catch(error => {
-          showToast(t('message.create_employee_fail'), 'error')
-        })
-    } catch (error) {}
+      // fetch('http://localhost:3000/employees', {
+      //   method: 'POST',
+      //   body: formData,
+      // })
+      //   .then(response => {
+      //     if (response.ok) {
+      //       showToast(t('message.create_employee_success'), 'success')
+      //       navigate('/employees')
+      //       return response.json()
+      //     } else {
+      //       showToast(t('message.create_employee_fail'), 'error')
+      //       throw new Error(`Request failed with status: ${response.status}`)
+      //     }
+      //   })
+      //   .then(data => {})
+      //   .catch(error => {
+      //     showToast(t('message.create_employee_fail'), 'error')
+      //   })
+    } catch (error) {
+      console.error('Error creating employee:', error)
+      message.error('Error creating employee. Please try again.')
+    }
   }
 
   return (
