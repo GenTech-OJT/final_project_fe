@@ -6,7 +6,7 @@ import {
 } from '@components/CustomComponent/CustomTable'
 import { showToast } from '@components/Toast/toast'
 import { Button, Spin, Empty } from 'antd'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 import './index.css'
@@ -43,7 +43,6 @@ const EmployeeManagement = () => {
         }
 
         const apiData = await response.json()
-        console.log(apiData)
         setGridData(apiData.data)
         setPagination({
           ...pagination,
@@ -69,7 +68,6 @@ const EmployeeManagement = () => {
 
   const deleteRecord = recordId => {
     // Handle logic to delete the selected record
-    console.log('Delete Record:', recordId)
   }
 
   const toggleStatus = async record => {
