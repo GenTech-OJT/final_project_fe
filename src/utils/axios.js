@@ -2,7 +2,11 @@ import axios from 'axios'
 import store from '../redux/store'
 import { login, logout } from '../redux/Slice/authSlice'
 
-const instance = axios.create()
+const BASE_URL = import.meta.env.VITE_BASE_URL_API
+
+const instance = axios.create({
+  baseURL: BASE_URL,
+})
 
 instance.interceptors.request.use(
   config => {
