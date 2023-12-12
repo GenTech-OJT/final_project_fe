@@ -171,7 +171,7 @@ const EmployeeDetail = () => {
   const generateChartData = skills => {
     const labels = skills.map(
       skill =>
-        `${skill.name.charAt(0).toUpperCase()}${skill.name.slice(1)}   -   ${
+        `${skill.name.charAt(0).toUpperCase()}${skill.name.slice(1)} - ${
           skill.year
         } years`
     )

@@ -24,6 +24,7 @@ const Chartpie = ({ data }) => {
             color: '#333',
             fontSize: 13,
           },
+          type: 'scroll',
         },
         series: [
           {
