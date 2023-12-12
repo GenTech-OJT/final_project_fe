@@ -51,7 +51,10 @@
     "employees_breadcrumb": "Danh sách nhân viên",
     "detail_breadcrumb": "Chi tiết",
     "create_breadcrumb": "Tạo mới",
-    "edit_breadcrumb": "Chỉnh sửa"
+    "edit_breadcrumb": "Chỉnh sửa",
+    "employee_detail_breadcrumb": "Chi tiết nhân viên",
+    "project_detail_breadcrumb": "Chi tiết dự án",
+    "dashboard": "Trang chủ"
   },
   "title": {
     "create_employee": "TẠO NHÂN VIÊN",

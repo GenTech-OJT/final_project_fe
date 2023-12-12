@@ -1,4 +1,4 @@
-import { ArrowLeftOutlined, EyeOutlined } from '@ant-design/icons'
+import { EyeOutlined } from '@ant-design/icons'
 import { Button, Card, Col, Descriptions, Row, Table, Tabs } from 'antd'
 import Title from 'antd/es/skeleton/Title'
 import { useEffect, useState } from 'react'
@@ -206,13 +206,6 @@ const EmployeeDetail = () => {
 
   return (
     <div className="page-container">
-      <button
-        className="back-to-list-button"
-        onClick={() => navigate('/employees')}
-      >
-        <ArrowLeftOutlined style={{ marginRight: '7px' }} />
-        {t('employee.back')}
-      </button>
       <Title className="page-title">EMPLOYEE DETAIL</Title>
 
       <Tabs

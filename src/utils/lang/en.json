@@ -51,7 +51,10 @@
     "employees_breadcrumb": "Employees",
     "detail_breadcrumb": "Details",
     "create_breadcrumb": "Create",
-    "edit_breadcrumb": "Edit"
+    "edit_breadcrumb": "Edit",
+    "employee_detail_breadcrumb": "Employee Detail",
+    "project_detail_breadcrumb": "Project Detail",
+    "dashboard": "Dashboard"
   },
   "title": {
     "create_employee": "CREATE EMPLOYEE",
