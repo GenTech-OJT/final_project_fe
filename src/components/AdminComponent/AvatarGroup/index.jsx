@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import { Avatar, Button, Popover } from 'antd'
+import { Avatar, Button, Col, Popover, Row } from 'antd'
 import '../AdminComponent.css'
 
 import { DownOutlined } from '@ant-design/icons'
@@ -62,15 +62,23 @@ const AvatarGroup = ({ collapsed, setSelectedKey }) => {
       open={open}
       onOpenChange={handleOpenChange}
     >
-      <div className="avatar-container">
-        <Avatar src="https://source.unsplash.com/random" />
+      <Row
+        align="middle"
+        gutter={8}
+        style={{ cursor: 'pointer', marginTop: '10px' }}
+      >
+        <Col flex="none">
+          <Avatar src="https://source.unsplash.com/random" />
+        </Col>
         {!collapsed && (
-          <div className="avatar-dropdown">
-            Ngo Tan Khoa
-            <DownOutlined />
-          </div>
+          <Col flex="none">
+            <div className="avatar-dropdown">
+              Ngo Tan Khoa
+              <DownOutlined />
+            </div>
+          </Col>
         )}
-      </div>
+      </Row>
     </Popover>
   )
 }
