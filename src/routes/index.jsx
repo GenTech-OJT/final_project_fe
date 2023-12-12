@@ -1,5 +1,5 @@
 import NotFoundPage from '@pages/AdminPages/404NotFound/NotFound'
-import EditEmployee from '@pages/AdminPages/EmployeeManagement/EditEmployee'
+
 import CreateEmployee from '@pages/AdminPages/EmployeeManagement/create'
 import Profile from '@pages/AdminPages/Profile/Profile'
 import CreateProject from '@pages/AdminPages/ProjectManagement/create'
@@ -18,6 +18,9 @@ const EmployeeManagement = lazy(
 const Login = lazy(() => import('@pages/AdminPages/login/Login'))
 const DetailEmployee = lazy(
   () => import('@pages/AdminPages/EmployeeManagement/detail')
+)
+const EditEmployee = lazy(
+  () => import('@pages/AdminPages/EmployeeManagement/edit')
 )
 const Dashboard = lazy(() => import('@pages/AdminPages/Dashboard'))
 

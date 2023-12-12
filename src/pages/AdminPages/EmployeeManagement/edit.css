@@ -1,9 +1,15 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 .back-to-list-button {
   position: relative;
   display: inline-block;
+  padding: 7px;
   text-decoration: none;
   color: black; /* Set the text color */
-  margin-bottom: 15px;
 }
 
 .back-to-list-button::after {
@@ -23,29 +29,46 @@
   transform: scaleX(1);
 }
 
-.select-lang {
-  position: absolute;
-  right: 5px;
-  top: 15px;
+.create-container {
+  width: 100%;
 }
+
+.input-container {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
 .dob {
   width: 100%;
 }
 
-@media only screen and (max-width: 1000px) {
-  .page-container {
-    padding: 15px 25px;
-  }
+.select-container-lg {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.select-container {
+  display: flex;
+  width: 49%;
+  justify-content: space-between;
+}
+
+.select-width-dobgs {
+  width: 49%;
+}
+
+.text-input-form {
+  width: 49%;
 }
 
 @media only screen and (max-width: 965px) {
   .select-container {
     flex-direction: column;
   }
-  .select-width-dobgs,
-  .select-width-im,
-  .select-width-p {
-    width: 120px;
+  .select-width-dobgs {
+    width: 150px;
   }
 
   .manager-input-width {
@@ -53,32 +76,14 @@
   }
 }
 
-@media only screen and (max-width: 900px) {
-  .create-input-form {
-    width: 100%;
-  }
-}
-
-@media only screen and (max-width: 675px) {
+@media only screen and (max-width: 700px) {
   .input-container,
   .select-container-lg {
     flex-direction: column;
   }
 
-  .skill-input,
   .text-input-form,
   .select-container {
     width: 100%;
-  }
-}
-
-@media only screen and (max-width: 400px) {
-  .page-title {
-    font-size: 25px !important;
-    margin: 12px 0;
-  }
-
-  .page-container {
-    padding: 15px 15px;
   }
 }

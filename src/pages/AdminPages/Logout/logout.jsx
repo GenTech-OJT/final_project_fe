@@ -1,6 +1,7 @@
 import { Modal, Button } from 'antd'
 import { navigate } from '@reach/router'
 import { useTranslation } from 'react-i18next'
+import { useState } from 'react'
 const Logout = () => {
   const { t } = useTranslation('translation')
   const [isModalVisible, setIsModalVisible] = useState(false)

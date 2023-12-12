@@ -31,11 +31,11 @@ const EmployeeManagement = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `https://final-project-be.onrender.com/employees?_page=${
-            pagination.current
-          }&_limit=${pagination.pageSize}&_sort=${
-            sortedInfo.columnKey || 'id'
-          }&_order=${sortedInfo.order || 'asc'}&q=${searchText}`
+          `http://localhost:3000/employees?_page=${pagination.current}&_limit=${
+            pagination.pageSize
+          }&_sort=${sortedInfo.columnKey || 'id'}&_order=${
+            sortedInfo.order || 'asc'
+          }&q=${searchText}`
         )
 
         if (!response.ok) {

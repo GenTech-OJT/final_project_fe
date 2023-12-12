@@ -16,6 +16,10 @@ video {
   max-width: 100%;
 }
 
+.ant-layout-sider-children {
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px I !important;
+}
+
 button {
   cursor: pointer;
   background-color: transparent;
@@ -29,4 +33,36 @@ body {
 }
 a {
   color: inherit;
+}
+
+.menu-mobile {
+  width: 270px !important;
+}
+.ant-drawer-content-wrapper {
+  width: 270px !important;
+}
+
+.sider-menu {
+  overflow: hidden !important;
+}
+
+@media screen and (max-width: 900px) {
+  .ant-layout-sider-collapsed {
+    max-width: 50px !important;
+    min-width: 50px !important;
+  }
+  .logo {
+    margin-left: 0;
+  }
+  .close-icon .anticon-close {
+    font-size: 21px;
+  }
+  .header-input {
+    display: none;
+  }
+
+  .ant-layout-has-sider {
+    margin-top: -68px;
+    height: 100vh;
+  }
 }

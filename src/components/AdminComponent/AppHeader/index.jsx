@@ -24,12 +24,6 @@ const AppHeader = () => {
 
   return (
     <div className="AppHeader">
-      <SearchOutlined className="search-header" />
-      <Input
-        placeholder="Basic usage"
-        bordered={false}
-        className="header-input"
-      />
       <Space wrap>
         <Select
           value={selectedLanguage}
