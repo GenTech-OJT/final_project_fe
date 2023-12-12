@@ -32,8 +32,7 @@
   },
   "validate": {
     "name_validate": "Please input a valid name!",
-    "name_validate_min": "Name must be at least 3 characters",
-    "name_validate_max": "Name must be at most 40 characters",
+    "name_validate_min_max": "Name must be between 3 and 40 characters",
     "name_require": "Please input name",
     "email_validate": "Please input your email!",
     "email_invalid": "Invalid email format!",
@@ -42,9 +41,12 @@
     "phone_valid": "Please enter a valid 10-digit phone number!",
     "code_validate": "Please input code!",
     "card_validate": "Please input the Citizen Identity Card!",
+    "card_validate2": "Please enter a valid Citizen Identity Card!",
     "dob_validate": "Please select Date of Birth!",
-    "skill_validate": "Please input skill!",
-    "experience_validate": "Please input experience!"
+    "skill_name_validate": "Please input skill name!",
+    "skill_name_validate2": "Skill name should only contain letters!",
+    "skill_experience_validate": "Please input skill experience!",
+    "skill_experience_validate2": "Experience should only contain numbers!"
   },
   "breadcrumbs": {
     "projects_breadcrumb": "Projects",

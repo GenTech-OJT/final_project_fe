@@ -220,16 +220,16 @@ const EditEmployee = () => {
                 rules={[
                   {
                     required: true,
-                    message: 'Please input the employee name !',
+                    message: t('validate.name_require'),
                   },
                   {
                     pattern: /^[a-z ,.'-]+$/i,
-                    message: 'Please enter a valid name!',
+                    message: t('validate.name_validate'),
                   },
                   {
                     min: 3,
                     max: 40,
-                    message: 'Name must be between 3 and 40 characters',
+                    message: t('validate.name_validate_min_max'),
                   },
                 ]}
               >
@@ -251,11 +251,11 @@ const EditEmployee = () => {
                 rules={[
                   {
                     required: true,
-                    message: 'Please input the employee email !',
+                    message: t('validate.email_validate'),
                   },
                   {
                     pattern: '^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$',
-                    message: 'Please enter a valid email!',
+                    message: t('validate.email_invalid'),
                   },
                   {
                     min: 3,
@@ -301,11 +301,11 @@ const EditEmployee = () => {
                 rules={[
                   {
                     required: true,
-                    message: 'Please input your phone number!',
+                    message: t('validate.phone_validate'),
                   },
                   {
                     pattern: /^[0-9-]{10,}$/,
-                    message: 'Please enter a valid 10-digit phone number!',
+                    message: t('validate.phone_valid'),
                   },
                 ]}
               >
@@ -330,11 +330,11 @@ const EditEmployee = () => {
                 rules={[
                   {
                     required: true,
-                    message: 'Please input your Citizen Identity Card!',
+                    message: t('validate.card_validate'),
                   },
                   {
                     pattern: /^[a-zA-Z0-9]{1,20}$/,
-                    message: 'Please enter a valid Citizen Identity Card!',
+                    message: t('validate.card_validate2'),
                   },
                 ]}
               >
@@ -357,7 +357,7 @@ const EditEmployee = () => {
                 rules={[
                   {
                     required: true,
-                    message: 'Please select your Date of Birth!',
+                    message: t('employee.dob_validate'),
                   },
                 ]}
               >
@@ -458,10 +458,36 @@ const EditEmployee = () => {
                         }}
                         align="baseline"
                       >
-                        <Form.Item {...restField} name={[name, 'skill']}>
+                        <Form.Item
+                          {...restField}
+                          name={[name, 'skill']}
+                          rules={[
+                            {
+                              required: true,
+                              message: t('validate.skill_name_validate'),
+                            },
+                            {
+                              pattern: /^[a-zA-Z\s]*$/,
+                              message: t('validate.skill_name_validate2'),
+                            },
+                          ]}
+                        >
                           <Input placeholder="Skill" />
                         </Form.Item>
-                        <Form.Item {...restField} name={[name, 'experience']}>
+                        <Form.Item
+                          {...restField}
+                          name={[name, 'experience']}
+                          rules={[
+                            {
+                              required: true,
+                              message: t('validate.skill_experience_validate'),
+                            },
+                            {
+                              pattern: /^[0-9]*$/,
+                              message: t('validate.skill_experience_validate2'),
+                            },
+                          ]}
+                        >
                           <Input placeholder="Experience (Years)" />
                         </Form.Item>
                         <MinusCircleOutlined

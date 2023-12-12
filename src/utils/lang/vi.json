@@ -32,8 +32,7 @@
   },
   "validate": {
     "name_validate": "Vui lòng nhập tên nhân viên!",
-    "name_validate2": "Tên phải có ít nhất 3 ký tự",
-    "name_validate3": "Tên phải có tối đa 40 ký tự",
+    "name_validate_min_max": "Tên phải có ít nhất 3 cho đến 40 ký tự",
     "name_require": "Vui lòng nhập tên",
     "email_validate": "Vui lòng nhập email!",
     "email_validate2": "Định dạng email không hợp lệ!",
@@ -42,9 +41,12 @@
     "phone_validate2": "Vui lòng nhập số điện thoại hợp lệ gồm 10 chữ số",
     "code_validate": "Vui lòng nhập mã!",
     "card_validate": "Vui lòng nhập Chứng minh nhân dân!",
+    "card_validate2": "Vui lòng nhập đúng định dạng Chứng minh nhân dân!",
     "dob_validate": "Vui lòng chọn Ngày sinh!",
-    "skill_validate": "Vui lòng nhập kỹ năng!",
-    "experience_validate": "Vui lòng nhập kinh nghiệm!"
+    "skill_name_validate": "Vui lòng nhập tên kỹ năng!",
+    "skill_name_validate2": "Vui lòng nhập tên kỹ năng chỉ chứa kí tự!",
+    "skill_experience_validate": "Vui lòng nhập số năm kinh nghiệm đối với kỹ năng!",
+    "skill_experience_validate2": "Vui lòng chỉ nhập số năm kinh nghiệm đối với kỹ năng!"
   },
   "breadcrumbs": {
     "projects_breadcrumb": "Danh sách dự án",
