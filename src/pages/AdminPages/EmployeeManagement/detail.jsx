@@ -4,14 +4,13 @@ import Title from 'antd/es/skeleton/Title'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import Chartpie from '../../../components/Chartpie/Chartpie'
 import './detail.css'
 
 const { TabPane } = Tabs
 
 const EmployeeDetail = () => {
-  const navigate = useNavigate()
   const { t } = useTranslation('translation')
 
   const { id } = useParams()
