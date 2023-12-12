@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux'
 import { Form, Input, Button, message, Typography } from 'antd'
-import { login } from '../../redux/authSlice'
+import { login } from '../../redux/Slice/authSlice'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { Formik } from 'formik'
