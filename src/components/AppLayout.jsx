@@ -1,4 +1,4 @@
-import { Suspense, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -7,9 +7,11 @@ import {
   VideoCameraOutlined,
 } from '@ant-design/icons'
 import { Layout, Menu, Button, theme } from 'antd'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Spinner from './admin/Spinner/Spinner'
 import BreadCrumb from './admin/Breadcrumb/Breadcrumb'
+import { useDispatch, useSelector } from 'react-redux'
+import { setSelectedKey } from '../redux/Slice/menuSlice'
 
 const { Header, Sider, Content } = Layout
 
@@ -19,7 +21,18 @@ const AppLayout = ({ children }) => {
     token: { colorBgContainer },
   } = theme.useToken()
 
-  const items = [
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const selectedKey = useSelector(state => state.menu)
+
+  useEffect(() => {
+    const storedSelectedKey = localStorage.getItem('selectedKey')
+    if (storedSelectedKey) {
+      dispatch(setSelectedKey(storedSelectedKey))
+    }
+  }, [dispatch])
+
+  const menuItems = [
     {
       key: '1',
       icon: <UserOutlined />,
@@ -40,6 +53,8 @@ const AppLayout = ({ children }) => {
     },
   ]
 
+  console.log('selectedKey', selectedKey)
+
   return (
     <Layout style={{ height: '100vh' }}>
       <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -47,25 +62,28 @@ const AppLayout = ({ children }) => {
         <Menu
           theme="dark"
           mode="inline"
-          defaultSelectedKeys={['1']}
+          defaultSelectedKeys={[selectedKey]}
+          selectedKeys={[selectedKey]}
+          onClick={item => {
+            localStorage.setItem('selectedKey', item.key)
+            dispatch(setSelectedKey(item.key))
+            navigate(item.key)
+          }}
           items={[
             {
-              key: '1',
+              key: '/admin/dashboard',
               icon: <UserOutlined />,
               label: 'Dashboard',
-              to: '/admin/dashboard',
             },
             {
-              key: '2',
+              key: '/admin/employees',
               icon: <VideoCameraOutlined />,
               label: 'Employees',
-              to: '/admin/employees',
             },
             {
-              key: '3',
+              key: '/admin/projects',
               icon: <UploadOutlined />,
               label: 'Projects',
-              to: '/admin/projects',
             },
           ]}
         />
