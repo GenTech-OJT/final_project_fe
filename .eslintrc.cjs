@@ -22,6 +22,7 @@ module.exports = {
           ['@api', './src/apis'],
           ['@routes', './src/routes'],
           ['@hooks', './src/hooks'],
+          ['@redux', './src/redux'],
           // Thêm các alias khác ở đây
         ],
         extensions: ['.js', '.jsx', '.json'],
