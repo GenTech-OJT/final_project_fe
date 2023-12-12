@@ -1,5 +1,4 @@
-import { SearchOutlined } from '@ant-design/icons'
-import { Input, Select, Space } from 'antd'
+import { Select, Space } from 'antd'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import '../AdminComponent.css'

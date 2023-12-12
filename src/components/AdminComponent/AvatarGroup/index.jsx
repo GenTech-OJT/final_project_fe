@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import { Avatar, Button, Col, Popover, Row } from 'antd'
+import { Avatar, Col, Popover, Row } from 'antd'
 import '../AdminComponent.css'
 
 import { DownOutlined } from '@ant-design/icons'
@@ -13,9 +13,7 @@ const AvatarGroup = ({ collapsed, setSelectedKey }) => {
   const navigate = useNavigate()
   const [open, setOpen] = useState(false)
   const { t } = useTranslation('translation')
-  const hide = () => {
-    setOpen(false)
-  }
+
   const handleOpenChange = newOpen => {
     setOpen(newOpen)
   }
@@ -24,11 +22,6 @@ const AvatarGroup = ({ collapsed, setSelectedKey }) => {
     setSelectedKey('')
     localStorage.removeItem('selectedKey')
   }
-  // const handleProfile = () => {
-  //   navigate('/profile')
-  //   setSelectedKey('')
-  //   localStorage.removeItem('selectedKey')
-  // }
 
   const content = (
     <div className="popup-account">
