@@ -117,5 +117,10 @@
     "end_date": "End Date",
     "status": "Status",
     "action": "Action"
+  },
+  "pagination": {
+    "page": "Page",
+    "next_page": "Next Page",
+    "pre_page": "Previous Page"
   }
 }

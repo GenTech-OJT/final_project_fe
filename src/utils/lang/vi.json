@@ -117,5 +117,10 @@
     "end_date": "Ngày kết thúc",
     "status": "Trạng thái",
     "action": "Hành động"
+  },
+  "pagination": {
+    "page": "Trang",
+    "next_page": "Trang Tiếp",
+    "pre_page": "Trang Trước"
   }
 }

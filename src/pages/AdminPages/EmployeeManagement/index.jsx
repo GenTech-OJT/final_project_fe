@@ -5,8 +5,8 @@ import {
   CustomTable,
 } from '@components/CustomComponent/CustomTable'
 import { showToast } from '@components/Toast/toast'
-import { Button, Spin, Empty } from 'antd'
-import { useEffect, useRef, useState } from 'react'
+import { Button, Empty, Spin } from 'antd'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 import './index.css'
@@ -137,6 +137,7 @@ const EmployeeManagement = () => {
       key: 'id',
       sorter: true,
       sortOrder: sortedInfo.columnKey === 'id' && sortedInfo.order,
+      showSorterTooltip: false,
     },
     {
       title: t('table_header.name'),
@@ -145,6 +146,7 @@ const EmployeeManagement = () => {
       key: 'name',
       sorter: true,
       sortOrder: sortedInfo.columnKey === 'name' && sortedInfo.order,
+      showSorterTooltip: false,
     },
     {
       title: t('table_header.status'),
@@ -153,6 +155,7 @@ const EmployeeManagement = () => {
       key: 'status',
       sorter: true,
       sortOrder: sortedInfo.columnKey === 'status' && sortedInfo.order,
+      showSorterTooltip: false,
       render: (_, record) => (
         <Button
           type={record.status === 'active' ? 'primary' : 'danger'}
@@ -176,6 +179,7 @@ const EmployeeManagement = () => {
       key: 'position',
       sorter: true,
       sortOrder: sortedInfo.columnKey === 'position' && sortedInfo.order,
+      showSorterTooltip: false,
     },
     {
       title: t('table_header.is_manager'),
@@ -184,6 +188,7 @@ const EmployeeManagement = () => {
       key: 'is_manager',
       sorter: true,
       sortOrder: sortedInfo.columnKey === 'is_manager' && sortedInfo.order,
+      showSorterTooltip: false,
       render: isManager => convertBooleanToString(isManager),
     },
     {
