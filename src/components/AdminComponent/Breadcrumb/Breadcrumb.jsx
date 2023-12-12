@@ -1,5 +1,5 @@
 import { HomeOutlined } from '@ant-design/icons'
-import { Breadcrumb } from 'antd'
+import { Breadcrumb, Col, Row } from 'antd'
 import { useTranslation } from 'react-i18next'
 import { Link, useLocation } from 'react-router-dom'
 
@@ -62,10 +62,14 @@ const BreadCrumb = () => {
     >
       <Breadcrumb.Item key="home">
         <Link to="/">
-          <div style={{ display: 'flex', gap: '10px' }}>
-            <HomeOutlined />
-            <p>{t('breadcrumbs.dashboard')}</p>
-          </div>
+          <Row gutter={10} align="middle">
+            <Col>
+              <HomeOutlined />
+            </Col>
+            <Col>
+              <p>{t('breadcrumbs.dashboard')}</p>
+            </Col>
+          </Row>
         </Link>
       </Breadcrumb.Item>
       {pathSnippets.map((snippet, index) => {

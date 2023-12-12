@@ -56,12 +56,24 @@ const EmployeeDetail = () => {
       render: status => (
         <span>
           {status === 'In progress' && (
-            <Button style={{ backgroundColor: 'blue', color: 'white' }}>
+            <Button
+              style={{
+                backgroundColor: 'blue',
+                color: 'white',
+                cursor: 'default',
+              }}
+            >
               {status}
             </Button>
           )}
           {status === 'Done' && (
-            <Button style={{ backgroundColor: 'green', color: 'white' }}>
+            <Button
+              style={{
+                backgroundColor: 'green',
+                color: 'white',
+                cursor: 'default',
+              }}
+            >
               {status}
             </Button>
           )}
@@ -280,113 +292,132 @@ const EmployeeDetail = () => {
               </Col>
             </Row>
           </Card>
-          <Card
-            style={{
-              marginTop: 20,
-              width: '100%',
-              backgroundColor: ' rgb(245, 245, 245)',
-            }}
-          >
-            <Row gutter={16} justify="center" align="middle">
-              <Col span={23}>
-                <p className="title">{t('employee_details.personal_info')}</p>
-                <hr className="profile_line" />
 
-                <Col span={26}>
-                  <Descriptions
-                    column={2}
-                    bordered
-                    className="custom-descriptions"
-                  >
-                    <Descriptions.Item
-                      label={
-                        <span style={{ fontWeight: 'bold' }}>
-                          {t('employee_details.gender')}
-                        </span>
-                      }
-                      className="custom-label"
-                    >
-                      {capitalizeFirstLetter(displayValue(employee.gender))}{' '}
-                    </Descriptions.Item>
-                    <Descriptions.Item
-                      label={
-                        <span style={{ fontWeight: 'bold' }}>
-                          {t('employee_details.identity_code')}
-                        </span>
-                      }
-                      className="custom-label"
-                    >
-                      {employee.identity}
-                    </Descriptions.Item>
-                    <Descriptions.Item
-                      label={
-                        <span style={{ fontWeight: 'bold' }}>
-                          {t('employee_details.phone_number')}
-                        </span>
-                      }
-                      className="custom-label"
-                    >
-                      {employee.phone}
-                    </Descriptions.Item>
-                    <Descriptions.Item
-                      label={
-                        <span style={{ fontWeight: 'bold' }}>
-                          {t('employee_details.is_manager')}
-                        </span>
-                      }
-                      className="custom-label"
-                    >
-                      {capitalizeFirstLetter(
-                        displayValue(employee.is_manager ? 'Yes' : 'No')
-                      )}
-                    </Descriptions.Item>
-                    <Descriptions.Item
-                      label={
-                        <span style={{ fontWeight: 'bold' }}>
-                          {t('employee_details.dob')}
-                        </span>
-                      }
-                      className="custom-label"
-                    >
-                      {employee.dob}
-                    </Descriptions.Item>
-                    <Descriptions.Item
-                      label={
-                        <span style={{ fontWeight: 'bold' }}>
-                          {t('employee_details.description_employee')}
-                        </span>
-                      }
-                      span={2}
-                      className="custom-label"
-                    >
-                      {capitalizeFirstLetter(
-                        displayValue(employee.description)
-                      )}
-                    </Descriptions.Item>
-                  </Descriptions>
-                  {/* Add more view-only information as needed */}
-                </Col>
-              </Col>
-            </Row>
-          </Card>
+          <Row gutter={16}>
+            <Col span={12}>
+              <Card
+                style={{
+                  marginTop: 20,
+                  width: '100%',
+                  backgroundColor: ' rgb(245, 245, 245)',
+                }}
+              >
+                <Row gutter={16} justify="center" align="middle">
+                  <Col span={23}>
+                    <p className="title">
+                      {t('employee_details.personal_info')}
+                    </p>
+                    <hr className="profile_line" />
+
+                    <Col span={26}>
+                      <Descriptions
+                        column={1}
+                        bordered
+                        className="custom-descriptions"
+                      >
+                        <Descriptions.Item
+                          label={
+                            <span style={{ fontWeight: 'bold' }}>
+                              {t('employee_details.gender')}
+                            </span>
+                          }
+                          className="custom-label"
+                        >
+                          {capitalizeFirstLetter(displayValue(employee.gender))}{' '}
+                        </Descriptions.Item>
+                        <Descriptions.Item
+                          label={
+                            <span style={{ fontWeight: 'bold' }}>
+                              {t('employee_details.identity_code')}
+                            </span>
+                          }
+                          className="custom-label"
+                        >
+                          {employee.identity}
+                        </Descriptions.Item>
+                        <Descriptions.Item
+                          label={
+                            <span style={{ fontWeight: 'bold' }}>
+                              {t('employee_details.phone_number')}
+                            </span>
+                          }
+                          className="custom-label"
+                        >
+                          {employee.phone}
+                        </Descriptions.Item>
+
+                        <Descriptions.Item
+                          label={
+                            <span style={{ fontWeight: 'bold' }}>
+                              {t('employee_details.dob')}
+                            </span>
+                          }
+                          className="custom-label"
+                        >
+                          {employee.dob}
+                        </Descriptions.Item>
+                        <Descriptions.Item
+                          label={
+                            <span style={{ fontWeight: 'bold' }}>
+                              {t('employee_details.is_manager')}
+                            </span>
+                          }
+                          className="custom-label"
+                        >
+                          {capitalizeFirstLetter(
+                            displayValue(employee.is_manager ? 'Yes' : 'No')
+                          )}
+                        </Descriptions.Item>
+                        <Descriptions.Item
+                          label={
+                            <span style={{ fontWeight: 'bold' }}>
+                              {t('employee_details.description_employee')}
+                            </span>
+                          }
+                          span={2}
+                          className="custom-label"
+                        >
+                          {capitalizeFirstLetter(
+                            displayValue(employee.description)
+                          )}
+                        </Descriptions.Item>
+                      </Descriptions>
+                      {/* Add more view-only information as needed */}
+                    </Col>
+                  </Col>
+                </Row>
+              </Card>
+            </Col>
+            <Col span={12}>
+              {/* New Card for Skills */}
+              <Card
+                style={{
+                  marginTop: 20,
+                  width: '100%',
+                  backgroundColor: 'rgb(245, 245, 245)',
+                }}
+              >
+                {/* Skills Content */}
+                <p className="title">{t('employee_details.skill')}</p>
+                <hr className="profile_line" />
+                {/* Add your skill-related content here */}
+                <Row gutter={16} justify="center" align="middle">
+                  <Col span={22}>
+                    {employee.skills && employee.skills.length > 0 ? (
+                      <div>
+                        <Chartpie data={generateChartData(employee.skills)} />
+                      </div>
+                    ) : (
+                      <p>No skills available</p>
+                    )}
+                  </Col>
+                </Row>
+              </Card>
+            </Col>
+          </Row>
         </TabPane>
         {/* next page */}
-        <TabPane tab={<span>{t('employee_details.skill')}</span>} key="2">
-          {/* Content for Skill tab */}
-          <Card style={{ backgroundColor: ' rgb(245, 245, 245)' }}>
-            <Row gutter={16} justify="center" align="middle">
-              <Col span={22}>
-                {employee.skills && employee.skills.length > 0 ? (
-                  <div>
-                    <Chartpie data={generateChartData(employee.skills)} />
-                  </div>
-                ) : (
-                  <p>No skills available</p>
-                )}
-              </Col>
-            </Row>
-          </Card>
-        </TabPane>
+
         <TabPane tab={<span>{t('employee_details.project')}</span>} key="3">
           {/* Content for Project tab */}
           <Table
