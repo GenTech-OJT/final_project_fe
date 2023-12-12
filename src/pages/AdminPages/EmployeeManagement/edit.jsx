@@ -116,7 +116,51 @@ const EditEmployee = () => {
         })
     })
   }
+  const SelectManager = () => {
+    const [managers, setManagers] = useState([])
+    const [selectedManager, setSelectedManager] = useState('')
+    const { t } = useTranslation('translation')
 
+    useEffect(() => {
+      fetch('http://localhost:3000/employees')
+        .then(response => response.json())
+        .then(data => {
+          const managerNames = data.data.map(m => m.name)
+          setManagers(managerNames)
+        })
+        .catch(error => {
+          // console.error('Error fetching data:', error)
+        })
+    }, [])
+
+    const handleManagerChange = value => {
+      setSelectedManager(value)
+    }
+
+    return (
+      <Form.Item
+        label={
+          <span style={{ fontWeight: 'bold' }}>{t('employee.manager')}</span>
+        }
+        name="manager"
+        className="select-width-dobgs"
+        rules={[
+          {
+            required: true,
+            message: 'Please select the employee manager !',
+          },
+        ]}
+      >
+        <Select value={selectedManager} onChange={handleManagerChange}>
+          {managers.map(m => (
+            <Select.Option key={m} value={m}>
+              {m}
+            </Select.Option>
+          ))}
+        </Select>
+      </Form.Item>
+    )
+  }
   const checkFile = file => {
     const isImage = file.type.startsWith('image/')
 
@@ -375,23 +419,7 @@ const EditEmployee = () => {
                   </Select>
                 </Form.Item>
 
-                <Form.Item
-                  label={
-                    <span style={{ fontWeight: 'bold' }}>
-                      {t('employee.manager')}
-                    </span>
-                  }
-                  name="manager"
-                  className="select-width-dobgs"
-                >
-                  <Input
-                    value={empData?.manager || ''}
-                    onChange={e => {
-                      form.setFieldsValue({ manager: e.target.value }) // Cập nhật giá trị trường input trong form
-                      setEmpData({ ...empData, manager: e.target.value }) // Cập nhật state 'empdata'
-                    }}
-                  />
-                </Form.Item>
+                <SelectManager />
               </div>
             </div>
             <div className="input-container">
