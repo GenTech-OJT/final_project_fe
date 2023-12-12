@@ -34,7 +34,9 @@ const SelectManager = () => {
         const managerNames = data.data.map(m => m.name)
         setManagers(managerNames)
       })
-      .catch(error => console.error('Error fetching data:', error))
+      .catch(error => {
+        //  console.error('Error fetching data:', error)
+      })
   }, [])
 
   const [field, meta] = useField('manager')
@@ -138,7 +140,7 @@ const CreateEmployee = () => {
       ...values,
       dob: moment(values.dob.$d).format('YYYY-MM-DD'),
     }
-    console.log(formattedValues)
+    // console.log(formattedValues)
     try {
       const formData = new FormData()
       if (avatar != null) {
@@ -151,9 +153,9 @@ const CreateEmployee = () => {
         formData.append(key, value)
       })
 
-      formData.forEach((value, key) => {
-        console.log('Form Data: ', `${key}: ${value}`)
-      })
+      // formData.forEach((value, key) => {
+      //   console.log('Form Data: ', `${key}: ${value}`)
+      // })
 
       fetch('http://localhost:3000/employees', {
         method: 'POST',
