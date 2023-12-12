@@ -378,132 +378,139 @@ const CreateEmployee = () => {
               </div>
               <div className="input-container">
                 <Form.Item
-                  label={t('employee.is_manager')}
-                  name="isManager"
+                  label={t('employee.skill')}
+                  required
                   className="text-input-form"
                 >
-                  <Checkbox
-                    name="isManager"
+                  <Form.List name="skills">
+                    {(fields, { add, remove }) => (
+                      <>
+                        {fields.map(({ key, name, ...restField }) => (
+                          <Space
+                            key={key}
+                            style={{
+                              display: 'flex',
+                              marginBottom: 8,
+                            }}
+                            align="baseline"
+                          >
+                            <Form.Item
+                              {...restField}
+                              name={[name, 'skill']}
+                              validateStatus={
+                                errors?.skills?.[name]?.skill &&
+                                touched?.skills?.[name]?.skill
+                                  ? 'error'
+                                  : ''
+                              }
+                              help={
+                                errors?.skills?.[name]?.skill &&
+                                touched?.skills?.[name]?.skill
+                                  ? errors.skills[name].skill
+                                  : ''
+                              }
+                            >
+                              <Input
+                                placeholder={t('employee.skill_placeholder')}
+                                onChange={e => {
+                                  setFieldValue(
+                                    `skills[${name}].skill`,
+                                    e.target.value
+                                  )
+                                  validateField(`skills[${name}].skill`)
+                                }}
+                              />
+                            </Form.Item>
+                            <Form.Item
+                              {...restField}
+                              name={[name, 'experience']}
+                              validateStatus={
+                                errors?.skills?.[name]?.experience &&
+                                touched?.skills?.[name]?.experience
+                                  ? 'error'
+                                  : ''
+                              }
+                              help={
+                                errors?.skills?.[name]?.experience &&
+                                touched?.skills?.[name]?.experience
+                                  ? errors.skills[name].experience
+                                  : ''
+                              }
+                            >
+                              <Input
+                                placeholder={t(
+                                  'employee.experience_placeholder'
+                                )}
+                                onChange={e => {
+                                  setFieldValue(
+                                    `skills[${name}].experience`,
+                                    e.target.value
+                                  )
+                                  validateField(`skills[${name}].experience`)
+                                }}
+                              />
+                            </Form.Item>
+                            <MinusCircleOutlined
+                              onClick={() => {
+                                if (fields.length > 1) {
+                                  const newSkills = values.skills.filter(
+                                    (_, index) => index !== name
+                                  )
+                                  setFieldValue('skills', newSkills)
+                                  remove(name, key)
+                                }
+                              }}
+                              disabled={fields.length === 1}
+                            />
+                          </Space>
+                        ))}
+                        <Form.Item>
+                          <Button
+                            type="dashed"
+                            onClick={() => add()}
+                            block
+                            icon={<PlusOutlined />}
+                          >
+                            {t('employee.add_skill')}
+                          </Button>
+                        </Form.Item>
+                      </>
+                    )}
+                  </Form.List>
+                </Form.Item>
+                <Form.Item
+                  label={t('employee.description_employee')}
+                  name="description"
+                  className="text-input-form"
+                  validateStatus={
+                    errors.description && touched.description ? 'error' : ''
+                  }
+                  help={
+                    errors.description &&
+                    touched.description &&
+                    errors.description
+                  }
+                >
+                  <Input.TextArea
+                    rows={4}
+                    name="description"
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    checked={values.isManager}
-                  ></Checkbox>
+                    value={values.description}
+                  />
                 </Form.Item>
               </div>
-              <Form.Item label={t('employee.skill')} required>
-                <Form.List name="skills">
-                  {(fields, { add, remove }) => (
-                    <>
-                      {fields.map(({ key, name, ...restField }) => (
-                        <Space
-                          key={key}
-                          style={{
-                            display: 'flex',
-                            marginBottom: 8,
-                          }}
-                          align="baseline"
-                        >
-                          <Form.Item
-                            {...restField}
-                            name={[name, 'skill']}
-                            validateStatus={
-                              errors?.skills?.[name]?.skill &&
-                              touched?.skills?.[name]?.skill
-                                ? 'error'
-                                : ''
-                            }
-                            help={
-                              errors?.skills?.[name]?.skill &&
-                              touched?.skills?.[name]?.skill
-                                ? errors.skills[name].skill
-                                : ''
-                            }
-                          >
-                            <Input
-                              placeholder={t('employee.skill_placeholder')}
-                              onChange={e => {
-                                setFieldValue(
-                                  `skills[${name}].skill`,
-                                  e.target.value
-                                )
-                                validateField(`skills[${name}].skill`)
-                              }}
-                            />
-                          </Form.Item>
-                          <Form.Item
-                            {...restField}
-                            name={[name, 'experience']}
-                            validateStatus={
-                              errors?.skills?.[name]?.experience &&
-                              touched?.skills?.[name]?.experience
-                                ? 'error'
-                                : ''
-                            }
-                            help={
-                              errors?.skills?.[name]?.experience &&
-                              touched?.skills?.[name]?.experience
-                                ? errors.skills[name].experience
-                                : ''
-                            }
-                          >
-                            <Input
-                              placeholder={t('employee.experience_placeholder')}
-                              onChange={e => {
-                                setFieldValue(
-                                  `skills[${name}].experience`,
-                                  e.target.value
-                                )
-                                validateField(`skills[${name}].experience`)
-                              }}
-                            />
-                          </Form.Item>
-                          <MinusCircleOutlined
-                            onClick={() => {
-                              if (fields.length > 1) {
-                                const newSkills = values.skills.filter(
-                                  (_, index) => index !== name
-                                )
-                                setFieldValue('skills', newSkills)
-                                remove(name, key)
-                              }
-                            }}
-                            disabled={fields.length === 1}
-                          />
-                        </Space>
-                      ))}
-                      <Form.Item>
-                        <Button
-                          type="dashed"
-                          onClick={() => add()}
-                          block
-                          icon={<PlusOutlined />}
-                        >
-                          {t('employee.add_skill')}
-                        </Button>
-                      </Form.Item>
-                    </>
-                  )}
-                </Form.List>
-              </Form.Item>
               <Form.Item
-                label={t('employee.description_employee')}
-                name="description"
-                validateStatus={
-                  errors.description && touched.description ? 'error' : ''
-                }
-                help={
-                  errors.description &&
-                  touched.description &&
-                  errors.description
-                }
+                label={t('employee.is_manager')}
+                name="isManager"
+                className="text-input-form"
               >
-                <Input.TextArea
-                  rows={4}
-                  name="description"
+                <Checkbox
+                  name="isManager"
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  value={values.description}
-                />
+                  checked={values.isManager}
+                ></Checkbox>
               </Form.Item>
               <Form.Item label={t('employee.avatar')}>
                 <Upload
