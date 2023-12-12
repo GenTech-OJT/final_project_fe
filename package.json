@@ -17,6 +17,7 @@
   "dependencies": {
     "@ant-design/icons": "^5.2.6",
     "@reduxjs/toolkit": "^2.0.1",
+    "@tanstack/react-query": "^5.13.4",
     "antd": "^5.11.3",
     "axios": "^1.6.2",
     "echarts": "^5.4.3",
