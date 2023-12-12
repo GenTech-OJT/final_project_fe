@@ -2,16 +2,17 @@ import { Suspense, useEffect, useState } from 'react'
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  UploadOutlined,
   UserOutlined,
-  VideoCameraOutlined,
+  DashboardOutlined,
+  ProjectOutlined,
 } from '@ant-design/icons'
-import { Layout, Menu, Button, theme } from 'antd'
-import { Link, useNavigate } from 'react-router-dom'
+import { Layout, Menu, Button, theme, Select, Space } from 'antd'
+import { useNavigate } from 'react-router-dom'
 import Spinner from './admin/Spinner/Spinner'
 import BreadCrumb from './admin/Breadcrumb/Breadcrumb'
 import { useDispatch, useSelector } from 'react-redux'
 import { setSelectedKey } from '../redux/Slice/menuSlice'
+import { useTranslation } from 'react-i18next'
 
 const { Header, Sider, Content } = Layout
 
@@ -20,6 +21,11 @@ const AppLayout = ({ children }) => {
   const {
     token: { colorBgContainer },
   } = theme.useToken()
+
+  const { t, i18n } = useTranslation('translation')
+  const [selectedLanguage, setSelectedLanguage] = useState(
+    localStorage.getItem('selectedLanguage') || 'eng'
+  )
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -32,28 +38,17 @@ const AppLayout = ({ children }) => {
     }
   }, [dispatch])
 
-  const menuItems = [
-    {
-      key: '1',
-      icon: <UserOutlined />,
-      label: 'Dashboard',
-      to: '/admin/dashboard',
-    },
-    {
-      key: '2',
-      icon: <VideoCameraOutlined />,
-      label: 'Employees',
-      to: '/admin/employees',
-    },
-    {
-      key: '3',
-      icon: <UploadOutlined />,
-      label: 'Projects',
-      to: '/admin/projects',
-    },
-  ]
+  const changeLanguage = value => {
+    setSelectedLanguage(value)
+    i18n.changeLanguage(value)
+    // Save selected language to localStorage
+    localStorage.setItem('selectedLanguage', value)
+  }
 
-  console.log('selectedKey', selectedKey)
+  // Update language
+  useEffect(() => {
+    i18n.changeLanguage(selectedLanguage)
+  }, [selectedLanguage, i18n])
 
   return (
     <Layout style={{ height: '100vh' }}>
@@ -72,18 +67,18 @@ const AppLayout = ({ children }) => {
           items={[
             {
               key: '/admin/dashboard',
-              icon: <UserOutlined />,
-              label: 'Dashboard',
+              icon: <DashboardOutlined />,
+              label: t('side_menu.dashboard_label'),
             },
             {
               key: '/admin/employees',
-              icon: <VideoCameraOutlined />,
-              label: 'Employees',
+              icon: <UserOutlined />,
+              label: t('side_menu.employee_management_label'),
             },
             {
               key: '/admin/projects',
-              icon: <UploadOutlined />,
-              label: 'Projects',
+              icon: <ProjectOutlined />,
+              label: t('side_menu.project_management_label'),
             },
           ]}
         />
@@ -107,6 +102,25 @@ const AppLayout = ({ children }) => {
               height: 64,
             }}
           />
+          <Space wrap>
+            <Select
+              value={selectedLanguage}
+              style={{
+                width: 120,
+              }}
+              onChange={changeLanguage}
+              options={[
+                {
+                  value: 'eng',
+                  label: t('English'),
+                },
+                {
+                  value: 'vi',
+                  label: t('Tiếng Việt'),
+                },
+              ]}
+            />
+          </Space>
         </Header>
         <BreadCrumb />
         <Content
