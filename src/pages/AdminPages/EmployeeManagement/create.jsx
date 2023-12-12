@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Button,
   DatePicker,
@@ -17,11 +17,50 @@ import {
   PlusOutlined,
   UploadOutlined,
 } from '@ant-design/icons'
-import { Formik } from 'formik'
+import { Formik, useField, useFormikContext } from 'formik'
 import * as Yup from 'yup'
 import moment from 'moment'
 import './create.css'
 import { showToast } from '@components/Toast/toast'
+
+const SelectManager = () => {
+  const { setFieldValue, values } = useFormikContext()
+  const [managers, setManagers] = useState([])
+
+  useEffect(() => {
+    fetch('http://localhost:3000/employees')
+      .then(response => response.json())
+      .then(data => {
+        const managerNames = data.data.map(m => m.name)
+        setManagers(managerNames)
+      })
+      .catch(error => console.error('Error fetching data:', error))
+  }, [])
+
+  const [field, meta] = useField('manager')
+
+  return (
+    <Form.Item
+      label="Manager"
+      name="manager"
+      validateStatus={meta.error && meta.touched ? 'error' : ''}
+      help={meta.error && meta.touched && meta.error}
+    >
+      <Select
+        {...field}
+        onChange={value => setFieldValue('manager', value)}
+        onBlur={field.onBlur}
+        defaultValue={values.manager}
+      >
+        {managers.map(m => (
+          <Select.Option key={m} value={m}>
+            {m}
+          </Select.Option>
+        ))}
+      </Select>
+    </Form.Item>
+  )
+}
 
 const CreateEmployee = () => {
   const navigate = useNavigate()
@@ -68,7 +107,8 @@ const CreateEmployee = () => {
     code: Yup.string().required('Please input code'),
     phone: Yup.string()
       .required('Please input phone number')
-      .matches(/^[0-9-]{10,}$/, 'Please input a valid 10-digit phone number!'),
+      .min(9, 'Please input a valid 10-digit phone number!')
+      .max(10, 'Please input a valid 10-digit phone number!'),
     identity: Yup.string()
       .required('Please input the citizen identity card')
       .matches(
@@ -100,7 +140,7 @@ const CreateEmployee = () => {
       ...values,
       dob: moment(values.dob.$d).format('YYYY-MM-DD'),
     }
-    // console.log(formattedValues)
+    console.log(formattedValues)
     try {
       const formData = new FormData()
       if (avatar != null) {
@@ -117,13 +157,13 @@ const CreateEmployee = () => {
         console.log('Form Data: ', `${key}: ${value}`)
       })
 
-      fetch('https://final-project-be.onrender.com/employees', {
-        method: 'POST',
-        body: formData,
-      })
+      // fetch('https://final-project-be.onrender.com/employees', {
+      //   method: 'POST',
+      //   body: formData,
+      // })
 
       showToast('Employee created successfully!', 'success')
-      navigate('/employees')
+      // navigate('/employees')
     } catch (error) {
       showToast('Error creating employee. Please try again.', 'error')
     }
@@ -131,13 +171,6 @@ const CreateEmployee = () => {
 
   return (
     <>
-      <button
-        className="back-to-list-button"
-        onClick={() => navigate('/employees')}
-      >
-        <ArrowLeftOutlined style={{ marginRight: '5px', fontSize: '12px' }} />
-        Back
-      </button>
       <div className="create-container">
         <Formik
           initialValues={initialValues}
@@ -331,24 +364,7 @@ const CreateEmployee = () => {
                     </Select>
                   </Form.Item>
 
-                  <Form.Item
-                    label="Manager"
-                    name="manager"
-                    className="select-width-dobgs"
-                    validateStatus={
-                      errors.manager && touched.manager ? 'error' : ''
-                    }
-                    help={
-                      errors.manager && touched.manager ? errors.manager : ''
-                    }
-                  >
-                    <Input
-                      name="manager"
-                      value={values.manager}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                    />
-                  </Form.Item>
+                  <SelectManager />
                 </div>
               </div>
               <div className="input-container">
