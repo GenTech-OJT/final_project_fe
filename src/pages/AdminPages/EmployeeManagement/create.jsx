@@ -179,364 +179,358 @@ const CreateEmployee = () => {
   }
 
   return (
-    <>
-      <div className="create-container">
-        <Formik
-          initialValues={initialValues}
-          validationSchema={validationSchema}
-          onSubmit={handleFormSubmit}
-        >
-          {({
-            values,
-            errors,
-            touched,
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            setFieldValue,
-            validateField,
-            // isSubmitting,
-          }) => (
-            <Form
-              layout="vertical"
-              onFinish={handleSubmit}
-              initialValues={initialValues}
-            >
-              <div className="input-container">
-                <Form.Item
-                  label={t('employee.name_employee')}
-                  name="name"
-                  className="text-input-form"
-                  required
-                  validateStatus={errors.name && touched.name ? 'error' : ''}
-                  help={errors.name && touched.name ? errors.name : ''}
-                >
-                  <Input
-                    name="name"
-                    value={values.name}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                  />
-                </Form.Item>
-                <Form.Item
-                  label={t('employee.email_employee')}
-                  name="email"
-                  className="text-input-form"
-                  required
-                  validateStatus={errors.email && touched.email ? 'error' : ''}
-                  help={errors.email && touched.email ? errors.email : ''}
-                >
-                  <Input
-                    name="email"
-                    value={values.email}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                  />
-                </Form.Item>
-              </div>
-              <div className="input-container">
-                <Form.Item
-                  label={t('employee.code')}
-                  name="code"
-                  className="text-input-form"
-                  required
-                  validateStatus={errors.code && touched.code ? 'error' : ''}
-                  help={errors.code && touched.code ? errors.code : ''}
-                >
-                  <Input
-                    name="code"
-                    value={values.code}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                  />
-                </Form.Item>
-                <Form.Item
-                  label={t('employee.phone_number_employee')}
-                  name="phone"
-                  className="text-input-form"
-                  required
-                  validateStatus={errors.phone && touched.phone ? 'error' : ''}
-                  help={errors.phone && touched.phone ? errors.phone : ''}
-                >
-                  <Input
-                    name="phone"
-                    type="number"
-                    value={values.phone}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                  />
-                </Form.Item>
-              </div>
-              <div className="input-container">
-                <Form.Item
-                  label={t('employee.identity')}
-                  name="identity"
-                  className="text-input-form"
-                  required
-                  validateStatus={
-                    errors.identity && touched.identity ? 'error' : ''
-                  }
-                  help={
-                    errors.identity && touched.identity ? errors.identity : ''
-                  }
-                >
-                  <Input
-                    name="identity"
-                    value={values.identity}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                  />
-                </Form.Item>
-                <Form.Item
-                  label={t('employee.date_of_birth_employee')}
-                  name="dob"
-                  className="text-input-form"
-                  required
-                  validateStatus={errors.dob && touched.dob ? 'error' : ''}
-                  help={errors.dob && touched.dob ? errors.dob : ''}
-                >
-                  <DatePicker
-                    placement="bottomRight"
-                    name="dob"
-                    className="dob"
-                    onChange={value => setFieldValue('dob', value)}
-                    onBlur={handleBlur}
-                    value={values.dob}
-                  />
-                </Form.Item>
-              </div>
-              <div className="select-container-lg">
-                <div className="select-container">
-                  <Form.Item
-                    label={t('employee.gender_employee')}
-                    name="gender"
-                    className="select-width-dobgs"
-                    validateStatus={
-                      errors.gender && touched.gender ? 'error' : ''
-                    }
-                    help={errors.gender && touched.gender && errors.gender}
-                  >
-                    <Select
-                      name="gender"
-                      onChange={value => setFieldValue('gender', value)}
-                      onBlur={handleBlur}
-                      defaultValue={values.gender}
-                    >
-                      <Select.Option value="male">Male</Select.Option>
-                      <Select.Option value="female">Female</Select.Option>
-                    </Select>
-                  </Form.Item>
-                  <Form.Item
-                    label={t('employee.status_employee')}
-                    name="status"
-                    className="select-width-dobgs"
-                    validateStatus={
-                      errors.status && touched.status ? 'error' : ''
-                    }
-                    help={errors.status && touched.status && errors.status}
-                  >
-                    <Select
-                      name="status"
-                      onChange={value => setFieldValue('status', value)}
-                      onBlur={handleBlur}
-                      defaultValue={values.status}
-                    >
-                      <Select.Option value={true}>Active</Select.Option>
-                      <Select.Option value={false}>Inactive</Select.Option>
-                    </Select>
-                  </Form.Item>
-                </div>
-                <div className="select-container">
-                  <Form.Item
-                    label={t('employee.position_employee')}
-                    name="position"
-                    className="select-width-dobgs"
-                    validateStatus={
-                      errors.position && touched.position ? 'error' : ''
-                    }
-                    help={
-                      errors.position && touched.position && errors.position
-                    }
-                  >
-                    <Select
-                      name="position"
-                      onChange={value => setFieldValue('position', value)}
-                      onBlur={handleBlur}
-                      defaultValue={values.position}
-                    >
-                      <Select.Option value="Developer">Developer</Select.Option>
-                      <Select.Option value="Quality Assurance">
-                        Quality Assurance
-                      </Select.Option>
-                      <Select.Option value="CEO">CEO</Select.Option>
-                      <Select.Option value="President">President</Select.Option>
-                    </Select>
-                  </Form.Item>
-
-                  <SelectManager />
-                </div>
-              </div>
-              <div className="input-container">
-                <Form.Item
-                  label={t('employee.skill')}
-                  required
-                  className="text-input-form"
-                >
-                  <Form.List name="skills">
-                    {(fields, { add, remove }) => (
-                      <>
-                        {fields.map(({ key, name, ...restField }) => (
-                          <Space
-                            key={key}
-                            style={{
-                              display: 'flex',
-                              marginBottom: 8,
-                            }}
-                            align="baseline"
-                          >
-                            <Form.Item
-                              {...restField}
-                              name={[name, 'skill']}
-                              validateStatus={
-                                errors?.skills?.[name]?.skill &&
-                                touched?.skills?.[name]?.skill
-                                  ? 'error'
-                                  : ''
-                              }
-                              help={
-                                errors?.skills?.[name]?.skill &&
-                                touched?.skills?.[name]?.skill
-                                  ? errors.skills[name].skill
-                                  : ''
-                              }
-                            >
-                              <Input
-                                placeholder={t('employee.skill_placeholder')}
-                                onChange={e => {
-                                  setFieldValue(
-                                    `skills[${name}].skill`,
-                                    e.target.value
-                                  )
-                                  validateField(`skills[${name}].skill`)
-                                }}
-                              />
-                            </Form.Item>
-                            <Form.Item
-                              {...restField}
-                              name={[name, 'experience']}
-                              validateStatus={
-                                errors?.skills?.[name]?.experience &&
-                                touched?.skills?.[name]?.experience
-                                  ? 'error'
-                                  : ''
-                              }
-                              help={
-                                errors?.skills?.[name]?.experience &&
-                                touched?.skills?.[name]?.experience
-                                  ? errors.skills[name].experience
-                                  : ''
-                              }
-                            >
-                              <Input
-                                placeholder={t(
-                                  'employee.experience_placeholder'
-                                )}
-                                onChange={e => {
-                                  setFieldValue(
-                                    `skills[${name}].experience`,
-                                    e.target.value
-                                  )
-                                  validateField(`skills[${name}].experience`)
-                                }}
-                              />
-                            </Form.Item>
-                            <MinusCircleOutlined
-                              onClick={() => {
-                                if (fields.length > 1) {
-                                  const newSkills = values.skills.filter(
-                                    (_, index) => index !== name
-                                  )
-                                  setFieldValue('skills', newSkills)
-                                  remove(name, key)
-                                }
-                              }}
-                              disabled={fields.length === 1}
-                            />
-                          </Space>
-                        ))}
-                        <Form.Item>
-                          <Button
-                            type="dashed"
-                            onClick={() => add()}
-                            block
-                            icon={<PlusOutlined />}
-                          >
-                            {t('employee.add_skill')}
-                          </Button>
-                        </Form.Item>
-                      </>
-                    )}
-                  </Form.List>
-                </Form.Item>
-                <Form.Item
-                  label={t('employee.description_employee')}
-                  name="description"
-                  className="text-input-form"
-                  validateStatus={
-                    errors.description && touched.description ? 'error' : ''
-                  }
-                  help={
-                    errors.description &&
-                    touched.description &&
-                    errors.description
-                  }
-                >
-                  <Input.TextArea
-                    rows={4}
-                    name="description"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.description}
-                  />
-                </Form.Item>
-              </div>
+    <div className="create-container">
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={handleFormSubmit}
+      >
+        {({
+          values,
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          setFieldValue,
+          validateField,
+          // isSubmitting,
+        }) => (
+          <Form
+            layout="vertical"
+            onFinish={handleSubmit}
+            initialValues={initialValues}
+          >
+            <div className="input-container">
               <Form.Item
-                label={t('employee.is_manager')}
-                name="isManager"
+                label={t('employee.name_employee')}
+                name="name"
                 className="text-input-form"
+                required
+                validateStatus={errors.name && touched.name ? 'error' : ''}
+                help={errors.name && touched.name ? errors.name : ''}
               >
-                <Checkbox
-                  name="isManager"
+                <Input
+                  name="name"
+                  value={values.name}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  checked={values.isManager}
-                ></Checkbox>
+                />
               </Form.Item>
-              <Form.Item label={t('employee.avatar')}>
-                <Upload
-                  name="avatar"
-                  listType="picture"
-                  accept="image/*"
-                  maxCount={1}
-                  action="https://final-project-be.onrender.com/employees"
-                  beforeUpload={checkFile}
-                  onRemove={() => setAvatar(null)}
+              <Form.Item
+                label={t('employee.email_employee')}
+                name="email"
+                className="text-input-form"
+                required
+                validateStatus={errors.email && touched.email ? 'error' : ''}
+                help={errors.email && touched.email ? errors.email : ''}
+              >
+                <Input
+                  name="email"
+                  value={values.email}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+              </Form.Item>
+            </div>
+            <div className="input-container">
+              <Form.Item
+                label={t('employee.code')}
+                name="code"
+                className="text-input-form"
+                required
+                validateStatus={errors.code && touched.code ? 'error' : ''}
+                help={errors.code && touched.code ? errors.code : ''}
+              >
+                <Input
+                  name="code"
+                  value={values.code}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+              </Form.Item>
+              <Form.Item
+                label={t('employee.phone_number_employee')}
+                name="phone"
+                className="text-input-form"
+                required
+                validateStatus={errors.phone && touched.phone ? 'error' : ''}
+                help={errors.phone && touched.phone ? errors.phone : ''}
+              >
+                <Input
+                  name="phone"
+                  type="number"
+                  value={values.phone}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+              </Form.Item>
+            </div>
+            <div className="input-container">
+              <Form.Item
+                label={t('employee.identity')}
+                name="identity"
+                className="text-input-form"
+                required
+                validateStatus={
+                  errors.identity && touched.identity ? 'error' : ''
+                }
+                help={
+                  errors.identity && touched.identity ? errors.identity : ''
+                }
+              >
+                <Input
+                  name="identity"
+                  value={values.identity}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+              </Form.Item>
+              <Form.Item
+                label={t('employee.date_of_birth_employee')}
+                name="dob"
+                className="text-input-form"
+                required
+                validateStatus={errors.dob && touched.dob ? 'error' : ''}
+                help={errors.dob && touched.dob ? errors.dob : ''}
+              >
+                <DatePicker
+                  placement="bottomRight"
+                  name="dob"
+                  className="dob"
+                  onChange={value => setFieldValue('dob', value)}
+                  onBlur={handleBlur}
+                  value={values.dob}
+                />
+              </Form.Item>
+            </div>
+            <div className="select-container-lg">
+              <div className="select-container">
+                <Form.Item
+                  label={t('employee.gender_employee')}
+                  name="gender"
+                  className="select-width-dobgs"
+                  validateStatus={
+                    errors.gender && touched.gender ? 'error' : ''
+                  }
+                  help={errors.gender && touched.gender && errors.gender}
                 >
-                  <Button icon={<UploadOutlined />}>
-                    {t('employee.upload_avatar')}
-                  </Button>
-                </Upload>
+                  <Select
+                    name="gender"
+                    onChange={value => setFieldValue('gender', value)}
+                    onBlur={handleBlur}
+                    defaultValue={values.gender}
+                  >
+                    <Select.Option value="male">Male</Select.Option>
+                    <Select.Option value="female">Female</Select.Option>
+                  </Select>
+                </Form.Item>
+                <Form.Item
+                  label={t('employee.status_employee')}
+                  name="status"
+                  className="select-width-dobgs"
+                  validateStatus={
+                    errors.status && touched.status ? 'error' : ''
+                  }
+                  help={errors.status && touched.status && errors.status}
+                >
+                  <Select
+                    name="status"
+                    onChange={value => setFieldValue('status', value)}
+                    onBlur={handleBlur}
+                    defaultValue={values.status}
+                  >
+                    <Select.Option value={true}>Active</Select.Option>
+                    <Select.Option value={false}>Inactive</Select.Option>
+                  </Select>
+                </Form.Item>
+              </div>
+              <div className="select-container">
+                <Form.Item
+                  label={t('employee.position_employee')}
+                  name="position"
+                  className="select-width-dobgs"
+                  validateStatus={
+                    errors.position && touched.position ? 'error' : ''
+                  }
+                  help={errors.position && touched.position && errors.position}
+                >
+                  <Select
+                    name="position"
+                    onChange={value => setFieldValue('position', value)}
+                    onBlur={handleBlur}
+                    defaultValue={values.position}
+                  >
+                    <Select.Option value="Developer">Developer</Select.Option>
+                    <Select.Option value="Quality Assurance">
+                      Quality Assurance
+                    </Select.Option>
+                    <Select.Option value="CEO">CEO</Select.Option>
+                    <Select.Option value="President">President</Select.Option>
+                  </Select>
+                </Form.Item>
+
+                <SelectManager />
+              </div>
+            </div>
+            <div className="input-container">
+              <Form.Item
+                label={t('employee.skill')}
+                required
+                className="text-input-form"
+              >
+                <Form.List name="skills">
+                  {(fields, { add, remove }) => (
+                    <>
+                      {fields.map(({ key, name, ...restField }) => (
+                        <Space
+                          key={key}
+                          style={{
+                            display: 'flex',
+                            marginBottom: 8,
+                          }}
+                          align="baseline"
+                        >
+                          <Form.Item
+                            {...restField}
+                            name={[name, 'skill']}
+                            validateStatus={
+                              errors?.skills?.[name]?.skill &&
+                              touched?.skills?.[name]?.skill
+                                ? 'error'
+                                : ''
+                            }
+                            help={
+                              errors?.skills?.[name]?.skill &&
+                              touched?.skills?.[name]?.skill
+                                ? errors.skills[name].skill
+                                : ''
+                            }
+                          >
+                            <Input
+                              placeholder={t('employee.skill_placeholder')}
+                              onChange={e => {
+                                setFieldValue(
+                                  `skills[${name}].skill`,
+                                  e.target.value
+                                )
+                                validateField(`skills[${name}].skill`)
+                              }}
+                            />
+                          </Form.Item>
+                          <Form.Item
+                            {...restField}
+                            name={[name, 'experience']}
+                            validateStatus={
+                              errors?.skills?.[name]?.experience &&
+                              touched?.skills?.[name]?.experience
+                                ? 'error'
+                                : ''
+                            }
+                            help={
+                              errors?.skills?.[name]?.experience &&
+                              touched?.skills?.[name]?.experience
+                                ? errors.skills[name].experience
+                                : ''
+                            }
+                          >
+                            <Input
+                              placeholder={t('employee.experience_placeholder')}
+                              onChange={e => {
+                                setFieldValue(
+                                  `skills[${name}].experience`,
+                                  e.target.value
+                                )
+                                validateField(`skills[${name}].experience`)
+                              }}
+                            />
+                          </Form.Item>
+                          <MinusCircleOutlined
+                            onClick={() => {
+                              if (fields.length > 1) {
+                                const newSkills = values.skills.filter(
+                                  (_, index) => index !== name
+                                )
+                                setFieldValue('skills', newSkills)
+                                remove(name, key)
+                              }
+                            }}
+                            disabled={fields.length === 1}
+                          />
+                        </Space>
+                      ))}
+                      <Form.Item>
+                        <Button
+                          type="dashed"
+                          onClick={() => add()}
+                          block
+                          icon={<PlusOutlined />}
+                        >
+                          {t('employee.add_skill')}
+                        </Button>
+                      </Form.Item>
+                    </>
+                  )}
+                </Form.List>
               </Form.Item>
-              <Form.Item>
-                <Button type="primary" htmlType="submit">
-                  {t('button_input.create')}
+              <Form.Item
+                label={t('employee.description_employee')}
+                name="description"
+                className="text-input-form"
+                validateStatus={
+                  errors.description && touched.description ? 'error' : ''
+                }
+                help={
+                  errors.description &&
+                  touched.description &&
+                  errors.description
+                }
+              >
+                <Input.TextArea
+                  rows={4}
+                  name="description"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.description}
+                />
+              </Form.Item>
+            </div>
+            <Form.Item
+              label={t('employee.is_manager')}
+              name="isManager"
+              className="text-input-form"
+            >
+              <Checkbox
+                name="isManager"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                checked={values.isManager}
+              ></Checkbox>
+            </Form.Item>
+            <Form.Item label={t('employee.avatar')}>
+              <Upload
+                name="avatar"
+                listType="picture"
+                accept="image/*"
+                maxCount={1}
+                action="https://final-project-be.onrender.com/employees"
+                beforeUpload={checkFile}
+                onRemove={() => setAvatar(null)}
+              >
+                <Button icon={<UploadOutlined />}>
+                  {t('employee.upload_avatar')}
                 </Button>
-              </Form.Item>
-            </Form>
-          )}
-        </Formik>
-      </div>
-    </>
+              </Upload>
+            </Form.Item>
+            <Form.Item>
+              <Button type="primary" htmlType="submit">
+                {t('button_input.create')}
+              </Button>
+            </Form.Item>
+          </Form>
+        )}
+      </Formik>
+    </div>
   )
 }
 
