@@ -6,9 +6,11 @@ import {
 } from '@ant-design/icons'
 import {
   Button,
+  Col,
   DatePicker,
   Form,
   Input,
+  Row,
   Select,
   Space,
   Typography,
@@ -494,31 +496,43 @@ const EditEmployee = () => {
                 {t('employee.avatar')}
               </p>
               {empData?.avatar && (
-                <>
-                  <img
-                    src={empData?.avatar || ''} // Đặt đường dẫn hình ảnh của avatar vào đây
-                    alt="Avatar"
-                    style={{
-                      width: '100px',
-                      height: '100px',
-                      objectFit: 'cover',
-                      borderRadius: '50%',
-                    }}
-                  />
-                  <Upload
-                    name="avatar"
-                    listType="picture"
-                    accept="image/*"
-                    maxCount={1}
-                    action="http://localhost:3000/employees"
-                    beforeUpload={checkFile}
-                    onRemove={() => setAvatar(null)}
-                  >
-                    <Button icon={<UploadOutlined />}>
-                      {t('employee.upload_avatar')}
-                    </Button>
-                  </Upload>
-                </>
+                <Row
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '20px',
+                  }}
+                >
+                  {' '}
+                  {/* Sử dụng gutter để tạo khoảng cách giữa các cột */}
+                  <Col>
+                    <img
+                      src={empData?.avatar || ''}
+                      alt="Avatar"
+                      style={{
+                        width: '100px',
+                        height: '100px',
+                        objectFit: 'cover',
+                        borderRadius: '50%',
+                      }}
+                    />
+                  </Col>
+                  <Col span={16}>
+                    <Upload
+                      name="avatar"
+                      listType="picture"
+                      accept="image/*"
+                      maxCount={1}
+                      action="http://localhost:3000/employees"
+                      beforeUpload={checkFile}
+                      onRemove={() => setAvatar(null)}
+                    >
+                      <Button icon={<UploadOutlined />}>
+                        {t('employee.upload_avatar')}
+                      </Button>
+                    </Upload>
+                  </Col>
+                </Row>
               )}
             </Form.Item>
 
