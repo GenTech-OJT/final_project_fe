@@ -297,6 +297,7 @@ const EditEmployee = () => {
               >
                 <Input
                   value={empData?.identity || ''}
+                  disabled={true}
                   onChange={e => {
                     form.setFieldsValue({ identity: e.target.value }) // Cập nhật giá trị trường input trong form
                     setEmpData({ ...empData, identity: e.target.value }) // Cập nhật state 'empdata'
@@ -440,7 +441,7 @@ const EditEmployee = () => {
                               message: t('validate.skill_experience_validate'),
                             },
                             {
-                              pattern: /^[0-9]*$/,
+                              pattern: /^\d*$/,
                               message: t('validate.skill_experience_validate2'),
                             },
                           ]}
