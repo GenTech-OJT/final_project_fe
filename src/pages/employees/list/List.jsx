@@ -286,6 +286,7 @@ const EmployeeList = () => {
             onChange: handlePaginationChange,
           }}
           locale={locale}
+          loading={isLoading}
         ></CustomTable>
       </div>
     </div>
