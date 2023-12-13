@@ -1,7 +1,6 @@
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useMutation } from '@tanstack/react-query'
 import { QUERY_KEY } from '@constants/reactQuery'
 import { getEmployeesApi, createEmployeeApi } from '@api/employeeApi'
-import { useMutation } from '@tanstack/react-query'
 
 // export const useGetEmployees = params => {
 //   return useQuery(['toan', params], async () => {

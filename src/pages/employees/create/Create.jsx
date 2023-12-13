@@ -9,6 +9,8 @@ import {
   message,
   Upload,
   Checkbox,
+  Col,
+  Row,
 } from 'antd'
 import {
   MinusCircleOutlined,
@@ -20,7 +22,6 @@ import * as Yup from 'yup'
 import moment from 'moment'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
-import { Col, Row } from 'antd'
 import { useGetEmployees, useCreateEmployee } from '@hooks/useEmployee'
 import './create.css'
 import { showToast } from '@components/toast/ToastCustom'
@@ -70,13 +71,13 @@ const SelectManager = () => {
 const CreateEmployee = () => {
   const {
     mutate: createEmployeeApi,
-    isLoading,
-    isError,
-    error,
+    // isLoading,
+    // isError,
+    // error,
   } = useCreateEmployee()
   const { t } = useTranslation('translation')
   const [avatar, setAvatar] = useState(null)
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
 
   // const [form] = Form.useForm()
 
