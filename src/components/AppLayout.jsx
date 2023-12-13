@@ -51,7 +51,7 @@ const AppLayout = ({ children }) => {
   }, [selectedLanguage, i18n])
 
   return (
-    <Layout style={{ height: '100vh' }}>
+    <Layout style={{ minHeight: '100vh' }}>
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className="demo-logo-vertical" />
         <Menu
