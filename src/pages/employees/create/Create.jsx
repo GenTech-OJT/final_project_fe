@@ -24,8 +24,7 @@ import { useTranslation } from 'react-i18next'
 // import { useNavigate } from 'react-router'
 import { showToast } from '@components/toast/ToastCustom'
 import { useGetEmployees, useCreateEmployee } from '@hooks/useEmployee'
-import './create.css'
-
+import './Create.css'
 const SelectManager = () => {
   const { data } = useGetEmployees({
     pageSize: undefined,
