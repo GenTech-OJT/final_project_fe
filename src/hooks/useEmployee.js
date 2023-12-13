@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { QUERY_KEY } from '@constants/reactQuery'
-import { getEmployeesApi } from '@api/employeeApi'
+import { getEmployeesApi, createEmployeeApi } from '@api/employeeApi'
+import { useMutation } from '@tanstack/react-query'
 
 // export const useGetEmployees = params => {
 //   return useQuery(['toan', params], async () => {
@@ -13,6 +14,15 @@ export const useGetEmployees = params => {
   return useQuery({
     queryKey: [QUERY_KEY.EMPLOYEES, params],
     queryFn: () => getEmployeesApi(params),
+  })
+}
+
+export const useCreateEmployee = () => {
+  return useMutation({
+    mutationFn: data => createEmployeeApi(data),
+    onSuccess: (data, variables, context) => {},
+    onError: (error, variables, context) => {},
+    onSettled: (data, error, variables, context) => {},
   })
 }
 
