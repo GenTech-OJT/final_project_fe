@@ -187,8 +187,11 @@ const EditEmployee = () => {
                   },
                   {
                     min: 3,
+                    message: t('validate.name_validate_min'),
+                  },
+                  {
                     max: 40,
-                    message: t('validate.name_validate_min_max'),
+                    message: t('validate.name_validate_max'),
                   },
                 ]}
               >
@@ -235,7 +238,11 @@ const EditEmployee = () => {
             </div>
             <div className="input-container">
               <Form.Item
-                label={<span style={{ fontWeight: 'bold' }}>Code</span>}
+                label={
+                  <span style={{ fontWeight: 'bold' }}>
+                    {t('employee.code')}
+                  </span>
+                }
                 name="code"
                 className="text-input-form"
               >
@@ -289,11 +296,11 @@ const EditEmployee = () => {
                 rules={[
                   {
                     required: true,
-                    message: t('validate.card_validate'),
+                    message: t('validate.card_require'),
                   },
                   {
                     pattern: /^[a-zA-Z0-9]{1,20}$/,
-                    message: t('validate.card_validate2'),
+                    message: t('validate.card_validate'),
                   },
                 ]}
               >
@@ -424,11 +431,11 @@ const EditEmployee = () => {
                           rules={[
                             {
                               required: true,
-                              message: t('validate.skill_name_validate'),
+                              message: t('validate.skills_require'),
                             },
                             {
                               pattern: /^[a-zA-Z\s]*$/,
-                              message: t('validate.skill_name_validate2'),
+                              message: t('validate.skills_validate'),
                             },
                           ]}
                         >
@@ -440,11 +447,11 @@ const EditEmployee = () => {
                           rules={[
                             {
                               required: true,
-                              message: t('validate.skill_experience_validate'),
+                              message: t('validate.experience_require'),
                             },
                             {
                               pattern: /^\d*$/,
-                              message: t('validate.skill_experience_validate2'),
+                              message: t('validate.experience_validate'),
                             },
                           ]}
                         >
