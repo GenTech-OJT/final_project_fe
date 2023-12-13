@@ -1,13 +1,11 @@
 /* eslint-disable no-undef */
 import {
-  ArrowLeftOutlined,
   MinusCircleOutlined,
   PlusOutlined,
   UploadOutlined,
 } from '@ant-design/icons'
 import {
   Button,
-  Card,
   DatePicker,
   Form,
   Input,
@@ -21,33 +19,22 @@ import moment from 'moment'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 import './Edit.css'
+import { useTranslation } from 'react-i18next'
 const { Title, Text } = Typography
 
-const EmployeeEdit = () => {
+const EditEmployee = () => {
   const navigate = useNavigate()
+  const { t } = useTranslation('translation')
   const [form] = Form.useForm()
   const { id } = useParams()
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [empData, setEmpData] = useState([])
   const [avatar, setAvatar] = useState(null)
-  const [formLayout, setFormLayout] = useState('horizontal')
   // const [avatar, setAvatar] = useState(null)
   // const [form] = Form.useForm()
 
   useEffect(() => {
-    const handleResize = () => {
-      setFormLayout(window.innerWidth < 700 ? 'vertical' : 'horizontal')
-    }
-
-    handleResize()
-    window.addEventListener('resize', handleResize)
-
-    return () => {
-      window.removeEventListener('resize', handleResize)
-    }
-  }, [])
-  useEffect(() => {
-    fetch('https://final-project-be.onrender.com/employees/' + id)
+    fetch('http://localhost:3000/employees/' + id)
       .then(res => {
         return res.json()
       })
@@ -55,6 +42,7 @@ const EmployeeEdit = () => {
         setEmpData(res)
         form.setFieldsValue({
           name: res.name,
+          email: res.email,
           code: res.code,
           phone: res.phone,
           identity: res.identity,
@@ -82,6 +70,7 @@ const EmployeeEdit = () => {
         ...empData,
         ...values,
         name: values.name,
+        email: values.email,
         code: values.code,
         phone: values.phone,
         identity: values.identity,
@@ -104,7 +93,7 @@ const EmployeeEdit = () => {
       }
 
       // Gửi request PUT lên server
-      fetch(`https://final-project-be.onrender.com/employees/${id}`, {
+      fetch(`http://localhost:3000/employees/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -127,276 +116,464 @@ const EmployeeEdit = () => {
         })
     })
   }
+  const SelectManager = () => {
+    const [managers, setManagers] = useState([])
+    const [selectedManager, setSelectedManager] = useState('')
+    const { t } = useTranslation('translation')
 
+    useEffect(() => {
+      fetch('http://localhost:3000/employees')
+        .then(response => response.json())
+        .then(data => {
+          const managerNames = data.data.map(m => m.name)
+          setManagers(managerNames)
+        })
+        .catch(error => {
+          // console.error('Error fetching data:', error)
+        })
+    }, [])
+
+    const handleManagerChange = value => {
+      setSelectedManager(value)
+    }
+
+    return (
+      <Form.Item
+        label={
+          <span style={{ fontWeight: 'bold' }}>{t('employee.manager')}</span>
+        }
+        name="manager"
+        className="select-width-dobgs"
+        rules={[
+          {
+            required: true,
+            message: 'Please select the employee manager !',
+          },
+        ]}
+      >
+        <Select value={selectedManager} onChange={handleManagerChange}>
+          {managers.map(m => (
+            <Select.Option key={m} value={m}>
+              {m}
+            </Select.Option>
+          ))}
+        </Select>
+      </Form.Item>
+    )
+  }
   const checkFile = file => {
     const isImage = file.type.startsWith('image/')
 
     if (!isImage) {
       message.error('You can only upload image files!')
+      setAvatar(null) // Reset avatar to null if the uploaded file is not an image
+      return false
     } else {
+      if (!file.originFileObj) {
+        message.error('Something went wrong with file upload!')
+        return false
+      }
       setAvatar(file)
+      return true
     }
-
-    return false
   }
+
   return (
     <>
-      <h2>Edit Employee</h2>
       {empData && (
-        <Form
-          labelCol={{
-            span: formLayout === 'vertical' ? 24 : 6,
-          }}
-          wrapperCol={{
-            span: formLayout === 'vertical' ? 24 : 18,
-          }}
-          labelAlign="left"
-          style={{
-            maxWidth: 600,
-          }}
-          form={form}
-          layout={formLayout}
-          onFinish={handleFormSubmit}
-          initialValues={{
-            name: empData.name,
-            code: empData.code,
-            phone: empData.phone,
-            identity: empData.identity,
-            dob: moment(empData.dob, 'YYYY-MM-DD'),
-            gender: empData.gender,
-            status: empData.status,
-            is_manager: empData.is_manager,
-            position: empData.position,
-            skills: empData?.skills?.map(skill => ({
-              skill: skill.name,
-              experience: skill.year,
-            })),
-            avatar: empData?.avatar,
-            manager: empData?.manager,
-            description: empData?.description,
+        <div className="create-container">
+          <Form
+            layout="vertical"
+            form={form}
+            onFinish={handleFormSubmit}
+            initialValues={{
+              name: empData.name,
+              email: empData.email,
+              code: empData.code,
+              phone: empData.phone,
+              identity: empData.identity,
+              dob: moment(empData.dob, 'YYYY-MM-DD'),
+              gender: empData.gender,
+              status: empData.status,
+              is_manager: empData.is_manager,
+              position: empData.position,
+              skills: empData?.skills?.map(skill => ({
+                skill: skill.name,
+                experience: skill.year,
+              })),
+              avatar: empData?.avatar,
+              manager: empData?.manager,
+              description: empData?.description,
 
-            // ... set other fields similarly
-          }}
-        >
-          <Form.Item
-            label="Name"
-            name="name"
-            rules={[
-              {
-                required: true,
-                message: 'Please input the employee name !',
-              },
-              {
-                pattern: /^[a-z ,.'-]+$/i,
-                message: 'Please enter a valid name!',
-              },
-              {
-                min: 3,
-                max: 40,
-                message: 'Name must be between 3 and 40 characters',
-              },
-            ]}
+              // ... set other fields similarly
+            }}
           >
-            <Input
-              value={empData?.name || ''}
-              onChange={e => {
-                form.setFieldsValue({ name: e.target.value }) // Cập nhật giá trị trường input trong form
-                setEmpData({ ...empData, name: e.target.value }) // Cập nhật state 'empdata'
-              }}
-            />{' '}
-          </Form.Item>
-          <Form.Item label="Code" name="code">
-            <Input
-              value={empData?.code || ''}
-              onChange={e => {
-                form.setFieldsValue({ code: e.target.value }) // Cập nhật giá trị trường input trong form
-                setEmpData({ ...empData, code: e.target.value }) // Cập nhật state 'empdata'
-              }}
-            />{' '}
-          </Form.Item>
-          <Form.Item
-            label="Phone"
-            name="phone"
-            rules={[
-              {
-                required: true,
-                message: 'Please input your phone number!',
-              },
-              {
-                pattern: /^[0-9-]{10,}$/,
-                message: 'Please enter a valid 10-digit phone number!',
-              },
-            ]}
-          >
-            <Input
-              value={empData?.phone || ''}
-              onChange={e => {
-                form.setFieldsValue({ phone: e.target.value }) // Cập nhật giá trị trường input trong form
-                setEmpData({ ...empData, phone: e.target.value }) // Cập nhật state 'empdata'
-              }}
-            />{' '}
-          </Form.Item>
-          <Form.Item
-            label="Citizen Identity Card"
-            name="identity"
-            rules={[
-              {
-                required: true,
-                message: 'Please input your Citizen Identity Card!',
-              },
-              {
-                pattern: /^[a-zA-Z0-9]{1,20}$/,
-                message: 'Please enter a valid Citizen Identity Card!',
-              },
-            ]}
-          >
-            <Input
-              value={empData?.identity || ''}
-              onChange={e => {
-                form.setFieldsValue({ identity: e.target.value }) // Cập nhật giá trị trường input trong form
-                setEmpData({ ...empData, identity: e.target.value }) // Cập nhật state 'empdata'
-              }}
-            />{' '}
-          </Form.Item>
-          <Form.Item
-            label="Date of Birth"
-            name="dob"
-            rules={[
-              {
-                required: true,
-                message: 'Please select your Date of Birth!',
-              },
-            ]}
-          >
-            <DatePicker placement="bottomRight" style={{ width: '100%' }} />
-          </Form.Item>
-          <Form.Item label="Gender" name="gender">
-            <Select>
-              <Select.Option value="male">Male</Select.Option>
-              <Select.Option value="female">Female</Select.Option>
-            </Select>
-          </Form.Item>
-          <Form.Item label="Status" name="status">
-            <Select>
-              <Select.Option value={true}>Active</Select.Option>
-              <Select.Option value={false}>Inactive</Select.Option>
-            </Select>
-          </Form.Item>
-          <Form.Item label="is Manager?" name="is_manager">
-            <Select>
-              <Select.Option value={true}>Yes</Select.Option>
-              <Select.Option value={false}>No</Select.Option>
-            </Select>
-          </Form.Item>
-          <Form.Item label="Position" name="position">
-            <Select>
-              <Select.Option value="Developer">Developer</Select.Option>
-              <Select.Option value="Quality Assurance">Tester</Select.Option>
-              <Select.Option value="CEO">CEO</Select.Option>
-              <Select.Option value="President">President</Select.Option>
-            </Select>
-          </Form.Item>
+            <div className="input-container">
+              <Form.Item
+                label={
+                  <span style={{ fontWeight: 'bold' }}>
+                    {t('employee.name_employee')}
+                  </span>
+                }
+                name="name"
+                className="text-input-form"
+                rules={[
+                  {
+                    required: true,
+                    message: t('validate.name_require'),
+                  },
+                  {
+                    pattern: /^[a-z ,.'-]+$/i,
+                    message: t('validate.name_validate'),
+                  },
+                  {
+                    min: 3,
+                    max: 40,
+                    message: t('validate.name_validate_min_max'),
+                  },
+                ]}
+              >
+                <Input
+                  value={empData?.name || ''}
+                  onChange={e => {
+                    form.setFieldsValue({ name: e.target.value }) // Cập nhật giá trị trường input trong form
+                    setEmpData({ ...empData, name: e.target.value }) // Cập nhật state 'empdata'
+                  }}
+                />{' '}
+              </Form.Item>
+              <Form.Item
+                label={
+                  <span style={{ fontWeight: 'bold' }}>
+                    {t('employee.email_employee')}
+                  </span>
+                }
+                name="email"
+                rules={[
+                  {
+                    required: true,
+                    message: t('validate.email_validate'),
+                  },
+                  {
+                    pattern: '^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$',
+                    message: t('validate.email_invalid'),
+                  },
+                  {
+                    min: 3,
+                    max: 40,
+                    message: 'Email must be between 3 and 40 characters',
+                  },
+                ]}
+                className="text-input-form"
+              >
+                <Input
+                  value={empData?.email || ''}
+                  onChange={e => {
+                    form.setFieldsValue({ email: e.target.value }) // Cập nhật giá trị trường input trong form
+                    setEmpData({ ...empData, email: e.target.value }) // Cập nhật state 'empdata'
+                  }}
+                />{' '}
+              </Form.Item>
+            </div>
+            <div className="input-container">
+              <Form.Item
+                label={<span style={{ fontWeight: 'bold' }}>Code</span>}
+                name="code"
+                className="text-input-form"
+              >
+                <Input
+                  value={empData?.code || ''}
+                  disabled={true}
+                  onChange={e => {
+                    form.setFieldsValue({ code: e.target.value }) // Cập nhật giá trị trường input trong form
+                    setEmpData({ ...empData, code: e.target.value }) // Cập nhật state 'empdata'
+                  }}
+                />{' '}
+              </Form.Item>
 
-          <Form.Item label="Manager" name="manager">
-            <Input
-              value={empData?.manager || ''}
-              onChange={e => {
-                form.setFieldsValue({ manager: e.target.value }) // Cập nhật giá trị trường input trong form
-                setEmpData({ ...empData, manager: e.target.value }) // Cập nhật state 'empdata'
-              }}
-            />
-          </Form.Item>
-          <Form.Item label="Skills">
-            <Form.List name="skills">
-              {(fields, { add, remove }) => (
-                <>
-                  {fields.map(({ key, name, ...restField }) => (
-                    <Space
-                      key={key}
-                      style={{
-                        display: 'flex',
-                        marginBottom: 8,
-                      }}
-                      align="baseline"
-                    >
-                      <Form.Item {...restField} name={[name, 'skill']}>
-                        <Input placeholder="Skill" />
-                      </Form.Item>
-                      <Form.Item {...restField} name={[name, 'experience']}>
-                        <Input placeholder="Experience (Years)" />
-                      </Form.Item>
-                      <MinusCircleOutlined
-                        onClick={() => {
-                          if (fields.length > 1) {
-                            remove(name)
-                          }
+              <Form.Item
+                label={
+                  <span style={{ fontWeight: 'bold' }}>
+                    {t('employee.phone_number_employee')}
+                  </span>
+                }
+                name="phone"
+                className="text-input-form"
+                rules={[
+                  {
+                    required: true,
+                    message: t('validate.phone_validate'),
+                  },
+                  {
+                    pattern: /^[0-9-]{10,}$/,
+                    message: t('validate.phone_valid'),
+                  },
+                ]}
+              >
+                <Input
+                  value={empData?.phone || ''}
+                  onChange={e => {
+                    form.setFieldsValue({ phone: e.target.value }) // Cập nhật giá trị trường input trong form
+                    setEmpData({ ...empData, phone: e.target.value }) // Cập nhật state 'empdata'
+                  }}
+                />{' '}
+              </Form.Item>
+            </div>
+            <div className="input-container">
+              <Form.Item
+                label={
+                  <span style={{ fontWeight: 'bold' }}>
+                    {t('employee.identity')}
+                  </span>
+                }
+                name="identity"
+                className="text-input-form"
+                rules={[
+                  {
+                    required: true,
+                    message: t('validate.card_validate'),
+                  },
+                  {
+                    pattern: /^[a-zA-Z0-9]{1,20}$/,
+                    message: t('validate.card_validate2'),
+                  },
+                ]}
+              >
+                <Input
+                  value={empData?.identity || ''}
+                  onChange={e => {
+                    form.setFieldsValue({ identity: e.target.value }) // Cập nhật giá trị trường input trong form
+                    setEmpData({ ...empData, identity: e.target.value }) // Cập nhật state 'empdata'
+                  }}
+                />{' '}
+              </Form.Item>
+              <Form.Item
+                label={
+                  <span style={{ fontWeight: 'bold' }}>
+                    {t('employee.date_of_birth_employee')}
+                  </span>
+                }
+                className="text-input-form"
+                name="dob"
+                rules={[
+                  {
+                    required: true,
+                    message: t('employee.dob_validate'),
+                  },
+                ]}
+              >
+                <DatePicker
+                  placement="bottomRight"
+                  style={{ width: '100%' }}
+                  disabledDate={current => current.isAfter(moment())} // Disable future dates
+                />
+              </Form.Item>
+            </div>
+            <div className="select-container-lg">
+              <div className="select-container">
+                <Form.Item
+                  label={
+                    <span style={{ fontWeight: 'bold' }}>
+                      {t('employee.gender_employee')}
+                    </span>
+                  }
+                  name="gender"
+                  className="select-width-dobgs"
+                >
+                  <Select>
+                    <Select.Option value="male">Male</Select.Option>
+                    <Select.Option value="female">Female</Select.Option>
+                  </Select>
+                </Form.Item>
+                <Form.Item
+                  className="select-width-dobgs"
+                  label={
+                    <span style={{ fontWeight: 'bold' }}>
+                      {t('employee.status_employee')}
+                    </span>
+                  }
+                  name="status"
+                >
+                  <Select>
+                    <Select.Option value={true}>Active</Select.Option>
+                    <Select.Option value={false}>Inactive</Select.Option>
+                  </Select>
+                </Form.Item>
+              </div>
+              <div className="select-container">
+                <Form.Item
+                  label={
+                    <span style={{ fontWeight: 'bold' }}>
+                      {t('employee.position_employee')}
+                    </span>
+                  }
+                  name="position"
+                  className="select-width-dobgs"
+                >
+                  <Select>
+                    <Select.Option value="Developer">Developer</Select.Option>
+                    <Select.Option value="Quality Assurance">
+                      Tester
+                    </Select.Option>
+                    <Select.Option value="CEO">CEO</Select.Option>
+                    <Select.Option value="President">President</Select.Option>
+                  </Select>
+                </Form.Item>
+
+                <SelectManager />
+              </div>
+            </div>
+            <div className="input-container">
+              <Form.Item
+                label={
+                  <span style={{ fontWeight: 'bold' }}>
+                    {t('employee.is_manager')}
+                  </span>
+                }
+                name="is_manager"
+                className="text-input-form"
+              >
+                <Select>
+                  <Select.Option value={true}>Yes</Select.Option>
+                  <Select.Option value={false}>No</Select.Option>
+                </Select>
+              </Form.Item>
+            </div>
+
+            <Form.Item
+              label={
+                <span style={{ fontWeight: 'bold' }}>
+                  {t('employee.skill')}
+                </span>
+              }
+            >
+              <Form.List name="skills">
+                {(fields, { add, remove }) => (
+                  <>
+                    {fields.map(({ key, name, ...restField }) => (
+                      <Space
+                        key={key}
+                        style={{
+                          display: 'flex',
+                          marginBottom: 8,
                         }}
-                        disabled={fields.length === 1}
-                      />
-                    </Space>
-                  ))}
-                  <Form.Item>
-                    <Button
-                      type="dashed"
-                      onClick={() => add()}
-                      block
-                      icon={<PlusOutlined />}
-                    >
-                      Add Skill
+                        align="baseline"
+                      >
+                        <Form.Item
+                          {...restField}
+                          name={[name, 'skill']}
+                          rules={[
+                            {
+                              required: true,
+                              message: t('validate.skill_name_validate'),
+                            },
+                            {
+                              pattern: /^[a-zA-Z\s]*$/,
+                              message: t('validate.skill_name_validate2'),
+                            },
+                          ]}
+                        >
+                          <Input placeholder="Skill" />
+                        </Form.Item>
+                        <Form.Item
+                          {...restField}
+                          name={[name, 'experience']}
+                          rules={[
+                            {
+                              required: true,
+                              message: t('validate.skill_experience_validate'),
+                            },
+                            {
+                              pattern: /^[0-9]*$/,
+                              message: t('validate.skill_experience_validate2'),
+                            },
+                          ]}
+                        >
+                          <Input placeholder="Experience (Years)" />
+                        </Form.Item>
+                        <MinusCircleOutlined
+                          onClick={() => {
+                            if (fields.length > 1) {
+                              remove(name)
+                            }
+                          }}
+                          disabled={fields.length === 1}
+                        />
+                      </Space>
+                    ))}
+                    <Form.Item>
+                      <Button
+                        type="dashed"
+                        onClick={() => add()}
+                        block
+                        icon={<PlusOutlined />}
+                      >
+                        {t('employee.add_skill')}
+                      </Button>
+                    </Form.Item>
+                  </>
+                )}
+              </Form.List>
+            </Form.Item>
+            <Form.Item
+              label={
+                <span style={{ fontWeight: 'bold' }}>
+                  {t('employee.description_employee')}
+                </span>
+              }
+              name="description"
+            >
+              <Input.TextArea
+                rows={4}
+                value={empData?.description || ''}
+                onChange={e => {
+                  form.setFieldsValue({ description: e.target.value }) // Cập nhật giá trị trường input trong form
+                  setEmpData({ ...empData, description: e.target.value }) // Cập nhật state 'empdata'
+                }}
+              />{' '}
+            </Form.Item>
+            <Form.Item name="avatar">
+              <p style={{ marginBottom: '8px', fontWeight: 'bold' }}>
+                {t('employee.avatar')}
+              </p>
+              {empData?.avatar && (
+                <>
+                  <img
+                    src={empData?.avatar || ''} // Đặt đường dẫn hình ảnh của avatar vào đây
+                    alt="Avatar"
+                    style={{
+                      width: '100px',
+                      height: '100px',
+                      objectFit: 'cover',
+                      borderRadius: '50%',
+                    }}
+                  />
+                  <Upload
+                    name="avatar"
+                    listType="picture"
+                    accept="image/*"
+                    maxCount={1}
+                    action="http://localhost:3000/employees"
+                    beforeUpload={checkFile}
+                    onRemove={() => setAvatar(null)}
+                  >
+                    <Button icon={<UploadOutlined />}>
+                      {t('employee.upload_avatar')}
                     </Button>
-                  </Form.Item>
+                  </Upload>
                 </>
               )}
-            </Form.List>
-          </Form.Item>
-          <Form.Item label="Description" name="description">
-            <Input.TextArea
-              rows={4}
-              value={empData?.description || ''}
-              onChange={e => {
-                form.setFieldsValue({ description: e.target.value }) // Cập nhật giá trị trường input trong form
-                setEmpData({ ...empData, description: e.target.value }) // Cập nhật state 'empdata'
-              }}
-            />{' '}
-          </Form.Item>
-          <Form.Item name="avatar">
-            <p style={{ marginBottom: '8px' }}>Avatar</p>
-            {empData?.avatar && (
-              <>
-                <img
-                  src={empData?.avatar || ''} // Đặt đường dẫn hình ảnh của avatar vào đây
-                  alt="Avatar"
-                  style={{
-                    width: '100px',
-                    height: '100px',
-                    objectFit: 'cover',
-                    borderRadius: '50%',
-                  }}
-                />
-                <Upload
-                  name="avatar"
-                  listType="picture"
-                  accept="image/*"
-                  maxCount={1}
-                  action="https://final-project-be.onrender.com/employees"
-                  beforeUpload={checkFile}
-                  onRemove={() => setAvatar(null)}
-                >
-                  <Button icon={<UploadOutlined />}>Upload Avatar</Button>
-                </Upload>
-              </>
-            )}
-          </Form.Item>
+            </Form.Item>
 
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
-        </Form>
+            <Form.Item>
+              <Button type="primary" htmlType="submit">
+                {t('employee.submit')}
+              </Button>
+            </Form.Item>
+          </Form>
+        </div>
       )}
     </>
   )
 }
 
-export default EmployeeEdit
+export default EditEmployee
