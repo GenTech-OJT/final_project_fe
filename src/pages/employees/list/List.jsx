@@ -6,7 +6,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 import './List.css'
-import { useGetEmployees } from '@hooks/useEmployee'
+import { useGetEmployees, useChangeStatus } from '@hooks/useEmployee'
 import { showToast } from '@components/toast/ToastCustom'
 // import DeleteEmployee from './delete'
 
@@ -52,47 +52,34 @@ const EmployeeList = () => {
 
   const toggleStatus = async record => {
     try {
-      // Dispatch action to update status in the database
-      const response = await fetch(
-        `http://localhost:3000/employees/${record.id}`,
-        {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            status: record.status === 'active' ? 'inactive' : 'active',
-          }),
-        }
-      )
+      await changeStatusMutation.mutateAsync(record.id, {
+        status: record.status === 'active' ? 'inactive' : 'active',
+      })
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`)
-      }
+      const updatedData = await refetch()
 
-      // Refetch data after updating status
-      const updatedData = await refetch() // Assuming useGetEmployees hook has a refetch function
-
-      if (updatedData.isSuccess) {
-        // Set the updated data state
+      if (changeStatusMutation.isSuccess && updatedData.isSuccess) {
         setTableData({
           ...tableData,
-          gridData: updatedData.data, // Update the gridData with the new data
+          gridData: updatedData.data,
         })
 
-        // Show success toast
-        record.status === 'active'
-          ? showToast(t('message.deactivated_successfully'), 'success')
-          : showToast(t('message.activated_successfully'), 'success')
+        const successMessage =
+          record.status === 'active'
+            ? t('message.deactivated_successfully')
+            : t('message.activated_successfully')
+
+        showToast(successMessage, 'success')
       } else {
-        throw new Error('Error refetching data after status update')
+        throw new Error('Error updating status')
       }
     } catch (error) {
       console.error('Error updating status:', error)
-      // Show error toast
       showToast(t('status_update_failed'), 'error')
     }
   }
+
+  const { mutate: changeStatusMutation } = useChangeStatus()
 
   const handleChange = e => {
     const value = e.target.value

@@ -1,6 +1,6 @@
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useMutation } from '@tanstack/react-query'
 import { QUERY_KEY } from '@constants/reactQuery'
-import { getEmployeesApi } from '@api/employeeApi'
+import { getEmployeesApi, changeStatusApi } from '@api/employeeApi'
 
 // export const useGetEmployees = params => {
 //   return useQuery(['toan', params], async () => {
@@ -16,6 +16,16 @@ export const useGetEmployees = params => {
   })
 }
 
+export const useChangeStatus = () => {
+  return useMutation({
+    mutationFn: (id, data) => changeStatusApi(id, data),
+    onSuccess: (data, variables, context) => {},
+    onError: (error, variables, context) => {
+      console.error('Error changing status:', error)
+    },
+    onSettled: (data, error, variables, context) => {},
+  })
+}
 // export const useCreateCard = () => {
 //   const navigate = useNavigate();
 
