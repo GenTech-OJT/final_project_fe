@@ -41,7 +41,7 @@
     "name_require": "Please input name",
     "email_validate": "Please input your email!",
     "email_invalid": "Invalid email format!",
-    "password": "Please input your passoword!",
+    "password": "Please input your password!",
     "phone_validate": "Please input phone number!",
     "phone_valid": "Please enter a valid 10-digit phone number!",
     "code_validate": "Please input code!",

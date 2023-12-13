@@ -14,22 +14,6 @@ input::-webkit-inner-spin-button {
   width: 100%;
 }
 
-.select-container-lg {
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-}
-
-.select-container {
-  display: flex;
-  width: 49%;
-  justify-content: space-between;
-}
-
-.select-width-dobgs {
-  width: 49%;
-}
-
 .text-input-form {
   width: 49%;
 }
@@ -38,18 +22,10 @@ input::-webkit-inner-spin-button {
   .select-container {
     flex-direction: column;
   }
-  .select-width-dobgs {
-    width: 170px;
-  }
-
-  .manager-input-width {
-    width: 100%;
-  }
 }
 
 @media only screen and (max-width: 700px) {
-  .input-container,
-  .select-container-lg {
+  .input-container {
     flex-direction: column;
   }
 

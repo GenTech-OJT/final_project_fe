@@ -47,7 +47,6 @@ const SelectManager = () => {
     <Form.Item
       label={t('employee.manager')}
       name="manager"
-      className="select-width-dobgs"
       validateStatus={meta.error && meta.touched ? 'error' : ''}
       help={meta.error && meta.touched && meta.error}
     >
@@ -153,8 +152,10 @@ const CreateEmployee = () => {
     console.log(formattedValues)
 
     try {
-      await createEmployeeApi(formData, {
+      await createEmployeeApi(formattedValues, {
         onSuccess: () => {
+          showToast(t('message.create_employee_success'), 'success')
+          navigate('/employees')
           // const token =
           //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NzBiOThiM2I2MTViZjIwYzdmODQzYSIsImlzQWRtaW4iOnRydWUsImlhdCI6MTcwMjMxNTk2MiwiZXhwIjoxNzAyMzE1OTkyfQ.HF-hz18XXtDSgxMJiJchsXiiFww6qQFfvrbHhMnZc3w'
           // const refreshToken =
@@ -163,9 +164,9 @@ const CreateEmployee = () => {
           // localStorage.setItem('isLoggedIn', 'true')
           // navigate('/admin')
           // showToast('Login Successful !', 'success')
-
-          showToast(t('message.create_employee_success'), 'success')
-          //       navigate('/employees')
+        },
+        onError: () => {
+          showToast(t('message.create_employee_fail'), 'error')
         },
       })
     } catch (error) {
@@ -230,140 +231,161 @@ const CreateEmployee = () => {
               </Form.Item>
             </Col>
           </Row>
-          <div className="input-container">
-            <Form.Item
-              label={t('employee.code')}
-              name="code"
-              className="text-input-form"
-              required
-              validateStatus={errors.code && touched.code ? 'error' : ''}
-              help={errors.code && touched.code ? errors.code : ''}
-            >
-              <Input
+          <Row gutter={{ xs: 8, sm: 12, md: 16, lg: 24 }}>
+            <Col xs={24} md={12}>
+              <Form.Item
+                label={t('employee.code')}
                 name="code"
-                value={values.code}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-            </Form.Item>
-            <Form.Item
-              label={t('employee.phone_number_employee')}
-              name="phone"
-              className="text-input-form"
-              required
-              validateStatus={errors.phone && touched.phone ? 'error' : ''}
-              help={errors.phone && touched.phone ? errors.phone : ''}
-            >
-              <Input
+                required
+                validateStatus={errors.code && touched.code ? 'error' : ''}
+                help={errors.code && touched.code ? errors.code : ''}
+              >
+                <Input
+                  name="code"
+                  value={values.code}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+              </Form.Item>{' '}
+            </Col>
+            <Col xs={24} md={12}>
+              <Form.Item
+                label={t('employee.phone_number_employee')}
                 name="phone"
-                type="number"
-                value={values.phone}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-            </Form.Item>
-          </div>
-          <div className="input-container">
-            <Form.Item
-              label={t('employee.identity')}
-              name="identity"
-              className="text-input-form"
-              required
-              validateStatus={
-                errors.identity && touched.identity ? 'error' : ''
-              }
-              help={errors.identity && touched.identity ? errors.identity : ''}
-            >
-              <Input
+                required
+                validateStatus={errors.phone && touched.phone ? 'error' : ''}
+                help={errors.phone && touched.phone ? errors.phone : ''}
+              >
+                <Input
+                  name="phone"
+                  type="number"
+                  value={values.phone}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row gutter={{ xs: 8, sm: 12, md: 16, lg: 24 }}>
+            <Col xs={24} md={12}>
+              <Form.Item
+                label={t('employee.identity')}
                 name="identity"
-                value={values.identity}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-            </Form.Item>
-            <Form.Item
-              label={t('employee.date_of_birth_employee')}
-              name="dob"
-              className="text-input-form"
-              required
-              validateStatus={errors.dob && touched.dob ? 'error' : ''}
-              help={errors.dob && touched.dob ? errors.dob : ''}
-            >
-              <DatePicker
-                placement="bottomRight"
-                name="dob"
-                className="dob"
-                onChange={value => setFieldValue('dob', value)}
-                onBlur={handleBlur}
-                value={values.dob}
-              />
-            </Form.Item>
-          </div>
-          <div className="select-container-lg">
-            <div className="select-container">
-              <Form.Item
-                label={t('employee.gender_employee')}
-                name="gender"
-                className="select-width-dobgs"
-                validateStatus={errors.gender && touched.gender ? 'error' : ''}
-                help={errors.gender && touched.gender && errors.gender}
-              >
-                <Select
-                  name="gender"
-                  onChange={value => setFieldValue('gender', value)}
-                  onBlur={handleBlur}
-                  defaultValue={values.gender}
-                >
-                  <Select.Option value="male">Male</Select.Option>
-                  <Select.Option value="female">Female</Select.Option>
-                </Select>
-              </Form.Item>
-              <Form.Item
-                label={t('employee.status_employee')}
-                name="status"
-                className="select-width-dobgs"
-                validateStatus={errors.status && touched.status ? 'error' : ''}
-                help={errors.status && touched.status && errors.status}
-              >
-                <Select
-                  name="status"
-                  onChange={value => setFieldValue('status', value)}
-                  onBlur={handleBlur}
-                  defaultValue={values.status}
-                >
-                  <Select.Option value={true}>Active</Select.Option>
-                  <Select.Option value={false}>Inactive</Select.Option>
-                </Select>
-              </Form.Item>
-            </div>
-            <div className="select-container">
-              <Form.Item
-                label={t('employee.position_employee')}
-                name="position"
-                className="select-width-dobgs"
+                required
                 validateStatus={
-                  errors.position && touched.position ? 'error' : ''
+                  errors.identity && touched.identity ? 'error' : ''
                 }
-                help={errors.position && touched.position && errors.position}
+                help={
+                  errors.identity && touched.identity ? errors.identity : ''
+                }
               >
-                <Select
-                  name="position"
-                  onChange={value => setFieldValue('position', value)}
+                <Input
+                  name="identity"
+                  value={values.identity}
+                  onChange={handleChange}
                   onBlur={handleBlur}
-                  defaultValue={values.position}
-                >
-                  <Select.Option value="Developer">Developer</Select.Option>
-                  <Select.Option value="Quality Assurance">
-                    Quality Assurance
-                  </Select.Option>
-                  <Select.Option value="CEO">CEO</Select.Option>
-                  <Select.Option value="President">President</Select.Option>
-                </Select>
+                />
               </Form.Item>
+            </Col>
+            <Col xs={24} md={12}>
+              <Form.Item
+                label={t('employee.date_of_birth_employee')}
+                name="dob"
+                required
+                validateStatus={errors.dob && touched.dob ? 'error' : ''}
+                help={errors.dob && touched.dob ? errors.dob : ''}
+              >
+                <DatePicker
+                  placement="bottomRight"
+                  name="dob"
+                  className="dob"
+                  onChange={value => setFieldValue('dob', value)}
+                  onBlur={handleBlur}
+                  value={values.dob}
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row gutter={{ xs: 8, sm: 12, md: 16, lg: 24 }}>
+            <Col xs={24} md={12}>
+              <Row gutter={{ xs: 4, sm: 8, md: 12, lg: 16 }}>
+                <Col xs={24} md={12}>
+                  <Form.Item
+                    label={t('employee.gender_employee')}
+                    name="gender"
+                    validateStatus={
+                      errors.gender && touched.gender ? 'error' : ''
+                    }
+                    help={errors.gender && touched.gender && errors.gender}
+                  >
+                    <Select
+                      name="gender"
+                      onChange={value => setFieldValue('gender', value)}
+                      onBlur={handleBlur}
+                      defaultValue={values.gender}
+                    >
+                      <Select.Option value="male">Male</Select.Option>
+                      <Select.Option value="female">Female</Select.Option>
+                    </Select>
+                  </Form.Item>
+                </Col>
+                <Col xs={24} md={12}>
+                  <Form.Item
+                    label={t('employee.status_employee')}
+                    name="status"
+                    validateStatus={
+                      errors.status && touched.status ? 'error' : ''
+                    }
+                    help={errors.status && touched.status && errors.status}
+                  >
+                    <Select
+                      name="status"
+                      onChange={value => setFieldValue('status', value)}
+                      onBlur={handleBlur}
+                      defaultValue={values.status}
+                    >
+                      <Select.Option value={true}>Active</Select.Option>
+                      <Select.Option value={false}>Inactive</Select.Option>
+                    </Select>
+                  </Form.Item>
+                </Col>
+              </Row>
+            </Col>
+            <Col xs={24} md={12}>
+              <Row gutter={{ xs: 4, sm: 8, md: 12, lg: 16 }}>
+                <Col xs={24} md={12}>
+                  <Form.Item
+                    label={t('employee.position_employee')}
+                    name="position"
+                    validateStatus={
+                      errors.position && touched.position ? 'error' : ''
+                    }
+                    help={
+                      errors.position && touched.position && errors.position
+                    }
+                  >
+                    <Select
+                      name="position"
+                      onChange={value => setFieldValue('position', value)}
+                      onBlur={handleBlur}
+                      defaultValue={values.position}
+                    >
+                      <Select.Option value="Developer">Developer</Select.Option>
+                      <Select.Option value="Quality Assurance">
+                        Quality Assurance
+                      </Select.Option>
+                      <Select.Option value="CEO">CEO</Select.Option>
+                      <Select.Option value="President">President</Select.Option>
+                    </Select>
+                  </Form.Item>
+                </Col>
+                <Col xs={24} md={12}>
+                  <SelectManager />
+                </Col>
+              </Row>
+            </Col>
+          </Row>
 
-              <SelectManager />
-            </div>
-          </div>
           <div className="input-container">
             <Form.Item
               label={t('employee.skill')}
@@ -502,7 +524,6 @@ const CreateEmployee = () => {
               listType="picture"
               accept="image/*"
               maxCount={1}
-              action="https://final-project-be.onrender.com/employees"
               beforeUpload={checkFile}
               onRemove={() => setAvatar(null)}
             >
