@@ -8,8 +8,8 @@
     "login": "Log in"
   },
   "side_menu": {
-    "project_management_label": "Project Management",
-    "employee_management_label": "Employee Management",
+    "project_management_label": "Projects",
+    "employee_management_label": "Employees",
     "dashboard_label": "Dashboard",
     "my_account": "My Account",
     "logout": "Logout"

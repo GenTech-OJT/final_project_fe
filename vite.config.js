@@ -10,6 +10,10 @@ export default defineConfig({
       '@utils': '/src/utils',
       '@pages': '/src/pages',
       '@routes': '/src/routes',
+      '@constants': '/src/constants',
+      '@api': '/src/apis',
+      '@hooks': '/src/hooks',
+      '@redux': '/src/redux',
       // Thêm các alias khác ở đây
     },
   },

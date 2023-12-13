@@ -8,9 +8,9 @@
     "login": "Đăng Nhập"
   },
   "side_menu": {
-    "project_management_label": "Quản lý dự án",
-    "employee_management_label": "Quản lý nhân viên",
-    "dashboard_label": "Trang Chủ",
+    "project_management_label": "Dự án",
+    "employee_management_label": "Nhân viên",
+    "dashboard_label": "Thống kê",
     "my_account": "Tài khoản của tôi",
     "logout": "Đăng xuất"
   },
