@@ -11,33 +11,33 @@ import { useGetEmployees } from '@hooks/useEmployee'
 // import DeleteEmployee from './delete'
 
 const EmployeeList = () => {
-  const { data, isLoading, isError, error } = useGetEmployees({
-    page: 1,
-    pageSize: 10,
-    sortColumn: 'id',
-    sortOrder: 'asc',
-    searchText: '',
+  const navigate = useNavigate()
+  const { t } = useTranslation('translation')
+  const [gridData, setGridData] = useState([])
+  const [searchText, setSearchText] = useState('')
+  const [sortedInfo, setSortedInfo] = useState({})
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 5,
+    total: 14,
   })
+  const [loadingData, setLoadingData] = useState(true)
+
+  const toan = {
+    page: pagination.current,
+    pageSize: pagination.pageSize,
+    sortColumn: sortedInfo.columnKey || 'id',
+    sortOrder: sortedInfo.order || 'asc',
+    searchText: searchText,
+  }
+
+  const { data, isLoading, isError, error } = useGetEmployees(toan)
 
   console.log('data', data)
 
   // if (isLoading) {
   //   return <div>Loading...</div>
   // }
-
-  // const [gridData, setGridData] = useState([])
-  // const [searchText, setSearchText] = useState('')
-  // const [sortedInfo, setSortedInfo] = useState({})
-  // const [pagination, setPagination] = useState({
-  //   current: 1,
-  //   pageSize: 5,
-  //   total: 14,
-  // })
-
-  // const navigate = useNavigate()
-  // const { t } = useTranslation('translation')
-
-  // const [loadingData, setLoadingData] = useState(true)
 
   // useEffect(() => {
   //   const fetchData = async () => {
@@ -71,211 +71,209 @@ const EmployeeList = () => {
   //   fetchData()
   // }, [pagination.current, pagination.pageSize, sortedInfo, searchText])
 
-  // const edit = id => {
-  //   navigate('/admin/employees/edit/' + id)
-  // }
+  const edit = id => {
+    navigate('/admin/employees/edit/' + id)
+  }
 
-  // const viewDetail = record => {
-  //   navigate(`/admin/employees/detail/${record.id}`)
-  // }
+  const viewDetail = record => {
+    navigate(`/admin/employees/detail/${record.id}`)
+  }
 
-  // const deleteRecord = recordId => {
-  //   // Handle logic to delete the selected record
-  //   console.log('Delete Record:', recordId)
-  // }
+  const deleteRecord = recordId => {
+    // Handle logic to delete the selected record
+    console.log('Delete Record:', recordId)
+  }
 
-  // const toggleStatus = record => {
-  //   // Handle logic to toggle status
-  //   const updatedGridData = gridData.map(item => {
-  //     if (item.id === record.id) {
-  //       return {
-  //         ...item,
-  //         status: item.status === 'active' ? 'inactive' : 'active',
-  //       }
-  //     }
-  //     return item
-  //   })
-  //   setGridData(updatedGridData)
-  //   record.status === 'active'
-  //     ? showToast(t('message.deactivated_successfully'), 'success')
-  //     : showToast(t('message.activated_successfully'), 'success')
-  // }
+  const toggleStatus = record => {
+    // Handle logic to toggle status
+    const updatedGridData = gridData.map(item => {
+      if (item.id === record.id) {
+        return {
+          ...item,
+          status: item.status === 'active' ? 'inactive' : 'active',
+        }
+      }
+      return item
+    })
+    setGridData(updatedGridData)
+    record.status === 'active'
+      ? showToast(t('message.deactivated_successfully'), 'success')
+      : showToast(t('message.activated_successfully'), 'success')
+  }
 
-  // const handleChange = e => {
-  //   const value = e.target.value
-  //   setSearchText(value)
-  //   setPagination({ ...pagination, current: 1 })
-  // }
+  const handleChange = e => {
+    const value = e.target.value
+    setSearchText(value)
+    setPagination({ ...pagination, current: 1 })
+  }
 
-  // const locale = {
-  //   emptyText: (
-  //     <Empty
-  //       image={Empty.PRESENTED_IMAGE_SIMPLE}
-  //       description={t('employee.no_data')}
-  //     />
-  //   ),
-  // }
+  const locale = {
+    emptyText: (
+      <Empty
+        image={Empty.PRESENTED_IMAGE_SIMPLE}
+        description={t('employee.no_data')}
+      />
+    ),
+  }
 
-  // const handleTableChange = (pagination, filters, sorter) => {
-  //   const isSameColumn = sortedInfo.columnKey === sorter.columnKey
-  //   const order = isSameColumn && sortedInfo.order === 'asc' ? 'desc' : 'asc'
+  const handleTableChange = (pagination, filters, sorter) => {
+    const isSameColumn = sortedInfo.columnKey === sorter.columnKey
+    const order = isSameColumn && sortedInfo.order === 'asc' ? 'desc' : 'asc'
 
-  //   setSortedInfo({
-  //     columnKey: sorter.columnKey,
-  //     order: order,
-  //   })
+    setSortedInfo({
+      columnKey: sorter.columnKey,
+      order: order,
+    })
 
-  //   setPagination({
-  //     ...pagination,
-  //     current: isSameColumn ? pagination.current : 1,
-  //   })
-  // }
+    setPagination({
+      ...pagination,
+      current: isSameColumn ? pagination.current : 1,
+    })
+  }
 
-  // const handlePaginationChange = (current, pageSize) => {
-  //   setPagination({ ...pagination, current, pageSize })
-  // }
+  const handlePaginationChange = (current, pageSize) => {
+    setPagination({ ...pagination, current, pageSize })
+  }
 
-  // const itemsPerPageOptions = [5, 10, 20]
-  // const handleItemsPerPageChange = pageSize => {
-  //   setPagination({ ...pagination, pageSize, current: 1 })
-  // }
+  const itemsPerPageOptions = [5, 10, 20]
+  const handleItemsPerPageChange = pageSize => {
+    setPagination({ ...pagination, pageSize, current: 1 })
+  }
 
-  // const convertBooleanToString = isManager => (isManager ? 'Yes' : 'No')
+  const convertBooleanToString = isManager => (isManager ? 'Yes' : 'No')
 
-  // const columns = [
-  //   {
-  //     title: 'ID',
-  //     align: 'center',
-  //     dataIndex: 'id',
-  //     key: 'id',
-  //     sorter: true,
-  //     sortOrder: sortedInfo.columnKey === 'id' && sortedInfo.order,
-  //   },
-  //   {
-  //     title: t('table_header.name'),
-  //     align: 'center',
-  //     dataIndex: 'name',
-  //     key: 'name',
-  //     sorter: true,
-  //     sortOrder: sortedInfo.columnKey === 'name' && sortedInfo.order,
-  //   },
-  //   {
-  //     title: t('table_header.status'),
-  //     align: 'center',
-  //     dataIndex: 'status',
-  //     key: 'status',
-  //     sorter: true,
-  //     sortOrder: sortedInfo.columnKey === 'status' && sortedInfo.order,
-  //     render: (_, record) => (
-  //       <Button
-  //         type={record.status === 'active' ? 'primary' : 'danger'}
-  //         onClick={() => toggleStatus(record)}
-  //         style={{
-  //           backgroundColor: record.status === 'active' ? '#1890ff' : '#ff4d4f',
-  //           borderColor: 'transparent',
-  //           color: 'white',
-  //         }}
-  //       >
-  //         {record.status === 'active'
-  //           ? t('button_input.active')
-  //           : t('button_input.inactive')}
-  //       </Button>
-  //     ),
-  //   },
-  //   {
-  //     title: t('table_header.position'),
-  //     align: 'center',
-  //     dataIndex: 'position',
-  //     key: 'position',
-  //     sorter: true,
-  //     sortOrder: sortedInfo.columnKey === 'position' && sortedInfo.order,
-  //   },
-  //   {
-  //     title: t('table_header.is_manager'),
-  //     align: 'center',
-  //     dataIndex: 'is_manager',
-  //     key: 'is_manager',
-  //     sorter: true,
-  //     sortOrder: sortedInfo.columnKey === 'is_manager' && sortedInfo.order,
-  //     render: isManager => convertBooleanToString(isManager),
-  //   },
-  //   {
-  //     title: t('table_header.action'),
-  //     align: 'center',
-  //     key: 'action',
-  //     render: (_, record) => (
-  //       <>
-  //         <Button
-  //           key={`view-${record.id}`}
-  //           onClick={() => viewDetail(record)}
-  //           style={{ marginRight: 8 }}
-  //           icon={<EyeOutlined />}
-  //         />
-  //         <Button
-  //           key={`edit-${record.id}`}
-  //           onClick={() => edit(record.id)}
-  //           style={{ marginRight: 8 }}
-  //           icon={<EditOutlined />}
-  //         />
-  //         {/* <DeleteEmployee key={`delete-${record.id}`}
-  //           onClick={() => deleteRecord(record.id)}
-  //           style={{ marginRight: 8 }}
-  //           employeeId={record.id}
-  //           icon={<DeleteOutlined />} /> */}
+  const columns = [
+    {
+      title: 'ID',
+      align: 'center',
+      dataIndex: 'id',
+      key: 'id',
+      sorter: true,
+      sortOrder: sortedInfo.columnKey === 'id' && sortedInfo.order,
+    },
+    {
+      title: t('table_header.name'),
+      align: 'center',
+      dataIndex: 'name',
+      key: 'name',
+      sorter: true,
+      sortOrder: sortedInfo.columnKey === 'name' && sortedInfo.order,
+    },
+    {
+      title: t('table_header.status'),
+      align: 'center',
+      dataIndex: 'status',
+      key: 'status',
+      sorter: true,
+      sortOrder: sortedInfo.columnKey === 'status' && sortedInfo.order,
+      render: (_, record) => (
+        <Button
+          type={record.status === 'active' ? 'primary' : 'danger'}
+          onClick={() => toggleStatus(record)}
+          style={{
+            backgroundColor: record.status === 'active' ? '#1890ff' : '#ff4d4f',
+            borderColor: 'transparent',
+            color: 'white',
+          }}
+        >
+          {record.status === 'active'
+            ? t('button_input.active')
+            : t('button_input.inactive')}
+        </Button>
+      ),
+    },
+    {
+      title: t('table_header.position'),
+      align: 'center',
+      dataIndex: 'position',
+      key: 'position',
+      sorter: true,
+      sortOrder: sortedInfo.columnKey === 'position' && sortedInfo.order,
+    },
+    {
+      title: t('table_header.is_manager'),
+      align: 'center',
+      dataIndex: 'is_manager',
+      key: 'is_manager',
+      sorter: true,
+      sortOrder: sortedInfo.columnKey === 'is_manager' && sortedInfo.order,
+      render: isManager => convertBooleanToString(isManager),
+    },
+    {
+      title: t('table_header.action'),
+      align: 'center',
+      key: 'action',
+      render: (_, record) => (
+        <>
+          <Button
+            key={`view-${record.id}`}
+            onClick={() => viewDetail(record)}
+            style={{ marginRight: 8 }}
+            icon={<EyeOutlined />}
+          />
+          <Button
+            key={`edit-${record.id}`}
+            onClick={() => edit(record.id)}
+            style={{ marginRight: 8 }}
+            icon={<EditOutlined />}
+          />
+          {/* <DeleteEmployee key={`delete-${record.id}`}
+            onClick={() => deleteRecord(record.id)}
+            style={{ marginRight: 8 }}
+            employeeId={record.id}
+            icon={<DeleteOutlined />} /> */}
 
-  //         {/* <DeleteEmployee
-  //           key={`delete-${record.id}`}
-  //           onClick={() => deleteRecord(record.id)}
-  //           style={{ marginRight: 8 }}
-  //           icon={<DeleteOutlined />}
-  //           employeeId={record.id}
-  //         /> */}
-  //       </>
-  //     ),
-  //   },
-  // ]
+          {/* <DeleteEmployee
+            key={`delete-${record.id}`}
+            onClick={() => deleteRecord(record.id)}
+            style={{ marginRight: 8 }}
+            icon={<DeleteOutlined />}
+            employeeId={record.id}
+          /> */}
+        </>
+      ),
+    },
+  ]
 
   return (
     <div className="employeeLayout">
-      {/* <Spin spinning={loadingData}>
-        <Button
-          type="primary"
-          onClick={() => navigate('/admin/employees/create')}
-          style={{ marginBottom: 16 }}
-        >
-          {t('button_input.create')}
-        </Button>
+      <Button
+        type="primary"
+        onClick={() => navigate('/admin/employees/create')}
+        style={{ marginBottom: 16 }}
+      >
+        {t('button_input.create')}
+      </Button>
 
-        <CustomSearch handleChange={handleChange} />
+      <CustomSearch handleChange={handleChange} />
 
-        <div
-          style={{
-            overflow: 'auto',
-            width: '100%',
-            whiteSpace: 'nowrap',
-            backgroundColor: 'white',
+      <div
+        style={{
+          overflow: 'auto',
+          width: '100%',
+          whiteSpace: 'nowrap',
+          backgroundColor: 'white',
+        }}
+      >
+        <CustomTable
+          columns={columns}
+          data={data?.data}
+          handleTableChange={handleTableChange}
+          edit={edit}
+          viewDetail={viewDetail}
+          deleteRecord={deleteRecord}
+          pagination={{
+            ...pagination,
+            showSizeChanger: true,
+            onShowSizeChange: handleItemsPerPageChange,
+            pageSizeOptions: itemsPerPageOptions.map(option =>
+              option.toString()
+            ),
+            onChange: handlePaginationChange,
           }}
-        >
-          <CustomTable
-            columns={columns}
-            data={gridData}
-            handleTableChange={handleTableChange}
-            edit={edit}
-            viewDetail={viewDetail}
-            deleteRecord={deleteRecord}
-            pagination={{
-              ...pagination,
-              showSizeChanger: true,
-              onShowSizeChange: handleItemsPerPageChange,
-              pageSizeOptions: itemsPerPageOptions.map(option =>
-                option.toString()
-              ),
-              onChange: handlePaginationChange,
-            }}
-            locale={locale}
-          ></CustomTable>
-        </div>
-      </Spin> */}
+          locale={locale}
+        ></CustomTable>
+      </div>
     </div>
   )
 }
