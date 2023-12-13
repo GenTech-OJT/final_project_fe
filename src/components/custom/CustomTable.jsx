@@ -33,6 +33,7 @@ CustomTable.propTypes = {
   data: PropTypes.array.isRequired,
   handleTableChange: PropTypes.func.isRequired,
   pagination: PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired,
 }
 
 const CustomSearch = ({ handleChange }) => {
