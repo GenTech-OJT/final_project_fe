@@ -33,11 +33,9 @@ const EmployeeList = () => {
     searchText: tableData.searchText,
   }
 
-  const { data, refetch, isLoading, isError, error } =
-    useGetEmployees(employees)
+  const { data, refetch, isLoading } = useGetEmployees(employees)
 
   console.log('data', data)
-  // setTableData({ ...tableData.gridData })
 
   const edit = id => {
     navigate('/admin/employees/edit/' + id)
@@ -126,7 +124,7 @@ const EmployeeList = () => {
         order: order,
       },
       pagination: {
-        ...tableData.pagination,
+        ...pagination,
         current: pagination.current,
       },
     })
@@ -135,24 +133,16 @@ const EmployeeList = () => {
   const handlePaginationChange = (current, pageSize) => {
     setTableData({
       ...tableData,
-      pagination: {
-        ...tableData.pagination,
-        current,
-        pageSize,
-      },
+      pagination: { ...tableData.pagination, current, pageSize },
     })
   }
 
   const itemsPerPageOptions = [5, 10, 20]
-
   const handleItemsPerPageChange = pageSize => {
+    // Update pagination in the state
     setTableData({
       ...tableData,
-      pagination: {
-        ...tableData.pagination,
-        pageSize,
-        current: 1,
-      },
+      pagination: { ...tableData.pagination, pageSize, current: 1 },
     })
   }
 
