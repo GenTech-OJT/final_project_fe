@@ -4,14 +4,26 @@ import { Input, Table } from 'antd'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 
-const CustomTable = ({ columns, data, handleTableChange, pagination }) => {
+const CustomTable = ({
+  columns,
+  data,
+  handleTableChange,
+  pagination,
+  loading,
+}) => {
   return (
     <Table
       columns={columns}
       dataSource={data}
       bordered
       onChange={handleTableChange}
-      pagination={pagination}
+      showSorterTooltip={false}
+      pagination={{
+        ...pagination,
+        showTotal: (total, range) =>
+          `${range[0]}-${range[1]} of ${total} items`,
+      }}
+      loading={loading}
     />
   )
 }
