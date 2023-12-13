@@ -14,63 +14,29 @@ const EmployeeList = () => {
   const navigate = useNavigate()
   const { t } = useTranslation('translation')
 
-  const [gridData, setGridData] = useState([])
-  const [searchText, setSearchText] = useState('')
-  const [sortedInfo, setSortedInfo] = useState({})
-  const [pagination, setPagination] = useState({
-    current: 1,
-    pageSize: 5,
-    total: 14,
+  const [tableData, setTableData] = useState({
+    gridData: [],
+    searchText: '',
+    sortedInfo: {},
+    pagination: {
+      current: 1,
+      pageSize: 5,
+      total: 14,
+    },
   })
 
   const employees = {
-    page: pagination.current,
-    pageSize: pagination.pageSize,
-    sortColumn: sortedInfo.columnKey || 'id',
-    sortOrder: sortedInfo.order || 'asc',
-    searchText: searchText,
+    page: tableData.pagination.current,
+    pageSize: tableData.pagination.pageSize,
+    sortColumn: tableData.sortedInfo.columnKey || 'id',
+    sortOrder: tableData.sortedInfo.order || 'asc',
+    searchText: tableData.searchText,
   }
 
   const { data, refetch, isLoading, isError, error } =
     useGetEmployees(employees)
 
   console.log('data', data)
-
-  // if (isLoading) {
-  //   return <div>Loading...</div>
-  // }
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await fetch(
-  //         `https://final-project-be.onrender.com/employees?_page=${
-  //           pagination.current
-  //         }&_limit=${pagination.pageSize}&_sort=${
-  //           sortedInfo.columnKey || 'id'
-  //         }&_order=${sortedInfo.order || 'asc'}&q=${searchText}`
-  //       )
-
-  //       if (!response.ok) {
-  //         throw new Error(`HTTP error! Status: ${response.status}`)
-  //       }
-
-  //       const apiData = await response.json()
-
-  //       setGridData(apiData.data)
-  //       setPagination({
-  //         ...pagination,
-  //         total: apiData.pagination.total,
-  //       })
-  //     } catch (error) {
-  //       console.error('Lỗi khi gọi API:', error)
-  //     } finally {
-  //       setLoadingData(false)
-  //     }
-  //   }
-
-  //   fetchData()
-  // }, [pagination.current, pagination.pageSize, sortedInfo, searchText])
 
   const edit = id => {
     navigate('/admin/employees/edit/' + id)
@@ -110,7 +76,7 @@ const EmployeeList = () => {
 
       if (updatedData.isSuccess) {
         // Set the updated data state
-        setGridData(updatedData.data)
+        gridData(updatedData.data)
 
         // Show success toast
         record.status === 'active'
@@ -128,8 +94,8 @@ const EmployeeList = () => {
 
   const handleChange = e => {
     const value = e.target.value
-    setSearchText(value)
-    setPagination({ ...pagination, current: 1 })
+    setTableData(value)
+    setTableData({ ...tableData.pagination, current: 1 })
   }
 
   const locale = {
@@ -142,27 +108,28 @@ const EmployeeList = () => {
   }
 
   const handleTableChange = (pagination, filters, sorter) => {
-    const isSameColumn = sortedInfo.columnKey === sorter.columnKey
-    const order = isSameColumn && sortedInfo.order === 'asc' ? 'desc' : 'asc'
+    const isSameColumn = tableData.sortedInfo.columnKey === sorter.columnKey
+    const order =
+      isSameColumn && tableData.sortedInfo.order === 'asc' ? 'desc' : 'asc'
 
-    setSortedInfo({
+    setTableData({
       columnKey: sorter.columnKey,
       order: order,
     })
 
-    setPagination({
+    setTableData({
       ...pagination,
-      current: isSameColumn ? pagination.current : 1,
+      current: isSameColumn ? tableData.pagination.current : 1,
     })
   }
 
   const handlePaginationChange = (current, pageSize) => {
-    setPagination({ ...pagination, current, pageSize })
+    setTableData({ ...tableData.pagination, current, pageSize })
   }
 
   const itemsPerPageOptions = [5, 10, 20]
   const handleItemsPerPageChange = pageSize => {
-    setPagination({ ...pagination, pageSize, current: 1 })
+    setTableData({ ...tableData.pagination, pageSize, current: 1 })
   }
 
   const convertBooleanToString = isManager => (isManager ? 'Yes' : 'No')
@@ -174,7 +141,8 @@ const EmployeeList = () => {
       dataIndex: 'id',
       key: 'id',
       sorter: true,
-      sortOrder: sortedInfo.columnKey === 'id' && sortedInfo.order,
+      sortOrder:
+        tableData.sortedInfo.columnKey === 'id' && tableData.sortedInfo.order,
     },
     {
       title: t('table_header.name'),
@@ -182,7 +150,8 @@ const EmployeeList = () => {
       dataIndex: 'name',
       key: 'name',
       sorter: true,
-      sortOrder: sortedInfo.columnKey === 'name' && sortedInfo.order,
+      sortOrder:
+        tableData.sortedInfo.columnKey === 'name' && tableData.sortedInfo.order,
     },
     {
       title: t('table_header.status'),
@@ -190,7 +159,9 @@ const EmployeeList = () => {
       dataIndex: 'status',
       key: 'status',
       sorter: true,
-      sortOrder: sortedInfo.columnKey === 'status' && sortedInfo.order,
+      sortOrder:
+        tableData.sortedInfo.columnKey === 'status' &&
+        tableData.sortedInfo.order,
       render: (_, record) => (
         <Button
           type={record.status === 'active' ? 'primary' : 'danger'}
@@ -213,7 +184,9 @@ const EmployeeList = () => {
       dataIndex: 'position',
       key: 'position',
       sorter: true,
-      sortOrder: sortedInfo.columnKey === 'position' && sortedInfo.order,
+      sortOrder:
+        tableData.sortedInfo.columnKey === 'position' &&
+        tableData.sortedInfo.order,
     },
     {
       title: t('table_header.is_manager'),
@@ -221,7 +194,9 @@ const EmployeeList = () => {
       dataIndex: 'is_manager',
       key: 'is_manager',
       sorter: true,
-      sortOrder: sortedInfo.columnKey === 'is_manager' && sortedInfo.order,
+      sortOrder:
+        tableData.sortedInfo.columnKey === 'is_manager' &&
+        tableData.sortedInfo.order,
       render: isManager => convertBooleanToString(isManager),
     },
     {
@@ -288,7 +263,7 @@ const EmployeeList = () => {
           viewDetail={viewDetail}
           deleteRecord={deleteRecord}
           pagination={{
-            ...pagination,
+            ...tableData.pagination,
             showSizeChanger: true,
             onShowSizeChange: handleItemsPerPageChange,
             pageSizeOptions: itemsPerPageOptions.map(option =>
