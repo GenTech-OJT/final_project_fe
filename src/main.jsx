@@ -5,7 +5,7 @@ import store from './redux/store'
 import '@utils/i18n/i18n.jsx'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { Toast } from '@components/toast/Toast'
+import { Toast } from '@components/toast/ToastCustom'
 
 const queryClient = new QueryClient({
   defaultOptions: {

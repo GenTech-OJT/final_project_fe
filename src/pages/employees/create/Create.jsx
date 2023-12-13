@@ -20,7 +20,7 @@ import { Formik } from 'formik'
 import * as Yup from 'yup'
 import moment from 'moment'
 import './Create.css'
-import { showToast } from '@components/toast/Toast'
+import { showToast } from '@components/toast/ToastCustom'
 
 const EmployeeCreate = () => {
   const navigate = useNavigate()

@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router'
 import { Button, Checkbox, Form, Input, Typography, Select, Space } from 'antd'
 import { LockOutlined, MailOutlined } from '@ant-design/icons'
-import { showToast } from '@components/toast/Toast'
+import { showToast } from '@components/toast/ToastCustom'
 import { Formik, Field } from 'formik'
 import * as Yup from 'yup'
 import { useEffect, useState } from 'react'

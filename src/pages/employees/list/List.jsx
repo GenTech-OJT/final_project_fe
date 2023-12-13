@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import { DeleteOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons'
 import { CustomSearch, CustomTable } from '@components/custom/CustomTable'
-import { showToast } from '@components/toast/Toast'
+import { showToast } from '@components/toast/ToastCustom'
 import { Button, Spin, Empty } from 'antd'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
