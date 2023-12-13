@@ -25,7 +25,6 @@ import './Edit.css'
 import { useTranslation } from 'react-i18next'
 import SelectManager from './SelectManager'
 import { useEditEmployee, useGetEmployees } from '@hooks/useEmployee'
-import { useQueryClient } from '@tanstack/react-query'
 const { Title, Text } = Typography
 
 const EditEmployee = () => {
