@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import {
   Button,
   DatePicker,
@@ -12,7 +12,6 @@ import {
 } from 'antd'
 import { useNavigate } from 'react-router'
 import {
-  ArrowLeftOutlined,
   MinusCircleOutlined,
   PlusOutlined,
   UploadOutlined,

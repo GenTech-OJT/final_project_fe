@@ -1,13 +1,11 @@
 /* eslint-disable no-undef */
 import {
-  ArrowLeftOutlined,
   MinusCircleOutlined,
   PlusOutlined,
   UploadOutlined,
 } from '@ant-design/icons'
 import {
   Button,
-  Card,
   DatePicker,
   Form,
   Input,
