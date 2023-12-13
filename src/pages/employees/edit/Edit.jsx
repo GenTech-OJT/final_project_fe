@@ -36,12 +36,7 @@ const EditEmployee = () => {
     sortColumn: 'id',
     sortOrder: 'asc',
   })
-  const {
-    mutate: editEmployeeApi,
-    isLoading,
-    isError,
-    error,
-  } = useEditEmployee()
+  const { mutate: editEmployeeApi } = useEditEmployee()
 
   const { t } = useTranslation('translation')
   const [form] = Form.useForm()
