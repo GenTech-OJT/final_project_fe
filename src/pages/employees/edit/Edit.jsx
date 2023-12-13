@@ -108,7 +108,7 @@ const EditEmployee = () => {
         onSuccess: () => {
           // Xử lý thành công
           message.success('Employee data updated successfully')
-          navigate('/employees')
+          navigate('/admin/employees')
         },
         onError: error => {
           // Xử lý lỗi
