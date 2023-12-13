@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 import {
   MinusCircleOutlined,
@@ -23,10 +24,25 @@ import { useNavigate, useParams } from 'react-router'
 import './Edit.css'
 import { useTranslation } from 'react-i18next'
 import SelectManager from './SelectManager'
+import { useEditEmployee, useGetEmployees } from '@hooks/useEmployee'
+import { useQueryClient } from '@tanstack/react-query'
 const { Title, Text } = Typography
 
 const EditEmployee = () => {
+  const queryClient = useQueryClient()
   const navigate = useNavigate()
+  const { data: employeesData } = useGetEmployees({
+    pageSize: undefined,
+    sortColumn: 'id',
+    sortOrder: 'asc',
+  })
+  const {
+    mutate: editEmployeeApi,
+    isLoading,
+    isError,
+    error,
+  } = useEditEmployee()
+
   const { t } = useTranslation('translation')
   const [form] = Form.useForm()
   const { id } = useParams()
@@ -37,35 +53,34 @@ const EditEmployee = () => {
   // const [form] = Form.useForm()
 
   useEffect(() => {
-    fetch('http://localhost:3000/employees/' + id)
-      .then(res => {
-        return res.json()
-      })
-      .then(res => {
-        setEmpData(res)
+    if (employeesData) {
+      const employee = employeesData?.data?.find(employee => employee.id === id)
+      if (employee) {
+        setEmpData(employee)
         form.setFieldsValue({
-          name: res.name,
-          email: res.email,
-          code: res.code,
-          phone: res.phone,
-          identity: res.identity,
-          dob: moment(res.dob, 'YYYY-MM-DD'),
-          gender: res.gender,
-          status: res.status,
-          is_manager: res.is_manager,
-          position: res.position,
-          skills: res?.skills?.map(skill => ({
+          name: employee.name,
+          email: employee.email,
+          code: employee.code,
+          phone: employee.phone,
+          identity: employee.identity,
+          dob: moment(employee.dob, 'YYYY-MM-DD'),
+          gender: employee.gender,
+          status: employee.status,
+          is_manager: employee.is_manager,
+          position: employee.position,
+          skills: employee?.skills?.map(skill => ({
             skill: skill.name,
             experience: skill.year,
           })),
-          avatar: res?.avatar,
-          manager: res?.manager,
-          description: res?.description,
+          avatar: employee?.avatar,
+          manager: employee?.manager,
+          description: employee?.description,
 
-          // ... set other fields similarly
+          // ... set other form fields
         })
-      })
-  }, [])
+      }
+    }
+  }, [employeesData, form, id])
 
   const handleFormSubmit = () => {
     form.validateFields().then(values => {
@@ -96,27 +111,21 @@ const EditEmployee = () => {
       }
 
       // Gửi request PUT lên server
-      fetch(`http://localhost:3000/employees/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(updatedData),
-      })
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok')
-          }
-          // Xử lý phản hồi từ server khi cập nhật thành công
-          // Ví dụ: Hiển thị thông báo thành công, điều hướng trang, etc.
+      editEmployeeApi(updatedData, {
+        onSuccess: () => {
+          // Xử lý thành công
           message.success('Employee data updated successfully')
           navigate('/employees')
-        })
-        .catch(error => {
-          // Xử lý lỗi trong quá trình gửi request PUT lên server
-          console.error('There was a problem with the fetch operation:', error)
+        },
+        onError: error => {
+          // Xử lý lỗi
+          console.error('Failed to update employee data:', error)
           message.error('Failed to update employee data')
-        })
+        },
+        onSettled: () => {
+          // Thực hiện các thao tác sau khi hoàn tất (có lỗi hoặc không)
+        },
+      })
     })
   }
 

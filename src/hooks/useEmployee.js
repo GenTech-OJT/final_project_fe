@@ -1,6 +1,7 @@
-import { useQuery } from '@tanstack/react-query'
+/* eslint-disable no-unused-vars */
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { QUERY_KEY } from '@constants/reactQuery'
-import { getEmployeesApi } from '@api/employeeApi'
+import { editEmployeeApi, getEmployeesApi } from '@api/employeeApi'
 
 // export const useGetEmployees = params => {
 //   return useQuery(['toan', params], async () => {
@@ -16,6 +17,21 @@ export const useGetEmployees = params => {
   })
 }
 
+export const useEditEmployee = () => {
+  return useMutation({
+    mutationFn: data => editEmployeeApi(data),
+    // Các hàm callback sau đây có thể được cập nhật tùy theo việc xử lý dữ liệu thành công, lỗi, hoặc khi kết thúc
+    onSuccess: (data, variables, context) => {
+      // Xử lý khi thành công
+    },
+    onError: (error, variables, context) => {
+      // Xử lý khi gặp lỗi
+    },
+    onSettled: (data, error, variables, context) => {
+      // Xử lý khi kết thúc, có thể sử dụng để thực hiện các hành động sau khi hoàn thành hoặc có lỗi
+    },
+  })
+}
 // export const useCreateCard = () => {
 //   const navigate = useNavigate();
 

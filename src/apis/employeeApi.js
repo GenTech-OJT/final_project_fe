@@ -25,3 +25,11 @@ export const getEmployeesApi = async ({
 
   return response.data
 }
+export const editEmployeeApi = async data => {
+  try {
+    const response = await axios.put(API_URL.EMPLOYEES + `/${data.id}`, data)
+    return response.data
+  } catch (error) {
+    throw new Error(`Failed to edit employee: ${error.message}`)
+  }
+}
