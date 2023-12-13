@@ -26,7 +26,7 @@ import './create.css'
 
 const SelectManager = () => {
   const { data } = useGetEmployees({
-    pageSize: 100,
+    pageSize: undefined,
     sortColumn: 'id',
     sortOrder: 'asc',
   })
@@ -147,22 +147,14 @@ const CreateEmployee = () => {
     const formattedValues = {
       ...values,
       dob: moment(values.dob.$d).format('YYYY-MM-DD'),
+      avatar: avatar,
     }
+
     console.log(formattedValues)
+
     try {
-      const formData = new FormData()
-      if (avatar != null) {
-        formData.append('avatar', avatar)
-      } else {
-        formData.append('avatar', null)
-      }
-
-      Object.entries(formattedValues).forEach(([key, value]) => {
-        formData.append(key, value)
-      })
-
-      await createEmployeeApi(formattedValues, {
-        onSuccess: formattedValues => {
+      await createEmployeeApi(formData, {
+        onSuccess: () => {
           // const token =
           //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NzBiOThiM2I2MTViZjIwYzdmODQzYSIsImlzQWRtaW4iOnRydWUsImlhdCI6MTcwMjMxNTk2MiwiZXhwIjoxNzAyMzE1OTkyfQ.HF-hz18XXtDSgxMJiJchsXiiFww6qQFfvrbHhMnZc3w'
           // const refreshToken =
@@ -172,35 +164,13 @@ const CreateEmployee = () => {
           // navigate('/admin')
           // showToast('Login Successful !', 'success')
 
-          message.success('Employee created successfully!')
+          showToast(t('message.create_employee_success'), 'success')
+          //       navigate('/employees')
         },
       })
-
-      // formData.forEach((value, key) => {
-      //   console.log('Form Data: ', `${key}: ${value}`)
-      // })
-
-      // fetch('http://localhost:3000/employees', {
-      //   method: 'POST',
-      //   body: formData,
-      // })
-      //   .then(response => {
-      //     if (response.ok) {
-      //       showToast(t('message.create_employee_success'), 'success')
-      //       navigate('/employees')
-      //       return response.json()
-      //     } else {
-      //       showToast(t('message.create_employee_fail'), 'error')
-      //       throw new Error(`Request failed with status: ${response.status}`)
-      //     }
-      //   })
-      //   .then(data => {})
-      //   .catch(error => {
-      //     showToast(t('message.create_employee_fail'), 'error')
-      //   })
     } catch (error) {
       console.error('Error creating employee:', error)
-      message.error('Error creating employee. Please try again.')
+      showToast(t('message.create_employee_fail'), 'error')
     }
   }
 
