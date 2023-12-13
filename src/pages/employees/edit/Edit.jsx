@@ -29,7 +29,6 @@ import { useQueryClient } from '@tanstack/react-query'
 const { Title, Text } = Typography
 
 const EditEmployee = () => {
-  const queryClient = useQueryClient()
   const navigate = useNavigate()
   const { data: employeesData } = useGetEmployees({
     pageSize: undefined,
