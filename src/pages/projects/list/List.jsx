@@ -239,7 +239,7 @@ const ProjectList = () => {
         onClick={() => navigate('/admin/employees/create')}
         style={{ marginBottom: 16 }}
       >
-        {t('button_input.create')}
+        {t('button_input.create_project')}
       </Button>
 
       <CustomSearch handleChange={handleChange} />

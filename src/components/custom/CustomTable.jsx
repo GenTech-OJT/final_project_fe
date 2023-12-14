@@ -17,7 +17,7 @@ const CustomTable = ({
     <Table
       columns={columns}
       dataSource={data}
-      bordered
+      bordered={false}
       onChange={handleTableChange}
       showSorterTooltip={false}
       pagination={{
@@ -27,6 +27,7 @@ const CustomTable = ({
       }}
       loading={loading}
       pageSpageSizeOptions={itemsPerPageOptions}
+      scroll={{ x: 100, y: 330 }}
     />
   )
 }
@@ -78,6 +79,7 @@ const SortableTable = ({
         onChange={handleTableChange}
         pagination={pagination}
         pageSpageSizeOptions={itemsPerPageOptions}
+        scroll={{ x: 100, y: 330 }}
       />
     </>
   )

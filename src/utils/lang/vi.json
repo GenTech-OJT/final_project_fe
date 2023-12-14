@@ -6,7 +6,8 @@
     "active": "Kích Hoạt",
     "inactive": "Vô Hiệu Hóa",
     "login": "Đăng Nhập",
-    "edit": "Chỉnh sửa"
+    "edit": "Chỉnh sửa",
+    "create_project": "Tạo Dự Án"
   },
   "side_menu": {
     "project_management_label": "Dự án",

@@ -6,7 +6,8 @@
     "active": "Active",
     "inactive": "Inactive",
     "login": "Log in",
-    "edit": "Edit"
+    "edit": "Edit",
+    "create_project": "Create Project"
   },
   "side_menu": {
     "project_management_label": "Projects",
