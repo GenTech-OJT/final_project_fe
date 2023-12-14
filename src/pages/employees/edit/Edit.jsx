@@ -157,6 +157,7 @@ const EditEmployee = () => {
     try {
       const result = await updateEmployeeApi({ id, data: formattedValues })
       showToast(t('message.create_employee_success'), 'success')
+      navigate('/admin/employees')
     } catch (error) {
       console.error('Error creating employee:', error)
       showToast(t('message.create_employee_fail'), 'error')
@@ -264,6 +265,7 @@ const EditEmployee = () => {
                     <Input
                       name="code"
                       value={values.code}
+                      disabled={true}
                       onChange={handleChange}
                       onBlur={handleBlur}
                     />
@@ -306,6 +308,7 @@ const EditEmployee = () => {
                       name="identity"
                       value={values.identity}
                       onChange={handleChange}
+                      disabled={true}
                       onBlur={handleBlur}
                     />
                   </Form.Item>
@@ -325,6 +328,7 @@ const EditEmployee = () => {
                       onChange={value => setFieldValue('dob', value)}
                       onBlur={handleBlur}
                       value={values.dob}
+                      disabledDate={current => current.isAfter(moment())} // Disable future dates
                     />
                   </Form.Item>
                 </Col>
@@ -544,65 +548,52 @@ const EditEmployee = () => {
                   checked={values.isManager}
                 ></Checkbox>
               </Form.Item>
-              <Form.Item name="avatar">
-                <p style={{ marginBottom: '8px', fontWeight: 'bold' }}>
-                  {t('employee.avatar')}
-                </p>
-
-                <Row
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '20px',
+              <Form.Item name="avatar" label={t('employee.avatar')}>
+                <Upload
+                  listType="picture-card"
+                  showUploadList={false}
+                  beforeUpload={checkFile}
+                  onChange={info => {
+                    if (info.file.status === 'done') {
+                      message.success(
+                        `${info.file.name} file uploaded successfully`
+                      )
+                      setAvatar(info.file.originFileObj)
+                    } else if (info.file.status === 'error') {
+                      message.error(`${info.file.name} file upload failed.`)
+                    }
+                  }}
+                  onRemove={() => {
+                    setAvatar(null)
+                    setIsAvatarRemoved(true)
                   }}
                 >
-                  <Col>
-                    {/* Hiển thị avatar nếu có và không bị xóa */}
-                    {!isAvatarRemoved && employee.avatar && (
-                      <img
-                        src={employee.avatar || ''}
-                        alt="Avatar"
-                        style={{
-                          width: '100px',
-                          height: '100px',
-                          objectFit: 'cover',
-                          borderRadius: '50%',
-                        }}
-                      />
-                    )}
-                  </Col>
-                  <Col span={16}>
-                    {/* Hiển thị nút "Xóa Avatar" và button "Upload Avatar" */}
-                    <Space>
-                      {/* Nếu avatar đã bị xóa, ẩn hình ảnh nhưng giữ lại button "Upload Avatar" */}
-                      {isAvatarRemoved && (
-                        <Upload
-                          name="avatar"
-                          listType="picture"
-                          accept="image/*"
-                          maxCount={1}
-                          action="http://localhost:3000/employees"
-                          beforeUpload={checkFile}
-                          onRemove={() => setAvatar(null)}
-                        >
-                          <Button icon={<UploadOutlined />}>
-                            {t('employee.upload_avatar')}
-                          </Button>
-                        </Upload>
-                      )}
-                      {/* Thêm nút "Xóa Avatar" */}
-                      {!isAvatarRemoved && (
-                        <Button onClick={handleRemoveAvatar}>
-                          {t('employee.remove_avatar')}
-                        </Button>
-                      )}
-                    </Space>
-                  </Col>
-                </Row>
+                  {avatar || employee?.avatar ? (
+                    <img
+                      src={
+                        avatar ? URL.createObjectURL(avatar) : employee.avatar
+                      }
+                      alt="avatar"
+                      style={{
+                        width: '100px',
+                        height: '100px',
+                        objectFit: 'cover',
+                        borderRadius: '50%',
+                      }}
+                    />
+                  ) : (
+                    <div>
+                      <UploadOutlined />
+                      <div style={{ marginTop: 8 }}>
+                        {t('employee.upload_avatar')}
+                      </div>
+                    </div>
+                  )}
+                </Upload>
               </Form.Item>
               <Form.Item>
                 <Button type="primary" htmlType="submit">
-                  {t('button_input.create')}
+                  {t('button_input.edit')}
                 </Button>
               </Form.Item>
             </Form>

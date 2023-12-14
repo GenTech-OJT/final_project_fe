@@ -2,6 +2,8 @@
   "button_input": {
     "create": "Create",
     "search": "Search",
+    "edit": "Edit",
+
     "back_to_home": "Back to Home",
     "active": "Active",
     "inactive": "Inactive",
