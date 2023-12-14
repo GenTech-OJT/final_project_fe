@@ -73,7 +73,6 @@ const EditEmployee = () => {
 
   const { t } = useTranslation('translation')
   const [avatar, setAvatar] = useState(null)
-  const [isAvatarRemoved, setIsAvatarRemoved] = useState(false)
 
   const checkFile = file => {
     const isImage = file.type.startsWith('image/')
@@ -560,10 +559,6 @@ const EditEmployee = () => {
                     } else if (info.file.status === 'error') {
                       message.error(`${info.file.name} file upload failed.`)
                     }
-                  }}
-                  onRemove={() => {
-                    setAvatar(null)
-                    setIsAvatarRemoved(true)
                   }}
                 >
                   {avatar || employee?.avatar ? (
