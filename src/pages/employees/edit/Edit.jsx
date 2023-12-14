@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react'
 import {
   Button,
@@ -73,10 +74,7 @@ const EditEmployee = () => {
   const { t } = useTranslation('translation')
   const [avatar, setAvatar] = useState(null)
   const [isAvatarRemoved, setIsAvatarRemoved] = useState(false)
-  const handleRemoveAvatar = () => {
-    setAvatar(null) // Xóa avatar bằng cách đặt trạng thái avatar thành null
-    setIsAvatarRemoved(true) // Đặt trạng thái xác định avatar bị xóa thành true
-  }
+
   const checkFile = file => {
     const isImage = file.type.startsWith('image/')
 
