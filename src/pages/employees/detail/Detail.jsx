@@ -191,9 +191,7 @@ const EmployeeDetail = () => {
 
         const employeeData = await response.json()
         setEmployee(employeeData)
-      } catch (error) {
-        console.error('Error fetching employee details:', error)
-      }
+      } catch (error) {}
     }
 
     fetchEmployeeDetail()

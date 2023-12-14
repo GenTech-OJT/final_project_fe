@@ -152,8 +152,6 @@ const CreateEmployee = () => {
       avatar: avatar,
     }
 
-    console.log('Format Values: ', formattedValues)
-
     try {
       await createEmployeeApi(formattedValues, {
         onSuccess: () => {
@@ -173,7 +171,6 @@ const CreateEmployee = () => {
         },
       })
     } catch (error) {
-      console.error('Error creating employee:', error)
       showToast(t('message.create_employee_fail'), 'error')
     }
   }
