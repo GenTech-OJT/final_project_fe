@@ -4,6 +4,7 @@ import { DeleteOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 import { useDeleteEmployee } from '@hooks/useEmployee'
 import { showToast } from '@components/toast/ToastCustom'
+import PropTypes from 'prop-types'
 
 const DeleteEmployee = ({ employeeId }) => {
   const { mutate: deleteEmployeeApi } = useDeleteEmployee()
@@ -49,6 +50,10 @@ const DeleteEmployee = ({ employeeId }) => {
       ></Modal>
     </>
   )
+}
+
+DeleteEmployee.propTypes = {
+  employeeId: PropTypes.string.isRequired, // Adjust the type as needed
 }
 
 export default DeleteEmployee
