@@ -106,7 +106,7 @@ const CreateEmployee = () => {
       .max(10, t('validate.phone_valid')),
     identity: Yup.string()
       .required(t('validate.card_require'))
-      .matches(/^[0-9]{1,20}$/, t('validate.card_validate')),
+      .matches(/^\d{1,20}$/, t('validate.card_validate')),
     dob: Yup.date().required(t('validate.dob_validate')),
     gender: Yup.string(),
     status: Yup.string(),
@@ -541,7 +541,7 @@ const CreateEmployee = () => {
 }
 
 const useForceUpdate = () => {
-  const [value, setValue] = useState(0)
+  const [, setValue] = useState(0)
   return () => setValue(value => ++value)
 }
 
