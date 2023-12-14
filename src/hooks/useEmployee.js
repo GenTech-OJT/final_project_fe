@@ -16,16 +16,26 @@ export const useGetEmployees = params => {
   })
 }
 
-export const useChangeStatus = () => {
+// export const useChangeStatus = () => {
+//   return useMutation({
+//     mutationFn: (id, data) => updateEmployeeApi(id, data),
+//     onSuccess: (data, variables, context) => {},
+//     onError: (error, variables, context) => {
+//       console.error('Error changing status:', error)
+//     },
+//     onSettled: (data, error, variables, context) => {},
+//   })
+// }
+
+export const useUpdateEmployee = () => {
   return useMutation({
     mutationFn: (id, data) => updateEmployeeApi(id, data),
     onSuccess: (data, variables, context) => {},
-    onError: (error, variables, context) => {
-      console.error('Error changing status:', error)
-    },
+    onError: (error, variables, context) => {},
     onSettled: (data, error, variables, context) => {},
   })
 }
+
 // export const useCreateCard = () => {
 //   const navigate = useNavigate();
 

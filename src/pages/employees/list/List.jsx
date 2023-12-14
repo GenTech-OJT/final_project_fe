@@ -1,12 +1,16 @@
 /* eslint-disable no-undef */
 import { DeleteOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons'
-import { CustomSearch, CustomTable } from '@components/custom/CustomTable'
+import {
+  CustomSearch,
+  CustomTable,
+  itemsPerPageOptions,
+} from '@components/custom/CustomTable'
 import { Button, Spin, Empty } from 'antd'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 import './List.css'
-import { useGetEmployees, useChangeStatus } from '@hooks/useEmployee'
+import { useGetEmployees, useUpdateEmployee } from '@hooks/useEmployee'
 import { showToast } from '@components/toast/ToastCustom'
 // import DeleteEmployee from './delete'
 
@@ -50,38 +54,41 @@ const EmployeeList = () => {
     console.log('Delete Record:', recordId)
   }
 
-  const { mutateAsync: changeStatusMutateAsync } = useChangeStatus()
+  const { mutate: updateEmployeeApi } = useUpdateEmployee()
 
-  const toggleStatus = async record => {
+  const toggleStatus = async (id, status) => {
     try {
-      await changeStatusMutateAsync(record.id, {
-        status: record.status === 'active' ? 'inactive' : 'active',
+      const result = await changeStatusMutateAsync(id, {
+        status: status === 'active' ? 'inactive' : 'active',
       })
 
-      const updatedData = await refetch()
-      console.log('updatedData after refetch:', updatedData)
+      console.log('changeStatusMutateAsync result:', result)
 
-      if (
-        changeStatusMutateAsync.isSuccess &&
-        updatedData.isSuccess &&
-        updatedData.data &&
-        updatedData.data.data
-      ) {
-        // Cập nhật dữ liệu trong bảng
-        setTableData({
-          ...tableData,
-          gridData: updatedData.data.data,
-        })
+      if (result && result.data) {
+        if (result.data.data) {
+          // Cập nhật dữ liệu trong bảng
+          setTableData(prevData => ({
+            ...prevData,
+            gridData: result.data.data,
+          }))
 
-        // Hiển thị thông báo thành công
-        const successMessage =
-          record.status === 'active'
-            ? t('message.deactivated_successfully')
-            : t('message.activated_successfully')
+          const successMessage =
+            record.status === 'active'
+              ? t('message.deactivated_successfully')
+              : t('message.activated_successfully')
 
-        showToast(successMessage, 'success')
+          showToast(successMessage, 'success')
+        } else {
+          console.warn(
+            'Unexpected data structure in mutation result:',
+            result.data
+          )
+        }
       } else {
-        console.error('Error updating status:', updatedData.error)
+        console.error(
+          'Error updating status:',
+          result?.data?.error || 'Unknown error'
+        )
         throw new Error('Error updating status')
       }
     } catch (error) {
@@ -133,7 +140,6 @@ const EmployeeList = () => {
     })
   }
 
-  const itemsPerPageOptions = [5, 10, 20]
   const handleItemsPerPageChange = pageSize => {
     // Update pagination in the state
     setTableData({
@@ -175,7 +181,10 @@ const EmployeeList = () => {
       render: (_, record) => (
         <Button
           type={record.status === 'active' ? 'primary' : 'danger'}
-          onClick={() => toggleStatus(record)}
+          onClick={() => {
+            toggleStatus(record.id, record.status),
+              console.log('status', record.status)
+          }}
           style={{
             backgroundColor: record.status === 'active' ? '#1890ff' : '#ff4d4f',
             borderColor: 'transparent',
