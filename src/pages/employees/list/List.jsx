@@ -36,9 +36,7 @@ const EmployeeList = () => {
     searchText: tableData.searchText,
   }
 
-  const { data, refetch, isLoading } = useGetEmployees(employees)
-
-  console.log('data', data)
+  const { data, isLoading } = useGetEmployees(employees)
 
   const edit = id => {
     navigate('/admin/employees/edit/' + id)
@@ -53,20 +51,21 @@ const EmployeeList = () => {
     console.log('Delete Record:', recordId)
   }
 
-  const { mutate: updateEmployeeApi } = useUpdateEmployee()
+  const updateEmployeeMutation = useUpdateEmployee(({ id, data }) =>
+    updateEmployeeApi(id, data)
+  )
 
   const toggleStatus = async (id, status) => {
     try {
-      const result = await updateEmployeeApi({
+      const response = await updateEmployeeMutation.mutateAsync({
         id,
         data: { status: status === 'active' ? 'inactive' : 'active' },
       })
 
-      console.log('updateEmployeeApi result:', result)
+      if (response) {
+        const updatedEmployee = response
 
-      if (result && result.data) {
-        const updatedEmployee = result.data
-
+        // Update the UI
         setTableData(prevData => ({
           ...prevData,
           gridData: prevData.gridData.map(employee =>
@@ -76,15 +75,14 @@ const EmployeeList = () => {
 
         const successMessage =
           updatedEmployee.status === 'active'
-            ? t('message.deactivated_successfully')
-            : t('message.activated_successfully')
+            ? t('message.activated_successfully')
+            : t('message.deactivated_successfully')
 
         showToast(successMessage, 'success')
       } else {
-        console.warn('Unexpected data structure in mutation result:', result)
+        showToast(t('status_update_failed'), 'error')
       }
     } catch (error) {
-      console.error('Error updating status:', error)
       showToast(t('status_update_failed'), 'error')
     }
   }
@@ -174,8 +172,7 @@ const EmployeeList = () => {
         <Button
           type={record.status === 'active' ? 'primary' : 'danger'}
           onClick={() => {
-            toggleStatus(record.id, record.status),
-              console.log('status', record.status)
+            toggleStatus(record.id, record.status)
           }}
           style={{
             backgroundColor: record.status === 'active' ? '#1890ff' : '#ff4d4f',
