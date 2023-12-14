@@ -72,7 +72,11 @@ const EditEmployee = () => {
 
   const { t } = useTranslation('translation')
   const [avatar, setAvatar] = useState(null)
-
+  const [isAvatarRemoved, setIsAvatarRemoved] = useState(false)
+  const handleRemoveAvatar = () => {
+    setAvatar(null) // Xóa avatar bằng cách đặt trạng thái avatar thành null
+    setIsAvatarRemoved(true) // Đặt trạng thái xác định avatar bị xóa thành true
+  }
   const checkFile = file => {
     const isImage = file.type.startsWith('image/')
 
@@ -552,34 +556,47 @@ const EditEmployee = () => {
                     gap: '20px',
                   }}
                 >
-                  {' '}
-                  {/* Sử dụng gutter để tạo khoảng cách giữa các cột */}
                   <Col>
-                    <img
-                      src={employee?.avatar || ''}
-                      alt="Avatar"
-                      style={{
-                        width: '100px',
-                        height: '100px',
-                        objectFit: 'cover',
-                        borderRadius: '50%',
-                      }}
-                    />
+                    {/* Hiển thị avatar nếu có và không bị xóa */}
+                    {!isAvatarRemoved && employee.avatar && (
+                      <img
+                        src={employee.avatar || ''}
+                        alt="Avatar"
+                        style={{
+                          width: '100px',
+                          height: '100px',
+                          objectFit: 'cover',
+                          borderRadius: '50%',
+                        }}
+                      />
+                    )}
                   </Col>
                   <Col span={16}>
-                    <Upload
-                      name="avatar"
-                      listType="picture"
-                      accept="image/*"
-                      maxCount={1}
-                      action="http://localhost:3000/employees"
-                      beforeUpload={checkFile}
-                      onRemove={() => setAvatar(null)}
-                    >
-                      <Button icon={<UploadOutlined />}>
-                        {t('employee.upload_avatar')}
-                      </Button>
-                    </Upload>
+                    {/* Hiển thị nút "Xóa Avatar" và button "Upload Avatar" */}
+                    <Space>
+                      {/* Nếu avatar đã bị xóa, ẩn hình ảnh nhưng giữ lại button "Upload Avatar" */}
+                      {isAvatarRemoved && (
+                        <Upload
+                          name="avatar"
+                          listType="picture"
+                          accept="image/*"
+                          maxCount={1}
+                          action="http://localhost:3000/employees"
+                          beforeUpload={checkFile}
+                          onRemove={() => setAvatar(null)}
+                        >
+                          <Button icon={<UploadOutlined />}>
+                            {t('employee.upload_avatar')}
+                          </Button>
+                        </Upload>
+                      )}
+                      {/* Thêm nút "Xóa Avatar" */}
+                      {!isAvatarRemoved && (
+                        <Button onClick={handleRemoveAvatar}>
+                          {t('employee.remove_avatar')}
+                        </Button>
+                      )}
+                    </Space>
                   </Col>
                 </Row>
               </Form.Item>
