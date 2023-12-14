@@ -5,7 +5,8 @@
     "back_to_home": "Trở về trang chủ",
     "active": "Kích Hoạt",
     "inactive": "Vô Hiệu Hóa",
-    "login": "Đăng Nhập"
+    "login": "Đăng Nhập",
+    "edit": "Chỉnh sửa"
   },
   "side_menu": {
     "project_management_label": "Dự án",
@@ -131,5 +132,11 @@
     "end_date": "Ngày kết thúc",
     "status": "Trạng thái",
     "action": "Hành động"
+  },
+  "dashboard_page": {
+    "skills": "Kỹ Năng",
+    "employees": "Nhân Viên",
+    "position": "Vị Trí",
+    "project": "Dự án"
   }
 }
