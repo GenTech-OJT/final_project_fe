@@ -50,20 +50,30 @@ const EmployeeList = () => {
     console.log('Delete Record:', recordId)
   }
 
+  const { mutateAsync: changeStatusMutateAsync } = useChangeStatus()
+
   const toggleStatus = async record => {
     try {
-      await changeStatusMutation.mutateAsync(record.id, {
+      await changeStatusMutateAsync(record.id, {
         status: record.status === 'active' ? 'inactive' : 'active',
       })
 
       const updatedData = await refetch()
+      console.log('updatedData after refetch:', updatedData)
 
-      if (changeStatusMutation.isSuccess && updatedData.isSuccess) {
+      if (
+        changeStatusMutateAsync.isSuccess &&
+        updatedData.isSuccess &&
+        updatedData.data &&
+        updatedData.data.data
+      ) {
+        // Cập nhật dữ liệu trong bảng
         setTableData({
           ...tableData,
-          gridData: updatedData.data,
+          gridData: updatedData.data.data,
         })
 
+        // Hiển thị thông báo thành công
         const successMessage =
           record.status === 'active'
             ? t('message.deactivated_successfully')
@@ -71,6 +81,7 @@ const EmployeeList = () => {
 
         showToast(successMessage, 'success')
       } else {
+        console.error('Error updating status:', updatedData.error)
         throw new Error('Error updating status')
       }
     } catch (error) {
@@ -78,8 +89,6 @@ const EmployeeList = () => {
       showToast(t('status_update_failed'), 'error')
     }
   }
-
-  const { mutate: changeStatusMutation } = useChangeStatus()
 
   const handleChange = e => {
     const value = e.target.value
