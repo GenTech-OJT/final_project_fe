@@ -155,7 +155,7 @@ const EditEmployee = () => {
     console.log('formattedValues', formattedValues)
 
     try {
-      await updateEmployeeApi({ id, formattedValues })
+      const result = await updateEmployeeApi({ id, data: formattedValues })
       showToast(t('message.create_employee_success'), 'success')
     } catch (error) {
       console.error('Error creating employee:', error)
