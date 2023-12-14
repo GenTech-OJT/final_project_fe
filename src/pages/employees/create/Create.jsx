@@ -12,13 +12,14 @@ import {
   Col,
   Row,
   ConfigProvider,
+  Spin,
 } from 'antd'
 import {
   MinusCircleOutlined,
   PlusOutlined,
   UploadOutlined,
 } from '@ant-design/icons'
-import { Formik, useField, useFormikContext } from 'formik'
+import { Formik } from 'formik'
 import * as Yup from 'yup'
 import moment from 'moment'
 import { useTranslation } from 'react-i18next'
@@ -33,90 +34,13 @@ import 'dayjs/locale/vi'
 import 'dayjs/locale/en-au'
 import './Create.css'
 
-const SelectPosition = () => {
-  const { data: position } = useGetPositions()
-  const { setFieldValue, values } = useFormikContext()
-  const [positions, setPositions] = useState([])
-  const { t } = useTranslation('translation')
-
-  useEffect(() => {
-    if (position) {
-      const positionsName = position.map(p => p)
-      setPositions(positionsName)
-    }
-  }, [position])
-
-  const [field, meta] = useField('position')
-
-  return (
-    <Form.Item
-      label={t('employee.position_employee')}
-      name="position"
-      validateStatus={meta.position && meta.position ? 'error' : ''}
-      help={meta.position && meta.position && meta.position}
-    >
-      <Select
-        {...field}
-        onChange={value => setFieldValue('position', value)}
-        onBlur={field.onBlur}
-        defaultValue={values.position}
-      >
-        {positions.map(p => (
-          <Select.Option key={p} value={p}>
-            {p}
-          </Select.Option>
-        ))}
-      </Select>
-    </Form.Item>
-  )
-}
-
-const SelectManager = () => {
-  const { data } = useGetManagers()
-  const { setFieldValue, values } = useFormikContext()
-  const [managers, setManagers] = useState([])
-  const { t } = useTranslation('translation')
-
-  useEffect(() => {
-    if (data) {
-      const managerNames = data.map(m => m.name)
-      setManagers(managerNames)
-    }
-  }, [data])
-
-  const [field, meta] = useField('manager')
-
-  return (
-    <Form.Item
-      label={t('employee.manager')}
-      name="manager"
-      validateStatus={meta.error && meta.touched ? 'error' : ''}
-      help={meta.error && meta.touched && meta.error}
-    >
-      <Select
-        {...field}
-        onChange={value => setFieldValue('manager', value)}
-        onBlur={field.onBlur}
-        defaultValue={values.manager}
-      >
-        {managers.map(m => (
-          <Select.Option key={m} value={m}>
-            {m}
-          </Select.Option>
-        ))}
-      </Select>
-    </Form.Item>
-  )
-}
-
 const CreateEmployee = () => {
   const { mutate: createEmployeeApi, isPending } = useCreateEmployee()
-  const { data: position } = useGetPositions()
-  const [defaultPosition, setDefaultPosition] = useState()
+  const { data: positions, isLoading } = useGetPositions()
+  const { data: managers } = useGetManagers()
   const { t } = useTranslation('translation')
   const [datePickerLocale, setDatePickerLocale] = useState(enUS)
   const [avatar, setAvatar] = useState(null)
-
   const forceUpdate = useForceUpdate()
 
   useEffect(() => {
@@ -131,13 +55,6 @@ const CreateEmployee = () => {
     forceUpdate()
   }, [forceUpdate])
 
-  useEffect(() => {
-    if (position) {
-      setDefaultPosition(position)
-    }
-  }, [position])
-
-  console.log(defaultPosition)
   const navigate = useNavigate()
 
   const checkFile = file => {
@@ -152,6 +69,11 @@ const CreateEmployee = () => {
     return false
   }
 
+  if (isLoading) {
+    return <Spin spinning={isLoading} fullscreen />
+  }
+
+  const defaultPosition = positions ? positions[0].name : ''
   const initialValues = {
     name: '',
     email: '',
@@ -162,7 +84,7 @@ const CreateEmployee = () => {
     gender: 'male',
     status: true,
     is_manager: false,
-    position: defaultPosition[0],
+    position: defaultPosition,
     manager: '',
     skills: [{ skill: '', experience: '' }],
     description: '',
@@ -184,7 +106,7 @@ const CreateEmployee = () => {
       .max(10, t('validate.phone_valid')),
     identity: Yup.string()
       .required(t('validate.card_require'))
-      .matches(/^[a-zA-Z0-9]{1,20}$/, t('validate.card_validate')),
+      .matches(/^[0-9]{1,20}$/, t('validate.card_validate')),
     dob: Yup.date().required(t('validate.dob_validate')),
     gender: Yup.string(),
     status: Yup.string(),
@@ -213,8 +135,6 @@ const CreateEmployee = () => {
       createDate: moment(),
     }
 
-    console.log('Format Values: ', formattedValues)
-
     try {
       await createEmployeeApi(formattedValues, {
         onSuccess: () => {
@@ -225,10 +145,7 @@ const CreateEmployee = () => {
           showToast(t('message.create_employee_fail'), 'error')
         },
       })
-    } catch (error) {
-      console.error('Error creating employee:', error)
-      showToast(t('message.create_employee_fail'), 'error')
-    }
+    } catch (error) {}
   }
 
   return (
@@ -381,8 +298,12 @@ const CreateEmployee = () => {
                       onBlur={handleBlur}
                       defaultValue={values.gender}
                     >
-                      <Select.Option value="male">Male</Select.Option>
-                      <Select.Option value="female">Female</Select.Option>
+                      <Select.Option value="male">
+                        {t('employee.male')}
+                      </Select.Option>
+                      <Select.Option value="female">
+                        {t('employee.female')}
+                      </Select.Option>
                     </Select>
                   </Form.Item>
                 </Col>
@@ -401,8 +322,12 @@ const CreateEmployee = () => {
                       onBlur={handleBlur}
                       defaultValue={values.status}
                     >
-                      <Select.Option value={true}>Active</Select.Option>
-                      <Select.Option value={false}>Inactive</Select.Option>
+                      <Select.Option value={true}>
+                        {t('employee.active')}
+                      </Select.Option>
+                      <Select.Option value={false}>
+                        {t('employee.inactive')}
+                      </Select.Option>
                     </Select>
                   </Form.Item>
                 </Col>
@@ -411,15 +336,56 @@ const CreateEmployee = () => {
             <Col xs={24} md={12}>
               <Row gutter={{ xs: 4, sm: 8, md: 12, lg: 16 }}>
                 <Col xs={24} md={12}>
-                  <SelectPosition />
+                  <Form.Item
+                    label={t('employee.position_employee')}
+                    name="position"
+                    validateStatus={
+                      errors.position && touched.position ? 'error' : ''
+                    }
+                    help={
+                      errors.position && touched.position && errors.position
+                    }
+                  >
+                    <Select
+                      name="position"
+                      onChange={value => setFieldValue('position', value)}
+                      onBlur={handleBlur}
+                      defaultValue={values.position}
+                    >
+                      {positions?.map(pos => (
+                        <Select.Option key={pos.id} value={pos.name}>
+                          {pos.name}
+                        </Select.Option>
+                      ))}
+                    </Select>
+                  </Form.Item>
                 </Col>
                 <Col xs={24} md={12}>
-                  <SelectManager />
+                  <Form.Item
+                    label={t('employee.manager')}
+                    name="manager"
+                    validateStatus={
+                      errors.manager && touched.manager ? 'error' : ''
+                    }
+                    help={errors.manager && touched.manager && errors.manager}
+                  >
+                    <Select
+                      name="manager"
+                      onChange={value => setFieldValue('manager', value)}
+                      onBlur={handleBlur}
+                      defaultValue={values.manager}
+                    >
+                      {managers?.map(m => (
+                        <Select.Option key={m.id} value={m.name}>
+                          {m.name}
+                        </Select.Option>
+                      ))}
+                    </Select>
+                  </Form.Item>
                 </Col>
               </Row>
             </Col>
           </Row>
-
           <Row gutter={{ xs: 8, sm: 12, md: 16, lg: 24 }}>
             <Col xs={24} md={12}>
               <Form.Item label={t('employee.skill')} required>
@@ -575,7 +541,7 @@ const CreateEmployee = () => {
 }
 
 const useForceUpdate = () => {
-  const [, setValue] = useState(0)
+  const [value, setValue] = useState(0)
   return () => setValue(value => ++value)
 }
 
