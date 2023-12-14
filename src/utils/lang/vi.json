@@ -29,6 +29,7 @@
     "logout_confirm": "Bạn có chắc chắn muốn đăng xuất?",
     "delete_confirm": "Bạn có chắc chắn muốn xóa?",
     "delete": "Xóa",
+    "logout": "Đăng xuất thành công!",
     "success_login": "Đăng nhập thành công!",
     "error_login": "Đăng nhập thất bại!",
     "create_employee_success": "Tạo nhân viên thành công",

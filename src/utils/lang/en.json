@@ -29,6 +29,7 @@
     "logout_confirm": "Are you sure to logout?",
     "delete_confirm": "Are you sure you want to delete this employee?",
     "Delete": "Delete",
+    "logout": "Logout success!",
     "success_login": "Login success!",
     "error_login": "Login faild!",
     "create_employee_success": "Employee created successfully",
