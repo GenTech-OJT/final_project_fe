@@ -63,3 +63,13 @@ export const updateEmployeeApi = async (id, data) => {
 
   return response.data
 }
+
+export const deleteEmployeeApi = async id => {
+  const response = await axios.delete(`${API_URL.EMPLOYEES}/${id}`)
+
+  if (response.status !== 200) {
+    throw new Error(`HTTP error! Status: ${response.status}`)
+  }
+
+  return response.data
+}
