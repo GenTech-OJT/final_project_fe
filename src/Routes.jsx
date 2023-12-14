@@ -32,7 +32,11 @@ const AppRoutes = () => {
       <Route
         path="/"
         element={
-          isAuthenticated ? <Navigate to="/admin" /> : <Navigate to="/login" />
+          isAuthenticated ? (
+            <Navigate to="/admin/dashboard" />
+          ) : (
+            <Navigate to="/login" />
+          )
         }
       />
       <Route path="/admin" element={<PrivateRoute component={<Admin />} />}>

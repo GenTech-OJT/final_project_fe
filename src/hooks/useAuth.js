@@ -6,11 +6,13 @@ import { showToast } from '@components/toast/ToastCustom'
 import { useTranslation } from 'react-i18next'
 import { login } from '@redux/Slice/authSlice'
 import store from '@redux/store'
+import { useDispatch } from 'react-redux'
+import { setSelectedKey } from '@redux/Slice/menuSlice'
 
 export const useLogin = () => {
-  const queryClient = useQueryClient()
   const navigate = useNavigate()
   const { t } = useTranslation('translation')
+  const dispatch = useDispatch()
 
   return useMutation({
     mutationFn: ({ email, password }) => getLoginApi({ email, password }),
@@ -23,8 +25,8 @@ export const useLogin = () => {
       )
       localStorage.setItem('accessToken', data.accessToken)
       localStorage.setItem('refreshToken', data.refreshToken)
-
-      navigate('/admin')
+      dispatch(setSelectedKey('/admin/dashboard'))
+      navigate('/admin/dashboard')
       showToast(t('message.success_login'), 'success')
     },
     onError: (error, variables, context) => {
