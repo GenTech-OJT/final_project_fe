@@ -108,24 +108,6 @@ const CreateEmployee = () => {
     description: '',
   }
 
-  const breadcrumbItems = [
-    {
-      key: 'dashboard',
-      title: t('breadcrumbs.dashboard'),
-      route: '/admin/dashboard',
-    },
-    {
-      key: 'employees',
-      title: t('breadcrumbs.employees'),
-      route: '/admin/employees',
-    },
-    {
-      key: 'create',
-      title: t('breadcrumbs.create'),
-      route: `/admin/employees/create`,
-    },
-  ]
-
   const validationSchema = Yup.object().shape({
     name: Yup.string()
       .matches(/^([a-zA-Z]\s*)+$/, t('validate.name_validate'))
