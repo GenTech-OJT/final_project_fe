@@ -36,7 +36,7 @@ const SelectManager = () => {
 
   useEffect(() => {
     if (data) {
-      const managerNames = data.map(m => m.name)
+      const managerNames = data?.map(m => m.name)
       setManagers(managerNames)
     }
   }, [data])
@@ -113,7 +113,28 @@ const EditEmployee = () => {
 
   const { t } = useTranslation('translation')
   const [avatar, setAvatar] = useState(null)
+  useEffect(() => {
+    if (employee && employee.avatar) {
+      setAvatar(employee.avatar)
+    }
+  }, [employee])
 
+  const handleUpload = async file => {
+    try {
+      const formData = new FormData()
+      formData.append('avatar', file) // Đổi tên field 'avatar' nếu cần thiết
+
+      const data = await updateEmployeeApi({
+        id,
+        data: { avatar: formData }, // Gửi formData chứa file avatar
+      })
+
+      setAvatar(data.avatar) // Cập nhật avatar sau khi upload thành công
+    } catch (error) {
+      console.error('Error uploading avatar:', error)
+      // Xử lý thông báo lỗi tải lên ở đây nếu cần thiết
+    }
+  }
   const checkFile = file => {
     const isImage = file.type.startsWith('image/')
 
@@ -178,9 +199,10 @@ const EditEmployee = () => {
       status: values.status,
       is_manager: values.is_manager,
       position: values.position,
-      avatar: avatar
-        ? URL.createObjectURL(avatar.originFileObj)
-        : values.avatar, // Updated avatar value
+      // avatar: avatar
+      //   ? URL.createObjectURL(avatar.originFileObj)
+      //   : values.avatar, // Updated avatar value
+      avatar: values.avatar,
       skills: values.skills.map(skill => ({
         name: skill.skill,
         year: skill.experience,
@@ -193,7 +215,7 @@ const EditEmployee = () => {
 
     try {
       const result = await updateEmployeeApi({ id, data: formattedValues })
-      showToast(t('message.create_employee_success'), 'success')
+      showToast(t('message.edit_employee_success'), 'success')
       navigate('/admin/employees')
     } catch (error) {
       console.error('Error creating employee:', error)
@@ -584,48 +606,31 @@ const EditEmployee = () => {
                 ></Checkbox>
               </Form.Item>
 
-              <Form.Item name="avatar" label={t('employee.avatar')}>
+              <Form.Item label={t('employee.avatar')}>
                 <Upload
-                  listType="picture-card"
-                  showUploadList={false}
-                  beforeUpload={checkFile}
-                  onChange={info => {
-                    if (info.file.status === 'done') {
-                      message.success(
-                        `${info.file.name} file uploaded successfully`
-                      )
-                      setAvatar(info.file.originFileObj)
-                    } else if (info.file.status === 'error') {
-                      message.error(`${info.file.name} file upload failed.`)
-                    }
-                  }}
+                  name="avatar"
+                  listType="picture"
+                  accept="image/*"
+                  maxCount={1}
+                  beforeUpload={handleUpload}
+                  onRemove={() => setAvatar(null)}
                 >
-                  {avatar || employee?.avatar ? (
+                  {avatar ? (
                     <img
-                      src={
-                        avatar ? URL.createObjectURL(avatar) : employee.avatar
-                      }
-                      alt="avatar"
-                      style={{
-                        width: '100px',
-                        height: '100px',
-                        objectFit: 'cover',
-                        borderRadius: '50%',
-                      }}
+                      src={avatar}
+                      alt="Avatar"
+                      style={{ width: '100px', height: '100px' }}
                     />
                   ) : (
-                    <div>
-                      <UploadOutlined />
-                      <div style={{ marginTop: 8 }}>
-                        {t('employee.upload_avatar')}
-                      </div>
-                    </div>
+                    <Button icon={<UploadOutlined />}>
+                      {t('employee.upload_avatar')}
+                    </Button>
                   )}
                 </Upload>
               </Form.Item>
               <Form.Item>
                 <Button type="primary" htmlType="submit">
-                  {t('button_input.create')}
+                  {t('button_input.edit')}
                 </Button>
               </Form.Item>
             </Form>
