@@ -5,6 +5,7 @@ import {
   createEmployeeApi,
   getEmployeeByIdApi,
   updateEmployeeApi,
+  deleteEmployeeApi,
 } from '@api/employeeApi'
 import { useNavigate } from 'react-router-dom'
 
@@ -43,6 +44,19 @@ export const useUpdateEmployee = () => {
 
   return useMutation({
     mutationFn: ({ id, data }) => updateEmployeeApi(id, data),
+    onSuccess: (data, variables, context) => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.EMPLOYEES] })
+    },
+    onError: (error, variables, context) => {},
+    onSettled: (data, error, variables, context) => {},
+  })
+}
+
+export const useDeleteEmployee = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: id => deleteEmployeeApi(id),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.EMPLOYEES] })
     },
