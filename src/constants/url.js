@@ -3,5 +3,6 @@ export const API_URL = {
   PROJECTS: '/projects',
   MANAGERS: '/managers',
   POSITIONS: '/positions',
+  DASHBOARD: '/dashboard',
   LOGIN: '/login',
 }
