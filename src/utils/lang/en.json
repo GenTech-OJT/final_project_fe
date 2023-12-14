@@ -5,7 +5,8 @@
     "back_to_home": "Back to Home",
     "active": "Active",
     "inactive": "Inactive",
-    "login": "Log in"
+    "login": "Log in",
+    "edit": "Edit"
   },
   "side_menu": {
     "project_management_label": "Projects",
@@ -130,5 +131,11 @@
     "end_date": "End Date",
     "status": "Status",
     "action": "Action"
+  },
+  "dashboard_page": {
+    "skills": "Skills",
+    "employees": "Employees",
+    "position": "Position",
+    "project": "Project"
   }
 }
