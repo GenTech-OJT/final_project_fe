@@ -363,6 +363,7 @@ const EditEmployee = () => {
                       name="dob"
                       className="dob"
                       onChange={value => setFieldValue('dob', value)}
+                      disabledDate={current => current.isAfter(moment())} // Disable future dates
                       onBlur={handleBlur}
                       value={values.dob}
                     />
