@@ -61,7 +61,5 @@ export const updateEmployeeApi = async (id, data) => {
     throw new Error(`HTTP error! Status: ${response.status}`)
   }
 
-  console.log(response, data)
-
   return response.data
 }
