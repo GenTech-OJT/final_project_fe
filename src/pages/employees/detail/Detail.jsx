@@ -231,7 +231,7 @@ const EmployeeDetail = () => {
                   </div>
                 </div>
                 <div className="vertical-line"></div>
-                <Col span={14}>
+                <Col span={16}>
                   <div className="horizontal_container">
                     <div className="content_1">
                       <div className="employee_content">
