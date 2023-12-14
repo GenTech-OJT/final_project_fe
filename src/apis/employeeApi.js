@@ -26,6 +26,30 @@ export const getEmployeesApi = async ({
   return response.data
 }
 
+export const createEmployeeApi = async data => {
+  const response = await axios.post(API_URL.EMPLOYEES, data, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  })
+
+  if (response.status !== 201) {
+    throw new Error(`HTTP error! Status: ${response.status}`)
+  }
+
+  return response.data
+}
+
+export const getEmployeeByIdApi = async id => {
+  const response = await axios.get(`${API_URL.EMPLOYEES}/${id}`)
+
+  if (response.status !== 200) {
+    throw new Error(`HTTP error! Status: ${response.status}`)
+  }
+
+  return response.data
+}
+
 export const updateEmployeeApi = async (id, data) => {
   const response = await axios.put(`${API_URL.EMPLOYEES}/${id}`, data, {
     headers: {
