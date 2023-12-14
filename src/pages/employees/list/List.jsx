@@ -5,7 +5,7 @@ import {
   CustomTable,
   itemsPerPageOptions,
 } from '@components/custom/CustomTable'
-import { Button, Spin, Empty } from 'antd'
+import { Button, Empty } from 'antd'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
@@ -18,7 +18,6 @@ const EmployeeList = () => {
   const { t } = useTranslation('translation')
 
   const [tableData, setTableData] = useState({
-    gridData: [],
     searchText: '',
     sortedInfo: {},
     pagination: {
@@ -47,40 +46,33 @@ const EmployeeList = () => {
   }
 
   const deleteRecord = recordId => {
-    // Handle logic to delete the selected record
     console.log('Delete Record:', recordId)
   }
 
-  const updateEmployeeMutation = useUpdateEmployee(({ id, data }) =>
-    updateEmployeeApi(id, data)
-  )
+  const { mutateAsync: updateApi } = useUpdateEmployee()
 
   const toggleStatus = async (id, status) => {
     try {
-      const response = await updateEmployeeMutation.mutateAsync({
-        id,
-        data: { status: status === 'active' ? 'inactive' : 'active' },
-      })
+      updateApi(
+        {
+          id: id,
+          data: { status: status === 'active' ? 'inactive' : 'active' },
+        },
+        {
+          onSuccess: data => {
+            const successMessage =
+              data.status === 'active'
+                ? t('message.activated_successfully')
+                : t('message.deactivated_successfully')
 
-      if (response) {
-        const updatedEmployee = response
-
-        setTableData(prevData => ({
-          ...prevData,
-          gridData: prevData.gridData.map(employee =>
-            employee.id === id ? updatedEmployee : employee
-          ),
-        }))
-
-        const successMessage =
-          updatedEmployee.status === 'active'
-            ? t('message.activated_successfully')
-            : t('message.deactivated_successfully')
-
-        showToast(successMessage, 'success')
-      } else {
-        showToast(t('status_update_failed'), 'error')
-      }
+            showToast(successMessage, 'success')
+          },
+          onError: error => {
+            console.log(error)
+            showToast(t('status_update_failed'), 'error')
+          },
+        }
+      )
     } catch (error) {
       showToast(t('status_update_failed'), 'error')
     }
