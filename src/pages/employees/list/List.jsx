@@ -65,7 +65,6 @@ const EmployeeList = () => {
       if (response) {
         const updatedEmployee = response
 
-        // Update the UI
         setTableData(prevData => ({
           ...prevData,
           gridData: prevData.gridData.map(employee =>
