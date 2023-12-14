@@ -5,4 +5,5 @@ export const API_URL = {
   POSITIONS: '/positions',
   DASHBOARD: '/dashboard',
   LOGIN: '/login',
+  REFRESH_TOKEN: '/refresh-token',
 }

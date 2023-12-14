@@ -1,7 +1,8 @@
-import { lazy } from 'react'
+import { lazy, useEffect } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import PrivateRoute from '@components/PrivateRoute'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { login } from '@redux/Slice/authSlice'
 const Login = lazy(() => import('@pages/login/Login'))
 const Admin = lazy(() => import('@pages/Admin'))
 const Dashboard = lazy(() => import('@pages/dashboard/Dashboard'))
@@ -12,8 +13,18 @@ const EmployeeDetail = lazy(() => import('@pages/employees/detail/Detail'))
 const NotFoundPage = lazy(() => import('@pages/notFound/NotFound'))
 
 const AppRoutes = () => {
+  const dispatch = useDispatch()
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
-  const isLoggedIn = localStorage.getItem('isLoggedIn')
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem('accessToken')
+    const refreshToken = localStorage.getItem('refreshToken')
+
+    if (accessToken && refreshToken) {
+      dispatch(login({ accessToken, refreshToken }))
+    }
+  }, [dispatch])
+
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
@@ -21,11 +32,7 @@ const AppRoutes = () => {
       <Route
         path="/"
         element={
-          isAuthenticated || isLoggedIn ? (
-            <Navigate to="/admin" />
-          ) : (
-            <Navigate to="/login" />
-          )
+          isAuthenticated ? <Navigate to="/admin" /> : <Navigate to="/login" />
         }
       />
       <Route path="/admin" element={<PrivateRoute component={<Admin />} />}>
