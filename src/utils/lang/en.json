@@ -137,5 +137,12 @@
     "employees": "Employees",
     "position": "Position",
     "project": "Project"
+  },
+  "pagination": {
+    "of": "of",
+    "items": "items",
+    "previous_page": "Previous Page",
+    "next_page": "Next Page",
+    "pageSize": "page"
   }
 }

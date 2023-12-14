@@ -1,17 +1,17 @@
 /* eslint-disable no-undef */
-import { DeleteOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons'
+import { EditOutlined, EyeOutlined } from '@ant-design/icons'
 import {
   CustomSearch,
   CustomTable,
   itemsPerPageOptions,
 } from '@components/custom/CustomTable'
-import { Button, Spin, Empty } from 'antd'
+import { showToast } from '@components/toast/ToastCustom'
+import { useGetEmployees, useUpdateEmployee } from '@hooks/useEmployee'
+import { Button, Empty } from 'antd'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 import './List.css'
-import { useGetEmployees, useUpdateEmployee } from '@hooks/useEmployee'
-import { showToast } from '@components/toast/ToastCustom'
 
 const EmployeeList = () => {
   const navigate = useNavigate()
@@ -24,7 +24,7 @@ const EmployeeList = () => {
     pagination: {
       current: 1,
       pageSize: 5,
-      total: 14,
+      total: 15,
     },
   })
 
@@ -102,6 +102,11 @@ const EmployeeList = () => {
         description={t('employee.no_data')}
       />
     ),
+    pagination: {
+      prev: t('pagination.prev'),
+      next: t('pagination.next'),
+      pageSize: t('pagination.page_size'),
+    },
   }
 
   const handleTableChange = (pagination, filters, sorter) => {
