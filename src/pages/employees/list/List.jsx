@@ -58,11 +58,11 @@ const EmployeeList = () => {
 
   const toggleStatus = async (id, status) => {
     try {
-      const result = await changeStatusMutateAsync(id, {
+      const result = await updateEmployeeApi(id, {
         status: status === 'active' ? 'inactive' : 'active',
       })
 
-      console.log('changeStatusMutateAsync result:', result)
+      console.log('updateEmployeeApi result:', result)
 
       if (result && result.data) {
         if (result.data.data) {
