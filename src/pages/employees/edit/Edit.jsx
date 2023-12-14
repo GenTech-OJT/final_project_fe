@@ -433,12 +433,11 @@ const EditEmployee = () => {
                           onBlur={handleBlur}
                           value={values.position}
                         >
-                          {positions &&
-                            positions.map(pos => (
-                              <Select.Option key={pos} value={pos}>
-                                {pos}
-                              </Select.Option>
-                            ))}
+                          {positions?.map(pos => (
+                            <Select.Option key={pos} value={pos}>
+                              {pos}
+                            </Select.Option>
+                          ))}
                         </Select>
                       </Form.Item>
                     </Col>
