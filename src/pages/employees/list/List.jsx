@@ -58,38 +58,31 @@ const EmployeeList = () => {
 
   const toggleStatus = async (id, status) => {
     try {
-      const result = await updateEmployeeApi(id, {
-        status: status === 'active' ? 'inactive' : 'active',
+      const result = await updateEmployeeApi({
+        id,
+        data: { status: status === 'active' ? 'inactive' : 'active' },
       })
 
       console.log('updateEmployeeApi result:', result)
 
       if (result && result.data) {
-        if (result.data.data) {
-          // Cập nhật dữ liệu trong bảng
-          setTableData(prevData => ({
-            ...prevData,
-            gridData: result.data.data,
-          }))
+        const updatedEmployee = result.data
 
-          const successMessage =
-            record.status === 'active'
-              ? t('message.deactivated_successfully')
-              : t('message.activated_successfully')
+        setTableData(prevData => ({
+          ...prevData,
+          gridData: prevData.gridData.map(employee =>
+            employee.id === id ? updatedEmployee : employee
+          ),
+        }))
 
-          showToast(successMessage, 'success')
-        } else {
-          console.warn(
-            'Unexpected data structure in mutation result:',
-            result.data
-          )
-        }
+        const successMessage =
+          updatedEmployee.status === 'active'
+            ? t('message.deactivated_successfully')
+            : t('message.activated_successfully')
+
+        showToast(successMessage, 'success')
       } else {
-        console.error(
-          'Error updating status:',
-          result?.data?.error || 'Unknown error'
-        )
-        throw new Error('Error updating status')
+        console.warn('Unexpected data structure in mutation result:', result)
       }
     } catch (error) {
       console.error('Error updating status:', error)
