@@ -5,7 +5,8 @@
     "back_to_home": "Trở về trang chủ",
     "active": "Kích Hoạt",
     "inactive": "Vô Hiệu Hóa",
-    "login": "Đăng Nhập"
+    "login": "Đăng Nhập",
+    "edit": "Chỉnh sửa"
   },
   "side_menu": {
     "project_management_label": "Dự án",
@@ -29,6 +30,7 @@
     "logout_confirm": "Bạn có chắc chắn muốn đăng xuất?",
     "delete_confirm": "Bạn có chắc chắn muốn xóa?",
     "delete": "Xóa",
+    "logout": "Đăng xuất thành công!",
     "success_login": "Đăng nhập thành công!",
     "error_login": "Đăng nhập thất bại!",
     "create_employee_success": "Tạo nhân viên thành công",
@@ -130,5 +132,11 @@
     "end_date": "Ngày kết thúc",
     "status": "Trạng thái",
     "action": "Hành động"
+  },
+  "dashboard_page": {
+    "skills": "Kỹ Năng",
+    "employees": "Nhân Viên",
+    "position": "Vị Trí",
+    "project": "Dự án"
   }
 }
