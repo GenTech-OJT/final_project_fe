@@ -15,8 +15,8 @@ const Chartpie = ({ data }) => {
           show: false,
         },
         legend: {
-          top: '30%',
-          left: '75%',
+          top: 'center',
+          left: '70%',
           itemWidth: 20,
           itemHeight: 14,
           itemGap: 18,
@@ -65,7 +65,7 @@ const Chartpie = ({ data }) => {
                 fill: '#333',
               },
               left: 'center',
-              top: '85%',
+              top: '90%',
             },
           ],
         },
@@ -83,7 +83,7 @@ const Chartpie = ({ data }) => {
   return (
     <div
       ref={chartRef}
-      style={{ width: '800px', height: '390px', right: '200px' }}
+      style={{ width: '660px', height: '331px', right: '230px' }}
     />
   )
 }
