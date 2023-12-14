@@ -23,12 +23,12 @@ import moment from 'moment'
 import { useTranslation } from 'react-i18next'
 import { showToast } from '@components/toast/ToastCustom'
 import { useGetEmployeeById, useUpdateEmployee } from '@hooks/useEmployee'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import './Edit.css'
 
 const EditEmployee = () => {
   const { id } = useParams()
-
+  const navigate = useNavigate()
   const { data: employee, isLoading } = useGetEmployeeById(id)
   const { mutateAsync: updateEmployeeApi } = useUpdateEmployee()
 
@@ -38,13 +38,18 @@ const EditEmployee = () => {
     code: employee?.code,
     phone: employee?.phone,
     identity: employee?.identity,
-    // dob: employee?.dob,
+    dob: moment(employee?.dob, 'YYYY-MM-DD'),
+
     gender: employee?.gender,
     status: employee?.status,
     isManager: employee?.isManager,
     position: employee?.position,
     manager: employee?.manager,
-    skills: [{ skill: '', experience: '' }],
+    skills: employee?.skills?.map(skill => ({
+      skill: skill.name,
+      experience: skill.year,
+    })),
+    avatar: employee?.avatar,
     description: employee?.description,
   }
 
@@ -81,40 +86,40 @@ const EditEmployee = () => {
   }
 
   const validationSchema = Yup.object().shape({
-    // name: Yup.string()
-    //   .matches(/^([a-zA-Z]\s*)+$/, t('validate.name_validate'))
-    //   .min(3, t('validate.name_validate_min'))
-    //   .max(40, t('validate.name_validate_max'))
-    //   .required(t('validate.name_require')),
-    // email: Yup.string()
-    //   .email(t('validate.email_invalid'))
-    //   .required(t('validate.email_validate')),
-    // code: Yup.string().required(t('validate.code_validate')),
-    // phone: Yup.string()
-    //   .required(t('validate.phone_validate'))
-    //   .min(9, t('validate.phone_valid'))
-    //   .max(10, t('validate.phone_valid')),
-    // identity: Yup.string()
-    //   .required(t('validate.card_require'))
-    //   .matches(/^[a-zA-Z0-9]{1,20}$/, t('validate.card_validate')),
-    // dob: Yup.date().required(t('validate.dob_validate')),
-    // gender: Yup.string(),
-    // status: Yup.string(),
-    // position: Yup.string(),
-    // isManager: Yup.bool(),
-    // manager: Yup.string(),
-    // skills: Yup.array()
-    //   .of(
-    //     Yup.object().shape({
-    //       skill: Yup.string().required(t('validate.skill_validate')),
-    //       experience: Yup.string()
-    //         .required(t('validate.experience_require'))
-    //         .matches(/^\d+(\.\d+)?$/, t('validate.experience_validate')),
-    //     })
-    //   )
-    //   .required(t('validate.skills_require'))
-    //   .min(1, t('validate.skills_validate')),
-    // description: Yup.string(),
+    name: Yup.string()
+      .matches(/^([a-zA-Z]\s*)+$/, t('validate.name_validate'))
+      .min(3, t('validate.name_validate_min'))
+      .max(40, t('validate.name_validate_max'))
+      .required(t('validate.name_require')),
+    email: Yup.string()
+      .email(t('validate.email_invalid'))
+      .required(t('validate.email_validate')),
+    code: Yup.string().required(t('validate.code_validate')),
+    phone: Yup.string()
+      .required(t('validate.phone_validate'))
+      .min(9, t('validate.phone_valid'))
+      .max(10, t('validate.phone_valid')),
+    identity: Yup.string()
+      .required(t('validate.card_require'))
+      .matches(/^[a-zA-Z0-9]{1,20}$/, t('validate.card_validate')),
+    dob: Yup.date().required(t('validate.dob_validate')),
+    gender: Yup.string(),
+    status: Yup.string(),
+    position: Yup.string(),
+    isManager: Yup.bool(),
+    manager: Yup.string(),
+    skills: Yup.array()
+      .of(
+        Yup.object().shape({
+          skill: Yup.string().required(t('validate.skill_validate')),
+          experience: Yup.string()
+            .required(t('validate.experience_require'))
+            .matches(/^\d+(\.\d+)?$/, t('validate.experience_validate')),
+        })
+      )
+      .required(t('validate.skills_require'))
+      .min(1, t('validate.skills_validate')),
+    description: Yup.string(),
   })
 
   const handleFormSubmit = async values => {
@@ -122,12 +127,31 @@ const EditEmployee = () => {
       ...values,
       // dob: moment(values.dob.$d).format('YYYY-MM-DD'),
       // avatar: avatar,
+      name: values.name,
+      email: values.email,
+      code: values.code,
+      phone: values.phone,
+      identity: values.identity,
+      dob: values.dob.format('YYYY-MM-DD'), // Định dạng lại ngày tháng nếu cần thiết
+      gender: values.gender,
+      status: values.status,
+      is_manager: values.is_manager,
+      position: values.position,
+      avatar: avatar
+        ? URL.createObjectURL(avatar.originFileObj)
+        : values.avatar, // Updated avatar value
+      skills: values.skills.map(skill => ({
+        name: skill.skill,
+        year: skill.experience,
+      })),
+      manager: values.manager,
+      description: values.description,
     }
 
     console.log('formattedValues', formattedValues)
 
     try {
-      const result = await updateEmployeeApi({ id, data: formattedValues })
+      await updateEmployeeApi({ id, formattedValues })
       showToast(t('message.create_employee_success'), 'success')
     } catch (error) {
       console.error('Error creating employee:', error)
@@ -516,19 +540,48 @@ const EditEmployee = () => {
                   checked={values.isManager}
                 ></Checkbox>
               </Form.Item>
-              <Form.Item label={t('employee.avatar')}>
-                <Upload
-                  name="avatar"
-                  listType="picture"
-                  accept="image/*"
-                  maxCount={1}
-                  beforeUpload={checkFile}
-                  onRemove={() => setAvatar(null)}
+              <Form.Item name="avatar">
+                <p style={{ marginBottom: '8px', fontWeight: 'bold' }}>
+                  {t('employee.avatar')}
+                </p>
+
+                <Row
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '20px',
+                  }}
                 >
-                  <Button icon={<UploadOutlined />}>
-                    {t('employee.upload_avatar')}
-                  </Button>
-                </Upload>
+                  {' '}
+                  {/* Sử dụng gutter để tạo khoảng cách giữa các cột */}
+                  <Col>
+                    <img
+                      src={employee?.avatar || ''}
+                      alt="Avatar"
+                      style={{
+                        width: '100px',
+                        height: '100px',
+                        objectFit: 'cover',
+                        borderRadius: '50%',
+                      }}
+                    />
+                  </Col>
+                  <Col span={16}>
+                    <Upload
+                      name="avatar"
+                      listType="picture"
+                      accept="image/*"
+                      maxCount={1}
+                      action="http://localhost:3000/employees"
+                      beforeUpload={checkFile}
+                      onRemove={() => setAvatar(null)}
+                    >
+                      <Button icon={<UploadOutlined />}>
+                        {t('employee.upload_avatar')}
+                      </Button>
+                    </Upload>
+                  </Col>
+                </Row>
               </Form.Item>
               <Form.Item>
                 <Button type="primary" htmlType="submit">
