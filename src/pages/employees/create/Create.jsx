@@ -11,6 +11,7 @@ import {
   Checkbox,
   Col,
   Row,
+  ConfigProvider,
 } from 'antd'
 import {
   MinusCircleOutlined,
@@ -21,23 +22,64 @@ import { Formik, useField, useFormikContext } from 'formik'
 import * as Yup from 'yup'
 import moment from 'moment'
 import { useTranslation } from 'react-i18next'
-// import { useNavigate } from 'react-router'
+import { useNavigate } from 'react-router'
 import { showToast } from '@components/toast/ToastCustom'
-import { useGetEmployees, useCreateEmployee } from '@hooks/useEmployee'
+import { useCreateEmployee } from '@hooks/useEmployee'
+import { useGetManagers } from '@hooks/useManager'
+import { useGetPositions } from '@hooks/usePosition'
+import enUS from 'antd/locale/en_US'
+import viVN from 'antd/locale/vi_VN'
+import 'dayjs/locale/vi'
+import 'dayjs/locale/en-au'
 import './Create.css'
+
+const SelectPosition = () => {
+  const { data: position } = useGetPositions()
+  const { setFieldValue, values } = useFormikContext()
+  const [positions, setPositions] = useState([])
+  const { t } = useTranslation('translation')
+
+  useEffect(() => {
+    if (position) {
+      const positionsName = position.map(p => p)
+      setPositions(positionsName)
+    }
+  }, [position])
+
+  const [field, meta] = useField('position')
+
+  return (
+    <Form.Item
+      label={t('employee.position_employee')}
+      name="position"
+      validateStatus={meta.position && meta.position ? 'error' : ''}
+      help={meta.position && meta.position && meta.position}
+    >
+      <Select
+        {...field}
+        onChange={value => setFieldValue('position', value)}
+        onBlur={field.onBlur}
+        defaultValue={values.position}
+      >
+        {positions.map(p => (
+          <Select.Option key={p} value={p}>
+            {p}
+          </Select.Option>
+        ))}
+      </Select>
+    </Form.Item>
+  )
+}
+
 const SelectManager = () => {
-  const { data } = useGetEmployees({
-    pageSize: undefined,
-    sortColumn: 'id',
-    sortOrder: 'asc',
-  })
+  const { data } = useGetManagers()
   const { setFieldValue, values } = useFormikContext()
   const [managers, setManagers] = useState([])
   const { t } = useTranslation('translation')
 
   useEffect(() => {
     if (data) {
-      const managerNames = data.data.map(m => m.name)
+      const managerNames = data.map(m => m.name)
       setManagers(managerNames)
     }
   }, [data])
@@ -68,17 +110,35 @@ const SelectManager = () => {
 }
 
 const CreateEmployee = () => {
-  const {
-    mutate: createEmployeeApi,
-    // isLoading,
-    // isError,
-    // error,
-  } = useCreateEmployee()
+  const { mutate: createEmployeeApi, isPending } = useCreateEmployee()
+  const { data: position } = useGetPositions()
+  const [defaultPosition, setDefaultPosition] = useState()
   const { t } = useTranslation('translation')
+  const [datePickerLocale, setDatePickerLocale] = useState(enUS)
   const [avatar, setAvatar] = useState(null)
-  // const navigate = useNavigate()
 
-  // const [form] = Form.useForm()
+  const forceUpdate = useForceUpdate()
+
+  useEffect(() => {
+    const savedLanguage = localStorage.getItem('selectedLanguage')
+
+    if (savedLanguage === 'eng') {
+      setDatePickerLocale(enUS)
+    } else if (savedLanguage === 'vi') {
+      setDatePickerLocale(viVN)
+    }
+
+    forceUpdate()
+  }, [forceUpdate])
+
+  useEffect(() => {
+    if (position) {
+      setDefaultPosition(position)
+    }
+  }, [position])
+
+  console.log(defaultPosition)
+  const navigate = useNavigate()
 
   const checkFile = file => {
     const isImage = file.type.startsWith('image/')
@@ -101,8 +161,8 @@ const CreateEmployee = () => {
     dob: null,
     gender: 'male',
     status: true,
-    isManager: false,
-    position: 'Developer',
+    is_manager: false,
+    position: defaultPosition[0],
     manager: '',
     skills: [{ skill: '', experience: '' }],
     description: '',
@@ -129,7 +189,7 @@ const CreateEmployee = () => {
     gender: Yup.string(),
     status: Yup.string(),
     position: Yup.string(),
-    isManager: Yup.bool(),
+    is_manager: Yup.bool(),
     manager: Yup.string(),
     skills: Yup.array()
       .of(
@@ -150,6 +210,7 @@ const CreateEmployee = () => {
       ...values,
       dob: moment(values.dob.$d).format('YYYY-MM-DD'),
       avatar: avatar,
+      createDate: moment(),
     }
 
     console.log('Format Values: ', formattedValues)
@@ -158,15 +219,7 @@ const CreateEmployee = () => {
       await createEmployeeApi(formattedValues, {
         onSuccess: () => {
           showToast(t('message.create_employee_success'), 'success')
-          // navigate('/admin/employees')
-          // const token =
-          //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NzBiOThiM2I2MTViZjIwYzdmODQzYSIsImlzQWRtaW4iOnRydWUsImlhdCI6MTcwMjMxNTk2MiwiZXhwIjoxNzAyMzE1OTkyfQ.HF-hz18XXtDSgxMJiJchsXiiFww6qQFfvrbHhMnZc3w'
-          // const refreshToken =
-          //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NzBiOThiM2I2MTViZjIwYzdmODQzYSIsImlzQWRtaW4iOnRydWUsImlhdCI6MTcwMjMxNTk2MiwiZXhwIjoxNzMzODUxOTYyfQ.D3Lq6_jL_N5Cie2BZDA4CisMv_m5BNg2CaTCWMUCJmk'
-          // dispatch(login({ token, refreshToken }))
-          // localStorage.setItem('isLoggedIn', 'true')
-          // navigate('/admin')
-          // showToast('Login Successful !', 'success')
+          navigate('/admin/employees')
         },
         onError: () => {
           showToast(t('message.create_employee_fail'), 'error')
@@ -193,7 +246,6 @@ const CreateEmployee = () => {
         handleSubmit,
         setFieldValue,
         validateField,
-        // isSubmitting,
       }) => (
         <Form
           layout="vertical"
@@ -298,14 +350,16 @@ const CreateEmployee = () => {
                 validateStatus={errors.dob && touched.dob ? 'error' : ''}
                 help={errors.dob && touched.dob ? errors.dob : ''}
               >
-                <DatePicker
-                  placement="bottomRight"
-                  name="dob"
-                  className="dob"
-                  onChange={value => setFieldValue('dob', value)}
-                  onBlur={handleBlur}
-                  value={values.dob}
-                />
+                <ConfigProvider locale={datePickerLocale}>
+                  <DatePicker
+                    placement="bottomRight"
+                    name="dob"
+                    className="dob"
+                    onChange={value => setFieldValue('dob', value)}
+                    onBlur={handleBlur}
+                    value={values.dob}
+                  />
+                </ConfigProvider>
               </Form.Item>
             </Col>
           </Row>
@@ -357,30 +411,7 @@ const CreateEmployee = () => {
             <Col xs={24} md={12}>
               <Row gutter={{ xs: 4, sm: 8, md: 12, lg: 16 }}>
                 <Col xs={24} md={12}>
-                  <Form.Item
-                    label={t('employee.position_employee')}
-                    name="position"
-                    validateStatus={
-                      errors.position && touched.position ? 'error' : ''
-                    }
-                    help={
-                      errors.position && touched.position && errors.position
-                    }
-                  >
-                    <Select
-                      name="position"
-                      onChange={value => setFieldValue('position', value)}
-                      onBlur={handleBlur}
-                      defaultValue={values.position}
-                    >
-                      <Select.Option value="Developer">Developer</Select.Option>
-                      <Select.Option value="Quality Assurance">
-                        Quality Assurance
-                      </Select.Option>
-                      <Select.Option value="CEO">CEO</Select.Option>
-                      <Select.Option value="President">President</Select.Option>
-                    </Select>
-                  </Form.Item>
+                  <SelectPosition />
                 </Col>
                 <Col xs={24} md={12}>
                   <SelectManager />
@@ -510,12 +541,12 @@ const CreateEmployee = () => {
               </Form.Item>
             </Col>
           </Row>
-          <Form.Item label={t('employee.is_manager')} name="isManager">
+          <Form.Item label={t('employee.is_manager')} name="is_manager">
             <Checkbox
-              name="isManager"
+              name="is_manager"
               onChange={handleChange}
               onBlur={handleBlur}
-              checked={values.isManager}
+              checked={values.is_manager}
             ></Checkbox>
           </Form.Item>
           <Form.Item label={t('employee.avatar')}>
@@ -533,7 +564,7 @@ const CreateEmployee = () => {
             </Upload>
           </Form.Item>
           <Form.Item>
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" htmlType="submit" loading={isPending}>
               {t('button_input.create')}
             </Button>
           </Form.Item>
@@ -541,6 +572,11 @@ const CreateEmployee = () => {
       )}
     </Formik>
   )
+}
+
+const useForceUpdate = () => {
+  const [, setValue] = useState(0)
+  return () => setValue(value => ++value)
 }
 
 export default CreateEmployee
