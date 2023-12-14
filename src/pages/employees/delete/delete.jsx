@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-import { Button, Modal, message } from 'antd'
+import { Button, Modal } from 'antd'
 import { DeleteOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 import { useDeleteEmployee } from '@hooks/useEmployee'
 import { showToast } from '@components/toast/ToastCustom'
 
 const DeleteEmployee = ({ employeeId }) => {
-  const { mutate: deleteEmployeeApi, isLoading } = useDeleteEmployee()
+  const { mutate: deleteEmployeeApi } = useDeleteEmployee()
   const [isModalVisible, setIsModalVisible] = useState(false)
   const { t } = useTranslation('translation')
 
