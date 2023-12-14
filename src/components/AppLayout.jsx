@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { setSelectedKey } from '../redux/Slice/menuSlice'
 import logoImage from '../assets/img/GenTech-Logo.png'
-import '../App.css'
+import { showToast } from '@components/toast/ToastCustom'
 import Spinner from './admin/Spinner/Spinner'
 
 const { Header, Sider, Content } = Layout
@@ -82,6 +82,7 @@ const AppLayout = ({ children }) => {
             if (item.key === '/login') {
               localStorage.removeItem('isLoggedIn')
               navigate('/login', { replace: true })
+              showToast(t('message.logout'), 'success')
             } else {
               localStorage.setItem('selectedKey', item.key)
               dispatch(setSelectedKey(item.key))
@@ -139,6 +140,7 @@ const AppLayout = ({ children }) => {
             <Select
               value={selectedLanguage}
               style={{
+                right: 15,
                 width: 120,
               }}
               onChange={changeLanguage}

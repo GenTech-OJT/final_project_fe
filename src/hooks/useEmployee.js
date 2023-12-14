@@ -1,4 +1,4 @@
-import { useQuery, useMutation } from '@tanstack/react-query'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { QUERY_KEY } from '@constants/reactQuery'
 import {
   getEmployeesApi,
@@ -39,9 +39,13 @@ export const useGetEmployeeById = id => {
 }
 
 export const useUpdateEmployee = () => {
+  const queryClient = useQueryClient()
+
   return useMutation({
     mutationFn: ({ id, data }) => updateEmployeeApi(id, data),
-    onSuccess: (data, variables, context) => {},
+    onSuccess: (data, variables, context) => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.EMPLOYEES] })
+    },
     onError: (error, variables, context) => {},
     onSettled: (data, error, variables, context) => {},
   })

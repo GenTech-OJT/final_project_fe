@@ -5,19 +5,35 @@ import {
   UserOutlined,
 } from '@ant-design/icons'
 import { Card, Col, Flex, Row, Statistic } from 'antd'
+import { useTranslation } from 'react-i18next'
+import BreadCrumb from '../../components/admin/Breadcrumb/Breadcrumb'
+import { useGetDashboard } from '../../hooks/useDashboard'
 import { ChartBar, ChartPie } from './Chart/Chart'
 import './Dashboard.css'
+
 const Dashboard = () => {
+  const { data } = useGetDashboard()
+  console.log(data)
+  const { t } = useTranslation('translation')
+  console.log(data)
+  const breadcrumbItems = [
+    {
+      key: 'dashboard',
+      title: t('breadcrumbs.dashboard'),
+      route: '/admin/dashboard',
+    },
+  ]
   return (
     <div className="dashboard">
+      <BreadCrumb items={breadcrumbItems} />
       <h2>Dashboard Page</h2>
       <Row gutter={{ xs: 8, sm: 12, md: 16, lg: 24 }}>
         <Col xs={24} sm={12} md={6}>
           <Card>
             <Flex justify="space-between">
               <Statistic
-                title="Employees"
-                value={100}
+                title={t('dashboard_page.employees')}
+                value={data?.employeeCount}
                 className="custom-statistic"
               ></Statistic>
               <UserOutlined className="custom-icon" />
@@ -28,8 +44,8 @@ const Dashboard = () => {
           <Card>
             <Flex justify="space-between">
               <Statistic
-                title="Projects"
-                value={100}
+                title={t('dashboard_page.project')}
+                value={data?.projectCount}
                 className="custom-statistic"
               ></Statistic>
               <ProjectOutlined className="custom-icon" />
@@ -40,7 +56,7 @@ const Dashboard = () => {
           <Card>
             <Flex justify="space-between">
               <Statistic
-                title="Skills"
+                title={t('dashboard_page.skills')}
                 value={100}
                 className="custom-statistic"
               ></Statistic>
@@ -52,8 +68,8 @@ const Dashboard = () => {
           <Card>
             <Flex justify="space-between">
               <Statistic
-                title="Positions"
-                value={100}
+                title={t('dashboard_page.position')}
+                value={data?.positionCount}
                 className="custom-statistic"
               ></Statistic>
               <TeamOutlined className="custom-icon" />

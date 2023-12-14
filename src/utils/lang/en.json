@@ -5,7 +5,8 @@
     "back_to_home": "Back to Home",
     "active": "Active",
     "inactive": "Inactive",
-    "login": "Log in"
+    "login": "Log in",
+    "edit": "Edit"
   },
   "side_menu": {
     "project_management_label": "Projects",
@@ -29,6 +30,7 @@
     "logout_confirm": "Are you sure to logout?",
     "delete_confirm": "Are you sure you want to delete this employee?",
     "Delete": "Delete",
+    "logout": "Logout success!",
     "success_login": "Login success!",
     "error_login": "Login faild!",
     "create_employee_success": "Employee created successfully",
@@ -132,5 +134,11 @@
     "end_date": "End Date",
     "status": "Status",
     "action": "Action"
+  },
+  "dashboard_page": {
+    "skills": "Skills",
+    "employees": "Employees",
+    "position": "Position",
+    "project": "Project"
   }
 }
