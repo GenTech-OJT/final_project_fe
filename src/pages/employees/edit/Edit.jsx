@@ -23,13 +23,54 @@ import moment from 'moment'
 import { useTranslation } from 'react-i18next'
 import { showToast } from '@components/toast/ToastCustom'
 import { useGetEmployeeById, useUpdateEmployee } from '@hooks/useEmployee'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import './Edit.css'
+import { useGetPositions } from '@hooks/usePosition'
+import { useGetManagers } from '@hooks/useManager'
 
+const SelectManager = () => {
+  const { data } = useGetManagers()
+  const { setFieldValue, values } = useFormikContext()
+  const [managers, setManagers] = useState([])
+  const { t } = useTranslation('translation')
+
+  useEffect(() => {
+    if (data) {
+      const managerNames = data.map(m => m.name)
+      setManagers(managerNames)
+    }
+  }, [data])
+
+  const [field, meta] = useField('manager')
+
+  return (
+    <Form.Item
+      label={t('employee.manager')}
+      name="manager"
+      validateStatus={meta.error && meta.touched ? 'error' : ''}
+      help={meta.error && meta.touched && meta.error}
+    >
+      <Select
+        {...field}
+        onChange={value => setFieldValue('manager', value)}
+        onBlur={field.onBlur}
+        defaultValue={values.manager}
+      >
+        {managers.map(m => (
+          <Select.Option key={m} value={m}>
+            {m}
+          </Select.Option>
+        ))}
+      </Select>
+    </Form.Item>
+  )
+}
 const EditEmployee = () => {
   const { id } = useParams()
+  const navigate = useNavigate()
 
   const { data: employee, isLoading } = useGetEmployeeById(id)
+  const { data: positions } = useGetPositions()
   const { mutateAsync: updateEmployeeApi } = useUpdateEmployee()
 
   const initialValues = {
@@ -38,13 +79,18 @@ const EditEmployee = () => {
     code: employee?.code,
     phone: employee?.phone,
     identity: employee?.identity,
-    // dob: employee?.dob,
+    dob: moment(employee?.dob, 'YYYY-MM-DD'),
+
     gender: employee?.gender,
     status: employee?.status,
-    isManager: employee?.isManager,
+    is_manager: employee?.is_manager,
     position: employee?.position,
     manager: employee?.manager,
-    skills: [{ skill: '', experience: '' }],
+    skills: employee?.skills?.map(skill => ({
+      skill: skill.name,
+      experience: skill.year,
+    })),
+    avatar: employee?.avatar,
     description: employee?.description,
   }
 
@@ -58,7 +104,7 @@ const EditEmployee = () => {
   //   // dob: initialValues.dob,
   //   gender: initialValues.gender,
   //   status: initialValues.status,
-  //   isManager: initialValues.isManager,
+  //   is_manager: initialValues.is_manager,
   //   position: initialValues.position,
   //   manager: initialValues.manager,
   //   skills: [{ skill: '', experience: '' }],
@@ -81,40 +127,40 @@ const EditEmployee = () => {
   }
 
   const validationSchema = Yup.object().shape({
-    // name: Yup.string()
-    //   .matches(/^([a-zA-Z]\s*)+$/, t('validate.name_validate'))
-    //   .min(3, t('validate.name_validate_min'))
-    //   .max(40, t('validate.name_validate_max'))
-    //   .required(t('validate.name_require')),
-    // email: Yup.string()
-    //   .email(t('validate.email_invalid'))
-    //   .required(t('validate.email_validate')),
-    // code: Yup.string().required(t('validate.code_validate')),
-    // phone: Yup.string()
-    //   .required(t('validate.phone_validate'))
-    //   .min(9, t('validate.phone_valid'))
-    //   .max(10, t('validate.phone_valid')),
-    // identity: Yup.string()
-    //   .required(t('validate.card_require'))
-    //   .matches(/^[a-zA-Z0-9]{1,20}$/, t('validate.card_validate')),
-    // dob: Yup.date().required(t('validate.dob_validate')),
-    // gender: Yup.string(),
-    // status: Yup.string(),
-    // position: Yup.string(),
-    // isManager: Yup.bool(),
-    // manager: Yup.string(),
-    // skills: Yup.array()
-    //   .of(
-    //     Yup.object().shape({
-    //       skill: Yup.string().required(t('validate.skill_validate')),
-    //       experience: Yup.string()
-    //         .required(t('validate.experience_require'))
-    //         .matches(/^\d+(\.\d+)?$/, t('validate.experience_validate')),
-    //     })
-    //   )
-    //   .required(t('validate.skills_require'))
-    //   .min(1, t('validate.skills_validate')),
-    // description: Yup.string(),
+    name: Yup.string()
+      .matches(/^([a-zA-Z]\s*)+$/, t('validate.name_validate'))
+      .min(3, t('validate.name_validate_min'))
+      .max(40, t('validate.name_validate_max'))
+      .required(t('validate.name_require')),
+    email: Yup.string()
+      .email(t('validate.email_invalid'))
+      .required(t('validate.email_validate')),
+    code: Yup.string().required(t('validate.code_validate')),
+    phone: Yup.string()
+      .required(t('validate.phone_validate'))
+      .min(9, t('validate.phone_valid'))
+      .max(10, t('validate.phone_valid')),
+    identity: Yup.string()
+      .required(t('validate.card_require'))
+      .matches(/^[a-zA-Z0-9]{1,20}$/, t('validate.card_validate')),
+    dob: Yup.date().required(t('validate.dob_validate')),
+    gender: Yup.string(),
+    status: Yup.string(),
+    position: Yup.string(),
+    is_manager: Yup.bool(),
+    manager: Yup.string(),
+    skills: Yup.array()
+      .of(
+        Yup.object().shape({
+          skill: Yup.string().required(t('validate.skill_validate')),
+          experience: Yup.string()
+            .required(t('validate.experience_require'))
+            .matches(/^\d+(\.\d+)?$/, t('validate.experience_validate')),
+        })
+      )
+      .required(t('validate.skills_require'))
+      .min(1, t('validate.skills_validate')),
+    description: Yup.string(),
   })
 
   const handleFormSubmit = async values => {
@@ -122,6 +168,25 @@ const EditEmployee = () => {
       ...values,
       // dob: moment(values.dob.$d).format('YYYY-MM-DD'),
       // avatar: avatar,
+      name: values.name,
+      email: values.email,
+      code: values.code,
+      phone: values.phone,
+      identity: values.identity,
+      dob: values.dob.format('YYYY-MM-DD'), // Định dạng lại ngày tháng nếu cần thiết
+      gender: values.gender,
+      status: values.status,
+      is_manager: values.is_manager,
+      position: values.position,
+      avatar: avatar
+        ? URL.createObjectURL(avatar.originFileObj)
+        : values.avatar, // Updated avatar value
+      skills: values.skills.map(skill => ({
+        name: skill.skill,
+        year: skill.experience,
+      })),
+      manager: values.manager,
+      description: values.description,
     }
 
     console.log('formattedValues', formattedValues)
@@ -129,6 +194,7 @@ const EditEmployee = () => {
     try {
       const result = await updateEmployeeApi({ id, data: formattedValues })
       showToast(t('message.create_employee_success'), 'success')
+      navigate('/admin/employees')
     } catch (error) {
       console.error('Error creating employee:', error)
       showToast(t('message.create_employee_fail'), 'error')
@@ -236,6 +302,7 @@ const EditEmployee = () => {
                     <Input
                       name="code"
                       value={values.code}
+                      disabled={true}
                       onChange={handleChange}
                       onBlur={handleBlur}
                     />
@@ -253,7 +320,7 @@ const EditEmployee = () => {
                   >
                     <Input
                       name="phone"
-                      type="number"
+                      type="text"
                       value={values.phone}
                       onChange={handleChange}
                       onBlur={handleBlur}
@@ -277,6 +344,7 @@ const EditEmployee = () => {
                     <Input
                       name="identity"
                       value={values.identity}
+                      disabled={true}
                       onChange={handleChange}
                       onBlur={handleBlur}
                     />
@@ -363,20 +431,19 @@ const EditEmployee = () => {
                           name="position"
                           onChange={value => setFieldValue('position', value)}
                           onBlur={handleBlur}
-                          defaultValue={values.position}
+                          value={values.position}
                         >
-                          <Select.Option value="Developer">
-                            Developer
-                          </Select.Option>
-                          <Select.Option value="Quality Assurance">
-                            Quality Assurance
-                          </Select.Option>
-                          <Select.Option value="CEO">CEO</Select.Option>
-                          <Select.Option value="President">
-                            President
-                          </Select.Option>
+                          {positions &&
+                            positions.map(pos => (
+                              <Select.Option key={pos} value={pos}>
+                                {pos}
+                              </Select.Option>
+                            ))}
                         </Select>
                       </Form.Item>
+                    </Col>
+                    <Col xs={24} md={12}>
+                      <SelectManager />
                     </Col>
                     <Col xs={24} md={12}>
                       {/* <SelectManager /> */}
@@ -508,26 +575,52 @@ const EditEmployee = () => {
                   </Form.Item>
                 </Col>
               </Row>
-              <Form.Item label={t('employee.is_manager')} name="isManager">
+              <Form.Item label={t('employee.is_manager')} name="is_manager">
                 <Checkbox
-                  name="isManager"
-                  onChange={handleChange}
+                  name="is_manager"
+                  onChange={e => setFieldValue('is_manager', e.target.checked)}
                   onBlur={handleBlur}
-                  checked={values.isManager}
+                  checked={values.is_manager}
                 ></Checkbox>
               </Form.Item>
-              <Form.Item label={t('employee.avatar')}>
+
+              <Form.Item name="avatar" label={t('employee.avatar')}>
                 <Upload
-                  name="avatar"
-                  listType="picture"
-                  accept="image/*"
-                  maxCount={1}
+                  listType="picture-card"
+                  showUploadList={false}
                   beforeUpload={checkFile}
-                  onRemove={() => setAvatar(null)}
+                  onChange={info => {
+                    if (info.file.status === 'done') {
+                      message.success(
+                        `${info.file.name} file uploaded successfully`
+                      )
+                      setAvatar(info.file.originFileObj)
+                    } else if (info.file.status === 'error') {
+                      message.error(`${info.file.name} file upload failed.`)
+                    }
+                  }}
                 >
-                  <Button icon={<UploadOutlined />}>
-                    {t('employee.upload_avatar')}
-                  </Button>
+                  {avatar || employee?.avatar ? (
+                    <img
+                      src={
+                        avatar ? URL.createObjectURL(avatar) : employee.avatar
+                      }
+                      alt="avatar"
+                      style={{
+                        width: '100px',
+                        height: '100px',
+                        objectFit: 'cover',
+                        borderRadius: '50%',
+                      }}
+                    />
+                  ) : (
+                    <div>
+                      <UploadOutlined />
+                      <div style={{ marginTop: 8 }}>
+                        {t('employee.upload_avatar')}
+                      </div>
+                    </div>
+                  )}
                 </Upload>
               </Form.Item>
               <Form.Item>
