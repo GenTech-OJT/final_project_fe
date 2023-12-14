@@ -1,29 +1,33 @@
-import { useState } from 'react'
-import {
-  Button,
-  DatePicker,
-  Form,
-  Input,
-  Select,
-  Space,
-  message,
-  Upload,
-  Checkbox,
-} from 'antd'
-import { useNavigate } from 'react-router'
 import {
   MinusCircleOutlined,
   PlusOutlined,
   UploadOutlined,
 } from '@ant-design/icons'
-import { Formik } from 'formik'
-import * as Yup from 'yup'
-import moment from 'moment'
-import './Create.css'
 import { showToast } from '@components/toast/ToastCustom'
+import {
+  Button,
+  Checkbox,
+  DatePicker,
+  Form,
+  Input,
+  Select,
+  Space,
+  Upload,
+  message,
+} from 'antd'
+import { Formik } from 'formik'
+import moment from 'moment'
+import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router'
+import * as Yup from 'yup'
+import Breadcrumb from '../../../components/admin/Breadcrumb/Breadcrumb'
+import './Create.css'
 
 const EmployeeCreate = () => {
   const navigate = useNavigate()
+  const { t } = useTranslation('translation')
+
   const [avatar, setAvatar] = useState(null)
   // const [form] = Form.useForm()
 
@@ -54,6 +58,24 @@ const EmployeeCreate = () => {
     skills: [{ skill: '', experience: '' }],
     description: '',
   }
+
+  const breadcrumbItems = [
+    {
+      key: 'dashboard',
+      title: t('breadcrumbs.dashboard'),
+      route: '/admin/dashboard',
+    },
+    {
+      key: 'employees',
+      title: t('breadcrumbs.employees'),
+      route: '/admin/employees',
+    },
+    {
+      key: 'create',
+      title: t('breadcrumbs.create'),
+      route: `/admin/employees/create`,
+    },
+  ]
 
   const validationSchema = Yup.object().shape({
     name: Yup.string()
@@ -130,6 +152,8 @@ const EmployeeCreate = () => {
 
   return (
     <>
+      <Breadcrumb items={breadcrumbItems} />
+
       <h2>Create Employee</h2>
       <Formik
         initialValues={initialValues}

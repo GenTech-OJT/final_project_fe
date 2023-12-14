@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
 import Chartpie from '../../../components/Chartpie/Chartpie'
 import './Detail.css'
+import Breadcrumb from '../../../components/admin/Breadcrumb/Breadcrumb'
 
 const { TabPane } = Tabs
 
@@ -133,6 +134,24 @@ const EmployeeDetail = () => {
     // Add more data as needed
   ]
 
+  const breadcrumbItems = [
+    {
+      key: 'dashboard',
+      title: t('breadcrumbs.dashboard'),
+      route: '/admin/dashboard',
+    },
+    {
+      key: 'employees',
+      title: t('breadcrumbs.employees'),
+      route: '/admin/employees',
+    },
+    {
+      key: 'detail',
+      title: t('breadcrumbs.employee_details'),
+      route: `/admin/employees/detail/${id}`,
+    },
+  ]
+
   const [data, setData] = useState(hardCodedData) // Use hard-coded data initially
   const [loading, setLoading] = useState(false)
   const [tableParams, setTableParams] = useState({
@@ -205,6 +224,7 @@ const EmployeeDetail = () => {
 
   return (
     <div className="page-container">
+      <Breadcrumb items={breadcrumbItems} />
       <h2>Detail Employee</h2>
       <Title className="page-title">EMPLOYEE DETAIL</Title>
 
