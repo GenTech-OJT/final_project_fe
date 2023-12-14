@@ -12,7 +12,6 @@ import { useNavigate } from 'react-router'
 import './List.css'
 import { useGetEmployees, useUpdateEmployee } from '@hooks/useEmployee'
 import { showToast } from '@components/toast/ToastCustom'
-// import DeleteEmployee from './delete'
 
 const EmployeeList = () => {
   const navigate = useNavigate()
