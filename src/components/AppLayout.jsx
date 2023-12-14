@@ -3,6 +3,7 @@ import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   ProjectOutlined,
+  LogoutOutlined,
   UserOutlined,
 } from '@ant-design/icons'
 import { Button, Layout, Menu, Select, Space, theme } from 'antd'
@@ -11,12 +12,15 @@ import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { setSelectedKey } from '../redux/Slice/menuSlice'
+import logoImage from '../assets/img/GenTech-Logo.png'
+import '../App.css'
 import Spinner from './admin/Spinner/Spinner'
 
 const { Header, Sider, Content } = Layout
 
 const AppLayout = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false)
+  const [isImageSmall, setIsImageSmall] = useState(false)
   const {
     token: { colorBgContainer },
   } = theme.useToken()
@@ -49,19 +53,40 @@ const AppLayout = ({ children }) => {
     i18n.changeLanguage(selectedLanguage)
   }, [selectedLanguage, i18n])
 
+  const handleImageSize = () => {
+    setIsImageSmall(!isImageSmall)
+  }
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Sider trigger={null} collapsible collapsed={collapsed}>
-        <div className="demo-logo-vertical" />
+        <Header
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding: '20px',
+          }}
+        >
+          <img
+            src={logoImage}
+            alt="Logo"
+            style={{ height: isImageSmall ? '20px' : '50px' }}
+          />
+        </Header>
         <Menu
           theme="dark"
           mode="inline"
           defaultSelectedKeys={[selectedKey]}
           selectedKeys={[selectedKey]}
           onClick={item => {
-            localStorage.setItem('selectedKey', item.key)
-            dispatch(setSelectedKey(item.key))
-            navigate(item.key)
+            if (item.key === '/login') {
+              localStorage.removeItem('isLoggedIn')
+              navigate('/login', { replace: true })
+            } else {
+              localStorage.setItem('selectedKey', item.key)
+              dispatch(setSelectedKey(item.key))
+              navigate(item.key)
+            }
           }}
           items={[
             {
@@ -79,8 +104,14 @@ const AppLayout = ({ children }) => {
               icon: <ProjectOutlined />,
               label: t('side_menu.project_management_label'),
             },
+            {
+              key: '/login',
+              icon: <LogoutOutlined />,
+              label: t('side_menu.logout'),
+            },
           ]}
         />
+        toaaaa
       </Sider>
       <Layout>
         <Header
@@ -94,7 +125,10 @@ const AppLayout = ({ children }) => {
           <Button
             type="text"
             icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-            onClick={() => setCollapsed(!collapsed)}
+            onClick={() => {
+              setCollapsed(!collapsed)
+              handleImageSize()
+            }}
             style={{
               fontSize: '16px',
               width: 64,

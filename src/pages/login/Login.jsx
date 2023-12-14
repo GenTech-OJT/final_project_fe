@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux'
-import { Form, Input, Button, message, Typography } from 'antd'
+import { Form, Input, Button, message, Typography, Select, Space } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
@@ -8,6 +8,8 @@ import { showToast } from '@components/toast/ToastCustom'
 import './Login.css'
 import { useLogin } from '@hooks/useAuth'
 import { login } from '@redux/Slice/authSlice'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 const { Text, Title } = Typography
 
@@ -20,14 +22,30 @@ const Login = () => {
     password: '',
     remember: true,
   }
+  const { t, i18n } = useTranslation('translation')
+  const [selectedLanguage, setSelectedLanguage] = useState(
+    localStorage.getItem('selectedLanguage') || 'eng'
+  )
+
+  const changeLanguage = value => {
+    setSelectedLanguage(value)
+    i18n.changeLanguage(value)
+    // Save selected language to localStorage
+    localStorage.setItem('selectedLanguage', value)
+  }
+  // Update language
+  useEffect(() => {
+    i18n.changeLanguage(selectedLanguage)
+  }, [selectedLanguage, i18n])
+
   const validationSchema = Yup.object().shape({
     email: Yup.string()
-      .email('Invalid email format')
-      .required('Please input your Email!'),
-    password: Yup.string().required('Please input your Password!'),
+      .email(t('validate.email_invalid'))
+      .required(t('validate.email_validate')),
+    password: Yup.string().required(t('validate.password')),
   })
 
-  const { mutate: loginApi, isSuccess } = useLogin()
+  const { mutate: loginApi, isPending, isError, isSuccess } = useLogin()
 
   const onFinish = async values => {
     loginApi(
@@ -41,23 +59,43 @@ const Login = () => {
           dispatch(login({ token, refreshToken }))
           localStorage.setItem('isLoggedIn', 'true')
           navigate('/admin')
-          showToast('Login Successful !', 'success')
+          showToast(t('message.success_login'), 'success')
+        },
+        onError: () => {
+          showToast(t('message.error_login'), 'error')
         },
       }
     )
   }
 
-  console.log(isSuccess)
-
   return (
     <>
+      <div className="language_container">
+        <Space wrap>
+          <Select
+            value={selectedLanguage}
+            style={{
+              width: 120,
+            }}
+            onChange={changeLanguage}
+            options={[
+              {
+                value: 'eng',
+                label: t('English'),
+              },
+              {
+                value: 'vi',
+                label: t('Vietnamese'),
+              },
+            ]}
+          />
+        </Space>
+      </div>
       <section className="section">
         <div className="container">
           <div className="header">
-            <Title className="title">Sign in</Title>
-            <Text className="text">
-              Please enter your details below to sign in.
-            </Text>
+            <Title className="title">{t('title.sign_in')}</Title>
+            <Text className="text">{t('sign_in_page.enter_sign_in')}</Text>
           </div>
           <Formik
             initialValues={initialValues}
@@ -75,7 +113,7 @@ const Login = () => {
               <Form onFinish={handleSubmit} layout="vertical">
                 <div className="input_email">
                   <Form.Item
-                    label="Email"
+                    label={t('sign_in_page.email')}
                     validateStatus={
                       errors.email && touched.email ? 'error' : ''
                     }
@@ -83,7 +121,7 @@ const Login = () => {
                   >
                     <Input
                       prefix={<MailOutlined />}
-                      placeholder="Email"
+                      placeholder={t('sign_in_page.email')}
                       name="email"
                       value={values.email}
                       onChange={handleChange}
@@ -93,7 +131,7 @@ const Login = () => {
                 </div>
                 <div className="input_password">
                   <Form.Item
-                    label="Password"
+                    label={t('sign_in_page.password')}
                     validateStatus={
                       errors.password && touched.password ? 'error' : ''
                     }
@@ -104,7 +142,7 @@ const Login = () => {
                     <Input.Password
                       prefix={<LockOutlined />}
                       type="password"
-                      placeholder="Password"
+                      placeholder={t('sign_in_page.password')}
                       name="password"
                       value={values.password}
                       onChange={handleChange}
@@ -112,8 +150,13 @@ const Login = () => {
                     />
                   </Form.Item>
                 </div>
-                <Button block type="primary" htmlType="submit">
-                  Log in
+                <Button
+                  block
+                  type="primary"
+                  htmlType="submit"
+                  loading={isPending}
+                >
+                  {t('button_input.login')}
                 </Button>
               </Form>
             )}
