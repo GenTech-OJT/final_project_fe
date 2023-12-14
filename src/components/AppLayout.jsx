@@ -112,7 +112,6 @@ const AppLayout = ({ children }) => {
             },
           ]}
         />
-        toaaaa
       </Sider>
       <Layout>
         <Header
@@ -140,6 +139,7 @@ const AppLayout = ({ children }) => {
             <Select
               value={selectedLanguage}
               style={{
+                right: 15,
                 width: 120,
               }}
               onChange={changeLanguage}
