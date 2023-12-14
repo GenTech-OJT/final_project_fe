@@ -4,6 +4,8 @@ import { Input, Table } from 'antd'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 
+const itemsPerPageOptions = [5, 10, 20]
+
 const CustomTable = ({
   columns,
   data,
@@ -24,6 +26,7 @@ const CustomTable = ({
           `${range[0]}-${range[1]} of ${total} items`,
       }}
       loading={loading}
+      pageSpageSizeOptions={itemsPerPageOptions}
     />
   )
 }
@@ -74,6 +77,7 @@ const SortableTable = ({
         bordered
         onChange={handleTableChange}
         pagination={pagination}
+        pageSpageSizeOptions={itemsPerPageOptions}
       />
     </>
   )
@@ -87,4 +91,4 @@ SortableTable.propTypes = {
   handleChange: PropTypes.func.isRequired,
 }
 
-export { CustomSearch, CustomTable, SortableTable }
+export { CustomSearch, CustomTable, SortableTable, itemsPerPageOptions }
