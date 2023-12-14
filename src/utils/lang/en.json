@@ -33,7 +33,9 @@
     "success_login": "Login success!",
     "error_login": "Login faild!",
     "create_employee_success": "Employee created successfully",
-    "create_employee_fail": "Error creating employee. Please try again!"
+    "create_employee_fail": "Error creating employee. Please try again!",
+    "Employee_deleted_successfully": "Employee deleted successfully",
+    "Employee_deleted_fail": "Error deleting employee. Please try again!"
   },
   "validate": {
     "name_validate": "Please input a valid name!",
