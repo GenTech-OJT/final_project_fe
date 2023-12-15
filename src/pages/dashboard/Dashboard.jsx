@@ -31,7 +31,6 @@ const Dashboard = () => {
   return (
     <div className="dashboard">
       <BreadCrumb items={breadcrumbItems} />
-      <h2>Dashboard Page</h2>
       <Row gutter={{ xs: 8, sm: 12, md: 16, lg: 24 }}>
         <Col xs={24} sm={12} md={6}>
           <Card>
@@ -62,7 +61,7 @@ const Dashboard = () => {
             <Flex justify="space-between">
               <Statistic
                 title={t('dashboard_page.skills')}
-                value={100}
+                value={data?.skillsArray.length}
                 className="custom-statistic"
               ></Statistic>
               <ToolOutlined className="custom-icon" />
