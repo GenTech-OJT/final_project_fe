@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router'
 import './List.css'
 import { useGetEmployees, useUpdateEmployee } from '@hooks/useEmployee'
 import { showToast } from '@components/toast/ToastCustom'
+import DeleteEmployee from '../delete/delete'
 
 const EmployeeList = () => {
   const navigate = useNavigate()
@@ -216,19 +217,13 @@ const EmployeeList = () => {
             style={{ marginRight: 8 }}
             icon={<EditOutlined />}
           />
-          {/* <DeleteEmployee key={`delete-${record.id}`}
-            onClick={() => deleteRecord(record.id)}
-            style={{ marginRight: 8 }}
+          <DeleteEmployee
             employeeId={record.id}
-            icon={<DeleteOutlined />} /> */}
-
-          {/* <DeleteEmployee
             key={`delete-${record.id}`}
             onClick={() => deleteRecord(record.id)}
             style={{ marginRight: 8 }}
             icon={<DeleteOutlined />}
-            employeeId={record.id}
-          /> */}
+          />
         </>
       ),
     },
