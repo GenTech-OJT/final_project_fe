@@ -164,7 +164,9 @@ const EditEmployee = () => {
     skills: Yup.array()
       .of(
         Yup.object().shape({
-          skill: Yup.string().required(t('validate.skill_validate')),
+          skill: Yup.string()
+            .required(t('validate.skill_require'))
+            .matches(/^[a-zA-Z\s]*$/, t('validate.skill_validate')),
           experience: Yup.string()
             .required(t('validate.experience_require'))
             .matches(/^\d+(\.\d+)?$/, t('validate.experience_validate')),
@@ -186,7 +188,7 @@ const EditEmployee = () => {
       dob: values.dob.format('YYYY-MM-DD'),
       gender: values.gender,
       status: values.status,
-      is_manager: values.is_manager,
+      is_manager: !!values.is_manager,
       position: values.position,
       avatar: values.avatar,
       skills: values.skills.map(skill => ({
@@ -591,7 +593,7 @@ const EditEmployee = () => {
                   name="is_manager"
                   onChange={e => setFieldValue('is_manager', e.target.checked)}
                   onBlur={handleBlur}
-                  checked={values.is_manager}
+                  checked={values.is_manager || false}
                 ></Checkbox>
               </Form.Item>
 
@@ -611,9 +613,13 @@ const EditEmployee = () => {
                       style={{ width: '100px', height: '100px' }}
                     />
                   ) : (
-                    <Button icon={<UploadOutlined />}>
-                      {t('employee.upload_avatar')}
-                    </Button>
+                    <div>
+                      <img
+                        src="https://st4.depositphotos.com/14953852/24787/v/450/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg"
+                        alt="Default Avatar"
+                        style={{ width: '100px', height: '100px' }}
+                      />
+                    </div>
                   )}
                 </Upload>
               </Form.Item>
