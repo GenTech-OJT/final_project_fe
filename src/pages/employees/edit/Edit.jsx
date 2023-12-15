@@ -186,7 +186,9 @@ const EditEmployee = () => {
       }
     })
 
-    formData.append('avatar', avatar)
+    if (avatar) {
+      formData.append('avatar', avatar)
+    }
     try {
       const result = await updateEmployeeApi({ id, data: formData })
       showToast(t('message.edit_employee_success'), 'success')
