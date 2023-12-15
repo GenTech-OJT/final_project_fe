@@ -95,7 +95,7 @@ const EditEmployee = () => {
     }
 
     forceUpdate()
-  }, [])
+  }, [forceUpdate])
 
   const initialValues = {
     name: employee?.name,
