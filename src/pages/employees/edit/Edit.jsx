@@ -374,6 +374,7 @@ const EditEmployee = () => {
                       /> */
                         <DatePicker
                           className="dob"
+                          disabledDate={current => current.isAfter(moment())}
                           onChange={value => setFieldValue('dob', value)}
                           defaultValue={dayjs(values.dob._i, dateFormat)}
                         />
