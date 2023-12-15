@@ -309,7 +309,9 @@ const CreateEmployee = () => {
                       name="dob"
                       className="dob"
                       disabledDate={current =>
-                        current && current > moment().endOf('day')
+                        (current && current > moment().endOf('day')) ||
+                        (current &&
+                          current > moment().subtract(18, 'years').endOf('day'))
                       }
                       onChange={value => setFieldValue('dob', value)}
                       onBlur={handleBlur}
