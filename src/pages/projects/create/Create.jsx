@@ -112,12 +112,16 @@ const CreateProject = () => {
         id: m.id,
         name: m.name,
         avatar: m.avatar,
+        assignTime: moment().format('YYYY-MM-DD HH:mm:ss'),
       })),
       technicals: technicals.map(t => ({
         name: t.name,
       })),
+      startDay: moment(values.startDay.$d).format('YYYY-MM-DD HH:mm:ss'),
+      endDay: moment(values.endDay.$d).format('YYYY-MM-DD HH:mm:ss'),
     }
 
+    console.log(33333, formattedValues)
     // const formData = new FormData()
     // Object.entries(formattedValues).forEach(([key, value]) => {
     //   if (key === 'skills') {
