@@ -112,23 +112,6 @@ const EditEmployee = () => {
     description: employee?.description,
   }
 
-  // chỗ này thì nếu cần thì thêm kh cần thì bỏ
-  // const [previousValue, setPreviousValue] = useState({
-  //   name: initialValues.name,
-  //   email: initialValues.email,
-  //   code: initialValues.code,
-  //   phone: initialValues.phone,
-  //   identity: initialValues.identity,
-  //   // dob: initialValues.dob,
-  //   gender: initialValues.gender,
-  //   status: initialValues.status,
-  //   is_manager: initialValues.is_manager,
-  //   position: initialValues.position,
-  //   manager: initialValues.manager,
-  //   skills: [{ skill: '', experience: '' }],
-  //   description: initialValues.description,
-  // });
-
   const { t } = useTranslation('translation')
   const [avatar, setAvatar] = useState(null)
   useEffect(() => {
@@ -139,20 +122,18 @@ const EditEmployee = () => {
   const uploadAvatar = async formData => {
     try {
       const data = await updateEmployeeApi({ id, data: formData })
-      setAvatar(data.avatar) // Cập nhật avatar sau khi upload thành công
+      setAvatar(data.avatar)
     } catch (error) {
       console.error('Error uploading avatar:', error)
-      // Xử lý thông báo lỗi tải lên ở đây nếu cần thiết
     }
   }
   const handleUpload = async file => {
     try {
       const formData = new FormData()
-      formData.append('avatar', file) // Đổi tên field 'avatar' nếu cần thiết
+      formData.append('avatar', file)
       await uploadAvatar(formData)
     } catch (error) {
       console.error('Error preparing upload:', error)
-      // Xử lý thông báo lỗi tải lên ở đây nếu cần thiết
     }
   }
 
@@ -196,21 +177,16 @@ const EditEmployee = () => {
   const handleFormSubmit = async values => {
     const formattedValues = {
       ...values,
-      // dob: moment(values.dob.$d).format('YYYY-MM-DD'),
-      // avatar: avatar,
       name: values.name,
       email: values.email,
       code: values.code,
       phone: values.phone,
       identity: values.identity,
-      dob: values.dob.format('YYYY-MM-DD'), // Định dạng lại ngày tháng nếu cần thiết
+      dob: values.dob.format('YYYY-MM-DD'),
       gender: values.gender,
       status: values.status,
       is_manager: values.is_manager,
       position: values.position,
-      // avatar: avatar
-      //   ? URL.createObjectURL(avatar.originFileObj)
-      //   : values.avatar, // Updated avatar value
       avatar: values.avatar,
       skills: values.skills.map(skill => ({
         name: skill.skill,
@@ -219,8 +195,6 @@ const EditEmployee = () => {
       manager: values.manager,
       description: values.description,
     }
-
-    console.log('formattedValues', formattedValues)
 
     try {
       const result = await updateEmployeeApi({ id, data: formattedValues })
@@ -233,32 +207,8 @@ const EditEmployee = () => {
     }
   }
 
-  // const handleFormSubmit = async values => {
-  //   const formattedValues = {
-  //     ...values,
-  //     // dob: moment(values.dob.$d).format('YYYY-MM-DD'),
-  //     // avatar: avatar,
-  //   }
-
-  //   try {
-  //    await updateEmployeeApi(id, formattedValues, {
-  //       onSuccess: () => {
-  //         console.log('Success')
-  //         showToast(t('message.create_employee_success'), 'success')
-  //       },
-  //       onError: (error) => {
-  //         console.log('Error: ', error)
-  //         showToast(t('message.create_employee_fail'), 'error')
-  //       },
-  //     })
-  //   } catch (error) {
-  //     console.error('Error creating employee:', error)
-  //     showToast(t('message.create_employee_fail'), 'error')
-  //   }
-  // }
-
   if (isLoading) {
-    return <div>Loading...</div>
+    return <div>...</div>
   }
 
   return (
@@ -279,7 +229,6 @@ const EditEmployee = () => {
             handleSubmit,
             setFieldValue,
             validateField,
-            isSubmitting,
           }) => (
             <Form
               layout="vertical"
@@ -338,7 +287,7 @@ const EditEmployee = () => {
                       onChange={handleChange}
                       onBlur={handleBlur}
                     />
-                  </Form.Item>{' '}
+                  </Form.Item>
                 </Col>
                 <Col xs={24} md={12}>
                   <Form.Item

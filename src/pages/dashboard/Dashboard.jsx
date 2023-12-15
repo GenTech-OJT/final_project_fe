@@ -12,10 +12,10 @@ import { ChartBar, ChartPie } from './Chart/Chart'
 import './Dashboard.css'
 
 const Dashboard = () => {
-  const { data } = useGetDashboard()
-  console.log(data)
+  const { data, isLoading } = useGetDashboard()
+
   const { t } = useTranslation('translation')
-  console.log(data)
+
   const breadcrumbItems = [
     {
       key: 'dashboard',
@@ -23,6 +23,11 @@ const Dashboard = () => {
       route: '/admin/dashboard',
     },
   ]
+
+  if (isLoading) {
+    return <div>...</div>
+  }
+
   return (
     <div className="dashboard">
       <BreadCrumb items={breadcrumbItems} />
@@ -79,7 +84,7 @@ const Dashboard = () => {
       </Row>
       <Row>
         <Col xs={24} sm={12} md={12}>
-          <ChartPie />
+          <ChartPie data={data?.skillsArray} />
         </Col>
         <Col xs={24} sm={12} md={12}>
           <ChartBar />
