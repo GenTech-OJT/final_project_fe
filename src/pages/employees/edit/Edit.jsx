@@ -392,11 +392,9 @@ const EditEmployee = () => {
                           defaultValue={values.gender}
                         >
                           <Select.Option value="male">
-                            {' '}
                             {t('employee.male')}
                           </Select.Option>
                           <Select.Option value="female">
-                            {' '}
                             {t('employee.female')}
                           </Select.Option>
                         </Select>
@@ -418,11 +416,9 @@ const EditEmployee = () => {
                           defaultValue={values.status}
                         >
                           <Select.Option value={true}>
-                            {' '}
                             {t('employee.active')}
                           </Select.Option>
                           <Select.Option value={false}>
-                            {' '}
                             {t('employee.inactive')}
                           </Select.Option>
                         </Select>
