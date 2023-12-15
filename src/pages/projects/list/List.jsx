@@ -48,7 +48,6 @@ const ProjectList = () => {
 
   const deleteRecord = recordId => {
     // Handle logic to delete the selected record
-    console.log('Delete Record:', recordId)
   }
 
   const updateEmployeeMutation = useUpdateEmployee(({ id, data }) =>

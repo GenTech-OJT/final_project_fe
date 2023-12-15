@@ -60,9 +60,7 @@ const EmployeeList = () => {
     navigate(`/admin/employees/detail/${record.id}`)
   }
 
-  const deleteRecord = recordId => {
-    console.log('Delete Record:', recordId)
-  }
+  const deleteRecord = recordId => {}
 
   const { mutateAsync: updateApi } = useUpdateEmployee()
 
