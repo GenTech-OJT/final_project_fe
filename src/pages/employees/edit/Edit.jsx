@@ -11,12 +11,15 @@ import {
   Checkbox,
   Col,
   Row,
+  ConfigProvider,
 } from 'antd'
 import {
   MinusCircleOutlined,
   PlusOutlined,
   UploadOutlined,
 } from '@ant-design/icons'
+import enUS from 'antd/locale/en_US'
+import viVN from 'antd/locale/vi_VN'
 import { Formik, useField, useFormikContext } from 'formik'
 import * as Yup from 'yup'
 import moment from 'moment'
@@ -70,8 +73,22 @@ const EditEmployee = () => {
   const navigate = useNavigate()
 
   const { data: employee, isLoading } = useGetEmployeeById(id)
+  const [datePickerLocale, setDatePickerLocale] = useState(enUS)
   const { data: positions } = useGetPositions()
   const { mutateAsync: updateEmployeeApi } = useUpdateEmployee()
+  const forceUpdate = useForceUpdate()
+
+  useEffect(() => {
+    const savedLanguage = localStorage.getItem('selectedLanguage')
+
+    if (savedLanguage === 'eng') {
+      setDatePickerLocale(enUS)
+    } else if (savedLanguage === 'vi') {
+      setDatePickerLocale(viVN)
+    }
+
+    forceUpdate()
+  }, [forceUpdate])
 
   const initialValues = {
     name: employee?.name,
@@ -118,33 +135,24 @@ const EditEmployee = () => {
       setAvatar(employee.avatar)
     }
   }, [employee])
-
-  const handleUpload = async file => {
+  const uploadAvatar = async formData => {
     try {
-      const formData = new FormData()
-      formData.append('avatar', file) // Đổi tên field 'avatar' nếu cần thiết
-
-      const data = await updateEmployeeApi({
-        id,
-        data: { avatar: formData }, // Gửi formData chứa file avatar
-      })
-
+      const data = await updateEmployeeApi({ id, data: formData })
       setAvatar(data.avatar) // Cập nhật avatar sau khi upload thành công
     } catch (error) {
       console.error('Error uploading avatar:', error)
       // Xử lý thông báo lỗi tải lên ở đây nếu cần thiết
     }
   }
-  const checkFile = file => {
-    const isImage = file.type.startsWith('image/')
-
-    if (!isImage) {
-      message.error('You can only upload image files!')
-    } else {
-      setAvatar(file)
+  const handleUpload = async file => {
+    try {
+      const formData = new FormData()
+      formData.append('avatar', file) // Đổi tên field 'avatar' nếu cần thiết
+      await uploadAvatar(formData)
+    } catch (error) {
+      console.error('Error preparing upload:', error)
+      // Xử lý thông báo lỗi tải lên ở đây nếu cần thiết
     }
-
-    return false
   }
 
   const validationSchema = Yup.object().shape({
@@ -215,6 +223,7 @@ const EditEmployee = () => {
 
     try {
       const result = await updateEmployeeApi({ id, data: formattedValues })
+      await uploadAvatar(formattedValues.avatar)
       showToast(t('message.edit_employee_success'), 'success')
       navigate('/admin/employees')
     } catch (error) {
@@ -380,15 +389,17 @@ const EditEmployee = () => {
                     validateStatus={errors.dob && touched.dob ? 'error' : ''}
                     help={errors.dob && touched.dob ? errors.dob : ''}
                   >
-                    <DatePicker
-                      placement="bottomRight"
-                      name="dob"
-                      className="dob"
-                      onChange={value => setFieldValue('dob', value)}
-                      disabledDate={current => current.isAfter(moment())} // Disable future dates
-                      onBlur={handleBlur}
-                      value={values.dob}
-                    />
+                    <ConfigProvider locale={datePickerLocale}>
+                      <DatePicker
+                        placement="bottomRight"
+                        name="dob"
+                        className="dob"
+                        onChange={value => setFieldValue('dob', value)}
+                        disabledDate={current => current.isAfter(moment())} // Disable future dates
+                        onBlur={handleBlur}
+                        value={values.dob}
+                      />
+                    </ConfigProvider>
                   </Form.Item>
                 </Col>
               </Row>
@@ -640,5 +651,8 @@ const EditEmployee = () => {
     </>
   )
 }
-
+const useForceUpdate = () => {
+  const [, setValue] = useState(0)
+  return () => setValue(value => ++value)
+}
 export default EditEmployee
