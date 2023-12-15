@@ -59,11 +59,13 @@
     "skills_validate": "Phải có ít nhất một kinh nghiệm!"
   },
   "breadcrumbs": {
-    "projects_breadcrumb": "Danh sách dự án",
-    "employees_breadcrumb": "Danh sách nhân viên",
-    "detail_breadcrumb": "Chi tiết",
-    "create_breadcrumb": "Tạo mới",
-    "edit_breadcrumb": "Chỉnh sửa"
+    "projects": "Danh sách dự án",
+    "employees": "Danh sách nhân viên",
+    "employee_details": "Chi tiết nhân viên",
+    "project_details": "Chi tiết dự án",
+    "create": "Tạo mới",
+    "edit": "Chỉnh sửa",
+    "dashboard": "Trang chủ"
   },
   "title": {
     "create_employee": "TẠO NHÂN VIÊN",
