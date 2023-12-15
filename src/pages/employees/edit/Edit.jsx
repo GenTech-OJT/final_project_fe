@@ -111,8 +111,6 @@ const EditEmployee = () => {
     description: employee?.description,
   }
 
-  console.log(initialValues.dob)
-
   const { t } = useTranslation('translation')
   const [avatar, setAvatar] = useState(null)
   useEffect(() => {
@@ -427,10 +425,10 @@ const EditEmployee = () => {
                           onBlur={handleBlur}
                           defaultValue={values.status}
                         >
-                          <Select.Option value={'active'}>
+                          <Select.Option value={true}>
                             {t('employee.active')}
                           </Select.Option>
-                          <Select.Option value={'inactive'}>
+                          <Select.Option value={false}>
                             {t('employee.inactive')}
                           </Select.Option>
                         </Select>
@@ -458,8 +456,8 @@ const EditEmployee = () => {
                           value={values.position}
                         >
                           {positions?.map(pos => (
-                            <Select.Option key={pos} value={pos}>
-                              {pos}
+                            <Select.Option key={pos.id} value={pos.name}>
+                              {pos.name}
                             </Select.Option>
                           ))}
                         </Select>
@@ -467,9 +465,6 @@ const EditEmployee = () => {
                     </Col>
                     <Col xs={24} md={12}>
                       <SelectManager />
-                    </Col>
-                    <Col xs={24} md={12}>
-                      {/* <SelectManager /> */}
                     </Col>
                   </Row>
                 </Col>
