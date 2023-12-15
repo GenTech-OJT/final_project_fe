@@ -1,22 +1,22 @@
-import { Suspense, useEffect, useState } from 'react'
 import {
+  DashboardOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  UserOutlined,
-  DashboardOutlined,
   ProjectOutlined,
   LogoutOutlined,
+  UserOutlined,
 } from '@ant-design/icons'
-import { Layout, Menu, Button, theme, Select, Space } from 'antd'
-import { useNavigate } from 'react-router-dom'
-import Spinner from './admin/Spinner/Spinner'
-import BreadCrumb from './admin/Breadcrumb/Breadcrumb'
-import { useDispatch, useSelector } from 'react-redux'
-import { setSelectedKey } from '../redux/Slice/menuSlice'
+import { Button, Layout, Menu, Select, Space, theme } from 'antd'
+import { Suspense, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { setSelectedKey } from '../redux/Slice/menuSlice'
 import logoImage from '../assets/img/GenTech-Logo.png'
 import { showToast } from '@components/toast/ToastCustom'
 import { logout } from '@redux/Slice/authSlice'
+import Spinner from './admin/Spinner/Spinner'
+import './AppLayout.css'
 
 const { Header, Sider, Content } = Layout
 
@@ -159,7 +159,6 @@ const AppLayout = ({ children }) => {
             />
           </Space>
         </Header>
-        <BreadCrumb />
         <Content
           style={{
             margin: '24px 16px',
@@ -168,10 +167,7 @@ const AppLayout = ({ children }) => {
             background: colorBgContainer,
           }}
         >
-          <Suspense fallback={<Spinner />}>
-            <BreadCrumb />
-            {children}
-          </Suspense>
+          <Suspense fallback={<Spinner />}>{children}</Suspense>
         </Content>
       </Layout>
     </Layout>

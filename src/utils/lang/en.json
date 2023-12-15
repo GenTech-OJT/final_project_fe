@@ -6,7 +6,8 @@
     "active": "Active",
     "inactive": "Inactive",
     "login": "Log in",
-    "edit": "Edit"
+    "edit": "Edit",
+    "create_project": "Create Project"
   },
   "side_menu": {
     "project_management_label": "Projects",
@@ -19,7 +20,7 @@
     "name": "Name",
     "status": "Status",
     "position": "Position",
-    "is_manager": "Is Manager",
+    "is_manager": "Role",
     "action": "Action"
   },
   "message": {
@@ -59,11 +60,13 @@
     "skills_validate": "Must have at least 1 skill"
   },
   "breadcrumbs": {
-    "projects_breadcrumb": "Projects",
-    "employees_breadcrumb": "Employees",
-    "detail_breadcrumb": "Details",
-    "create_breadcrumb": "Create",
-    "edit_breadcrumb": "Edit"
+    "employee_details": "Employee Details",
+    "project_details": "Project Details",
+    "projects": "Projects",
+    "employees": "Employees",
+    "create": "Create",
+    "edit": "Edit",
+    "dashboard": "Dashboard"
   },
   "title": {
     "create_employee": "CREATE EMPLOYEE",
@@ -96,7 +99,11 @@
     "back": "Back",
     "avatar": "Avatar",
     "skill_placeholder": "Skill",
-    "experience_placeholder": "Experience (Years)"
+    "experience_placeholder": "Experience (Years)",
+    "managers": {
+      "true": "Manager",
+      "false": "Employee"
+    }
   },
   "sign_in_page": {
     "enter_sign_in": "Please enter your details below to sign in.",
@@ -140,5 +147,12 @@
     "employees": "Employees",
     "position": "Position",
     "project": "Project"
+  },
+  "pagination": {
+    "of": "of",
+    "items": "items",
+    "previous_page": "Previous Page",
+    "next_page": "Next Page",
+    "pageSize": "page"
   }
 }

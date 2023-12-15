@@ -5,14 +5,15 @@ import {
   CustomTable,
   itemsPerPageOptions,
 } from '@components/custom/CustomTable'
-import { Button, Empty } from 'antd'
+import { showToast } from '@components/toast/ToastCustom'
+import { useGetEmployees, useUpdateEmployee } from '@hooks/useEmployee'
+import { Button, Empty, Tag } from 'antd'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
-import './List.css'
-import { useGetEmployees, useUpdateEmployee } from '@hooks/useEmployee'
-import { showToast } from '@components/toast/ToastCustom'
+import Breadcrumb from '../../../components/admin/Breadcrumb/Breadcrumb'
 import DeleteEmployee from '../delete/delete'
+import './List.css'
 
 const EmployeeList = () => {
   const navigate = useNavigate()
@@ -35,6 +36,19 @@ const EmployeeList = () => {
     sortOrder: tableData.sortedInfo.order || 'asc',
     searchText: tableData.searchText,
   }
+
+  const breadcrumbItems = [
+    {
+      key: 'dashboard',
+      title: t('breadcrumbs.dashboard'),
+      route: '/admin/dashboard',
+    },
+    {
+      key: 'employees',
+      title: t('breadcrumbs.employees'),
+      route: '/admin/employees',
+    },
+  ]
 
   const { data, isLoading } = useGetEmployees(employees)
 
@@ -130,7 +144,17 @@ const EmployeeList = () => {
     })
   }
 
-  const convertBooleanToString = isManager => (isManager ? 'Yes' : 'No')
+  const convertBooleanToString = isManager => {
+    if (isManager) {
+      return {
+        color: 'success', // Màu thành công cho Tag
+      }
+    } else {
+      return {
+        color: 'processing', // Màu xử lý cho Tag
+      }
+    }
+  }
 
   const columns = [
     {
@@ -141,6 +165,13 @@ const EmployeeList = () => {
       sorter: true,
       sortOrder:
         tableData.sortedInfo.columnKey === 'id' && tableData.sortedInfo.order,
+      render: (_, record, index) => (
+        <span>
+          {(tableData.pagination.current - 1) * tableData.pagination.pageSize +
+            index +
+            1}
+        </span>
+      ),
     },
     {
       title: t('table_header.name'),
@@ -197,7 +228,16 @@ const EmployeeList = () => {
       sortOrder:
         tableData.sortedInfo.columnKey === 'is_manager' &&
         tableData.sortedInfo.order,
-      render: isManager => convertBooleanToString(isManager),
+      render: isManager => {
+        const tagConfig = convertBooleanToString(isManager)
+        return (
+          <Tag icon={tagConfig.icon} color={tagConfig.color}>
+            {isManager
+              ? t('employee.managers.true')
+              : t('employee.managers.false')}
+          </Tag>
+        )
+      },
     },
     {
       title: t('table_header.action'),
@@ -231,16 +271,15 @@ const EmployeeList = () => {
 
   return (
     <div className="employeeLayout">
+      <Breadcrumb items={breadcrumbItems} />
       <Button
         type="primary"
         onClick={() => navigate('/admin/employees/create')}
-        style={{ marginBottom: 16 }}
+        style={{ marginBottom: 16, float: 'right' }}
       >
         {t('button_input.create')}
       </Button>
-
       <CustomSearch handleChange={handleChange} />
-
       <div
         style={{
           overflow: 'auto',
