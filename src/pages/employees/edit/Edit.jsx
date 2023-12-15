@@ -12,11 +12,7 @@ import {
   Row,
   ConfigProvider,
 } from 'antd'
-import {
-  MinusCircleOutlined,
-  PlusOutlined,
-  UploadOutlined,
-} from '@ant-design/icons'
+import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
 import enUS from 'antd/locale/en_US'
 import viVN from 'antd/locale/vi_VN'
 import 'dayjs/locale/vi'
