@@ -51,11 +51,7 @@ export const getEmployeeByIdApi = async id => {
 }
 
 export const updateEmployeeApi = async (id, data) => {
-  const response = await axios.put(`${API_URL.EMPLOYEES}/${id}`, data, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-  })
+  const response = await axios.put(`${API_URL.EMPLOYEES}/${id}`, data)
 
   if (response.status !== 200) {
     throw new Error(`HTTP error! Status: ${response.status}`)

@@ -6,7 +6,7 @@
 /* Định dạng ô tìm kiếm */
 
 .ant-input-affix-wrapper {
-  float: right;
+  float: left;
 }
 
 /* Định dạng kích thước biểu tượng trong ant-space */
@@ -16,17 +16,20 @@
 
 /* Hiệu ứng hover cho biểu tượng trong ant-space */
 .ant-space-item:hover .anticon {
-  color: #ff18be; /* Màu sắc mới khi hover */
+  color: #ff18be;
+  /* Màu sắc mới khi hover */
 }
 
 /* Hiệu ứng hover cho biểu tượng Delete trong ant-popover */
 .ant-popover-message-title .anticon:hover {
-  color: rgb(0, 255, 17); /* Màu sắc mới khi hover */
+  color: rgb(0, 255, 17);
+  /* Màu sắc mới khi hover */
 }
 
 /* Hiệu ứng hover cho biểu tượng Save và Close trong ant-space */
 .ant-space-item > span:hover .anticon {
-  color: green; /* Màu sắc mới khi hover */
+  color: green;
+  /* Màu sắc mới khi hover */
 }
 
 .ant-table-column-title {

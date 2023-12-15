@@ -1,6 +1,6 @@
 import axios from 'axios'
 import store from '../redux/store'
-import { login, logout } from '../redux/Slice/authSlice'
+import { updateAccessToken } from '../redux/Slice/authSlice'
 import { API_URL } from '@constants/url'
 
 const BASE_URL = import.meta.env.VITE_BASE_URL_API
@@ -31,7 +31,7 @@ api.interceptors.response.use(
       originalRequest._retry = true
 
       // try to refresh access token
-      const response = await axios.post(API_URL.REFRESH_TOKEN, { refreshToken })
+      const response = await api.post(API_URL.REFRESH_TOKEN, { refreshToken })
 
       if (response.status === 200) {
         // update access token in redux state

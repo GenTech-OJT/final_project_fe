@@ -7,7 +7,6 @@ export const getDashboardApi = async () => {
   if (response.status !== 200) {
     throw new Error(`HTTP error! Status: ${response.status}`)
   }
-  console.log(response)
 
   return response.data
 }
