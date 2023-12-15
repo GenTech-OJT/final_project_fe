@@ -20,7 +20,7 @@
     "name": "Name",
     "status": "Status",
     "position": "Position",
-    "is_manager": "Is Manager",
+    "is_manager": "Role",
     "action": "Action"
   },
   "message": {
@@ -99,7 +99,11 @@
     "back": "Back",
     "avatar": "Avatar",
     "skill_placeholder": "Skill",
-    "experience_placeholder": "Experience (Years)"
+    "experience_placeholder": "Experience (Years)",
+    "managers": {
+      "true": "Manager",
+      "false": "Employee"
+    }
   },
   "sign_in_page": {
     "enter_sign_in": "Please enter your details below to sign in.",

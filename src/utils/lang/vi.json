@@ -20,7 +20,7 @@
     "name": "Họ và Tên",
     "status": "Trạng Thái",
     "position": "Vị Trí",
-    "is_manager": "Quản Lí",
+    "is_manager": "Vai Trò",
     "action": "Thao Tác"
   },
   "message": {
@@ -99,7 +99,11 @@
     "back": "Quay Lại",
     "avatar": "Hình đại diện",
     "skill_placeholder": "Kĩ năng",
-    "experience_placeholder": "Kinh nghiệm (Năm)"
+    "experience_placeholder": "Kinh nghiệm (Năm)",
+    "managers": {
+      "true": "Quản Lí",
+      "false": "Nhân Viên"
+    }
   },
   "sign_in_page": {
     "enter_sign_in": "Vui lòng nhập thông tin chi tiết của bạn dưới đây để đăng nhập.",
