@@ -218,7 +218,7 @@ const CreateEmployee = () => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
-              </Form.Item>{' '}
+              </Form.Item>
             </Col>
             <Col xs={24} md={12}>
               <Form.Item

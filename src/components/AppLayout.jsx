@@ -16,6 +16,7 @@ import logoImage from '../assets/img/GenTech-Logo.png'
 import { showToast } from '@components/toast/ToastCustom'
 import { logout } from '@redux/Slice/authSlice'
 import Spinner from './admin/Spinner/Spinner'
+import './AppLayout.css'
 
 const { Header, Sider, Content } = Layout
 
