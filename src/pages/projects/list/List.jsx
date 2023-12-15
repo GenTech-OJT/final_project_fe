@@ -136,22 +136,27 @@ const ProjectList = () => {
       align: 'center',
       dataIndex: 'id',
       key: 'id',
+      width: '10%',
       sorter: true,
       sortOrder:
         tableData.sortedInfo.columnKey === 'id' && tableData.sortedInfo.order,
-      render: (_, record, index) => (
-        <span>
-          {(tableData.pagination.current - 1) * tableData.pagination.pageSize +
-            index +
-            1}
-        </span>
-      ),
     },
     {
       title: t('project_details.project_name'),
       align: 'center',
       dataIndex: 'name',
       key: 'name',
+      width: '20%',
+      sorter: true,
+      sortOrder:
+        tableData.sortedInfo.columnKey === 'name' && tableData.sortedInfo.order,
+    },
+    {
+      title: t('project_details.manager_name'),
+      align: 'center',
+      dataIndex: 'manager',
+      key: 'manager',
+      width: '20%',
       sorter: true,
       sortOrder:
         tableData.sortedInfo.columnKey === 'name' && tableData.sortedInfo.order,
@@ -162,6 +167,7 @@ const ProjectList = () => {
       align: 'center',
       dataIndex: 'start_date',
       key: 'start_date',
+      width: '20%',
       sorter: true,
       sortOrder:
         tableData.sortedInfo.columnKey === 'start_date' &&
@@ -172,6 +178,7 @@ const ProjectList = () => {
       align: 'center',
       dataIndex: 'end_date',
       key: 'end_date',
+      width: '20%',
       sorter: true,
       sortOrder:
         tableData.sortedInfo.columnKey === 'end_date' &&

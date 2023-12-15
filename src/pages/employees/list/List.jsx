@@ -165,13 +165,6 @@ const EmployeeList = () => {
       sorter: true,
       sortOrder:
         tableData.sortedInfo.columnKey === 'id' && tableData.sortedInfo.order,
-      render: (_, record, index) => (
-        <span>
-          {(tableData.pagination.current - 1) * tableData.pagination.pageSize +
-            index +
-            1}
-        </span>
-      ),
     },
     {
       title: t('table_header.name'),
