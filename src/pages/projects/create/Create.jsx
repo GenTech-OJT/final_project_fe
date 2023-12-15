@@ -1,4 +1,4 @@
-// import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Button,
   Col,
@@ -12,7 +12,6 @@ import {
   Spin,
   Badge,
 } from 'antd'
-import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import moment from 'moment'
@@ -22,6 +21,7 @@ import { showToast } from '@components/toast/ToastCustom'
 import Breadcrumb from '@components/admin/Breadcrumb/Breadcrumb'
 import { useCreateProject } from '@hooks/useProject'
 import { useGetManagers } from '@hooks/useManager'
+import { useGetEmployees } from '@hooks/useEmployee'
 // import enUS from 'antd/locale/en_US'
 // import viVN from 'antd/locale/vi_VN'
 import 'dayjs/locale/en-au'
@@ -30,10 +30,14 @@ import './Create.css'
 const { RangePicker } = DatePicker
 
 const CreateProject = () => {
-  const { mutate: createProjectApi, isPending } = useCreateProject()
-  const { data: managers, isLoading } = useGetManagers()
+  const { mutate: createProjectApi } = useCreateProject()
+  const { data: managers, isLoading: loadingManager } = useGetManagers()
+  const { data: employees, isLoading: loadingEmployees } = useGetEmployees({})
   const { t } = useTranslation('translation')
   const navigate = useNavigate()
+  const [teamMembers, setTeamMembers] = useState([])
+  const [technicals, setTechnicals] = useState([])
+
   // const [datePickerLocale, setDatePickerLocale] = useState(enUS)
   // const forceUpdate = useForceUpdate()
 
@@ -49,8 +53,11 @@ const CreateProject = () => {
   //   forceUpdate()
   // }, [forceUpdate])
 
-  if (isLoading) {
-    return <Spin spinning={isLoading} fullscreen />
+  if (loadingManager) {
+    return <Spin spinning={loadingManager} fullscreen />
+  }
+  if (loadingEmployees) {
+    return <Spin spinning={loadingEmployees} fullscreen />
   }
 
   const breadcrumbItems = [
@@ -74,12 +81,12 @@ const CreateProject = () => {
   const initialValues = {
     name: '',
     manager: '',
-    teamMember: [{ name: '' }],
+    teamMembers: [],
     status: 'pending',
     startDay: '',
     endDay: '',
     description: '',
-    technical: [{ name: '' }],
+    technicals: [],
   }
 
   const validationSchema = Yup.object().shape({
@@ -89,28 +96,25 @@ const CreateProject = () => {
       .max(40, t('validate.name_validate_max'))
       .required(t('validate.name_require')),
     manager: Yup.string(),
+    teamMembers: Yup.array().min(1, 'Please select at least one team member'),
+    technicals: Yup.array().min(1, 'Please select at least one technical'),
     startDay: Yup.date().required(t('validate.dob_validate')),
-    endDays: Yup.date().required(t('validate.dob_validate')),
+    endDay: Yup.date().required(t('validate.dob_validate')),
     status: Yup.string(),
-    skills: Yup.array()
-      .of(
-        Yup.object().shape({
-          skill: Yup.string().required(t('validate.skill_validate')),
-          experience: Yup.string()
-            .required(t('validate.experience_require'))
-            .matches(/^\d+(\.\d+)?$/, t('validate.experience_validate')),
-        })
-      )
-      .required(t('validate.skills_require'))
-      .min(1, t('validate.skills_validate')),
     description: Yup.string(),
   })
 
   const handleFormSubmit = async values => {
     const formattedValues = {
       ...values,
-      startDay: moment(values.startDay.$d).format('YYYY-MM-DD HH:mm:ss'),
-      endDay: moment(values.endDay.$d).format('YYYY-MM-DD HH:mm:ss'),
+      teamMembers: teamMembers.map(m => ({
+        id: m.id,
+        name: m.name,
+        avatar: m.avatar,
+      })),
+      technicals: technicals.map(t => ({
+        name: t.name,
+      })),
     }
 
     console.log(33333, formattedValues)
@@ -258,6 +262,77 @@ const CreateProject = () => {
             <Row gutter={{ xs: 8, sm: 12, md: 16, lg: 24 }}>
               <Col xs={24} md={12}>
                 <Form.Item
+                  label="Team Members"
+                  name="teamMembers"
+                  validateStatus={
+                    errors.teamMembers && touched.teamMembers ? 'error' : ''
+                  }
+                  help={
+                    errors.teamMembers &&
+                    touched.teamMembers &&
+                    errors.teamMembers
+                  }
+                >
+                  <Select
+                    mode="multiple"
+                    name="teamMembers"
+                    placeholder="Inserted are removed"
+                    defaultValue={values.teamMembers}
+                    onBlur={handleBlur}
+                    onChange={selectedValues => {
+                      const selectedMembers = employees?.data.filter(employee =>
+                        selectedValues.includes(employee.name)
+                      )
+                      setTeamMembers(selectedMembers)
+                      setFieldValue('teamMembers', selectedMembers)
+                    }}
+                  >
+                    {employees?.data?.map(e => (
+                      <Select.Option key={e.id} value={e.name}>
+                        {e.name}
+                      </Select.Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </Col>
+              <Col xs={24} md={12}>
+                <Form.Item
+                  label="Technicals"
+                  name="technicals"
+                  validateStatus={
+                    errors.technicals && touched.technicals ? 'error' : ''
+                  }
+                  help={
+                    errors.technicals && touched.technicals && errors.technicals
+                  }
+                >
+                  <Select
+                    mode="multiple"
+                    name="technicals"
+                    placeholder="Inserted are removed"
+                    defaultValue={values.technicals}
+                    onBlur={handleBlur}
+                    onChange={selectedValues => {
+                      const selectedTechnicals = employees?.data.filter(
+                        employee => selectedValues.includes(employee.name)
+                      )
+                      setTechnicals(selectedTechnicals)
+                      setFieldValue('technicals', selectedTechnicals)
+                    }}
+                  >
+                    {employees?.data?.map(e => (
+                      <Select.Option key={e.id} value={e.name}>
+                        {e.name}
+                      </Select.Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row gutter={{ xs: 8, sm: 12, md: 16, lg: 24 }}>
+              <Col xs={24} md={12}>
+                {' '}
+                <Form.Item
                   label={t('employee.status_employee')}
                   name="status"
                   validateStatus={
@@ -272,123 +347,18 @@ const CreateProject = () => {
                     defaultValue={values.status}
                   >
                     <Select.Option value={'pending'}>
-                      <Badge color="yellow" text="Pending" />
+                      <Badge status="warning" text="Pending" />
                     </Select.Option>
                     <Select.Option value={'inProgress'}>
-                      <Badge
-                        status="processing"
-                        color="blue"
-                        text="In progress"
-                      />
+                      <Badge status="processing" text="In progress" />
                     </Select.Option>
                     <Select.Option value={'cancelled'}>
-                      <Badge color="volcano" text="Cancelled" />
+                      <Badge status="error" text="Cancelled" />
                     </Select.Option>
                     <Select.Option value={'done'}>
-                      <Badge color="green" text="Done" />
+                      <Badge status="success" text="Done" />
                     </Select.Option>
                   </Select>
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row gutter={{ xs: 8, sm: 12, md: 16, lg: 24 }}>
-              <Col xs={24} md={12}>
-                <Form.Item label={t('employee.skill')} required>
-                  <Form.List name="skills">
-                    {(fields, { add, remove }) => (
-                      <>
-                        {fields.map(({ key, name, ...restField }) => (
-                          <Space
-                            key={key}
-                            style={{
-                              display: 'flex',
-                              marginBottom: 8,
-                            }}
-                            align="baseline"
-                          >
-                            <Form.Item
-                              {...restField}
-                              name={[name, 'skill']}
-                              validateStatus={
-                                errors?.skills?.[name]?.skill &&
-                                touched?.skills?.[name]?.skill
-                                  ? 'error'
-                                  : ''
-                              }
-                              help={
-                                errors?.skills?.[name]?.skill &&
-                                touched?.skills?.[name]?.skill
-                                  ? errors.skills[name].skill
-                                  : ''
-                              }
-                            >
-                              <Input
-                                placeholder={t('employee.skill_placeholder')}
-                                onChange={e => {
-                                  setFieldValue(
-                                    `skills[${name}].skill`,
-                                    e.target.value
-                                  )
-                                  validateField(`skills[${name}].skill`)
-                                }}
-                              />
-                            </Form.Item>
-                            <Form.Item
-                              {...restField}
-                              name={[name, 'experience']}
-                              validateStatus={
-                                errors?.skills?.[name]?.experience &&
-                                touched?.skills?.[name]?.experience
-                                  ? 'error'
-                                  : ''
-                              }
-                              help={
-                                errors?.skills?.[name]?.experience &&
-                                touched?.skills?.[name]?.experience
-                                  ? errors.skills[name].experience
-                                  : ''
-                              }
-                            >
-                              <Input
-                                placeholder={t(
-                                  'employee.experience_placeholder'
-                                )}
-                                onChange={e => {
-                                  setFieldValue(
-                                    `skills[${name}].experience`,
-                                    e.target.value
-                                  )
-                                  validateField(`skills[${name}].experience`)
-                                }}
-                              />
-                            </Form.Item>
-                            <MinusCircleOutlined
-                              onClick={() => {
-                                if (fields.length > 1) {
-                                  const newSkills = values.skills.filter(
-                                    (_, index) => index !== name
-                                  )
-                                  setFieldValue('skills', newSkills)
-                                  remove(name, key)
-                                }
-                              }}
-                              disabled={fields.length === 1}
-                            />
-                          </Space>
-                        ))}
-                        <Form.Item>
-                          <Button
-                            type="dashed"
-                            onClick={() => add()}
-                            block
-                            icon={<PlusOutlined />}
-                          >
-                            {t('employee.add_skill')}
-                          </Button>
-                        </Form.Item>
-                      </>
-                    )}
-                  </Form.List>
                 </Form.Item>
               </Col>
               <Col xs={24} md={12}>
@@ -416,7 +386,8 @@ const CreateProject = () => {
             </Row>
 
             <Form.Item>
-              <Button type="primary" htmlType="submit" loading={isPending}>
+              {/* <Button type="primary" htmlType="submit" loading={isPending}> */}
+              <Button type="primary" htmlType="submit">
                 {t('button_input.create')}
               </Button>
             </Form.Item>
