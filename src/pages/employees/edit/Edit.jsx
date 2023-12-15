@@ -32,7 +32,8 @@ import './Edit.css'
 import { useGetPositions } from '@hooks/usePosition'
 import { useGetManagers } from '@hooks/useManager'
 import Breadcrumb from '@components/admin/Breadcrumb/Breadcrumb'
-
+import dayjs from 'dayjs'
+const dateFormat = 'YYYY-MM-DD'
 const SelectManager = () => {
   const { data } = useGetManagers()
   const { setFieldValue, values } = useFormikContext()
@@ -113,6 +114,8 @@ const EditEmployee = () => {
     avatar: employee?.avatar,
     description: employee?.description,
   }
+
+  console.log(initialValues.dob)
 
   const { t } = useTranslation('translation')
   const [avatar, setAvatar] = useState(null)
@@ -363,15 +366,22 @@ const EditEmployee = () => {
                     help={errors.dob && touched.dob ? errors.dob : ''}
                   >
                     <ConfigProvider locale={datePickerLocale}>
-                      <DatePicker
+                      {
+                        /* <DatePicker
                         placement="bottomRight"
                         name="dob"
                         className="dob"
                         onChange={value => setFieldValue('dob', value)}
                         disabledDate={current => current.isAfter(moment())} // Disable future dates
                         onBlur={handleBlur}
-                        value={values.dob}
-                      />
+                        value={values.dob} // Remove this line
+                      /> */
+                        <DatePicker
+                          className="dob"
+                          onChange={value => setFieldValue('dob', value)}
+                          defaultValue={dayjs(values.dob._i, dateFormat)}
+                        />
+                      }
                     </ConfigProvider>
                   </Form.Item>
                 </Col>
