@@ -31,6 +31,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import './Edit.css'
 import { useGetPositions } from '@hooks/usePosition'
 import { useGetManagers } from '@hooks/useManager'
+import Breadcrumb from '@components/admin/Breadcrumb/Breadcrumb'
 
 const SelectManager = () => {
   const { data } = useGetManagers()
@@ -211,8 +212,27 @@ const EditEmployee = () => {
     return <div>...</div>
   }
 
+  const breadcrumbItems = [
+    {
+      key: 'dashboard',
+      title: t('breadcrumbs.dashboard'),
+      route: '/admin/dashboard',
+    },
+    {
+      key: 'employees',
+      title: t('breadcrumbs.employees'),
+      route: '/admin/employees',
+    },
+    {
+      key: 'edit',
+      title: t('breadcrumbs.edit'),
+      route: `/admin/employees/edit/${id}`,
+    },
+  ]
+
   return (
     <>
+      <Breadcrumb items={breadcrumbItems} />
       {employee && (
         <Formik
           enableReinitialize
@@ -371,8 +391,12 @@ const EditEmployee = () => {
                           onBlur={handleBlur}
                           defaultValue={values.gender}
                         >
-                          <Select.Option value="male">Male</Select.Option>
-                          <Select.Option value="female">Female</Select.Option>
+                          <Select.Option value="male">
+                            {t('employee.male')}
+                          </Select.Option>
+                          <Select.Option value="female">
+                            {t('employee.female')}
+                          </Select.Option>
                         </Select>
                       </Form.Item>
                     </Col>
@@ -391,8 +415,12 @@ const EditEmployee = () => {
                           onBlur={handleBlur}
                           defaultValue={values.status}
                         >
-                          <Select.Option value={true}>Active</Select.Option>
-                          <Select.Option value={false}>Inactive</Select.Option>
+                          <Select.Option value={true}>
+                            {t('employee.active')}
+                          </Select.Option>
+                          <Select.Option value={false}>
+                            {t('employee.inactive')}
+                          </Select.Option>
                         </Select>
                       </Form.Item>
                     </Col>
