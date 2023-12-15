@@ -34,7 +34,9 @@
     "success_login": "Đăng nhập thành công!",
     "error_login": "Đăng nhập thất bại!",
     "create_employee_success": "Tạo nhân viên thành công",
-    "create_employee_fail": "Tạo nhân viên thất bại, vui lòng thử lại!"
+    "create_employee_fail": "Tạo nhân viên thất bại, vui lòng thử lại!",
+    "Employee_deleted_successfully": "Xóa nhân viên thành công",
+    "Employee_deleted_fail": "Xóa nhân viên thất bại, vui lòng thử lại!"
   },
   "validate": {
     "name_validate": "Vui lòng nhập tên hợp lệ",
@@ -88,7 +90,7 @@
     "submit": "Xác Nhận",
     "add_skill": "Thêm Kĩ Năng",
     "upload_avatar": "Tải hình lên",
-    "male": "Name",
+    "male": "Nam",
     "female": "Nữ",
     "active": "Kích Hoạt",
     "inactive": "Vô Hiệu Hóa",

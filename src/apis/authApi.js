@@ -10,3 +10,8 @@ export const getLoginApi = async ({ email, password }) => {
 
   return response.data
 }
+
+export const getMeApi = async () => {
+  const response = await axios.get('users/me')
+  return response.data
+}

@@ -4,13 +4,8 @@ import { useSelector } from 'react-redux'
 
 const PrivateRoute = ({ component }) => {
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
-  const isLoggedIn = localStorage.getItem('isLoggedIn') // Kiểm tra trạng thái đăng nhập
 
-  return isAuthenticated || isLoggedIn ? (
-    component
-  ) : (
-    <Navigate to="/login" replace />
-  )
+  return isAuthenticated ? component : <Navigate to="/login" replace />
 }
 
 export default PrivateRoute
