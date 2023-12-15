@@ -27,7 +27,11 @@ export const getEmployeesApi = async ({
 }
 
 export const createEmployeeApi = async data => {
-  const response = await axios.post(API_URL.EMPLOYEES, data)
+  const response = await axios.post(API_URL.EMPLOYEES, data, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  })
 
   if (response.status !== 201) {
     throw new Error(`HTTP error! Status: ${response.status}`)
