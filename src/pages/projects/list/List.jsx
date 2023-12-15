@@ -11,7 +11,8 @@ import { Button, Empty } from 'antd'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
-import './List.css'
+import Breadcrumb from '../../../components/admin/Breadcrumb/Breadcrumb'
+import '../../../components/custom/CustomTable.css'
 
 const ProjectList = () => {
   const navigate = useNavigate()
@@ -35,6 +36,19 @@ const ProjectList = () => {
     sortOrder: tableData.sortedInfo.order || 'asc',
     searchText: tableData.searchText,
   }
+
+  const breadcrumbItems = [
+    {
+      key: 'dashboard',
+      title: t('breadcrumbs.dashboard'),
+      route: '/admin/dashboard',
+    },
+    {
+      key: 'projects',
+      title: t('breadcrumbs.projects'),
+      route: '/admin/projects',
+    },
+  ]
 
   const { data, isLoading } = useGetEmployees(employees)
 
@@ -248,10 +262,12 @@ const ProjectList = () => {
 
   return (
     <div className="projectLayout">
+      <Breadcrumb items={breadcrumbItems} />
+      <br />
       <Button
         type="primary"
-        onClick={() => navigate('/admin/employees/create')}
-        style={{ marginBottom: 16 }}
+        // onClick={() => navigate('/admin/employees/create')}
+        style={{ marginBottom: 16, float: 'right' }}
       >
         {t('button_input.create_project')}
       </Button>
