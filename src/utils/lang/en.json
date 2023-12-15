@@ -36,7 +36,8 @@
     "create_employee_success": "Employee created successfully",
     "create_employee_fail": "Error creating employee. Please try again!",
     "Employee_deleted_successfully": "Employee deleted successfully",
-    "Employee_deleted_fail": "Error deleting employee. Please try again!"
+    "Employee_deleted_fail": "Error deleting employee. Please try again!",
+    "edit_employee_success": "Update employee successfully"
   },
   "validate": {
     "name_validate": "Please input a valid name!",
@@ -52,11 +53,12 @@
     "card_require": "Please input the Citizen Identity Card!",
     "card_validate": "Please input a valid Citizen Identity Card!",
     "dob_validate": "Please select Date of Birth!",
-    "skill_validate": "Please input skill!",
     "experience_require": "Please input experience!",
     "experience_validate": "Experience must be a number!",
     "skills_require": "Must have skill",
-    "skills_validate": "Must have at least 1 skill"
+    "skills_validate": "Must have at least 1 skill",
+    "skill_require": "Please input skill!",
+    "skill_validate": "Skill name must be a string!"
   },
   "breadcrumbs": {
     "employee_details": "Employee Details",
@@ -113,6 +115,7 @@
     "logout": "Logout"
   },
   "employee_details": {
+    "title": "Detail Employee",
     "profile": "Profile",
     "skill": "Skill",
     "project": "Project",
@@ -126,7 +129,16 @@
     "identity_code": "Identity Code",
     "active": "Active",
     "inactive": "Inactive",
-    "is_manager": "Is manager"
+    "is_manager": "Role",
+    "genders": {
+      "male": "Male",
+      "female": "Female"
+    },
+    "is_managers": {
+      "true": "Manager",
+      "false": "Employee"
+    },
+    "years": "years"
   },
   "project_details": {
     "project_name": "Project Name",

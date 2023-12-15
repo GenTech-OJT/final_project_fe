@@ -1,15 +1,25 @@
 import { EyeOutlined } from '@ant-design/icons'
-import { Button, Card, Col, Descriptions, Row, Table, Tabs } from 'antd'
+import {
+  Button,
+  Card,
+  Col,
+  Descriptions,
+  Flex,
+  Row,
+  Table,
+  Tabs,
+  Tag,
+} from 'antd'
 import Title from 'antd/es/skeleton/Title'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { useParams } from 'react-router-dom'
 import Chartpie from '../../../components/Chartpie/Chartpie'
-import { useGetEmployeeById } from '../../../hooks/useEmployee'
-import './detail.css'
-import './Detail.css'
 import Breadcrumb from '../../../components/admin/Breadcrumb/Breadcrumb'
+import { useGetEmployeeById } from '../../../hooks/useEmployee'
+import './Detail.css'
+import './detail.css'
 
 const { TabPane } = Tabs
 
@@ -58,26 +68,20 @@ const EmployeeDetail = () => {
       render: status => (
         <span>
           {status === 'In progress' && (
-            <Button
-              style={{
-                backgroundColor: 'blue',
-                color: 'white',
-                cursor: 'default',
-              }}
+            <Tag
+              color="#2db7f5"
+              style={{ fontSize: '14px', padding: '8px 12px' }}
             >
               {status}
-            </Button>
+            </Tag>
           )}
           {status === 'Done' && (
-            <Button
-              style={{
-                backgroundColor: 'green',
-                color: 'white',
-                cursor: 'default',
-              }}
+            <Tag
+              color="#87d068"
+              style={{ fontSize: '14px', padding: '8px 12px' }}
             >
               {status}
-            </Button>
+            </Tag>
           )}
         </span>
       ),
@@ -188,12 +192,13 @@ const EmployeeDetail = () => {
 
   // Function to generate data for Chartpie from employee skills
   const generateChartData = skills => {
-    const labels = skills.map(
-      skill =>
-        `${skill.name.charAt(0).toUpperCase()}${skill.name.slice(1)} - ${
-          skill.year
-        } years`
-    )
+    const labels = skills.map(skill => {
+      const skillName = skill.name || '' // Default to an empty string if name is null or undefined
+      return `${skillName.charAt(0).toUpperCase()}${skillName.slice(1)} - ${
+        skill.year
+      } ${t('employee_details.years')}`
+    })
+
     const data = skills.map(skill => skill.year)
 
     return {
@@ -209,14 +214,14 @@ const EmployeeDetail = () => {
     return value !== null && value !== undefined ? value : ''
   }
 
-  if (isLoading) {
+  if (isLoading || !employee_details) {
     return <div>Loading...</div>
   }
 
   return (
     <div className="page-container">
       <Breadcrumb items={breadcrumbItems} />
-      <h2>Detail Employee</h2>
+      <h2>{t('employee_details.title')}</h2>
       <Title className="page-title">EMPLOYEE DETAIL</Title>
 
       <Tabs
@@ -227,79 +232,68 @@ const EmployeeDetail = () => {
       >
         <TabPane tab={<span> {t('employee_details.profile')}</span>} key="1">
           {/* Content for Profile tab */}
-          <Card style={{ backgroundColor: ' rgb(245, 245, 245)' }}>
-            <Row gutter={16} justify="center" align="middle">
-              <Col span={24} className="employee_avt">
-                <img
-                  src={employee_details.avatar}
-                  alt="Employee Avatar"
-                  className="avt"
-                />
-                <div className="employee_title">
-                  <p className="employee_name">{employee_details?.name}</p>
-                  <p className="employee_position">
-                    {employee_details.position}
-                  </p>
-                  <div className="status-show">
-                    <div
-                      className="status-dot"
-                      style={{ backgroundColor: getStatusDotColor() }}
-                    ></div>
-                    <p className="status-text">
-                      {employee_details.status === 'active'
-                        ? t('employee_details.active')
-                        : t('employee_details.inactive')}
+
+          {/* Hoang res */}
+          <Card style={{ backgroundColor: 'rgb(245, 245, 245)' }}>
+            <Row gutter={{ sm: 24, md: 24 }}>
+              <Col sm={24} lg={12} className="avatar_status">
+                <Flex>
+                  <img
+                    // src={employee_details.avatar}
+                    src="https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg"
+                    alt="Employee Avatar"
+                    className="avt"
+                  />
+                  <div className="employee_title">
+                    <p className="employee_name">{employee_details?.name}</p>
+                    <p className="employee_position">
+                      {employee_details.position}
                     </p>
-                  </div>
-                </div>
-                <div className="vertical-line"></div>
-                <Col span={16}>
-                  <div className="horizontal_container">
-                    <div className="content_1">
-                      <div className="employee_content">
-                        <p className="employee_label">
-                          {t('employee_details.employee_code')}
-                          {' : '}
-                        </p>
-                        <p className="employee_info">{employee_details.code}</p>
-                      </div>
-                      <div className="employee_content">
-                        <p className="employee_label">
-                          {t('employee_details.line_manager')}
-                          {' : '}
-                        </p>
-                        <p className="employee_info">
-                          {capitalizeFirstLetter(
-                            displayValue(employee_details.line_manager)
-                          )}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="content_2">
-                      <div className="employee_content">
-                        <p className="employee_label">
-                          {t('employee_details.phone_number')}
-                          {' : '}
-                        </p>
-                        <p className="employee_info">
-                          {employee_details.phone}
-                        </p>
-                      </div>
-                      <div className="employee_content">
-                        <p className="employee_label">Email : </p>
-                        <p className="employee_info">
-                          {employee_details.email}
-                        </p>
-                      </div>
+                    <div className="status-show">
+                      <div
+                        className="status-dot"
+                        style={{ backgroundColor: getStatusDotColor() }}
+                      ></div>
+                      <p className="status-text">
+                        {employee_details.status === 'active'
+                          ? t('employee_details.active')
+                          : t('employee_details.inactive')}
+                      </p>
                     </div>
                   </div>
-                </Col>
+                </Flex>
+              </Col>
+              <Col sm={24} lg={12}>
+                <Row>
+                  <p className="employee_label">
+                    {t('employee_details.employee_code')}
+                    {' : '}
+                  </p>
+                  <p className="employee_info">{employee_details.code}</p>
+                </Row>
+                <Row>
+                  <p className="employee_label">
+                    {t('employee_details.line_manager')}
+                    {' : '}
+                  </p>
+                  <p className="employee_info">
+                    {capitalizeFirstLetter(
+                      displayValue(employee_details.line_manager)
+                    )}
+                  </p>
+                </Row>
+                <Row>
+                  <p className="employee_label">Email :</p>
+                  {/* <p className="employee_info">{employee_details.email}</p> */}
+                  <p className="employee_info">nhatnhatnhar27@gmail.com</p>
+                </Row>
               </Col>
             </Row>
           </Card>
 
-          <Row gutter={16}>
-            <Col span={12}>
+          {/* ///// */}
+          <Row gutter={{ xs: 8, sm: 12, md: 16, lg: 24 }}>
+            <Col md={24} lg={12}>
               <Card
                 style={{
                   marginTop: 20,
@@ -329,8 +323,12 @@ const EmployeeDetail = () => {
                           className="custom-label"
                         >
                           {capitalizeFirstLetter(
-                            displayValue(employee_details.gender)
-                          )}{' '}
+                            displayValue(
+                              t(
+                                `employee_details.genders.${employee_details.gender}`
+                              )
+                            )
+                          )}
                         </Descriptions.Item>
                         <Descriptions.Item
                           label={
@@ -373,7 +371,9 @@ const EmployeeDetail = () => {
                         >
                           {capitalizeFirstLetter(
                             displayValue(
-                              employee_details.is_manager ? 'Yes' : 'No'
+                              t(
+                                `employee_details.is_managers.${employee_details.is_manager}`
+                              )
                             )
                           )}
                         </Descriptions.Item>
@@ -396,8 +396,7 @@ const EmployeeDetail = () => {
                 </Row>
               </Card>
             </Col>
-            <Col span={12}>
-              {/* New Card for Skills */}
+            <Col md={24} lg={12}>
               <Card
                 style={{
                   marginTop: 20,
@@ -425,6 +424,11 @@ const EmployeeDetail = () => {
                 </Row>
               </Card>
             </Col>
+          </Row>
+
+          <Row gutter={16}>
+            <Col span={12}></Col>
+            <Col span={12}>{/* New Card for Skills */}</Col>
           </Row>
         </TabPane>
         {/* next page */}

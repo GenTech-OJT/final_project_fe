@@ -2,10 +2,11 @@
   display: flex;
   align-items: center;
 }
+
 .employee_name {
   font-weight: 500;
-  font-size: 25px;
-  margin-bottom: 0;
+  font-size: 23px;
+  margin: 0;
 }
 
 .employee_title {
@@ -13,7 +14,7 @@
 }
 
 .employee_position {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 500;
   color: #167ec5;
   margin: 0 0 2px;
@@ -27,8 +28,10 @@
 
 .vertical-line {
   border-left: 1px solid #b3b2b2af;
-  height: 60px;
-  margin-left: 55px;
+  height: 70px;
+  margin-left: 80px;
+  display: flex;
+  align-self: center;
 }
 
 .employee_label {
@@ -46,6 +49,7 @@
 .title {
   font-weight: 500;
   font-size: 20px;
+  margin-top: 0;
 }
 
 .profile_line {
@@ -104,11 +108,17 @@
 }
 
 .status-text {
-  margin: 10px;
+  margin: 5px 10px;
 }
 
 .pie-chart-container {
   width: 100%;
   max-width: 400px;
   margin: 0 auto;
+}
+
+@media only screen and (max-width: 992px) {
+  .avatar_status {
+    margin-bottom: 30px;
+  }
 }

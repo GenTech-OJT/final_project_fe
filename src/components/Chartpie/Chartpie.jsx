@@ -15,8 +15,8 @@ const Chartpie = ({ data }) => {
           show: false,
         },
         legend: {
-          top: 'center',
-          left: '70%',
+          bottom: '0',
+          left: 'center',
           itemWidth: 20,
           itemHeight: 14,
           itemGap: 18,
@@ -55,20 +55,6 @@ const Chartpie = ({ data }) => {
             })),
           },
         ],
-        graphic: {
-          elements: [
-            {
-              type: 'text',
-              style: {
-                text: 'Skills Experience',
-                font: 'bold 14px Arial ',
-                fill: '#333',
-              },
-              left: 'center',
-              top: '90%',
-            },
-          ],
-        },
       }
 
       myChart.setOption(option)
@@ -80,12 +66,7 @@ const Chartpie = ({ data }) => {
     }
   }, [data])
 
-  return (
-    <div
-      ref={chartRef}
-      style={{ width: '660px', height: '331px', right: '230px' }}
-    />
-  )
+  return <div ref={chartRef} style={{ width: '100%', height: '331px' }} />
 }
 
 Chartpie.propTypes = {

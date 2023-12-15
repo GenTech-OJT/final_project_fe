@@ -36,7 +36,8 @@
     "create_employee_success": "Tạo nhân viên thành công",
     "create_employee_fail": "Tạo nhân viên thất bại, vui lòng thử lại!",
     "Employee_deleted_successfully": "Xóa nhân viên thành công",
-    "Employee_deleted_fail": "Xóa nhân viên thất bại, vui lòng thử lại!"
+    "Employee_deleted_fail": "Xóa nhân viên thất bại, vui lòng thử lại!",
+    "edit_employee_success": "Cập nhật nhân viên Thành Công"
   },
   "validate": {
     "name_validate": "Vui lòng nhập tên hợp lệ",
@@ -52,11 +53,12 @@
     "card_require": "Vui lòng nhập Chứng minh nhân dân!",
     "card_validate": "Vui lòng nhập Chứng minh nhân dân hợp lệ!",
     "dob_validate": "Vui lòng chọn Ngày sinh!",
-    "skill_validate": "Vui lòng nhập kỹ năng!",
     "experience_require": "Vui lòng nhập kinh nghiệm!",
     "experience_validate": "Kinh nghiệm phải là số năm!",
     "skills_require": "Vui lòng nhập kinh nghiệm!",
-    "skills_validate": "Phải có ít nhất một kinh nghiệm!"
+    "skills_validate": "Phải có ít nhất một kinh nghiệm!",
+    "skill_require": "Vui lòng nhập kỹ năng!",
+    "skill_validate": "Vui lòng nhập đúng kí tự"
   },
   "breadcrumbs": {
     "projects": "Danh sách dự án",
@@ -113,6 +115,7 @@
     "logout": "Đăng Xuất"
   },
   "employee_details": {
+    "title": "Chi tiết nhân viên",
     "profile": "Hồ sơ",
     "skill": "Kĩ năng",
     "project": "Dự án",
@@ -126,7 +129,16 @@
     "identity_code": "Căn cước công dân",
     "active": "Kích hoạt",
     "inactive": "Vô hiệu hóa",
-    "is_manager": "Quản lí"
+    "is_manager": "Vai trò",
+    "genders": {
+      "male": "Nam",
+      "female": "Nữ"
+    },
+    "is_managers": {
+      "true": "Quản lí",
+      "false": "Nhân viên"
+    },
+    "years": "năm"
   },
   "project_details": {
     "project_name": "Tên dự án",
