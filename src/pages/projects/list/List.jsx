@@ -24,7 +24,7 @@ const ProjectList = () => {
     pagination: {
       current: 1,
       pageSize: 5,
-      total: 14,
+      total: 15,
     },
   })
 
@@ -149,6 +149,7 @@ const ProjectList = () => {
       sortOrder:
         tableData.sortedInfo.columnKey === 'name' && tableData.sortedInfo.order,
     },
+
     {
       title: t('project_details.start_date'),
       align: 'center',

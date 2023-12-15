@@ -27,7 +27,7 @@ const CustomTable = ({
       }}
       loading={loading}
       pageSpageSizeOptions={itemsPerPageOptions}
-      scroll={{ x: 100, y: 330 }}
+      scroll={{ x: 100, y: 350 }}
     />
   )
 }
@@ -79,7 +79,7 @@ const SortableTable = ({
         onChange={handleTableChange}
         pagination={pagination}
         pageSpageSizeOptions={itemsPerPageOptions}
-        scroll={{ x: 100, y: 330 }}
+        scroll={{ x: true, y: 350 }}
       />
     </>
   )
