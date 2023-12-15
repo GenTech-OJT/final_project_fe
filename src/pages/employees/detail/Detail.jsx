@@ -325,7 +325,7 @@ const EmployeeDetail = () => {
                       }
                       className="custom-label"
                     >
-                      {capitalizeFirstLetter(displayValue(employee.gender))}{' '}
+                      {capitalizeFirstLetter(displayValue(employee.gender))}
                     </Descriptions.Item>
                     <Descriptions.Item
                       label={
