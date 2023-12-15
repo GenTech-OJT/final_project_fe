@@ -6,7 +6,7 @@
 /* Định dạng ô tìm kiếm */
 
 .ant-input-affix-wrapper {
-  float: right;
+  float: left;
 }
 
 /* Định dạng kích thước biểu tượng trong ant-space */

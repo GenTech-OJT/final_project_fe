@@ -275,7 +275,7 @@ const EmployeeList = () => {
       <Button
         type="primary"
         onClick={() => navigate('/admin/employees/create')}
-        style={{ marginBottom: 16 }}
+        style={{ marginBottom: 16, float: 'right' }}
       >
         {t('button_input.create')}
       </Button>
