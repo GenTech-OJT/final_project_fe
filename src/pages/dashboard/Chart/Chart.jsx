@@ -70,14 +70,21 @@ const ChartBar = () => {
     const option = {
       xAxis: {
         type: 'category',
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        data: [
+          'Jan-Feb',
+          'Mar-Apr',
+          'May-Jun',
+          'July-Aug',
+          'Sep-Oct',
+          'Nov-Dec',
+        ],
       },
       yAxis: {
         type: 'value',
       },
       series: [
         {
-          data: [120, 200, 150, 80, 70, 110, 130],
+          data: [10, 7, 19, 12, 29, 25],
           type: 'bar',
         },
       ],

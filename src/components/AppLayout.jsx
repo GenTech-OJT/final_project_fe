@@ -15,7 +15,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setSelectedKey } from '../redux/Slice/menuSlice'
 import { useTranslation } from 'react-i18next'
 import logoImage from '../assets/img/GenTech-Logo.png'
-import '../App.css'
+import { showToast } from '@components/toast/ToastCustom'
+import { logout } from '@redux/Slice/authSlice'
 
 const { Header, Sider, Content } = Layout
 
@@ -80,9 +81,11 @@ const AppLayout = ({ children }) => {
           defaultSelectedKeys={[selectedKey]}
           selectedKeys={[selectedKey]}
           onClick={item => {
-            if (item.key === '/login') {
-              localStorage.removeItem('isLoggedIn')
-              navigate('/login', { replace: true })
+            if (item.key === '/logout') {
+              dispatch(logout())
+              localStorage.removeItem('accessToken')
+              localStorage.removeItem('refreshToken')
+              showToast(t('message.logout'), 'success')
             } else {
               localStorage.setItem('selectedKey', item.key)
               dispatch(setSelectedKey(item.key))
@@ -106,13 +109,12 @@ const AppLayout = ({ children }) => {
               label: t('side_menu.project_management_label'),
             },
             {
-              key: '/login',
+              key: '/logout',
               icon: <LogoutOutlined />,
               label: t('side_menu.logout'),
             },
           ]}
         />
-        toaaaa
       </Sider>
       <Layout>
         <Header
@@ -140,6 +142,7 @@ const AppLayout = ({ children }) => {
             <Select
               value={selectedLanguage}
               style={{
+                right: 15,
                 width: 120,
               }}
               onChange={changeLanguage}

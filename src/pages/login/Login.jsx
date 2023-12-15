@@ -48,24 +48,7 @@ const Login = () => {
   const { mutate: loginApi, isSuccess } = useLogin()
 
   const onFinish = async values => {
-    loginApi(
-      { email: values.email, password: values.password },
-      {
-        onSuccess: data => {
-          const token =
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NzBiOThiM2I2MTViZjIwYzdmODQzYSIsImlzQWRtaW4iOnRydWUsImlhdCI6MTcwMjMxNTk2MiwiZXhwIjoxNzAyMzE1OTkyfQ.HF-hz18XXtDSgxMJiJchsXiiFww6qQFfvrbHhMnZc3w'
-          const refreshToken =
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NzBiOThiM2I2MTViZjIwYzdmODQzYSIsImlzQWRtaW4iOnRydWUsImlhdCI6MTcwMjMxNTk2MiwiZXhwIjoxNzMzODUxOTYyfQ.D3Lq6_jL_N5Cie2BZDA4CisMv_m5BNg2CaTCWMUCJmk'
-          dispatch(login({ token, refreshToken }))
-          localStorage.setItem('isLoggedIn', 'true')
-          navigate('/admin')
-          showToast(t('message.success_login'), 'success')
-        },
-        onError: () => {
-          showToast(t('message.error_login'), 'error')
-        },
-      }
-    )
+    loginApi({ email: values.email, password: values.password })
   }
 
   console.log(isSuccess)
