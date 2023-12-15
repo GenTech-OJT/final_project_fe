@@ -102,7 +102,8 @@ const EditEmployee = () => {
 
     gender: employee?.gender,
     status: employee?.status,
-    is_manager: employee?.is_manager,
+    is_manager: !!employee?.is_manager,
+
     position: employee?.position,
     manager: employee?.manager,
     skills: employee?.skills?.map(skill => ({
@@ -188,7 +189,7 @@ const EditEmployee = () => {
       dob: values.dob.format('YYYY-MM-DD'),
       gender: values.gender,
       status: values.status,
-      is_manager: !!values.is_manager,
+      is_manager: values.is_manager,
       position: values.position,
       avatar: values.avatar,
       skills: values.skills.map(skill => ({
