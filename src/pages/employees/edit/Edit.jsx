@@ -118,29 +118,6 @@ const EditEmployee = () => {
     description: employee?.description,
   }
 
-  // useEffect(() => {
-  //   if (employee?.avatar) {
-  //     setAvatar(employee.avatar)
-  //   }
-  // }, [employee])
-  // const uploadAvatar = async formData => {
-  //   try {
-  //     const data = await updateEmployeeApi({ id, data: formData })
-  //     setAvatar(data.avatar)
-  //   } catch (error) {
-  //     console.error('Error uploading avatar:', error)
-  //   }
-  // }
-  // const handleUpload = async file => {
-  //   try {
-  //     const formData = new FormData()
-  //     formData.append('avatar', file)
-  //     await uploadAvatar(formData)
-  //   } catch (error) {
-  //     console.error('Error preparing upload:', error)
-  //   }
-  // }
-
   const validationSchema = Yup.object().shape({
     name: Yup.string()
       .matches(/^([a-zA-Z]\s*)+$/, t('validate.name_validate'))
