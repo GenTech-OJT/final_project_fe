@@ -81,12 +81,12 @@ const CreateProject = () => {
   const initialValues = {
     name: '',
     manager: '',
-    teamMembers: [],
+    employees: [],
     status: 'pending',
-    startDay: '',
-    endDay: '',
+    start_date: '',
+    end_date: '',
     description: '',
-    technicals: [],
+    technical: [],
   }
 
   const validationSchema = Yup.object().shape({
@@ -96,10 +96,10 @@ const CreateProject = () => {
       .max(40, t('validate.name_validate_max'))
       .required(t('validate.name_require')),
     manager: Yup.string(),
-    teamMembers: Yup.array().min(1, 'Please select at least one team member'),
-    technicals: Yup.array().min(1, 'Please select at least one technical'),
-    startDay: Yup.date().required(t('validate.dob_validate')),
-    endDay: Yup.date().required(t('validate.dob_validate')),
+    employees: Yup.array().min(1, 'Please select at least one team member'),
+    technical: Yup.array().min(1, 'Please select at least one technical'),
+    start_date: Yup.date().required(t('validate.dob_validate')),
+    end_date: Yup.date().required(t('validate.dob_validate')),
     status: Yup.string(),
     description: Yup.string(),
   })
@@ -107,17 +107,17 @@ const CreateProject = () => {
   const handleFormSubmit = async values => {
     const formattedValues = {
       ...values,
-      teamMembers: teamMembers.map(m => ({
+      employees: teamMembers.map(m => ({
         id: m.id,
         name: m.name,
         avatar: m.avatar,
-        assignTime: moment().format('YYYY-MM-DD HH:mm:ss'),
+        assign_time: moment().format('YYYY-MM-DD HH:mm:ss'),
       })),
-      technicals: technicals.map(t => ({
+      technical: technicals.map(t => ({
         name: t.name,
       })),
-      startDay: moment(values.startDay.$d).format('YYYY-MM-DD HH:mm:ss'),
-      endDay: moment(values.endDay.$d).format('YYYY-MM-DD HH:mm:ss'),
+      start_date: moment(values.start_date.$d).format('YYYY-MM-DD HH:mm:ss'),
+      end_date: moment(values.end_date.$d).format('YYYY-MM-DD HH:mm:ss'),
     }
 
     console.log(33333, formattedValues)
@@ -217,23 +217,25 @@ const CreateProject = () => {
               <Col xs={24} md={12}>
                 <Form.Item
                   label="Start Day"
-                  name="startDay"
+                  name="start_date"
                   required
                   validateStatus={
-                    errors.startDay && touched.startDay ? 'error' : ''
+                    errors.start_date && touched.start_date ? 'error' : ''
                   }
                   help={
-                    errors.startDay && touched.startDay ? errors.startDay : ''
+                    errors.start_date && touched.start_date
+                      ? errors.start_date
+                      : ''
                   }
                 >
                   {/* <ConfigProvider locale={datePickerLocale}> */}
                   <DatePicker
                     placement="bottomRight"
-                    name="startDay"
+                    name="start_date"
                     className="datePicker"
-                    onChange={value => setFieldValue('startDay', value)}
+                    onChange={value => setFieldValue('start_date', value)}
                     onBlur={handleBlur}
-                    value={values.startDay}
+                    value={values.start_date}
                     disabledDate={current =>
                       current && current < moment().startOf('day')
                     }
@@ -244,25 +246,27 @@ const CreateProject = () => {
               <Col xs={24} md={12}>
                 <Form.Item
                   label="End Day"
-                  name="endDay"
+                  name="end_date"
                   required
                   validateStatus={
-                    errors.endDay && touched.endDay ? 'error' : ''
+                    errors.end_date && touched.end_date ? 'error' : ''
                   }
-                  help={errors.endDay && touched.endDay ? errors.endDay : ''}
+                  help={
+                    errors.end_date && touched.end_date ? errors.end_date : ''
+                  }
                 >
                   {/* <ConfigProvider locale={datePickerLocale}> */}
                   <DatePicker
                     placement="bottomRight"
-                    name="endDay"
+                    name="end_date"
                     className="datePicker"
-                    onChange={value => setFieldValue('endDay', value)}
+                    onChange={value => setFieldValue('end_date', value)}
                     onBlur={handleBlur}
-                    value={values.endDay}
+                    value={values.end_date}
                     disabledDate={current =>
                       current &&
                       (current < moment().startOf('day') ||
-                        current < values.startDay)
+                        current < values.start_date)
                     }
                   />
                   {/* </ConfigProvider> */}
@@ -273,29 +277,27 @@ const CreateProject = () => {
               <Col xs={24} md={12}>
                 <Form.Item
                   label="Team Members"
-                  name="teamMembers"
+                  name="employees"
                   validateStatus={
-                    errors.teamMembers && touched.teamMembers ? 'error' : ''
+                    errors.employees && touched.employees ? 'error' : ''
                   }
                   help={
-                    errors.teamMembers &&
-                    touched.teamMembers &&
-                    errors.teamMembers
+                    errors.employees && touched.employees && errors.employees
                   }
                 >
                   <Select
                     mode="multiple"
-                    name="teamMembers"
+                    name="employees"
                     placeholder="Inserted are removed"
                     maxTagCount={3}
-                    defaultValue={values.teamMembers}
+                    defaultValue={values.employees}
                     onBlur={handleBlur}
                     onChange={selectedValues => {
                       const selectedMembers = employees?.data.filter(employee =>
                         selectedValues.includes(employee.name)
                       )
                       setTeamMembers(selectedMembers)
-                      setFieldValue('teamMembers', selectedMembers)
+                      setFieldValue('employees', selectedMembers)
                     }}
                   >
                     {employees?.data?.map(e => (
@@ -309,27 +311,27 @@ const CreateProject = () => {
               <Col xs={24} md={12}>
                 <Form.Item
                   label="Technicals"
-                  name="technicals"
+                  name="technical"
                   validateStatus={
-                    errors.technicals && touched.technicals ? 'error' : ''
+                    errors.technical && touched.technical ? 'error' : ''
                   }
                   help={
-                    errors.technicals && touched.technicals && errors.technicals
+                    errors.technical && touched.technical && errors.technical
                   }
                 >
                   <Select
                     mode="multiple"
-                    name="technicals"
+                    name="technical"
                     placeholder="Inserted are removed"
                     maxTagCount={3}
-                    defaultValue={values.technicals}
+                    defaultValue={values.technical}
                     onBlur={handleBlur}
                     onChange={selectedValues => {
                       const selectedTechnicals = employees?.data.filter(
                         employee => selectedValues.includes(employee.name)
                       )
                       setTechnicals(selectedTechnicals)
-                      setFieldValue('technicals', selectedTechnicals)
+                      setFieldValue('technical', selectedTechnicals)
                     }}
                   >
                     {employees?.data?.map(e => (
@@ -357,16 +359,16 @@ const CreateProject = () => {
                     onBlur={handleBlur}
                     defaultValue={values.status}
                   >
-                    <Select.Option value={'pending'}>
+                    <Select.Option value={'Pending'}>
                       <Badge status="warning" text="Pending" />
                     </Select.Option>
-                    <Select.Option value={'inProgress'}>
+                    <Select.Option value={'In Progress'}>
                       <Badge status="processing" text="In progress" />
                     </Select.Option>
-                    <Select.Option value={'cancelled'}>
+                    <Select.Option value={'Cancelled'}>
                       <Badge status="error" text="Cancelled" />
                     </Select.Option>
-                    <Select.Option value={'done'}>
+                    <Select.Option value={'Done'}>
                       <Badge status="success" text="Done" />
                     </Select.Option>
                   </Select>
