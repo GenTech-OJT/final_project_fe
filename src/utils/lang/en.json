@@ -59,11 +59,13 @@
     "skills_validate": "Must have at least 1 skill"
   },
   "breadcrumbs": {
-    "projects_breadcrumb": "Projects",
-    "employees_breadcrumb": "Employees",
-    "detail_breadcrumb": "Details",
-    "create_breadcrumb": "Create",
-    "edit_breadcrumb": "Edit"
+    "employee_details": "Employee Details",
+    "project_details": "Project Details",
+    "projects": "Projects",
+    "employees": "Employees",
+    "create": "Create",
+    "edit": "Edit",
+    "dashboard": "Dashboard"
   },
   "title": {
     "create_employee": "CREATE EMPLOYEE",

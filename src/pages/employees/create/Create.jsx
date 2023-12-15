@@ -1,37 +1,37 @@
-import React, { useState, useEffect } from 'react'
-import {
-  Button,
-  DatePicker,
-  Form,
-  Input,
-  Select,
-  Space,
-  message,
-  Upload,
-  Checkbox,
-  Col,
-  Row,
-  ConfigProvider,
-  Spin,
-} from 'antd'
 import {
   MinusCircleOutlined,
   PlusOutlined,
   UploadOutlined,
 } from '@ant-design/icons'
-import { Formik } from 'formik'
-import * as Yup from 'yup'
-import moment from 'moment'
-import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router'
 import { showToast } from '@components/toast/ToastCustom'
 import { useCreateEmployee } from '@hooks/useEmployee'
 import { useGetManagers } from '@hooks/useManager'
 import { useGetPositions } from '@hooks/usePosition'
+import {
+  Button,
+  Checkbox,
+  Col,
+  ConfigProvider,
+  DatePicker,
+  Form,
+  Input,
+  Row,
+  Select,
+  Space,
+  Spin,
+  Upload,
+  message,
+} from 'antd'
 import enUS from 'antd/locale/en_US'
 import viVN from 'antd/locale/vi_VN'
-import 'dayjs/locale/vi'
 import 'dayjs/locale/en-au'
+import 'dayjs/locale/vi'
+import { Formik } from 'formik'
+import moment from 'moment'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router'
+import * as Yup from 'yup'
 import './Create.css'
 
 const CreateEmployee = () => {
