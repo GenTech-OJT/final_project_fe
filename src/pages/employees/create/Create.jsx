@@ -150,12 +150,24 @@ const CreateEmployee = () => {
     const formattedValues = {
       ...values,
       dob: moment(values.dob.$d).format('YYYY-MM-DD'),
-      avatar: avatar,
       createDate: moment(),
     }
 
+    const formData = new FormData()
+    Object.entries(formattedValues).forEach(([key, value]) => {
+      if (key === 'skills') {
+        value.forEach((skills, index) => {
+          formData.append(`skills[${index}][name]`, skills.skill)
+          formData.append(`skills[${index}][year]`, skills.experience)
+        })
+      } else {
+        formData.append(key, value)
+      }
+    })
+    formData.append('avatar', avatar)
+
     try {
-      await createEmployeeApi(formattedValues, {
+      await createEmployeeApi(formData, {
         onSuccess: () => {
           showToast(t('message.create_employee_success'), 'success')
           navigate('/admin/employees')
