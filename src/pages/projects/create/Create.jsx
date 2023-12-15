@@ -34,6 +34,7 @@ const CreateProject = () => {
     pageSize: 10000,
   })
   const { t } = useTranslation('translation')
+  const [endDate, setEndDate] = useState()
   const [teamMembers, setTeamMembers] = useState([])
   const [technicals, setTechnicals] = useState([])
   // const navigate = useNavigate()
@@ -111,7 +112,8 @@ const CreateProject = () => {
         id: m.id,
         name: m.name,
         avatar: m.avatar,
-        assign_time: moment().format('YYYY-MM-DD HH:mm:ss'),
+        joining_time: moment().format('YYYY-MM-DD HH:mm:ss'),
+        leaving_time: null,
       })),
       technical: technicals.map(t => ({
         name: t.name,
@@ -233,7 +235,14 @@ const CreateProject = () => {
                     placement="bottomRight"
                     name="start_date"
                     className="datePicker"
-                    onChange={value => setFieldValue('start_date', value)}
+                    onChange={value => {
+                      setFieldValue('start_date', value)
+                      if (values.end_date && values.end_date < value) {
+                        setFieldValue('end_date', null)
+                      } else if (values.end_date === null) {
+                        setFieldValue('end_date', endDate)
+                      }
+                    }}
                     onBlur={handleBlur}
                     value={values.start_date}
                     disabledDate={current =>
@@ -260,13 +269,15 @@ const CreateProject = () => {
                     placement="bottomRight"
                     name="end_date"
                     className="datePicker"
-                    onChange={value => setFieldValue('end_date', value)}
+                    onChange={value => {
+                      setFieldValue('end_date', value)
+                      setEndDate(value)
+                    }}
                     onBlur={handleBlur}
                     value={values.end_date}
                     disabledDate={current =>
-                      current &&
-                      (current < moment().startOf('day') ||
-                        current < values.start_date)
+                      !values.start_date ||
+                      (current && current < values.start_date)
                     }
                   />
                   {/* </ConfigProvider> */}
