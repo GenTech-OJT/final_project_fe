@@ -19,11 +19,14 @@ const authSlice = createSlice({
     },
     updateAccessToken(state, action) {
       state.accessToken = action.payload
+      localStorage.setItem('accessToken', action.payload)
     },
     logout(state) {
       state.isAuthenticated = false
       state.accessToken = null
       state.refreshToken = null
+      localStorage.removeItem('accessToken')
+      localStorage.removeItem('refreshToken')
     },
   },
 })

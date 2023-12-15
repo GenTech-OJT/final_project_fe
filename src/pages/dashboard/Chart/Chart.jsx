@@ -1,8 +1,13 @@
 import React, { useEffect, useRef } from 'react'
 import * as echarts from 'echarts'
 
-const ChartPie = () => {
+const ChartPie = ({ data }) => {
   const chartRef = useRef(null)
+
+  const transformedData = data.map(item => ({
+    value: item.count,
+    name: item.name,
+  }))
 
   useEffect(() => {
     const myChart = echarts.init(chartRef.current)
@@ -12,7 +17,7 @@ const ChartPie = () => {
         trigger: 'item',
       },
       legend: {
-        top: '5%',
+        top: '1%',
         left: 'center',
       },
       series: [
@@ -40,13 +45,7 @@ const ChartPie = () => {
           labelLine: {
             show: false,
           },
-          data: [
-            { value: 1048, name: 'Search Engine' },
-            { value: 735, name: 'Direct' },
-            { value: 580, name: 'Email' },
-            { value: 484, name: 'Union Ads' },
-            { value: 300, name: 'Video Ads' },
-          ],
+          data: transformedData,
         },
       ],
     }
@@ -56,7 +55,7 @@ const ChartPie = () => {
     return () => {
       myChart.dispose()
     }
-  }, [])
+  }, [transformedData])
 
   return <div ref={chartRef} style={{ width: '100%', height: '500px' }} />
 }

@@ -5,13 +5,15 @@ import {
   CustomTable,
   itemsPerPageOptions,
 } from '@components/custom/CustomTable'
-import { Button, Empty } from 'antd'
+import { showToast } from '@components/toast/ToastCustom'
+import { useGetEmployees, useUpdateEmployee } from '@hooks/useEmployee'
+import { Button, Empty, Tag } from 'antd'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
+import Breadcrumb from '../../../components/admin/Breadcrumb/Breadcrumb'
+import DeleteEmployee from '../delete/delete'
 import './List.css'
-import { useGetEmployees, useUpdateEmployee } from '@hooks/useEmployee'
-import { showToast } from '@components/toast/ToastCustom'
 
 const EmployeeList = () => {
   const navigate = useNavigate()
@@ -35,6 +37,19 @@ const EmployeeList = () => {
     searchText: tableData.searchText,
   }
 
+  const breadcrumbItems = [
+    {
+      key: 'dashboard',
+      title: t('breadcrumbs.dashboard'),
+      route: '/admin/dashboard',
+    },
+    {
+      key: 'employees',
+      title: t('breadcrumbs.employees'),
+      route: '/admin/employees',
+    },
+  ]
+
   const { data, isLoading } = useGetEmployees(employees)
 
   const edit = id => {
@@ -45,9 +60,7 @@ const EmployeeList = () => {
     navigate(`/admin/employees/detail/${record.id}`)
   }
 
-  const deleteRecord = recordId => {
-    console.log('Delete Record:', recordId)
-  }
+  const deleteRecord = recordId => {}
 
   const { mutateAsync: updateApi } = useUpdateEmployee()
 
@@ -129,7 +142,17 @@ const EmployeeList = () => {
     })
   }
 
-  const convertBooleanToString = isManager => (isManager ? 'Yes' : 'No')
+  const convertBooleanToString = isManager => {
+    if (isManager) {
+      return {
+        color: 'success', // Màu thành công cho Tag
+      }
+    } else {
+      return {
+        color: 'processing', // Màu xử lý cho Tag
+      }
+    }
+  }
 
   const columns = [
     {
@@ -196,7 +219,16 @@ const EmployeeList = () => {
       sortOrder:
         tableData.sortedInfo.columnKey === 'is_manager' &&
         tableData.sortedInfo.order,
-      render: isManager => convertBooleanToString(isManager),
+      render: isManager => {
+        const tagConfig = convertBooleanToString(isManager)
+        return (
+          <Tag icon={tagConfig.icon} color={tagConfig.color}>
+            {isManager
+              ? t('employee.managers.true')
+              : t('employee.managers.false')}
+          </Tag>
+        )
+      },
     },
     {
       title: t('table_header.action'),
@@ -216,19 +248,13 @@ const EmployeeList = () => {
             style={{ marginRight: 8 }}
             icon={<EditOutlined />}
           />
-          {/* <DeleteEmployee key={`delete-${record.id}`}
-            onClick={() => deleteRecord(record.id)}
-            style={{ marginRight: 8 }}
+          <DeleteEmployee
             employeeId={record.id}
-            icon={<DeleteOutlined />} /> */}
-
-          {/* <DeleteEmployee
             key={`delete-${record.id}`}
             onClick={() => deleteRecord(record.id)}
             style={{ marginRight: 8 }}
             icon={<DeleteOutlined />}
-            employeeId={record.id}
-          /> */}
+          />
         </>
       ),
     },
@@ -236,16 +262,15 @@ const EmployeeList = () => {
 
   return (
     <div className="employeeLayout">
+      <Breadcrumb items={breadcrumbItems} />
       <Button
         type="primary"
         onClick={() => navigate('/admin/employees/create')}
-        style={{ marginBottom: 16 }}
+        style={{ marginBottom: 16, float: 'right' }}
       >
         {t('button_input.create')}
       </Button>
-
       <CustomSearch handleChange={handleChange} />
-
       <div
         style={{
           overflow: 'auto',

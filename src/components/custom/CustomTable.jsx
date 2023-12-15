@@ -12,21 +12,27 @@ const CustomTable = ({
   handleTableChange,
   pagination,
   loading,
+  locale,
 }) => {
+  const { t } = useTranslation('translation')
   return (
     <Table
       columns={columns}
       dataSource={data}
-      bordered
+      bordered={false}
       onChange={handleTableChange}
       showSorterTooltip={false}
       pagination={{
         ...pagination,
         showTotal: (total, range) =>
-          `${range[0]}-${range[1]} of ${total} items`,
+          `${range[0]}-${range[1]} ${t('pagination.of')} ${total} ${t(
+            'pagination.items'
+          )}`,
       }}
       loading={loading}
       pageSpageSizeOptions={itemsPerPageOptions}
+      scroll={{ x: true, y: 350 }}
+      locale={locale}
     />
   )
 }
@@ -78,6 +84,7 @@ const SortableTable = ({
         onChange={handleTableChange}
         pagination={pagination}
         pageSpageSizeOptions={itemsPerPageOptions}
+        scroll={{ x: true, y: 350 }}
       />
     </>
   )

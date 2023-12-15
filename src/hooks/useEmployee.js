@@ -17,9 +17,13 @@ export const useGetEmployees = params => {
 }
 
 export const useCreateEmployee = () => {
+  const queryClient = useQueryClient()
+
   return useMutation({
     mutationFn: data => createEmployeeApi(data),
-    onSuccess: (data, variables, context) => {},
+    onSuccess: (data, variables, context) => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.EMPLOYEES] })
+    },
     onError: (error, variables, context) => {},
     onSettled: (data, error, variables, context) => {},
   })
@@ -46,6 +50,9 @@ export const useUpdateEmployee = () => {
     mutationFn: ({ id, data }) => updateEmployeeApi(id, data),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.EMPLOYEES] })
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEY.EMPLOYEES, variables.id],
+      })
     },
     onError: (error, variables, context) => {},
     onSettled: (data, error, variables, context) => {},

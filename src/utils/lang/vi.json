@@ -6,7 +6,8 @@
     "active": "Kích Hoạt",
     "inactive": "Vô Hiệu Hóa",
     "login": "Đăng Nhập",
-    "edit": "Chỉnh sửa"
+    "edit": "Chỉnh sửa",
+    "create_project": "Tạo Dự Án"
   },
   "side_menu": {
     "project_management_label": "Dự án",
@@ -19,7 +20,7 @@
     "name": "Họ và Tên",
     "status": "Trạng Thái",
     "position": "Vị Trí",
-    "is_manager": "Quản Lí",
+    "is_manager": "Vai Trò",
     "action": "Thao Tác"
   },
   "message": {
@@ -61,11 +62,13 @@
     "skills_validate": "Phải có ít nhất một kinh nghiệm!"
   },
   "breadcrumbs": {
-    "projects_breadcrumb": "Danh sách dự án",
-    "employees_breadcrumb": "Danh sách nhân viên",
-    "detail_breadcrumb": "Chi tiết",
-    "create_breadcrumb": "Tạo mới",
-    "edit_breadcrumb": "Chỉnh sửa"
+    "projects": "Danh sách dự án",
+    "employees": "Danh sách nhân viên",
+    "employee_details": "Chi tiết nhân viên",
+    "project_details": "Chi tiết dự án",
+    "create": "Tạo mới",
+    "edit": "Chỉnh sửa",
+    "dashboard": "Trang chủ"
   },
   "title": {
     "create_employee": "TẠO NHÂN VIÊN",
@@ -98,7 +101,11 @@
     "back": "Quay Lại",
     "avatar": "Hình đại diện",
     "skill_placeholder": "Kĩ năng",
-    "experience_placeholder": "Kinh nghiệm (Năm)"
+    "experience_placeholder": "Kinh nghiệm (Năm)",
+    "managers": {
+      "true": "Quản Lí",
+      "false": "Nhân Viên"
+    }
   },
   "sign_in_page": {
     "enter_sign_in": "Vui lòng nhập thông tin chi tiết của bạn dưới đây để đăng nhập.",
@@ -142,5 +149,12 @@
     "employees": "Nhân Viên",
     "position": "Vị Trí",
     "project": "Dự án"
+  },
+  "pagination": {
+    "of": "trên",
+    "items": "nhân viên",
+    "previous_page": "Trang Trước",
+    "next_page": "Trang Sau",
+    "pageSize": "Trang"
   }
 }
