@@ -234,30 +234,6 @@ const EditEmployee = () => {
     }
   }
 
-  // const handleFormSubmit = async values => {
-  //   const formattedValues = {
-  //     ...values,
-  //     // dob: moment(values.dob.$d).format('YYYY-MM-DD'),
-  //     // avatar: avatar,
-  //   }
-
-  //   try {
-  //    await updateEmployeeApi(id, formattedValues, {
-  //       onSuccess: () => {
-  //         console.log('Success')
-  //         showToast(t('message.create_employee_success'), 'success')
-  //       },
-  //       onError: (error) => {
-  //         console.log('Error: ', error)
-  //         showToast(t('message.create_employee_fail'), 'error')
-  //       },
-  //     })
-  //   } catch (error) {
-  //     console.error('Error creating employee:', error)
-  //     showToast(t('message.create_employee_fail'), 'error')
-  //   }
-  // }
-
   if (isLoading) {
     return <div>Loading...</div>
   }
