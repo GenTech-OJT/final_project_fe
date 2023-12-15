@@ -31,7 +31,7 @@ const CustomTable = ({
       }}
       loading={loading}
       pageSpageSizeOptions={itemsPerPageOptions}
-      scroll={{ x: 100, y: 350 }}
+      scroll={{ x: true, y: 350 }}
       locale={locale}
     />
   )
