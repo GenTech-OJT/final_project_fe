@@ -36,7 +36,9 @@
     "create_employee_success": "Tạo nhân viên thành công",
     "create_employee_fail": "Tạo nhân viên thất bại, vui lòng thử lại!",
     "Employee_deleted_successfully": "Xóa nhân viên thành công",
-    "Employee_deleted_fail": "Xóa nhân viên thất bại, vui lòng thử lại!"
+    "Employee_deleted_fail": "Xóa nhân viên thất bại, vui lòng thử lại!",
+    "Projects_deleted_successfully": "Xóa dự án thành công",
+    "Projects_deleted_fail": "Xóa dự án thất bại, vui lòng thử lại!"
   },
   "validate": {
     "name_validate": "Vui lòng nhập tên hợp lệ",
