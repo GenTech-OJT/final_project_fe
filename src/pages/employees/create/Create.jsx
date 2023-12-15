@@ -101,7 +101,7 @@ const CreateEmployee = () => {
     identity: '',
     dob: null,
     gender: 'male',
-    status: true,
+    status: 'active',
     is_manager: false,
     position: defaultPosition,
     manager: '',
