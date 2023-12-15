@@ -7,9 +7,13 @@ const { Item } = BreadcrumbAntd
 const Breadcrumb = ({ items }) => {
   return (
     <BreadcrumbAntd style={{ paddingBottom: 10 }}>
-      {items?.map(({ id, route, title }) => (
+      {items?.map(({ id, route, title }, index) => (
         <Item key={id}>
-          <Link to={route ?? `/${id}`}>{title}</Link>
+          {index === items.length - 1 ? (
+            <span>{title}</span>
+          ) : (
+            <Link to={route ?? `/${id}`}>{title}</Link>
+          )}
         </Item>
       ))}
     </BreadcrumbAntd>
