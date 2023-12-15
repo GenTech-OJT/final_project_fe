@@ -36,9 +36,7 @@
     "create_employee_success": "Employee created successfully",
     "create_employee_fail": "Error creating employee. Please try again!",
     "Employee_deleted_successfully": "Employee deleted successfully",
-    "Employee_deleted_fail": "Error deleting employee. Please try again!",
-    "Projects_deleted_successfully": "Project deleted successfully",
-    "Projects_deleted_fail": "Error deleting project. Please try again!"
+    "Employee_deleted_fail": "Error deleting employee. Please try again!"
   },
   "validate": {
     "name_validate": "Please input a valid name!",
