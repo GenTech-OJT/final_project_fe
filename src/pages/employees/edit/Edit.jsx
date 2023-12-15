@@ -6,7 +6,6 @@ import {
   Input,
   Select,
   Space,
-  message,
   Upload,
   Checkbox,
   Col,
@@ -20,6 +19,8 @@ import {
 } from '@ant-design/icons'
 import enUS from 'antd/locale/en_US'
 import viVN from 'antd/locale/vi_VN'
+import 'dayjs/locale/vi'
+import 'dayjs/locale/en-au'
 import { Formik, useField, useFormikContext } from 'formik'
 import * as Yup from 'yup'
 import moment from 'moment'
@@ -131,7 +132,7 @@ const EditEmployee = () => {
   const { t } = useTranslation('translation')
   const [avatar, setAvatar] = useState(null)
   useEffect(() => {
-    if (employee && employee.avatar) {
+    if (employee?.avatar) {
       setAvatar(employee.avatar)
     }
   }, [employee])
