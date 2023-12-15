@@ -27,16 +27,17 @@ import { useGetEmployees } from '@hooks/useEmployee'
 import 'dayjs/locale/en-au'
 import 'dayjs/locale/vi'
 import './Create.css'
-const { RangePicker } = DatePicker
 
 const CreateProject = () => {
-  const { mutate: createProjectApi } = useCreateProject()
+  // const { mutate: createProjectApi } = useCreateProject()
   const { data: managers, isLoading: loadingManager } = useGetManagers()
-  const { data: employees, isLoading: loadingEmployees } = useGetEmployees({})
+  const { data: employees, isLoading: loadingEmployees } = useGetEmployees({
+    pageSize: 10000,
+  })
   const { t } = useTranslation('translation')
-  const navigate = useNavigate()
   const [teamMembers, setTeamMembers] = useState([])
   const [technicals, setTechnicals] = useState([])
+  // const navigate = useNavigate()
 
   // const [datePickerLocale, setDatePickerLocale] = useState(enUS)
   // const forceUpdate = useForceUpdate()
@@ -117,7 +118,6 @@ const CreateProject = () => {
       })),
     }
 
-    console.log(33333, formattedValues)
     // const formData = new FormData()
     // Object.entries(formattedValues).forEach(([key, value]) => {
     //   if (key === 'skills') {
@@ -232,6 +232,9 @@ const CreateProject = () => {
                     onChange={value => setFieldValue('startDay', value)}
                     onBlur={handleBlur}
                     value={values.startDay}
+                    disabledDate={current =>
+                      current && current < moment().startOf('day')
+                    }
                   />
                   {/* </ConfigProvider> */}
                 </Form.Item>
@@ -254,6 +257,11 @@ const CreateProject = () => {
                     onChange={value => setFieldValue('endDay', value)}
                     onBlur={handleBlur}
                     value={values.endDay}
+                    disabledDate={current =>
+                      current &&
+                      (current < moment().startOf('day') ||
+                        current < values.startDay)
+                    }
                   />
                   {/* </ConfigProvider> */}
                 </Form.Item>
@@ -277,6 +285,7 @@ const CreateProject = () => {
                     mode="multiple"
                     name="teamMembers"
                     placeholder="Inserted are removed"
+                    maxTagCount={3}
                     defaultValue={values.teamMembers}
                     onBlur={handleBlur}
                     onChange={selectedValues => {
@@ -310,6 +319,7 @@ const CreateProject = () => {
                     mode="multiple"
                     name="technicals"
                     placeholder="Inserted are removed"
+                    maxTagCount={3}
                     defaultValue={values.technicals}
                     onBlur={handleBlur}
                     onChange={selectedValues => {
@@ -331,7 +341,6 @@ const CreateProject = () => {
             </Row>
             <Row gutter={{ xs: 8, sm: 12, md: 16, lg: 24 }}>
               <Col xs={24} md={12}>
-                {' '}
                 <Form.Item
                   label={t('employee.status_employee')}
                   name="status"
