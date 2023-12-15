@@ -2,7 +2,7 @@ import PrivateRoute from '@components/PrivateRoute'
 import { login } from '@redux/Slice/authSlice'
 import { lazy, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 const Login = lazy(() => import('@pages/login/Login'))
 const Admin = lazy(() => import('@pages/Admin'))
 const Dashboard = lazy(() => import('@pages/dashboard/Dashboard'))
@@ -15,16 +15,21 @@ const NotFoundPage = lazy(() => import('@pages/notFound/NotFound'))
 
 const AppRoutes = () => {
   const dispatch = useDispatch()
+  const location = useLocation()
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
 
   useEffect(() => {
     const accessToken = localStorage.getItem('accessToken')
     const refreshToken = localStorage.getItem('refreshToken')
+    const currentPath =
+      location.pathname === '/' ? '/admin/dashboard' : location.pathname
+
+    localStorage.setItem('selectedKey', currentPath)
 
     if (accessToken && refreshToken) {
       dispatch(login({ accessToken, refreshToken }))
     }
-  }, [dispatch])
+  }, [dispatch, location.pathname])
 
   return (
     <Routes>
