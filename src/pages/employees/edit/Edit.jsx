@@ -444,11 +444,11 @@ const EditEmployee = () => {
                           onBlur={handleBlur}
                           defaultValue={values.status}
                         >
-                          <Select.Option value={t('employee.active')}>
+                          <Select.Option value={true}>
                             {' '}
                             {t('employee.active')}
                           </Select.Option>
-                          <Select.Option value={t('employee.inactive')}>
+                          <Select.Option value={false}>
                             {' '}
                             {t('employee.inactive')}
                           </Select.Option>
