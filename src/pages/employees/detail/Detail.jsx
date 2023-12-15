@@ -19,7 +19,6 @@ import Chartpie from '../../../components/Chartpie/Chartpie'
 import Breadcrumb from '../../../components/admin/Breadcrumb/Breadcrumb'
 import { useGetEmployeeById } from '../../../hooks/useEmployee'
 import './Detail.css'
-import './detail.css'
 
 const { TabPane } = Tabs
 
