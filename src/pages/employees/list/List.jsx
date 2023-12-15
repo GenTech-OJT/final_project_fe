@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 import Breadcrumb from '../../../components/admin/Breadcrumb/Breadcrumb'
 import DeleteEmployee from '../delete/delete'
-import './List.css'
+import '../../../components/custom/CustomTable.css'
 
 const EmployeeList = () => {
   const navigate = useNavigate()
@@ -263,6 +263,7 @@ const EmployeeList = () => {
   return (
     <div className="employeeLayout">
       <Breadcrumb items={breadcrumbItems} />
+      <br />
       <Button
         type="primary"
         onClick={() => navigate('/admin/employees/create')}
