@@ -147,5 +147,12 @@
     "employees": "Nhân Viên",
     "position": "Vị Trí",
     "project": "Dự án"
+  },
+  "pagination": {
+    "of": "trên",
+    "items": "nhân viên",
+    "previous_page": "Trang Trước",
+    "next_page": "Trang Sau",
+    "pageSize": "Trang"
   }
 }
