@@ -198,7 +198,7 @@ const EditEmployee = () => {
     }
 
     try {
-      const result = await updateEmployeeApi({ id, data: formattedValues })
+      await updateEmployeeApi({ id, data: formattedValues })
       await uploadAvatar(formattedValues.avatar)
       showToast(t('message.edit_employee_success'), 'success')
       navigate('/admin/employees')
