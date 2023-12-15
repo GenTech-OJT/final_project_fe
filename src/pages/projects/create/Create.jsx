@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import {
   Button,
   Col,
@@ -8,7 +8,6 @@ import {
   Input,
   Row,
   Select,
-  Space,
   Spin,
   Badge,
 } from 'antd'
@@ -16,10 +15,10 @@ import { Formik } from 'formik'
 import * as Yup from 'yup'
 import moment from 'moment'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router'
-import { showToast } from '@components/toast/ToastCustom'
+// import { useNavigate } from 'react-router'
+// import { showToast } from '@components/toast/ToastCustom'
 import Breadcrumb from '@components/admin/Breadcrumb/Breadcrumb'
-import { useCreateProject } from '@hooks/useProject'
+// import { useCreateProject } from '@hooks/useProject'
 import { useGetManagers } from '@hooks/useManager'
 import { useGetEmployees } from '@hooks/useEmployee'
 // import enUS from 'antd/locale/en_US'
@@ -163,7 +162,6 @@ const CreateProject = () => {
           handleBlur,
           handleSubmit,
           setFieldValue,
-          validateField,
         }) => (
           <Form
             layout="vertical"
