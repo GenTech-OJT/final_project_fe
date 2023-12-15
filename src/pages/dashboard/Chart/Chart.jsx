@@ -17,7 +17,7 @@ const ChartPie = ({ data }) => {
         trigger: 'item',
       },
       legend: {
-        top: '5%',
+        top: '1%',
         left: 'center',
       },
       series: [
