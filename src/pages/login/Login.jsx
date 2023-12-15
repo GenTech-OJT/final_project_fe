@@ -45,13 +45,11 @@ const Login = () => {
     password: Yup.string().required(t('validate.password')),
   })
 
-  const { mutate: loginApi, isSuccess } = useLogin()
+  const { mutate: loginApi, isPending, isError, isSuccess } = useLogin()
 
   const onFinish = async values => {
     loginApi({ email: values.email, password: values.password })
   }
-
-  console.log(isSuccess)
 
   return (
     <>
@@ -135,7 +133,12 @@ const Login = () => {
                     />
                   </Form.Item>
                 </div>
-                <Button block type="primary" htmlType="submit">
+                <Button
+                  block
+                  type="primary"
+                  htmlType="submit"
+                  loading={isPending}
+                >
                   {t('button_input.login')}
                 </Button>
               </Form>
