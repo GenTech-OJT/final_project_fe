@@ -18,7 +18,7 @@ import { useTranslation } from 'react-i18next'
 // import { useNavigate } from 'react-router'
 // import { showToast } from '@components/toast/ToastCustom'
 import Breadcrumb from '@components/admin/Breadcrumb/Breadcrumb'
-// import { useCreateProject } from '@hooks/useProject'
+import { useCreateProject } from '@hooks/useProject'
 import { useGetManagers } from '@hooks/useManager'
 import { useGetEmployees } from '@hooks/useEmployee'
 // import enUS from 'antd/locale/en_US'
@@ -28,7 +28,7 @@ import 'dayjs/locale/vi'
 import './Create.css'
 
 const CreateProject = () => {
-  // const { mutate: createProjectApi } = useCreateProject()
+  const { mutate: createProjectApi } = useCreateProject()
   const { data: managers, isLoading: loadingManager } = useGetManagers()
   const { data: employees, isLoading: loadingEmployees } = useGetEmployees({
     pageSize: 10000,
@@ -68,9 +68,9 @@ const CreateProject = () => {
       route: '/admin/dashboard',
     },
     {
-      key: 'employees',
+      key: 'projects',
       title: t('breadcrumbs.employees'),
-      route: '/admin/employees',
+      route: '/admin/projects',
     },
     {
       key: 'create',
@@ -83,7 +83,7 @@ const CreateProject = () => {
     name: '',
     manager: '',
     employees: [],
-    status: 'pending',
+    status: 'Pending',
     start_date: '',
     end_date: '',
     description: '',
@@ -92,11 +92,10 @@ const CreateProject = () => {
 
   const validationSchema = Yup.object().shape({
     name: Yup.string()
-      .matches(/^([a-zA-Z]\s*)+$/, t('validate.name_validate'))
-      .min(3, t('validate.name_validate_min'))
-      .max(40, t('validate.name_validate_max'))
+      .matches(/^([a-zA-Z0-9]\s*)+$/, t('validate.name_validate'))
+      .max(128, t('validate.name_validate_max'))
       .required(t('validate.name_require')),
-    manager: Yup.string(),
+    manager: Yup.string().required('Please select manager'),
     employees: Yup.array().min(1, 'Please select at least one team member'),
     technical: Yup.array().min(1, 'Please select at least one technical'),
     start_date: Yup.date().required(t('validate.dob_validate')),
@@ -116,6 +115,7 @@ const CreateProject = () => {
         leaving_time: null,
       })),
       technical: technicals.map(t => ({
+        id: t.id,
         name: t.name,
       })),
       start_date: moment(values.start_date.$d).format('YYYY-MM-DD HH:mm:ss'),
@@ -135,17 +135,17 @@ const CreateProject = () => {
     //   }
     // })
 
-    // try {
-    //   await createProjectApi(formattedValues, {
-    //     onSuccess: () => {
-    //       showToast(t('message.create_employee_success'), 'success')
-    //       navigate('/admin/employees')
-    //     },
-    //     onError: () => {
-    //       showToast(t('message.create_employee_fail'), 'error')
-    //     },
-    //   })
-    // } catch (error) {}
+    try {
+      await createProjectApi(formattedValues, {
+        onSuccess: () => {
+          showToast(t('message.create_employee_success'), 'success')
+          // navigate('/admin/employees')
+        },
+        onError: () => {
+          showToast(t('message.create_employee_fail'), 'error')
+        },
+      })
+    } catch (error) {}
   }
 
   return (
@@ -305,14 +305,14 @@ const CreateProject = () => {
                     onBlur={handleBlur}
                     onChange={selectedValues => {
                       const selectedMembers = employees?.data.filter(employee =>
-                        selectedValues.includes(employee.name)
+                        selectedValues.includes(employee.id)
                       )
                       setTeamMembers(selectedMembers)
                       setFieldValue('employees', selectedMembers)
                     }}
                   >
                     {employees?.data?.map(e => (
-                      <Select.Option key={e.id} value={e.name}>
+                      <Select.Option key={e.id} value={e.id}>
                         {e.name}
                       </Select.Option>
                     ))}
