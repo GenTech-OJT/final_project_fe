@@ -12,8 +12,8 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 import Breadcrumb from '../../../components/admin/Breadcrumb/Breadcrumb'
-import DeleteEmployee from '../delete/delete'
 import '../../../components/custom/CustomTable.css'
+import DeleteEmployee from '../delete/delete'
 
 const EmployeeList = () => {
   const navigate = useNavigate()
@@ -143,12 +143,12 @@ const EmployeeList = () => {
   }
 
   const convertBooleanToString = isManager => {
-    if (isManager === 'true') {
+    if (isManager === 'true' || isManager === true) {
       return {
         color: 'success',
         label: t('employee.managers.true'),
       }
-    } else if (isManager === 'false') {
+    } else if (isManager === 'false' || isManager === false) {
       return {
         color: 'processing',
         label: t('employee.managers.false'),
@@ -163,13 +163,14 @@ const EmployeeList = () => {
 
   const columns = [
     {
-      title: 'ID',
+      title: t('table_header.code'),
       align: 'center',
-      dataIndex: 'id',
-      key: 'id',
+      dataIndex: 'code',
+      key: 'code',
+      width: '10%',
       sorter: true,
       sortOrder:
-        tableData.sortedInfo.columnKey === 'id' && tableData.sortedInfo.order,
+        tableData.sortedInfo.columnKey === 'code' && tableData.sortedInfo.order,
     },
     {
       title: t('table_header.name'),
@@ -179,6 +180,27 @@ const EmployeeList = () => {
       sorter: true,
       sortOrder:
         tableData.sortedInfo.columnKey === 'name' && tableData.sortedInfo.order,
+      render: (_, record) => (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <img
+            src={record.avatar}
+            alt="Avatar"
+            style={{
+              width: 30,
+              height: 30,
+              borderRadius: '50%',
+              marginRight: 8,
+            }}
+          />
+          {record.name}
+        </div>
+      ),
     },
     {
       title: t('table_header.status'),

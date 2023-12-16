@@ -21,7 +21,8 @@
     "status": "Trạng Thái",
     "position": "Vị Trí",
     "is_manager": "Vai Trò",
-    "action": "Thao Tác"
+    "action": "Thao Tác",
+    "code": "Mã"
   },
   "message": {
     "activated_successfully": "Đã Kích Hoạt Thành Công",

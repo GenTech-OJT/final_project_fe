@@ -21,7 +21,8 @@
     "status": "Status",
     "position": "Position",
     "is_manager": "Role",
-    "action": "Action"
+    "action": "Action",
+    "code": "Code"
   },
   "message": {
     "activated_successfully": "Activated Successfully",
