@@ -191,7 +191,7 @@ const EditEmployee = () => {
     }
 
     try {
-      const result = await updateEmployeeApi({ id, data: formData })
+      await updateEmployeeApi({ id, data: formData })
       showToast(t('message.edit_employee_success'), 'success')
       navigate('/admin/employees')
     } catch (error) {
@@ -365,7 +365,10 @@ const EditEmployee = () => {
                         <DatePicker
                           className="dob"
                           disabledDate={current =>
-                            current && current > dayjs().endOf('day')
+                            (current && current > dayjs().endOf('day')) ||
+                            (current &&
+                              current >
+                                dayjs().subtract(18, 'years').endOf('day'))
                           }
                           onChange={value => setFieldValue('dob', value)}
                           defaultValue={dayjs(values.dob._i, dateFormat)}
