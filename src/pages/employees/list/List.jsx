@@ -143,13 +143,20 @@ const EmployeeList = () => {
   }
 
   const convertBooleanToString = isManager => {
-    if (isManager) {
+    if (isManager === 'true') {
       return {
-        color: 'success', // Màu thành công cho Tag
+        color: 'success',
+        label: t('employee.managers.true'),
+      }
+    } else if (isManager === 'false') {
+      return {
+        color: 'processing',
+        label: t('employee.managers.false'),
       }
     } else {
       return {
-        color: 'processing', // Màu xử lý cho Tag
+        color: 'default',
+        label: t('employee.managers.unknown'),
       }
     }
   }
@@ -223,9 +230,7 @@ const EmployeeList = () => {
         const tagConfig = convertBooleanToString(isManager)
         return (
           <Tag icon={tagConfig.icon} color={tagConfig.color}>
-            {isManager
-              ? t('employee.managers.true')
-              : t('employee.managers.false')}
+            {tagConfig.label}
           </Tag>
         )
       },

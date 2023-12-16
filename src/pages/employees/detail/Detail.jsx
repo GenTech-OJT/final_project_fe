@@ -91,14 +91,12 @@ const EmployeeDetail = () => {
       key: 'action',
       width: '5%',
       render: (_, record) => (
-        <>
-          <Button
-            key={`view-${record.id}`}
-            // onClick={() => viewDetail(record)}
-            style={{ marginRight: 8 }}
-            icon={<EyeOutlined />}
-          />
-        </>
+        <Button
+          key={`view-${record.id}`}
+          // onClick={() => viewDetail(record)}
+          style={{ marginRight: 8 }}
+          icon={<EyeOutlined />}
+        />
       ),
     },
   ]
