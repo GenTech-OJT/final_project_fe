@@ -23,6 +23,7 @@ export const useCreateEmployee = () => {
     mutationFn: data => createEmployeeApi(data),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.EMPLOYEES] })
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.DASHBOARD] })
     },
     onError: (error, variables, context) => {},
     onSettled: (data, error, variables, context) => {},
@@ -66,6 +67,7 @@ export const useDeleteEmployee = () => {
     mutationFn: id => deleteEmployeeApi(id),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.EMPLOYEES] })
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.DASHBOARD] })
     },
     onError: (error, variables, context) => {},
     onSettled: (data, error, variables, context) => {},
