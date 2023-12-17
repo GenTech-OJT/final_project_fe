@@ -36,11 +36,11 @@ const ProjectList = () => {
   })
 
   const edit = id => {
-    navigate('/admin/employees/edit/' + id)
+    navigate('/admin/projects/edit/' + id)
   }
 
   const viewDetail = record => {
-    navigate(`/admin/employees/detail/${record.id}`)
+    navigate(`/admin/projects/detail/${record.id}`)
   }
 
   const deleteRecord = recordId => {
@@ -167,7 +167,7 @@ const ProjectList = () => {
       <br />
       <Button
         type="primary"
-        // onClick={() => navigate('/admin/employees/create')}
+        onClick={() => navigate('/admin/projects/create')}
         style={{ marginBottom: 16, float: 'right' }}
       >
         {t('button_input.create')}
