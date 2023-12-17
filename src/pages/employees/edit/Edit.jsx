@@ -11,8 +11,13 @@ import {
   Col,
   Row,
   ConfigProvider,
+  message,
 } from 'antd'
-import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
+import {
+  MinusCircleOutlined,
+  PlusOutlined,
+  UploadOutlined,
+} from '@ant-design/icons'
 import enUS from 'antd/locale/en_US'
 import viVN from 'antd/locale/vi_VN'
 import 'dayjs/locale/vi'
@@ -70,6 +75,9 @@ const SelectManager = () => {
 const EditEmployee = () => {
   const { id } = useParams()
   const navigate = useNavigate()
+  const [avatar, setAvatar] = useState(null)
+
+  const { t } = useTranslation('translation')
 
   const { data: employee, isLoading } = useGetEmployeeById(id)
   const [datePickerLocale, setDatePickerLocale] = useState(enUS)
@@ -107,33 +115,7 @@ const EditEmployee = () => {
       skill: skill.name,
       experience: skill.year,
     })),
-    avatar: employee?.avatar,
     description: employee?.description,
-  }
-
-  const { t } = useTranslation('translation')
-  const [avatar, setAvatar] = useState(null)
-  useEffect(() => {
-    if (employee?.avatar) {
-      setAvatar(employee.avatar)
-    }
-  }, [employee])
-  const uploadAvatar = async formData => {
-    try {
-      const data = await updateEmployeeApi({ id, data: formData })
-      setAvatar(data.avatar)
-    } catch (error) {
-      console.error('Error uploading avatar:', error)
-    }
-  }
-  const handleUpload = async file => {
-    try {
-      const formData = new FormData()
-      formData.append('avatar', file)
-      await uploadAvatar(formData)
-    } catch (error) {
-      console.error('Error preparing upload:', error)
-    }
   }
 
   const validationSchema = Yup.object().shape({
@@ -175,31 +157,41 @@ const EditEmployee = () => {
     description: Yup.string(),
   })
 
+  const checkFile = file => {
+    const isImage = file.type.startsWith('image/')
+
+    if (!isImage) {
+      message.error('You can only upload image files!')
+    } else {
+      setAvatar(file)
+    }
+
+    return false
+  }
   const handleFormSubmit = async values => {
     const formattedValues = {
       ...values,
-      name: values.name,
-      email: values.email,
-      code: values.code,
-      phone: values.phone,
-      identity: values.identity,
+
       dob: values.dob.format('YYYY-MM-DD'),
-      gender: values.gender,
-      status: values.status,
-      is_manager: values.is_manager,
-      position: values.position,
-      avatar: values.avatar,
-      skills: values.skills.map(skill => ({
-        name: skill.skill,
-        year: skill.experience,
-      })),
-      manager: values.manager,
-      description: values.description,
+    }
+    const formData = new FormData()
+    Object.entries(formattedValues).forEach(([key, value]) => {
+      if (key === 'skills') {
+        value.forEach((skills, index) => {
+          formData.append(`skills[${index}][name]`, skills.skill)
+          formData.append(`skills[${index}][year]`, skills.experience)
+        })
+      } else {
+        formData.append(key, value)
+      }
+    })
+
+    if (avatar) {
+      formData.append('avatar', avatar)
     }
 
     try {
-      await updateEmployeeApi({ id, data: formattedValues })
-      await uploadAvatar(formattedValues.avatar)
+      await updateEmployeeApi({ id, data: formData })
       showToast(t('message.edit_employee_success'), 'success')
       navigate('/admin/employees')
     } catch (error) {
@@ -373,7 +365,10 @@ const EditEmployee = () => {
                         <DatePicker
                           className="dob"
                           disabledDate={current =>
-                            current && current > dayjs().endOf('day')
+                            (current && current > dayjs().endOf('day')) ||
+                            (current &&
+                              current >
+                                dayjs().subtract(18, 'years').endOf('day'))
                           }
                           onChange={value => setFieldValue('dob', value)}
                           defaultValue={dayjs(values.dob._i, dateFormat)}
@@ -608,24 +603,13 @@ const EditEmployee = () => {
                   listType="picture"
                   accept="image/*"
                   maxCount={1}
-                  beforeUpload={handleUpload}
+                  defaultFileList={[{ url: employee?.avatar, name: 'Avatar' }]}
+                  beforeUpload={checkFile}
                   onRemove={() => setAvatar(null)}
                 >
-                  {avatar ? (
-                    <img
-                      src={avatar}
-                      alt="Avatar"
-                      style={{ width: '100px', height: '100px' }}
-                    />
-                  ) : (
-                    <div>
-                      <img
-                        src="https://st4.depositphotos.com/14953852/24787/v/450/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg"
-                        alt="Default Avatar"
-                        style={{ width: '100px', height: '100px' }}
-                      />
-                    </div>
-                  )}
+                  <Button icon={<UploadOutlined />}>
+                    {t('employee.upload_avatar')}
+                  </Button>
                 </Upload>
               </Form.Item>
               <Form.Item>
