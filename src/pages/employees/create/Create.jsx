@@ -165,7 +165,6 @@ const CreateEmployee = () => {
       }
     })
     formData.append('avatar', avatar)
-    formData.append('create_date', moment())
 
     try {
       await createEmployeeApi(formData, {
