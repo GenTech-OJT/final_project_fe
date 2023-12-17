@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Button,
   Col,
-  // ConfigProvider,
+  ConfigProvider,
   DatePicker,
   Form,
   Input,
@@ -15,21 +15,21 @@ import { Formik } from 'formik'
 import * as Yup from 'yup'
 import moment from 'moment'
 import { useTranslation } from 'react-i18next'
-// import { useNavigate } from 'react-router'
-// import { showToast } from '@components/toast/ToastCustom'
+import { useNavigate } from 'react-router'
+import { showToast } from '@components/toast/ToastCustom'
 import Breadcrumb from '@components/admin/Breadcrumb/Breadcrumb'
 import { useCreateProject } from '@hooks/useProject'
 import { useGetManagers } from '@hooks/useManager'
 import { useGetEmployees } from '@hooks/useEmployee'
 import { useGetTechnicals } from '@hooks/useTechnical'
-// import enUS from 'antd/locale/en_US'
-// import viVN from 'antd/locale/vi_VN'
+import enUS from 'antd/locale/en_US'
+import viVN from 'antd/locale/vi_VN'
 import 'dayjs/locale/en-au'
 import 'dayjs/locale/vi'
 import './Create.css'
 
 const CreateProject = () => {
-  const { mutate: createProjectApi } = useCreateProject()
+  const { mutate: createProjectApi, isPending } = useCreateProject()
   const { data: managers, isLoading: loadingManager } = useGetManagers()
   const { data: employees, isLoading: loadingEmployees } = useGetEmployees({
     pageSize: 10000,
@@ -40,22 +40,22 @@ const CreateProject = () => {
   const [endDate, setEndDate] = useState()
   const [teamMembers, setTeamMembers] = useState([])
   const [technicals, setTechnicals] = useState([])
-  // const navigate = useNavigate()
+  const navigate = useNavigate()
 
-  // const [datePickerLocale, setDatePickerLocale] = useState(enUS)
-  // const forceUpdate = useForceUpdate()
+  const [datePickerLocale, setDatePickerLocale] = useState(enUS)
+  const forceUpdate = useForceUpdate()
 
-  // useEffect(() => {
-  //   const savedLanguage = localStorage.getItem('selectedLanguage')
+  useEffect(() => {
+    const savedLanguage = localStorage.getItem('selectedLanguage')
 
-  //   if (savedLanguage === 'eng') {
-  //     setDatePickerLocale(enUS)
-  //   } else if (savedLanguage === 'vi') {
-  //     setDatePickerLocale(viVN)
-  //   }
+    if (savedLanguage === 'eng') {
+      setDatePickerLocale(enUS)
+    } else if (savedLanguage === 'vi') {
+      setDatePickerLocale(viVN)
+    }
 
-  //   forceUpdate()
-  // }, [forceUpdate])
+    forceUpdate()
+  }, [forceUpdate])
 
   if (loadingManager) {
     return <Spin spinning={loadingManager} fullscreen />
@@ -75,7 +75,7 @@ const CreateProject = () => {
     },
     {
       key: 'projects',
-      title: t('breadcrumbs.employees'),
+      title: t('breadcrumbs.projects'),
       route: '/admin/projects',
     },
     {
@@ -98,14 +98,16 @@ const CreateProject = () => {
 
   const validationSchema = Yup.object().shape({
     name: Yup.string()
-      .matches(/^([a-zA-Z0-9]\s*)+$/, t('validate.name_validate'))
-      .max(128, t('validate.name_validate_max'))
-      .required(t('validate.name_require')),
-    manager: Yup.string().required('Please select manager'),
-    employees: Yup.array().min(1, 'Please select at least one team member'),
-    technical: Yup.array().min(1, 'Please select at least one technical'),
-    start_date: Yup.date().required(t('validate.dob_validate')),
-    end_date: Yup.date().required(t('validate.dob_validate')),
+      .matches(/^([a-zA-Z0-9]\s*)+$/, t('project_validate.name_valid'))
+      .max(128, t('project_validate.name_max'))
+      .required(t('project_validate.name_require')),
+    manager: Yup.string().required(t('project_validate.manager_require')),
+    employees: Yup.array().min(1, t('project_validate.employees_require')),
+    technical: Yup.array().min(1, t('project_validate.technical_require')),
+    start_date: Yup.date().required(t('project_validate.start_day_require')),
+    end_date: Yup.date()
+      .required(t('project_validate.end_day_require'))
+      .min(Yup.ref('start_date'), t('project_validate.end_day_min')),
     status: Yup.string(),
     description: Yup.string(),
   })
@@ -117,8 +119,12 @@ const CreateProject = () => {
         id: m.id,
         name: m.name,
         avatar: m.avatar,
-        joining_time: moment().format('YYYY-MM-DD HH:mm:ss'),
-        leaving_time: null,
+        periods: [
+          {
+            joining_time: moment().format('YYYY-MM-DD HH:mm:ss'),
+            leaving_time: null,
+          },
+        ],
       })),
       technical: technicals.map(t => ({
         id: t.id,
@@ -128,27 +134,14 @@ const CreateProject = () => {
       end_date: moment(values.end_date.$d).format('YYYY-MM-DD HH:mm:ss'),
     }
 
-    console.log(33333, formattedValues)
-    // const formData = new FormData()
-    // Object.entries(formattedValues).forEach(([key, value]) => {
-    //   if (key === 'skills') {
-    //     value.forEach((skills, index) => {
-    //       formData.append(`skills[${index}][name]`, skills.skill)
-    //       formData.append(`skills[${index}][year]`, skills.experience)
-    //     })
-    //   } else {
-    //     formData.append(key, value)
-    //   }
-    // })
-
     try {
       await createProjectApi(formattedValues, {
         onSuccess: () => {
-          showToast(t('message.create_employee_success'), 'success')
-          // navigate('/admin/employees')
+          showToast(t('message.create_project_success'), 'success')
+          navigate('/admin/employees')
         },
         onError: () => {
-          showToast(t('message.create_employee_fail'), 'error')
+          showToast(t('message.create_project_fail'), 'error')
         },
       })
     } catch (error) {}
@@ -182,7 +175,7 @@ const CreateProject = () => {
             >
               <Col xs={24} md={12}>
                 <Form.Item
-                  label={t('employee.name_employee')}
+                  label={t('project.name')}
                   name="name"
                   required
                   validateStatus={errors.name && touched.name ? 'error' : ''}
@@ -198,8 +191,9 @@ const CreateProject = () => {
               </Col>
               <Col xs={24} md={12}>
                 <Form.Item
-                  label={t('employee.manager')}
+                  label={t('project.manager')}
                   name="manager"
+                  required
                   validateStatus={
                     errors.manager && touched.manager ? 'error' : ''
                   }
@@ -224,7 +218,7 @@ const CreateProject = () => {
             <Row gutter={{ xs: 8, sm: 12, md: 16, lg: 24 }}>
               <Col xs={24} md={12}>
                 <Form.Item
-                  label="Start Day"
+                  label={t('project.start_date')}
                   name="start_date"
                   required
                   validateStatus={
@@ -236,31 +230,31 @@ const CreateProject = () => {
                       : ''
                   }
                 >
-                  {/* <ConfigProvider locale={datePickerLocale}> */}
-                  <DatePicker
-                    placement="bottomRight"
-                    name="start_date"
-                    className="datePicker"
-                    onChange={value => {
-                      setFieldValue('start_date', value)
-                      if (values.end_date && values.end_date < value) {
-                        setFieldValue('end_date', null)
-                      } else if (values.end_date === null) {
-                        setFieldValue('end_date', endDate)
+                  <ConfigProvider locale={datePickerLocale}>
+                    <DatePicker
+                      placement="bottomRight"
+                      name="start_date"
+                      className="datePicker"
+                      onChange={value => {
+                        setFieldValue('start_date', value)
+                        if (values.end_date && values.end_date < value) {
+                          setFieldValue('end_date', null)
+                        } else if (values.end_date === null) {
+                          setFieldValue('end_date', endDate)
+                        }
+                      }}
+                      onBlur={handleBlur}
+                      value={values.start_date}
+                      disabledDate={current =>
+                        current && current < moment().startOf('day')
                       }
-                    }}
-                    onBlur={handleBlur}
-                    value={values.start_date}
-                    disabledDate={current =>
-                      current && current < moment().startOf('day')
-                    }
-                  />
-                  {/* </ConfigProvider> */}
+                    />
+                  </ConfigProvider>
                 </Form.Item>
               </Col>
               <Col xs={24} md={12}>
                 <Form.Item
-                  label="End Day"
+                  label={t('project.end_date')}
                   name="end_date"
                   required
                   validateStatus={
@@ -270,31 +264,32 @@ const CreateProject = () => {
                     errors.end_date && touched.end_date ? errors.end_date : ''
                   }
                 >
-                  {/* <ConfigProvider locale={datePickerLocale}> */}
-                  <DatePicker
-                    placement="bottomRight"
-                    name="end_date"
-                    className="datePicker"
-                    onChange={value => {
-                      setFieldValue('end_date', value)
-                      setEndDate(value)
-                    }}
-                    onBlur={handleBlur}
-                    value={values.end_date}
-                    disabledDate={current =>
-                      !values.start_date ||
-                      (current && current < values.start_date)
-                    }
-                  />
-                  {/* </ConfigProvider> */}
+                  <ConfigProvider locale={datePickerLocale}>
+                    <DatePicker
+                      placement="bottomRight"
+                      name="end_date"
+                      className="datePicker"
+                      onChange={value => {
+                        setFieldValue('end_date', value)
+                        setEndDate(value)
+                      }}
+                      onBlur={handleBlur}
+                      value={values.end_date}
+                      disabledDate={current =>
+                        !values.start_date ||
+                        (current && current < values.start_date)
+                      }
+                    />
+                  </ConfigProvider>
                 </Form.Item>
               </Col>
             </Row>
             <Row gutter={{ xs: 8, sm: 12, md: 16, lg: 24 }}>
               <Col xs={24} md={12}>
                 <Form.Item
-                  label="Team Members"
+                  label={t('project.team_members')}
                   name="employees"
+                  required
                   validateStatus={
                     errors.employees && touched.employees ? 'error' : ''
                   }
@@ -305,7 +300,7 @@ const CreateProject = () => {
                   <Select
                     mode="multiple"
                     name="employees"
-                    placeholder="Inserted are removed"
+                    placeholder={t('project.team_members_placeholder')}
                     maxTagCount={3}
                     defaultValue={values.employees}
                     onBlur={handleBlur}
@@ -327,8 +322,9 @@ const CreateProject = () => {
               </Col>
               <Col xs={24} md={12}>
                 <Form.Item
-                  label="Technicals"
+                  label={t('project.technicals')}
                   name="technical"
+                  required
                   validateStatus={
                     errors.technical && touched.technical ? 'error' : ''
                   }
@@ -339,7 +335,7 @@ const CreateProject = () => {
                   <Select
                     mode="multiple"
                     name="technical"
-                    placeholder="Inserted are removed"
+                    placeholder={t('project.technical_placeholder')}
                     maxTagCount={3}
                     defaultValue={values.technical}
                     onBlur={handleBlur}
@@ -363,7 +359,7 @@ const CreateProject = () => {
             <Row gutter={{ xs: 8, sm: 12, md: 16, lg: 24 }}>
               <Col xs={24} md={12}>
                 <Form.Item
-                  label={t('employee.status_employee')}
+                  label={t('project.status')}
                   name="status"
                   validateStatus={
                     errors.status && touched.status ? 'error' : ''
@@ -377,23 +373,32 @@ const CreateProject = () => {
                     defaultValue={values.status}
                   >
                     <Select.Option value={'Pending'}>
-                      <Badge status="warning" text="Pending" />
+                      <Badge
+                        status="warning"
+                        text={t('project.pending_status')}
+                      />
                     </Select.Option>
                     <Select.Option value={'In Progress'}>
-                      <Badge status="processing" text="In progress" />
+                      <Badge
+                        status="processing"
+                        text={t('project.in_progress_status')}
+                      />
                     </Select.Option>
                     <Select.Option value={'Cancelled'}>
-                      <Badge status="error" text="Cancelled" />
+                      <Badge
+                        status="error"
+                        text={t('project.cancelled_status')}
+                      />
                     </Select.Option>
                     <Select.Option value={'Done'}>
-                      <Badge status="success" text="Done" />
+                      <Badge status="success" text={t('project.done_status')} />
                     </Select.Option>
                   </Select>
                 </Form.Item>
               </Col>
               <Col xs={24} md={12}>
                 <Form.Item
-                  label={t('employee.description_employee')}
+                  label={t('project.description')}
                   name="description"
                   validateStatus={
                     errors.description && touched.description ? 'error' : ''
@@ -416,8 +421,7 @@ const CreateProject = () => {
             </Row>
 
             <Form.Item>
-              {/* <Button type="primary" htmlType="submit" loading={isPending}> */}
-              <Button type="primary" htmlType="submit">
+              <Button type="primary" htmlType="submit" loading={isPending}>
                 {t('button_input.create')}
               </Button>
             </Form.Item>
@@ -428,9 +432,9 @@ const CreateProject = () => {
   )
 }
 
-// const useForceUpdate = () => {
-//   const [, setValue] = useState(0)
-//   return () => setValue(value => ++value)
-// }
+const useForceUpdate = () => {
+  const [, setValue] = useState(0)
+  return () => setValue(value => ++value)
+}
 
 export default CreateProject
