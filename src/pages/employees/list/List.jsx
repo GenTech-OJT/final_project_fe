@@ -19,24 +19,6 @@ const EmployeeList = () => {
   const navigate = useNavigate()
   const { t } = useTranslation('translation')
 
-  const [tableData, setTableData] = useState({
-    searchText: '',
-    sortedInfo: {},
-    pagination: {
-      current: 1,
-      pageSize: 5,
-      total: 14,
-    },
-  })
-
-  const employees = {
-    page: tableData.pagination.current,
-    pageSize: tableData.pagination.pageSize,
-    sortColumn: tableData.sortedInfo.columnKey || 'id',
-    sortOrder: tableData.sortedInfo.order || 'asc',
-    searchText: tableData.searchText,
-  }
-
   const breadcrumbItems = [
     {
       key: 'dashboard',
@@ -50,7 +32,15 @@ const EmployeeList = () => {
     },
   ]
 
-  const { data, isLoading } = useGetEmployees(employees)
+  const [pagination, setPagination] = useState({ page: 1, pageSize: 10 })
+  const [sort, setSort] = useState({ sortColumn: 'id', sortOrder: 'asc' })
+  const [searchText, setSearchText] = useState('')
+
+  const { data, isLoading } = useGetEmployees({
+    ...pagination,
+    ...sort,
+    searchText,
+  })
 
   const edit = id => {
     navigate('/admin/employees/edit/' + id)
@@ -93,11 +83,7 @@ const EmployeeList = () => {
 
   const handleChange = e => {
     const value = e.target.value
-    setTableData({
-      ...tableData,
-      searchText: value,
-      pagination: { ...tableData.pagination, current: 1 },
-    })
+    setSearchText(value)
   }
 
   const locale = {
@@ -110,36 +96,17 @@ const EmployeeList = () => {
   }
 
   const handleTableChange = (pagination, filters, sorter) => {
-    const isSameColumn = tableData.sortedInfo.columnKey === sorter.columnKey
-    const order =
-      isSameColumn && tableData.sortedInfo.order === 'asc' ? 'desc' : 'asc'
-
-    setTableData({
-      ...tableData,
-      sortedInfo: {
-        columnKey: sorter.columnKey,
-        order: order,
-      },
-      pagination: {
-        ...pagination,
-        current: pagination.current,
-      },
+    setPagination({
+      ...pagination,
+      page: pagination.current,
+      pageSize: pagination.pageSize,
     })
-  }
-
-  const handlePaginationChange = (current, pageSize) => {
-    setTableData({
-      ...tableData,
-      pagination: { ...tableData.pagination, current, pageSize },
-    })
-  }
-
-  const handleItemsPerPageChange = pageSize => {
-    // Update pagination in the state
-    setTableData({
-      ...tableData,
-      pagination: { ...tableData.pagination, pageSize, current: 1 },
-    })
+    if (sorter.order) {
+      setSort({
+        sortColumn: sorter.field,
+        sortOrder: sorter.order === 'ascend' ? 'asc' : 'desc',
+      })
+    }
   }
 
   const convertBooleanToString = isManager => {
@@ -168,8 +135,6 @@ const EmployeeList = () => {
       dataIndex: 'id',
       key: 'id',
       sorter: true,
-      sortOrder:
-        tableData.sortedInfo.columnKey === 'id' && tableData.sortedInfo.order,
     },
     {
       title: t('table_header.name'),
@@ -177,8 +142,6 @@ const EmployeeList = () => {
       dataIndex: 'name',
       key: 'name',
       sorter: true,
-      sortOrder:
-        tableData.sortedInfo.columnKey === 'name' && tableData.sortedInfo.order,
     },
     {
       title: t('table_header.status'),
@@ -186,9 +149,6 @@ const EmployeeList = () => {
       dataIndex: 'status',
       key: 'status',
       sorter: true,
-      sortOrder:
-        tableData.sortedInfo.columnKey === 'status' &&
-        tableData.sortedInfo.order,
       render: (_, record) => (
         <Button
           type={record.status === 'active' ? 'primary' : 'danger'}
@@ -213,9 +173,6 @@ const EmployeeList = () => {
       dataIndex: 'position',
       key: 'position',
       sorter: true,
-      sortOrder:
-        tableData.sortedInfo.columnKey === 'position' &&
-        tableData.sortedInfo.order,
     },
     {
       title: t('table_header.is_manager'),
@@ -223,9 +180,6 @@ const EmployeeList = () => {
       dataIndex: 'is_manager',
       key: 'is_manager',
       sorter: true,
-      sortOrder:
-        tableData.sortedInfo.columnKey === 'is_manager' &&
-        tableData.sortedInfo.order,
       render: isManager => {
         const tagConfig = convertBooleanToString(isManager)
         return (
@@ -293,17 +247,13 @@ const EmployeeList = () => {
           viewDetail={viewDetail}
           deleteRecord={deleteRecord}
           pagination={{
-            ...tableData.pagination,
-            showSizeChanger: true,
-            onShowSizeChange: handleItemsPerPageChange,
-            pageSizeOptions: itemsPerPageOptions.map(option =>
-              option.toString()
-            ),
-            onChange: handlePaginationChange,
+            total: data?.pagination.total,
+            current: pagination.page,
+            pageSize: pagination.pageSize,
           }}
           locale={locale}
           loading={isLoading}
-        ></CustomTable>
+        />
       </div>
     </div>
   )

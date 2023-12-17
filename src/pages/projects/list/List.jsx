@@ -37,8 +37,6 @@ const ProjectList = () => {
     searchText,
   })
 
-  console.log('data', data)
-
   const edit = id => {
     navigate('/admin/employees/edit/' + id)
   }
