@@ -1,8 +1,6 @@
 /* eslint-disable no-undef */
 import { EditOutlined, EyeOutlined } from '@ant-design/icons'
 import { CustomSearch, CustomTable } from '@components/custom/CustomTable'
-import { showToast } from '@components/toast/ToastCustom'
-import { useUpdateEmployee } from '@hooks/useEmployee'
 import { Avatar, Button, Empty, Tooltip } from 'antd'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -47,34 +45,6 @@ const ProjectList = () => {
 
   const deleteRecord = recordId => {
     // Handle logic to delete the selected record
-  }
-
-  const updateEmployeeMutation = useUpdateEmployee(({ id, data }) =>
-    updateEmployeeApi(id, data)
-  )
-
-  const toggleStatus = async (id, status) => {
-    try {
-      const response = await updateEmployeeMutation.mutateAsync({
-        id,
-        data: { status: status === 'active' ? 'inactive' : 'active' },
-      })
-
-      if (response) {
-        const updatedEmployee = response
-
-        const successMessage =
-          updatedEmployee.status === 'active'
-            ? t('message.activated_successfully')
-            : t('message.deactivated_successfully')
-
-        showToast(successMessage, 'success')
-      } else {
-        showToast(t('status_update_failed'), 'error')
-      }
-    } catch (error) {
-      showToast(t('status_update_failed'), 'error')
-    }
   }
 
   const handleChange = e => {
@@ -127,14 +97,6 @@ const ProjectList = () => {
       key: 'manager',
       sorter: true,
     },
-
-    {
-      title: t('project_details.start_date'),
-      align: 'center',
-      dataIndex: 'start_date',
-      key: 'start_date',
-      sorter: true,
-    },
     {
       title: t('project_details.team_member'),
       dataIndex: 'employees',
@@ -150,35 +112,18 @@ const ProjectList = () => {
       ),
     },
     {
+      title: t('project_details.start_date'),
+      align: 'center',
+      dataIndex: 'start_date',
+      key: 'start_date',
+      sorter: true,
+    },
+    {
       title: t('project_details.end_date'),
       align: 'center',
       dataIndex: 'end_date',
       key: 'end_date',
       sorter: true,
-    },
-    {
-      title: t('project_details.status'),
-      align: 'center',
-      dataIndex: 'status',
-      key: 'status',
-      sorter: true,
-      render: (_, record) => (
-        <Button
-          type={record.status === 'active' ? 'primary' : 'danger'}
-          onClick={() => {
-            toggleStatus(record.id, record.status)
-          }}
-          style={{
-            backgroundColor: record.status === 'active' ? '#1890ff' : '#ff4d4f',
-            borderColor: 'transparent',
-            color: 'white',
-          }}
-        >
-          {record.status === 'active'
-            ? t('button_input.active')
-            : t('button_input.inactive')}
-        </Button>
-      ),
     },
     {
       title: t('project_details.action'),
