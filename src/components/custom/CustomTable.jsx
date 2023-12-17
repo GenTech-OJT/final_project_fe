@@ -14,7 +14,6 @@ const CustomTable = ({
   loading,
   locale,
 }) => {
-  const { t } = useTranslation('translation')
   return (
     <Table
       columns={columns}
@@ -25,9 +24,8 @@ const CustomTable = ({
       pagination={{
         ...pagination,
         showTotal: (total, range) =>
-          `${range[0]}-${range[1]} ${t('pagination.of')} ${total} ${t(
-            'pagination.items'
-          )}`,
+          `${range[0]}-${range[1]} of ${total} items`,
+        showSizeChanger: true,
       }}
       loading={loading}
       pageSpageSizeOptions={itemsPerPageOptions}
