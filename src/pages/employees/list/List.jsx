@@ -1,10 +1,6 @@
 /* eslint-disable no-undef */
 import { DeleteOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons'
-import {
-  CustomSearch,
-  CustomTable,
-  itemsPerPageOptions,
-} from '@components/custom/CustomTable'
+import { CustomSearch, CustomTable } from '@components/custom/CustomTable'
 import { showToast } from '@components/toast/ToastCustom'
 import { useGetEmployees, useUpdateEmployee } from '@hooks/useEmployee'
 import { Button, Empty, Tag } from 'antd'

@@ -14,7 +14,6 @@ const CustomTable = ({
   loading,
   locale,
 }) => {
-  const { t } = useTranslation('translation')
   return (
     <Table
       columns={columns}
