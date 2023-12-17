@@ -1,12 +1,8 @@
 /* eslint-disable no-undef */
 import { EditOutlined, EyeOutlined } from '@ant-design/icons'
-import {
-  CustomSearch,
-  CustomTable,
-  itemsPerPageOptions,
-} from '@components/custom/CustomTable'
+import { CustomSearch, CustomTable } from '@components/custom/CustomTable'
 import { showToast } from '@components/toast/ToastCustom'
-import { useGetEmployees, useUpdateEmployee } from '@hooks/useEmployee'
+import { useUpdateEmployee } from '@hooks/useEmployee'
 import { Avatar, Button, Empty, Tooltip } from 'antd'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -40,6 +36,8 @@ const ProjectList = () => {
     ...sort,
     searchText,
   })
+
+  console.log('data', data)
 
   const edit = id => {
     navigate('/admin/employees/edit/' + id)
@@ -97,6 +95,7 @@ const ProjectList = () => {
 
   const handleTableChange = (pagination, filters, sorter) => {
     setPagination({
+      ...pagination,
       page: pagination.current,
       pageSize: pagination.pageSize,
     })
@@ -106,37 +105,7 @@ const ProjectList = () => {
         sortOrder: sorter.order === 'ascend' ? 'asc' : 'desc',
       })
     }
-    // const isSameColumn = tableData.sortedInfo.columnKey === sorter.columnKey
-    // const order =
-    //   isSameColumn && tableData.sortedInfo.order === 'asc' ? 'desc' : 'asc'
-
-    // setTableData({
-    //   ...tableData,
-    //   sortedInfo: {
-    //     columnKey: sorter.columnKey,
-    //     order: order,
-    //   },
-    //   pagination: {
-    //     ...pagination,
-    //     current: pagination.current,
-    //   },
-    // })
   }
-
-  // const handlePaginationChange = (current, pageSize) => {
-  //   setTableData({
-  //     ...tableData,
-  //     pagination: { ...tableData.pagination, current, pageSize },
-  //   })
-  // }
-
-  // const handleItemsPerPageChange = pageSize => {
-  //   // Update pagination in the state
-  //   setTableData({
-  //     ...tableData,
-  //     pagination: { ...tableData.pagination, pageSize, current: 1 },
-  //   })
-  // }
 
   const columns = [
     {
@@ -285,7 +254,7 @@ const ProjectList = () => {
           }}
           locale={locale}
           loading={isLoading}
-        ></CustomTable>
+        />
       </div>
     </div>
   )
