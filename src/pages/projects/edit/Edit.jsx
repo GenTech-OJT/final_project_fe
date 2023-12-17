@@ -48,22 +48,21 @@ const EditProject = () => {
   const [datePickerLocale, setDatePickerLocale] = useState(enUS)
   const navigate = useNavigate()
 
-  //   const forceUpdate = useForceUpdate()
-
-  //   useEffect(() => {
-  //     const savedLanguage = localStorage.getItem('selectedLanguage')
-
-  //     if (savedLanguage === 'eng') {
-  //       setDatePickerLocale(enUS)
-  //     } else if (savedLanguage === 'vi') {
-  //       setDatePickerLocale(viVN)
-  //     }
-
-  //     forceUpdate()
-  //   }, [forceUpdate])
+  const forceUpdate = useForceUpdate()
 
   useEffect(() => {
-    // Check if all loading conditions are false
+    const savedLanguage = localStorage.getItem('selectedLanguage')
+
+    if (savedLanguage === 'eng') {
+      setDatePickerLocale(enUS)
+    } else if (savedLanguage === 'vi') {
+      setDatePickerLocale(viVN)
+    }
+
+    forceUpdate()
+  }, [forceUpdate])
+
+  useEffect(() => {
     if (!loadingProject) {
       setTeamMembers(projectDetail.employees)
       setTechnicals(projectDetail.technical)
@@ -102,17 +101,14 @@ const EditProject = () => {
   const selectListTeamMembers = []
   const selectListTechnicals = []
 
-  projectDetail.employees.forEach(e => {
-    if (e && e.id) {
-      selectListTeamMembers.push(e.id)
-    }
-  })
-  projectDetail.technical.forEach(t => {
-    if (t && t.id) {
-      selectListTechnicals.push(t.id)
-    }
-  })
-  const dateFormat = 'YYYY-MM-DD'
+  selectListTeamMembers.push(
+    ...(projectDetail.employees?.filter(e => e?.id)?.map(e => e.id) || [])
+  )
+  selectListTechnicals.push(
+    ...(projectDetail.technical?.filter(t => t?.id)?.map(t => t.id) || [])
+  )
+
+  const dateFormat = 'YYYY-MM-DD HH:mm:ss'
 
   const initialValues = {
     name: projectDetail.name,
@@ -464,9 +460,9 @@ const EditProject = () => {
   )
 }
 
-// const useForceUpdate = () => {
-//   const [, setValue] = useState(0)
-//   return () => setValue(value => ++value)
-// }
+const useForceUpdate = () => {
+  const [, setValue] = useState(0)
+  return () => setValue(value => ++value)
+}
 
 export default EditProject
