@@ -149,8 +149,8 @@ const CreateEmployee = () => {
   const handleFormSubmit = async values => {
     const formattedValues = {
       ...values,
+      phone: '+84' + values.phone,
       dob: moment(values.dob.$d).format('YYYY-MM-DD'),
-      createDate: moment(),
     }
 
     const formData = new FormData()
@@ -309,7 +309,9 @@ const CreateEmployee = () => {
                       name="dob"
                       className="dob"
                       disabledDate={current =>
-                        current && current > moment().endOf('day')
+                        (current && current > moment().endOf('day')) ||
+                        (current &&
+                          current > moment().subtract(18, 'years').endOf('day'))
                       }
                       onChange={value => setFieldValue('dob', value)}
                       onBlur={handleBlur}
