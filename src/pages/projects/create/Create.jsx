@@ -40,9 +40,8 @@ const CreateProject = () => {
   const [endDate, setEndDate] = useState()
   const [teamMembers, setTeamMembers] = useState([])
   const [technicals, setTechnicals] = useState([])
-  const navigate = useNavigate()
-
   const [datePickerLocale, setDatePickerLocale] = useState(enUS)
+  const navigate = useNavigate()
   const forceUpdate = useForceUpdate()
 
   useEffect(() => {
@@ -138,7 +137,7 @@ const CreateProject = () => {
       await createProjectApi(formattedValues, {
         onSuccess: () => {
           showToast(t('message.create_project_success'), 'success')
-          navigate('/admin/employees')
+          navigate('/admin/projects')
         },
         onError: () => {
           showToast(t('message.create_project_fail'), 'error')
