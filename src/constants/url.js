@@ -4,6 +4,7 @@ export const API_URL = {
   MANAGERS: '/managers',
   POSITIONS: '/positions',
   DASHBOARD: '/dashboard',
+  TECHNICALS: '/technicals',
   LOGIN: '/login',
   REFRESH_TOKEN: '/refresh-token',
 }

@@ -21,6 +21,7 @@ import Breadcrumb from '@components/admin/Breadcrumb/Breadcrumb'
 import { useCreateProject } from '@hooks/useProject'
 import { useGetManagers } from '@hooks/useManager'
 import { useGetEmployees } from '@hooks/useEmployee'
+import { useGetTechnicals } from '@hooks/useTechnical'
 // import enUS from 'antd/locale/en_US'
 // import viVN from 'antd/locale/vi_VN'
 import 'dayjs/locale/en-au'
@@ -33,6 +34,8 @@ const CreateProject = () => {
   const { data: employees, isLoading: loadingEmployees } = useGetEmployees({
     pageSize: 10000,
   })
+  const { data: technicalsDB, isLoading: loadingTechnicalsDB } =
+    useGetTechnicals()
   const { t } = useTranslation('translation')
   const [endDate, setEndDate] = useState()
   const [teamMembers, setTeamMembers] = useState([])
@@ -59,6 +62,9 @@ const CreateProject = () => {
   }
   if (loadingEmployees) {
     return <Spin spinning={loadingEmployees} fullscreen />
+  }
+  if (loadingTechnicalsDB) {
+    return <Spin spinning={loadingTechnicalsDB} fullscreen />
   }
 
   const breadcrumbItems = [
@@ -338,16 +344,16 @@ const CreateProject = () => {
                     defaultValue={values.technical}
                     onBlur={handleBlur}
                     onChange={selectedValues => {
-                      const selectedTechnicals = employees?.data.filter(
-                        employee => selectedValues.includes(employee.name)
+                      const selectedTechnicals = technicalsDB?.filter(t =>
+                        selectedValues.includes(t.id)
                       )
                       setTechnicals(selectedTechnicals)
                       setFieldValue('technical', selectedTechnicals)
                     }}
                   >
-                    {employees?.data?.map(e => (
-                      <Select.Option key={e.id} value={e.name}>
-                        {e.name}
+                    {technicalsDB?.map(t => (
+                      <Select.Option key={t.id} value={t.id}>
+                        {t.name}
                       </Select.Option>
                     ))}
                   </Select>
