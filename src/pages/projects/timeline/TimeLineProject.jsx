@@ -2,7 +2,7 @@ import { Radio, Timeline } from 'antd'
 import React, { useState, useEffect } from 'react'
 
 const TimeLineProject = () => {
-  const [mode, setMode] = useState('left')
+  const [mode, setMode] = useState('alternate')
   const [userData, setUserData] = useState([])
 
   useEffect(() => {
