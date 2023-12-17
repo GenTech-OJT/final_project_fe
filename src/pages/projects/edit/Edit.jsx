@@ -144,12 +144,7 @@ const EditProject = () => {
         id: m.id,
         name: m.name,
         avatar: m.avatar,
-        periods: [
-          {
-            joining_time: moment().format('YYYY-MM-DD HH:mm:ss'),
-            leaving_time: null,
-          },
-        ],
+        periods: m.periods,
       })),
       technical: technicals.map(t => ({
         id: t.id,
