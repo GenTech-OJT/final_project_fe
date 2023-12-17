@@ -38,7 +38,9 @@
     "create_employee_fail": "Error creating employee. Please try again!",
     "Employee_deleted_successfully": "Employee deleted successfully",
     "Employee_deleted_fail": "Error deleting employee. Please try again!",
-    "edit_employee_success": "Update employee successfully"
+    "edit_employee_success": "Update employee successfully",
+    "create_project_success": "Project created successfully",
+    "create_project_fail": "Error creating project. Please try again!"
   },
   "validate": {
     "name_validate": "Please input a valid name!",
@@ -60,6 +62,17 @@
     "skills_validate": "Must have at least 1 skill",
     "skill_require": "Please input skill!",
     "skill_validate": "Skill name must be a string!"
+  },
+  "project_validate": {
+    "name_require": "Please input project name",
+    "name_max": "Name must be at most 128 characters long.",
+    "name_valid": "Please enter a valid project name",
+    "manager_require": "Please select manager",
+    "employees_require": "Please select at least one team member!",
+    "technical_require": "Please select at least one technical!",
+    "start_day_require": "Please provide a start date!",
+    "end_day_require": "Please provide an end date!",
+    "end_day_min": "End date must be later than start date!"
   },
   "breadcrumbs": {
     "employee_details": "Employee Details",
@@ -106,6 +119,22 @@
       "true": "Manager",
       "false": "Employee"
     }
+  },
+  "project": {
+    "name": "Project Name",
+    "manager": "Manager",
+    "start_date": "Start Date",
+    "end_date": "End Date",
+    "team_members": "Team Members",
+    "technicals": "Technicals",
+    "status": "Status",
+    "description": "Description",
+    "pending_status": "Pending",
+    "in_progress_status": "In progress",
+    "cancelled_status": "Cancelled",
+    "done_status": "Done",
+    "technical_placeholder": "Select technical",
+    "team_members_placeholder": "Select team member"
   },
   "sign_in_page": {
     "enter_sign_in": "Please enter your details below to sign in.",
