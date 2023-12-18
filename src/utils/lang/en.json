@@ -187,7 +187,9 @@
     "skills": "Skills",
     "employees": "Employees",
     "position": "Position",
-    "project": "Project"
+    "project": "Project",
+    "note_piechart": "Pie Chart about Skills of employees",
+    "note_barchart": "Bar Chart about Projects in stages every 2 months"
   },
   "pagination": {
     "of": "of",

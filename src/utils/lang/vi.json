@@ -187,7 +187,9 @@
     "skills": "Kỹ Năng",
     "employees": "Nhân Viên",
     "position": "Vị Trí",
-    "project": "Dự án"
+    "project": "Dự án",
+    "note_piechart": "Biểu đồ tròn thể hiện tỷ lệ kỹ năng của nhân viên",
+    "note_barchart": "Biểu đồ thanh về các dự án theo giai đoạn 2 tháng một lần"
   },
   "pagination": {
     "of": "trên",
