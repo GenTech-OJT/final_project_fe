@@ -90,7 +90,7 @@ const Dashboard = () => {
           <Card>
             <ChartPie data={data?.skillsArray} />
             <Meta
-              title="Pie Chart about Skills of employees"
+              title={t('dashboard_page.note_piechart')}
               style={{ textAlign: 'center' }}
             ></Meta>
           </Card>
@@ -99,7 +99,7 @@ const Dashboard = () => {
           <Card>
             <ChartBar />
             <Meta
-              title="Bar Chart about Projects in stages every 2 months"
+              title={t('dashboard_page.note_barchart')}
               style={{ textAlign: 'center' }}
             ></Meta>
           </Card>
