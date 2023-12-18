@@ -1,68 +1,88 @@
 /* eslint-disable no-unused-vars */
-import { useGetProjectById, useGetProjects } from '@hooks/useProject'
-import { Radio, Timeline, Tooltip } from 'antd'
+import { useGetProjectById } from '@hooks/useProject'
+import { Timeline } from 'antd'
 import moment from 'moment'
 import { useState } from 'react'
-import './Timeline.css'
 import { useParams } from 'react-router'
+import './Timeline.css'
+
 const TimeLineProject = () => {
   const { id } = useParams()
-  console.log(id)
+  const { data: project, isLoading } = useGetProjectById(id)
+  console.log(project)
+
   const [mode, setMode] = useState('alternate')
-  const { data: projects, isLoading: loadingEmployees } = useGetProjects({
-    pageSize: 10000,
-  })
-  const { data: project_id, isLoading } = useGetProjectById(id)
-  console.log(project_id)
+
   const onChange = e => {
     setMode(e.target.value)
   }
 
-  // Chuyển đổi dữ liệu nhân viên thành items cho Timeline
-  const timelineItems = projects?.data.map(project => {
-    const employeesTooltipContent = project.employees
-      ? project.employees
-          .map(employee => {
-            const periodsContent = employee.periods
-              ? employee.periods
-                  .map(period => {
-                    const joiningTime = period.joining_time
-                    const leavingTime = period.leaving_time
-                    return `Joining Time: ${moment(joiningTime).format(
-                      'DD/MM/YYYY'
-                    )}, Leaving Time: ${
-                      leavingTime
-                        ? moment(leavingTime).format('DD/MM/YYYY')
-                        : 'Null'
-                    }`
-                  })
-                  .join('\n')
-              : ''
-            return `ID: ${employee.id}\n${periodsContent}`
-          })
-          .join('\n')
-      : ''
-    return {
-      key: project.id,
-      label: project.name,
-      children: (
-        <Tooltip title={employeesTooltipContent}>
-          <div>
-            <p>Start Date: {moment(project.start_date).format('DD/MM/YYYY')}</p>
-            <p>End Date: {moment(project.end_date).format('DD/MM/YYYY')}</p>
-          </div>
-        </Tooltip>
-      ),
-    }
-  })
+  const timelineItems = project
+    ? [
+        {
+          key: 'start',
+          label: project.name,
+          children: (
+            <div>
+              <p>{`Start Date: ${moment(project.start_date).format(
+                'DD/MM/YYYY'
+              )}`}</p>
+            </div>
+          ),
+          date: moment(project.start_date),
+        },
+        ...generateEmployeeTimelineItems(project),
+        {
+          key: 'end',
+          label: project.name,
+          children: (
+            <div>
+              <p>{`End Date: ${moment(project.end_date).format(
+                'DD/MM/YYYY'
+              )}`}</p>
+            </div>
+          ),
+          date: moment(project.end_date),
+        },
+      ]
+    : []
 
   return (
     <div className="timeline-container">
       <Timeline mode={mode} items={timelineItems}>
-        {/* Timeline nhận items từ timelineItems */}
+        {/* Timeline receives items from timelineItems */}
       </Timeline>
     </div>
   )
+}
+
+const generateEmployeeTimelineItems = project => {
+  return project.employees
+    ? project.employees.flatMap(employee => {
+        return employee.periods
+          ? employee.periods.map(period => ({
+              key: `${employee.id}-${period.joining_time}`,
+              label: `${getEmployeeName(employee.id)}`,
+              children: (
+                <div>
+                  <p>{`(${moment(period.joining_time).format(
+                    'DD/MM/YYYY'
+                  )} - ${moment(period.leaving_time || project.end_date).format(
+                    'DD/MM/YYYY'
+                  )})`}</p>
+                </div>
+              ),
+              date: moment(period.joining_time),
+            }))
+          : []
+      })
+    : []
+}
+
+const getEmployeeName = employeeId => {
+  // Assuming you have a function to get the employee name by ID
+  // You can replace this with your actual implementation
+  return `Employee ${employeeId}`
 }
 
 export default TimeLineProject
