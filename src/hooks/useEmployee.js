@@ -6,6 +6,7 @@ import {
   getEmployeeByIdApi,
   updateEmployeeApi,
   deleteEmployeeApi,
+  getProjectsByEmployeeIdApi,
 } from '@api/employeeApi'
 import { useNavigate } from 'react-router-dom'
 
@@ -71,5 +72,13 @@ export const useDeleteEmployee = () => {
     },
     onError: (error, variables, context) => {},
     onSettled: (data, error, variables, context) => {},
+  })
+}
+
+export const useGetProjectsByEmployeeId = (id, searchText) => {
+  return useQuery({
+    queryKey: [QUERY_KEY.EMPLOYEE_PROJECTS, id, searchText],
+    queryFn: () => getProjectsByEmployeeIdApi(id, searchText),
+    onError: (error, variables, context) => {},
   })
 }

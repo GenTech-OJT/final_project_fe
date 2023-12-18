@@ -24,6 +24,7 @@ export const useCreateProject = () => {
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.PROJECTS] })
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.DASHBOARD] })
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.EMPLOYEE_PROJECTS] })
     },
     onError: (error, variables, context) => {},
     onSettled: (data, error, variables, context) => {},
@@ -54,6 +55,7 @@ export const useUpdateProject = () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEY.PROJECTS, variables.id],
       })
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.EMPLOYEE_PROJECTS] })
     },
     onError: (error, variables, context) => {},
     onSettled: (data, error, variables, context) => {},
@@ -68,6 +70,7 @@ export const useDeleteProject = () => {
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.PROJECTS] })
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.DASHBOARD] })
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.EMPLOYEE_PROJECTS] })
     },
     onError: (error, variables, context) => {},
     onSettled: (data, error, variables, context) => {},
