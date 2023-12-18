@@ -1,30 +1,42 @@
-import { EyeOutlined } from '@ant-design/icons'
 import {
+  Avatar,
   Button,
   Card,
   Col,
   Descriptions,
   Flex,
+  Input,
+  List,
   Row,
-  Table,
   Tabs,
   Tag,
+  Tooltip,
 } from 'antd'
 import Title from 'antd/es/skeleton/Title'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { useParams } from 'react-router-dom'
-import Chartpie from '../../../components/Chartpie/Chartpie'
-import Breadcrumb from '../../../components/admin/Breadcrumb/Breadcrumb'
-import { useGetEmployeeById } from '../../../hooks/useEmployee'
+import Chartpie from '@components/Chartpie/Chartpie'
+import Breadcrumb from '@components/admin/Breadcrumb/Breadcrumb'
+import {
+  useGetEmployeeById,
+  useGetProjectsByEmployeeId,
+} from '@hooks/useEmployee'
 import './Detail.css'
+import { EyeOutlined } from '@ant-design/icons'
 
 const { TabPane } = Tabs
 
 const EmployeeDetail = () => {
   const { id } = useParams()
+  const [searchText, setSearchText] = useState('')
+
   const { data: employee_details, isLoading } = useGetEmployeeById(id)
+
+  const { data: dataProject, isLoading: isLoadingProject } =
+    useGetProjectsByEmployeeId(id, searchText)
+
   const { t } = useTranslation('translation')
 
   const getStatusDotColor = () => {
@@ -34,72 +46,6 @@ const EmployeeDetail = () => {
   const capitalizeFirstLetter = string => {
     return string.charAt(0).toUpperCase() + string.slice(1)
   }
-
-  const columns = [
-    {
-      title: t('project_details.project_name'),
-      dataIndex: 'name',
-      sorter: true,
-      width: '10%',
-    },
-    {
-      title: t('project_details.manager_name'),
-      dataIndex: 'manager',
-      width: '10%',
-    },
-    {
-      title: t('project_details.start_date'),
-      dataIndex: 'start_date',
-      width: '10%',
-    },
-    {
-      title: t('project_details.end_date'),
-      dataIndex: 'end_date',
-      width: '10%',
-      render: (end_date, record) => (
-        <span>{record.status === 'Done' ? end_date : null}</span>
-      ),
-    },
-    {
-      title: t('project_details.status'),
-      dataIndex: 'status',
-      width: '10%',
-      render: status => (
-        <span>
-          {status === 'In progress' && (
-            <Tag
-              color="#2db7f5"
-              style={{ fontSize: '14px', padding: '8px 12px' }}
-            >
-              {status}
-            </Tag>
-          )}
-          {status === 'Done' && (
-            <Tag
-              color="#87d068"
-              style={{ fontSize: '14px', padding: '8px 12px' }}
-            >
-              {status}
-            </Tag>
-          )}
-        </span>
-      ),
-    },
-    {
-      title: t('project_details.action'),
-      align: 'center',
-      key: 'action',
-      width: '5%',
-      render: (_, record) => (
-        <Button
-          key={`view-${record.id}`}
-          // onClick={() => viewDetail(record)}
-          style={{ marginRight: 8 }}
-          icon={<EyeOutlined />}
-        />
-      ),
-    },
-  ]
 
   // Hard-coded data for demonstration purposes
   const hardCodedData = [
@@ -166,26 +112,7 @@ const EmployeeDetail = () => {
     },
   ]
 
-  const [data, setData] = useState(hardCodedData) // Use hard-coded data initially
-  const [tableParams, setTableParams] = useState({
-    pagination: {
-      current: 1,
-      pageSize: 10,
-    },
-  })
-
-  const handleTableChange = (pagination, filters, sorter) => {
-    setTableParams({
-      pagination,
-      filters,
-      ...sorter,
-    })
-
-    // `dataSource` is useless since `pageSize` changed
-    if (pagination.pageSize !== tableParams.pagination?.pageSize) {
-      setData(hardCodedData) // Reset to hard-coded data when pageSize changes
-    }
-  }
+  console.log(dataProject, 'dataProject')
 
   // Function to generate data for Chartpie from employee skills
   const generateChartData = skills => {
@@ -211,7 +138,7 @@ const EmployeeDetail = () => {
     return value !== null && value !== undefined ? value : ''
   }
 
-  if (isLoading || !employee_details) {
+  if (isLoading || !employee_details || isLoadingProject) {
     return <div>Loading...</div>
   }
 
@@ -431,14 +358,55 @@ const EmployeeDetail = () => {
         {/* next page */}
 
         <TabPane tab={<span>{t('employee_details.project')}</span>} key="3">
-          {/* Content for Project tab */}
-          <Table
-            columns={columns}
-            rowKey={record => record.id}
-            dataSource={data}
-            pagination={tableParams.pagination}
-            loading={isLoading}
-            onChange={handleTableChange}
+          <List
+            grid={{
+              gutter: 16,
+              column: 4,
+            }}
+            dataSource={dataProject}
+            renderItem={item => {
+              console.log(item, 'item')
+              return (
+                <List.Item>
+                  <Card
+                    title={item.name}
+                    extra={
+                      <a href="#">
+                        <EyeOutlined />
+                      </a>
+                    }
+                    actions={[
+                      <span key={'start_date'}>{item.start_date}</span>,
+                    ]}
+                  >
+                    <Row gutter={[16, 16]}>
+                      <Col span={24}>
+                        <Tag color="#f50">{item.status}</Tag>
+                      </Col>
+                      <Col span={24}>{item.description}</Col>
+                      <Col span={24}>
+                        <Avatar.Group key={'avatar'} maxCount={3}>
+                          {item.employees.map(employee => {
+                            console.log(employee, 'employee')
+                            return (
+                              <Tooltip
+                                title={employee?.name}
+                                key={employee?.id}
+                              >
+                                <Avatar
+                                  key={employee?.id}
+                                  src={employee?.avatar}
+                                />
+                              </Tooltip>
+                            )
+                          })}
+                        </Avatar.Group>
+                      </Col>
+                    </Row>
+                  </Card>
+                </List.Item>
+              )
+            }}
           />
         </TabPane>
       </Tabs>
