@@ -116,8 +116,6 @@ const CreateProject = () => {
       ...values,
       employees: teamMembers.map(m => ({
         id: m.id,
-        name: m.name,
-        avatar: m.avatar,
         periods: [
           {
             joining_time: moment().format('YYYY-MM-DD HH:mm:ss'),
@@ -205,7 +203,7 @@ const CreateProject = () => {
                     defaultValue={values.manager}
                   >
                     {managers?.map(m => (
-                      <Select.Option key={m.id} value={m.name}>
+                      <Select.Option key={m.id} value={m.id}>
                         {m.name}
                       </Select.Option>
                     ))}
