@@ -81,6 +81,7 @@ const ProjectList = () => {
       align: 'center',
       dataIndex: 'id',
       key: 'id',
+      width: 100,
       sorter: true,
     },
     {
@@ -88,6 +89,7 @@ const ProjectList = () => {
       align: 'center',
       dataIndex: 'name',
       key: 'name',
+      width: 150,
       sorter: true,
     },
     {
@@ -96,13 +98,14 @@ const ProjectList = () => {
       dataIndex: 'manager',
       key: 'manager',
       sorter: true,
-      width: '15%',
+      width: '170px',
       render: manager => manager?.name || 'N/A',
     },
     {
       title: t('project_details.team_member'),
       dataIndex: 'employees',
       key: 'employees',
+      width: 140,
       render: employees => (
         <Avatar.Group maxCount={2} size="small">
           {employees.map(employee => (
