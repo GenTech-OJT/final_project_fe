@@ -14,10 +14,9 @@ import Title from 'antd/es/skeleton/Title'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import Breadcrumb from '@components/admin/Breadcrumb/Breadcrumb'
+import { useGetEmployeeById } from '@hooks/useEmployee'
 import { useParams } from 'react-router-dom'
-import Chartpie from '../../../components/Chartpie/Chartpie'
-import Breadcrumb from '../../../components/admin/Breadcrumb/Breadcrumb'
-import { useGetEmployeeById } from '../../../hooks/useEmployee'
 import './Detail.css'
 
 const { TabPane } = Tabs
@@ -145,7 +144,6 @@ const EmployeeDetail = () => {
         },
       ],
     },
-    // Add more data as needed
   ]
 
   const breadcrumbItems = [
@@ -187,32 +185,29 @@ const EmployeeDetail = () => {
     }
   }
 
-  // Function to generate data for Chartpie from employee skills
-  const generateChartData = skills => {
-    const labels = skills.map(skill => {
-      const skillName = skill.name || '' // Default to an empty string if name is null or undefined
-      return `${skillName.charAt(0).toUpperCase()}${skillName.slice(1)} - ${
-        skill.year
-      } ${t('employee_details.years')}`
-    })
-
-    const data = skills.map(skill => skill.year)
-
-    return {
-      labels,
-      datasets: [
-        {
-          data,
-        },
-      ],
-    }
-  }
   const displayValue = value => {
     return value !== null && value !== undefined ? value : ''
   }
 
   if (isLoading || !employee_details) {
-    return <div>Loading...</div>
+    return <div> Loading...</div>
+  }
+
+  // Function to get vibrant colors
+  const getTagColor = index => {
+    const colors = [
+      '#2a9d8f',
+      '#6A8EAE',
+      '#5a189a',
+      '#d90429',
+      '#BFEBE5',
+      '#CFCFCF',
+      '#DFDFDF',
+      '#EFEFEF',
+      '#F9F9F9',
+      '#FFFFFF',
+    ]
+    return colors[index % colors.length]
   }
 
   return (
@@ -228,10 +223,9 @@ const EmployeeDetail = () => {
       >
         <TabPane tab={<span> {t('employee_details.profile')}</span>} key="1">
           {/* Content for Profile tab */}
-          {/* Hoang res */}
           <Card style={{ backgroundColor: 'rgb(245, 245, 245)' }}>
-            <Row gutter={{ sm: 24, md: 24, xs: 24 }} className="info_employee">
-              <Col sm={12} lg={12}>
+            <Row gutter={{ sm: 24, md: 24 }} className="info_employee">
+              <Col sm={24} lg={12}>
                 <Flex>
                   <img
                     src={employee_details.avatar}
@@ -257,7 +251,7 @@ const EmployeeDetail = () => {
                   </div>
                 </Flex>
               </Col>
-              <Col sm={12} lg={12} className="simple_info">
+              <Col sm={24} lg={12} className="simple_info">
                 <Row style={{ marginBottom: '5px' }}>
                   <p className="employee_label">
                     {t('employee_details.employee_code')}
@@ -291,7 +285,7 @@ const EmployeeDetail = () => {
 
           {/* ///// */}
           <Row gutter={{ xs: 8, sm: 12, md: 16, lg: 24 }}>
-            <Col md={24} lg={12}>
+            <Col md={24} lg={24}>
               <Card
                 style={{
                   marginTop: 20,
@@ -299,16 +293,16 @@ const EmployeeDetail = () => {
                   backgroundColor: ' rgb(245, 245, 245)',
                 }}
               >
-                <Row gutter={16} justify="center" align="middle">
+                <Row gutter={16} justify="center" align="middle" column={2}>
                   <Col span={23}>
                     <p className="title">
                       {t('employee_details.personal_info')}
                     </p>
                     <hr className="profile_line" />
 
-                    <Col span={26}>
+                    <Col span={24}>
                       <Descriptions
-                        column={1}
+                        column={2}
                         bordered
                         className="custom-descriptions"
                       >
@@ -388,45 +382,34 @@ const EmployeeDetail = () => {
                             displayValue(employee_details.description)
                           )}
                         </Descriptions.Item>
+
+                        {/* Add a new Descriptions.Item for Skills */}
+                        <Descriptions.Item
+                          label={
+                            <span style={{ fontWeight: 'bold' }}>Skills</span>
+                          }
+                          span={2} // span to cover two columns
+                          className="custom-label"
+                        >
+                          {/* Map through employee_details.skills and display each skill as a Tag */}
+
+                          {employee_details.skills.map((skill, index) => (
+                            <Tag
+                              key={index}
+                              color={getTagColor(index)}
+                              style={{ padding: '5px' }}
+                            >
+                              {capitalizeFirstLetter(skill.name)} - {skill.year}{' '}
+                              years
+                            </Tag>
+                          ))}
+                        </Descriptions.Item>
                       </Descriptions>
                     </Col>
                   </Col>
                 </Row>
               </Card>
             </Col>
-            <Col md={24} lg={12}>
-              <Card
-                style={{
-                  marginTop: 20,
-                  width: '100%',
-                  backgroundColor: 'rgb(245, 245, 245)',
-                }}
-              >
-                {/* Skills Content */}
-                <p className="title">{t('employee_details.skill')}</p>
-                <hr className="profile_line" />
-                {/* Add your skill-related content here */}
-                <Row gutter={16} justify="center" align="middle">
-                  <Col span={22}>
-                    {employee_details.skills &&
-                    employee_details.skills.length > 0 ? (
-                      <div>
-                        <Chartpie
-                          data={generateChartData(employee_details.skills)}
-                        />
-                      </div>
-                    ) : (
-                      <p>No skills available</p>
-                    )}
-                  </Col>
-                </Row>
-              </Card>
-            </Col>
-          </Row>
-
-          <Row gutter={16}>
-            <Col span={12}></Col>
-            <Col span={12}>{/* New Card for Skills */}</Col>
           </Row>
         </TabPane>
         {/* next page */}
