@@ -50,26 +50,48 @@ const EditProject = () => {
   const [datePickerLocale, setDatePickerLocale] = useState(enUS)
   const navigate = useNavigate()
 
-  // const forceUpdate = useForceUpdate()
+  const forceUpdate = useForceUpdate()
 
-  // useEffect(() => {
-  //   const savedLanguage = localStorage.getItem('selectedLanguage')
+  useEffect(() => {
+    const savedLanguage = localStorage.getItem('selectedLanguage')
 
-  //   if (savedLanguage === 'eng') {
-  //     setDatePickerLocale(enUS)
-  //   } else if (savedLanguage === 'vi') {
-  //     setDatePickerLocale(viVN)
-  //   }
+    if (savedLanguage === 'eng') {
+      setDatePickerLocale(enUS)
+    } else if (savedLanguage === 'vi') {
+      setDatePickerLocale(viVN)
+    }
 
-  //   forceUpdate()
-  // }, [forceUpdate])
+    forceUpdate()
+  }, [forceUpdate])
 
   useEffect(() => {
     if (!loadingProject) {
-      setTeamMembers(projectDetail.employees)
+      const formattedTeamMembers = projectDetail.employees.map(employee => ({
+        id: employee.id,
+        periods: employee.periods,
+      }))
+
+      setTeamMembers(formattedTeamMembers)
       setTechnicals(projectDetail.technical)
     }
   }, [loadingManager, loadingEmployees, loadingTechnicalsDB, loadingProject])
+
+  useEffect(() => {
+    const combinedListUpdateTeamMembers = [
+      ...teamMembers,
+      ...removeTeamMembers,
+      ...newTeamMembers,
+    ]
+
+    // Remove duplicates based on member IDs
+    const uniqueListUpdateTeamMembers = Array.from(
+      new Set(combinedListUpdateTeamMembers.map(member => member.id))
+    ).map(id => {
+      return combinedListUpdateTeamMembers.find(member => member.id === id)
+    })
+
+    setListUpdateTeamMembers(uniqueListUpdateTeamMembers)
+  }, [teamMembers, removeTeamMembers, newTeamMembers])
 
   const handleSelectChange = (selectedValues, option) => {
     const selectedMembers = employees?.data.filter(employee =>
@@ -145,11 +167,6 @@ const EditProject = () => {
     return <Spin spinning={true} fullscreen />
   }
 
-  console.log('Current: ', teamMembers)
-  console.log('Remove: ', removeTeamMembers)
-  console.log('New: ', newTeamMembers)
-  console.log('Update: ', listUpdateTeamMembers)
-  console.log('-----------------------------------')
   const breadcrumbItems = [
     {
       key: 'dashboard',
@@ -169,11 +186,11 @@ const EditProject = () => {
   ]
 
   // Initial Value for team member and technical
-  const selectListTeamMembers = []
   const selectListTechnicals = []
-  selectListTeamMembers.push(
-    ...(projectDetail.employees?.filter(e => e?.id)?.map(e => e.id) || [])
-  )
+  const selectListTeamMembers =
+    projectDetail.employees
+      ?.filter(e => e?.periods?.some(period => period.leaving_time === null))
+      .map(e => e.id) || []
   selectListTechnicals.push(
     ...(projectDetail.technical?.filter(t => t?.id)?.map(t => t.id) || [])
   )
@@ -209,10 +226,7 @@ const EditProject = () => {
   const handleFormSubmit = async values => {
     const formattedValues = {
       ...values,
-      employees: listUpdateTeamMembers.map(m => ({
-        id: m.id,
-        periods: m.periods,
-      })),
+      employees: listUpdateTeamMembers,
       technical: technicals.map(t => ({
         id: t.id,
         name: t.name,
@@ -226,11 +240,11 @@ const EditProject = () => {
         { id: id, data: formattedValues },
         {
           onSuccess: () => {
-            showToast(t('message.create_project_success'), 'success')
+            showToast(t('message.Update_project_success'), 'success')
             navigate('/admin/projects')
           },
           onError: () => {
-            showToast(t('message.create_project_fail'), 'error')
+            showToast(t('message.Update_project_fail'), 'error')
           },
         }
       )
@@ -516,9 +530,9 @@ const EditProject = () => {
   )
 }
 
-// const useForceUpdate = () => {
-//   const [, setValue] = useState(0)
-//   return () => setValue(value => ++value)
-// }
+const useForceUpdate = () => {
+  const [, setValue] = useState(0)
+  return () => setValue(value => ++value)
+}
 
 export default EditProject
