@@ -23,6 +23,7 @@ export const useCreateProject = () => {
     mutationFn: data => createProjectApi(data),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.PROJECTS] })
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.DASHBOARD] })
     },
     onError: (error, variables, context) => {},
     onSettled: (data, error, variables, context) => {},
@@ -66,6 +67,7 @@ export const useDeleteProject = () => {
     mutationFn: id => deleteProjectApi(id),
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.PROJECTS] })
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.DASHBOARD] })
     },
     onError: (error, variables, context) => {},
     onSettled: (data, error, variables, context) => {},
