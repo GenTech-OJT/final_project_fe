@@ -16,7 +16,7 @@ import './Timeline.css'
 const TimeLineProject = () => {
   const { id } = useParams()
   const { data: project, isLoading } = useGetProjectById(id)
-  console.log(project)
+  console.log(project?.employees)
 
   const [mode, setMode] = useState('alternate')
 
@@ -89,7 +89,7 @@ const TimeLineProject = () => {
         margin: 'auto',
         marginTop: '20px',
         borderRadius: '20px',
-        boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)',
+        boxShadow: 'rgba(0, 0, 0, 0.1) 0px 4px 12px',
         padding: '16px',
         overflowY: 'auto', // Thêm thanh cuộn dọc
       }}
@@ -130,7 +130,7 @@ const generateEmployeeTimelineItems = project => {
         return employee.periods
           ? employee.periods.map(period => ({
               key: `${employee.id}-${period.joining_time}`,
-              label: `${getEmployeeName(employee.id)}`,
+              label: `${getEmployeeName(employee.name)}`,
               children: (
                 <Card
                   style={{
@@ -169,10 +169,10 @@ const generateEmployeeTimelineItems = project => {
     : []
 }
 
-const getEmployeeName = employeeId => {
+const getEmployeeName = employeeName => {
   // Assuming you have a function to get the employee name by ID
   // You can replace this with your actual implementation
-  return `Employee ${employeeId}`
+  return `${employeeName}`
 }
 
 export default TimeLineProject
