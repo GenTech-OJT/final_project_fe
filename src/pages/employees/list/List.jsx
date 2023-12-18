@@ -81,7 +81,7 @@ const EmployeeList = () => {
     const value = e.target.value
     setSearchText(value)
   }
-  console.log('CustomTable - pagination.total:', pagination.total)
+
   const locale = {
     emptyText: (
       <Empty
@@ -244,7 +244,6 @@ const EmployeeList = () => {
           deleteRecord={deleteRecord}
           pagination={{
             total: data?.pagination.total,
-
             current: pagination.page,
             pageSize: pagination.pageSize,
           }}
