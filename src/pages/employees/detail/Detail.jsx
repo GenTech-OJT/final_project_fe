@@ -6,9 +6,11 @@ import {
   Flex,
   List,
   Row,
+  Space,
   Tabs,
   Tag,
   Tooltip,
+  Typography,
 } from 'antd'
 import Title from 'antd/es/skeleton/Title'
 import { useState } from 'react'
@@ -290,63 +292,44 @@ const EmployeeDetail = () => {
         {/* next page */}
 
         <TabPane tab={<span>{t('employee_details.project')}</span>} key="3">
-          <List
-            grid={{
-              gutter: 16,
-              column: 4,
-            }}
-            dataSource={dataProject}
-            renderItem={item => {
-              console.log(item, 'item')
-              return (
-                <List.Item>
-                  <Card
-                    title={item.name}
-                    extra={
-                      <a href="#">
-                        <EyeOutlined />
-                      </a>
-                    }
-                    actions={[
-                      <span key={'start_date'}>{item.start_date}</span>,
-                    ]}
-                  >
-                    <Row gutter={[16, 16]}>
-                      <Col span={24}>
-                        {item.status === 'Pending' && (
-                          <Tag color="#e5b804" status="success">
-                            {item.status}
-                          </Tag>
-                        )}
-                        {item.status === 'In Progress' && (
-                          <Tag color="#0044cc">{item.status}</Tag>
-                        )}
-                        {item.status === 'Cancelled' && (
-                          <Tag color="#f31e1e">{item.status}</Tag>
-                        )}
-                        {item.status === 'Done' && (
-                          <Tag color="#01b301">{item.status}</Tag>
-                        )}
-                      </Col>
-                      <Col span={24}>{item.description}</Col>
-                      <Col span={24}>
-                        <Avatar.Group key={'avatar'} maxCount={3}>
-                          {item.employees.map(employee => (
-                            <Tooltip title={employee?.name} key={employee?.id}>
-                              <Avatar
-                                key={employee?.id}
-                                src={employee?.avatar}
-                              />
-                            </Tooltip>
-                          ))}
-                        </Avatar.Group>
-                      </Col>
-                    </Row>
-                  </Card>
-                </List.Item>
-              )
-            }}
-          />
+          <Row gutter={[16, 16]}>
+            {dataProject.map((item, index) => (
+              <Col xs={24} sm={12} md={8} lg={6} key={index}>
+                <Card
+                  actions={[
+                    <Avatar.Group maxCount={2} key="avatar">
+                      {item.employees.map(employee => (
+                        <Tooltip title={employee.name} key={employee.id}>
+                          <Avatar src={employee.avatar} />
+                        </Tooltip>
+                      ))}
+                    </Avatar.Group>,
+                    <span key="date">{item.start_date}</span>,
+                  ]}
+                >
+                  <Row gutter={[16, 16]}>
+                    <Col span={24}>
+                      <Space
+                        size="large"
+                        style={{
+                          width: '100%',
+                          justifyContent: 'space-between',
+                        }}
+                      >
+                        <Tag color="error">{item.currentEmployee.position}</Tag>
+                        <Typography.Text ellipsis>...</Typography.Text>
+                      </Space>
+                    </Col>
+                    <Col span={24}>
+                      <Typography.Title level={4}>{item.name}</Typography.Title>
+                    </Col>
+                    <Col span={24}>{item.description}</Col>
+                    <Col span={24}></Col>
+                  </Row>
+                </Card>
+              </Col>
+            ))}
+          </Row>
         </TabPane>
       </Tabs>
     </div>
