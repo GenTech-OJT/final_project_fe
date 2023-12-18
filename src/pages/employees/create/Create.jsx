@@ -101,7 +101,7 @@ const CreateEmployee = () => {
     identity: '',
     dob: null,
     gender: 'male',
-    status: true,
+    status: 'active',
     is_manager: false,
     position: defaultPosition,
     manager: '',
@@ -149,13 +149,25 @@ const CreateEmployee = () => {
   const handleFormSubmit = async values => {
     const formattedValues = {
       ...values,
+      phone: '+84' + values.phone,
       dob: moment(values.dob.$d).format('YYYY-MM-DD'),
-      avatar: avatar,
-      createDate: moment(),
     }
 
+    const formData = new FormData()
+    Object.entries(formattedValues).forEach(([key, value]) => {
+      if (key === 'skills') {
+        value.forEach((skills, index) => {
+          formData.append(`skills[${index}][name]`, skills.skill)
+          formData.append(`skills[${index}][year]`, skills.experience)
+        })
+      } else {
+        formData.append(key, value)
+      }
+    })
+    formData.append('avatar', avatar)
+
     try {
-      await createEmployeeApi(formattedValues, {
+      await createEmployeeApi(formData, {
         onSuccess: () => {
           showToast(t('message.create_employee_success'), 'success')
           navigate('/admin/employees')
@@ -297,7 +309,9 @@ const CreateEmployee = () => {
                       name="dob"
                       className="dob"
                       disabledDate={current =>
-                        current && current > moment().endOf('day')
+                        (current && current > moment().endOf('day')) ||
+                        (current &&
+                          current > moment().subtract(18, 'years').endOf('day'))
                       }
                       onChange={value => setFieldValue('dob', value)}
                       onBlur={handleBlur}
@@ -349,10 +363,10 @@ const CreateEmployee = () => {
                         onBlur={handleBlur}
                         defaultValue={values.status}
                       >
-                        <Select.Option value={true}>
+                        <Select.Option value={'active'}>
                           {t('employee.active')}
                         </Select.Option>
-                        <Select.Option value={false}>
+                        <Select.Option value={'inactive'}>
                           {t('employee.inactive')}
                         </Select.Option>
                       </Select>

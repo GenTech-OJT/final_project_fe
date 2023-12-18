@@ -6,7 +6,8 @@
     "active": "Kích Hoạt",
     "inactive": "Vô Hiệu Hóa",
     "login": "Đăng Nhập",
-    "edit": "Chỉnh sửa"
+    "edit": "Chỉnh sửa",
+    "create_project": "Tạo Dự Án"
   },
   "side_menu": {
     "project_management_label": "Dự án",
@@ -19,7 +20,7 @@
     "name": "Họ và Tên",
     "status": "Trạng Thái",
     "position": "Vị Trí",
-    "is_manager": "Quản Lí",
+    "is_manager": "Vai Trò",
     "action": "Thao Tác"
   },
   "message": {
@@ -37,8 +38,9 @@
     "create_employee_fail": "Tạo nhân viên thất bại, vui lòng thử lại!",
     "Employee_deleted_successfully": "Xóa nhân viên thành công",
     "Employee_deleted_fail": "Xóa nhân viên thất bại, vui lòng thử lại!",
-    "Projects_deleted_successfully": "Xóa dự án thành công",
-    "Projects_deleted_fail": "Xóa dự án thất bại, vui lòng thử lại!"
+    "edit_employee_success": "Cập nhật nhân viên Thành Công",
+    "create_project_success": "Tạo dự án thành công",
+    "create_project_fail": "Lỗi khi tạo dự án. Vui lòng thử lại!"
   },
   "validate": {
     "name_validate": "Vui lòng nhập tên hợp lệ",
@@ -54,11 +56,23 @@
     "card_require": "Vui lòng nhập Chứng minh nhân dân!",
     "card_validate": "Vui lòng nhập Chứng minh nhân dân hợp lệ!",
     "dob_validate": "Vui lòng chọn Ngày sinh!",
-    "skill_validate": "Vui lòng nhập kỹ năng!",
     "experience_require": "Vui lòng nhập kinh nghiệm!",
     "experience_validate": "Kinh nghiệm phải là số năm!",
     "skills_require": "Vui lòng nhập kinh nghiệm!",
-    "skills_validate": "Phải có ít nhất một kinh nghiệm!"
+    "skills_validate": "Phải có ít nhất một kinh nghiệm!",
+    "skill_require": "Vui lòng nhập kỹ năng!",
+    "skill_validate": "Vui lòng nhập đúng kí tự"
+  },
+  "project_validate": {
+    "name_require": "Vui lòng nhập tên dự án",
+    "name_max": "Tên phải có tối đa 128 ký tự.",
+    "name_valid": "Vui lòng nhập một tên dự án hợp lệ",
+    "manager_require": "Vui lòng chọn quản lý",
+    "employees_require": "Vui lòng chọn ít nhất một thành viên!",
+    "technical_require": "Vui lòng chọn ít nhất một công nghệ!",
+    "start_day_require": "Vui lòng chọn ngày bắt đầu!",
+    "end_day_require": "Vui lòng chọn ngày kết thúc!",
+    "end_day_min": "Ngày kết thúc phải sau ngày bắt đầu!"
   },
   "breadcrumbs": {
     "projects": "Danh sách dự án",
@@ -100,7 +114,27 @@
     "back": "Quay Lại",
     "avatar": "Hình đại diện",
     "skill_placeholder": "Kĩ năng",
-    "experience_placeholder": "Kinh nghiệm (Năm)"
+    "experience_placeholder": "Kinh nghiệm (Năm)",
+    "managers": {
+      "true": "Quản Lí",
+      "false": "Nhân Viên"
+    }
+  },
+  "project": {
+    "name": "Tên dự án",
+    "manager": "Quản lý",
+    "start_date": "Ngày bắt đầu",
+    "end_date": "Ngày kết thúc",
+    "team_members": "Thành viên",
+    "technicals": "Công nghệ",
+    "status": "Trạng thái",
+    "description": "Mô tả",
+    "pending_status": "Chờ xử lý",
+    "in_progress_status": "Đang tiến hành",
+    "cancelled_status": "Đã hủy",
+    "done_status": "Đã hoàn thành",
+    "technical_placeholder": "Lựa chọn công nghệ",
+    "team_members_placeholder": "Lựa chọn thành viên"
   },
   "sign_in_page": {
     "enter_sign_in": "Vui lòng nhập thông tin chi tiết của bạn dưới đây để đăng nhập.",
@@ -115,6 +149,7 @@
     "logout": "Đăng Xuất"
   },
   "employee_details": {
+    "title": "Chi tiết nhân viên",
     "profile": "Hồ sơ",
     "skill": "Kĩ năng",
     "project": "Dự án",
@@ -128,7 +163,16 @@
     "identity_code": "Căn cước công dân",
     "active": "Kích hoạt",
     "inactive": "Vô hiệu hóa",
-    "is_manager": "Quản lí"
+    "is_manager": "Vai trò",
+    "genders": {
+      "male": "Nam",
+      "female": "Nữ"
+    },
+    "is_managers": {
+      "true": "Quản lí",
+      "false": "Nhân viên"
+    },
+    "years": "năm"
   },
   "project_details": {
     "project_name": "Tên dự án",
@@ -144,5 +188,12 @@
     "employees": "Nhân Viên",
     "position": "Vị Trí",
     "project": "Dự án"
+  },
+  "pagination": {
+    "of": "trên",
+    "items": "nhân viên",
+    "previous_page": "Trang Trước",
+    "next_page": "Trang Sau",
+    "pageSize": "Trang"
   }
 }

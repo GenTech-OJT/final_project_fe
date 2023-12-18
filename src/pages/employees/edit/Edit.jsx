@@ -11,6 +11,7 @@ import {
   Col,
   Row,
   ConfigProvider,
+  message,
 } from 'antd'
 import {
   MinusCircleOutlined,
@@ -31,7 +32,9 @@ import { useNavigate, useParams } from 'react-router-dom'
 import './Edit.css'
 import { useGetPositions } from '@hooks/usePosition'
 import { useGetManagers } from '@hooks/useManager'
-
+import Breadcrumb from '@components/admin/Breadcrumb/Breadcrumb'
+import dayjs from 'dayjs'
+const dateFormat = 'YYYY-MM-DD'
 const SelectManager = () => {
   const { data } = useGetManagers()
   const { setFieldValue, values } = useFormikContext()
@@ -72,6 +75,9 @@ const SelectManager = () => {
 const EditEmployee = () => {
   const { id } = useParams()
   const navigate = useNavigate()
+  const [avatar, setAvatar] = useState(null)
+
+  const { t } = useTranslation('translation')
 
   const { data: employee, isLoading } = useGetEmployeeById(id)
   const [datePickerLocale, setDatePickerLocale] = useState(enUS)
@@ -101,40 +107,15 @@ const EditEmployee = () => {
 
     gender: employee?.gender,
     status: employee?.status,
-    is_manager: employee?.is_manager,
+    is_manager: !!employee?.is_manager,
+
     position: employee?.position,
     manager: employee?.manager,
     skills: employee?.skills?.map(skill => ({
       skill: skill.name,
       experience: skill.year,
     })),
-    avatar: employee?.avatar,
     description: employee?.description,
-  }
-
-  const { t } = useTranslation('translation')
-  const [avatar, setAvatar] = useState(null)
-  useEffect(() => {
-    if (employee?.avatar) {
-      setAvatar(employee.avatar)
-    }
-  }, [employee])
-  const uploadAvatar = async formData => {
-    try {
-      const data = await updateEmployeeApi({ id, data: formData })
-      setAvatar(data.avatar)
-    } catch (error) {
-      console.error('Error uploading avatar:', error)
-    }
-  }
-  const handleUpload = async file => {
-    try {
-      const formData = new FormData()
-      formData.append('avatar', file)
-      await uploadAvatar(formData)
-    } catch (error) {
-      console.error('Error preparing upload:', error)
-    }
   }
 
   const validationSchema = Yup.object().shape({
@@ -163,7 +144,9 @@ const EditEmployee = () => {
     skills: Yup.array()
       .of(
         Yup.object().shape({
-          skill: Yup.string().required(t('validate.skill_validate')),
+          skill: Yup.string()
+            .required(t('validate.skill_require'))
+            .matches(/^[a-zA-Z\s]*$/, t('validate.skill_validate')),
           experience: Yup.string()
             .required(t('validate.experience_require'))
             .matches(/^\d+(\.\d+)?$/, t('validate.experience_validate')),
@@ -174,31 +157,41 @@ const EditEmployee = () => {
     description: Yup.string(),
   })
 
+  const checkFile = file => {
+    const isImage = file.type.startsWith('image/')
+
+    if (!isImage) {
+      message.error('You can only upload image files!')
+    } else {
+      setAvatar(file)
+    }
+
+    return false
+  }
   const handleFormSubmit = async values => {
     const formattedValues = {
       ...values,
-      name: values.name,
-      email: values.email,
-      code: values.code,
-      phone: values.phone,
-      identity: values.identity,
+
       dob: values.dob.format('YYYY-MM-DD'),
-      gender: values.gender,
-      status: values.status,
-      is_manager: values.is_manager,
-      position: values.position,
-      avatar: values.avatar,
-      skills: values.skills.map(skill => ({
-        name: skill.skill,
-        year: skill.experience,
-      })),
-      manager: values.manager,
-      description: values.description,
+    }
+    const formData = new FormData()
+    Object.entries(formattedValues).forEach(([key, value]) => {
+      if (key === 'skills') {
+        value.forEach((skills, index) => {
+          formData.append(`skills[${index}][name]`, skills.skill)
+          formData.append(`skills[${index}][year]`, skills.experience)
+        })
+      } else {
+        formData.append(key, value)
+      }
+    })
+
+    if (avatar) {
+      formData.append('avatar', avatar)
     }
 
     try {
-      const result = await updateEmployeeApi({ id, data: formattedValues })
-      await uploadAvatar(formattedValues.avatar)
+      await updateEmployeeApi({ id, data: formData })
       showToast(t('message.edit_employee_success'), 'success')
       navigate('/admin/employees')
     } catch (error) {
@@ -211,8 +204,27 @@ const EditEmployee = () => {
     return <div>...</div>
   }
 
+  const breadcrumbItems = [
+    {
+      key: 'dashboard',
+      title: t('breadcrumbs.dashboard'),
+      route: '/admin/dashboard',
+    },
+    {
+      key: 'employees',
+      title: t('breadcrumbs.employees'),
+      route: '/admin/employees',
+    },
+    {
+      key: 'edit',
+      title: t('breadcrumbs.edit'),
+      route: `/admin/employees/edit/${id}`,
+    },
+  ]
+
   return (
     <>
+      <Breadcrumb items={breadcrumbItems} />
       {employee && (
         <Formik
           enableReinitialize
@@ -340,15 +352,28 @@ const EditEmployee = () => {
                     help={errors.dob && touched.dob ? errors.dob : ''}
                   >
                     <ConfigProvider locale={datePickerLocale}>
-                      <DatePicker
+                      {
+                        /* <DatePicker
                         placement="bottomRight"
                         name="dob"
                         className="dob"
                         onChange={value => setFieldValue('dob', value)}
                         disabledDate={current => current.isAfter(moment())} // Disable future dates
                         onBlur={handleBlur}
-                        value={values.dob}
-                      />
+                        value={values.dob} // Remove this line
+                      /> */
+                        <DatePicker
+                          className="dob"
+                          disabledDate={current =>
+                            (current && current > dayjs().endOf('day')) ||
+                            (current &&
+                              current >
+                                dayjs().subtract(18, 'years').endOf('day'))
+                          }
+                          onChange={value => setFieldValue('dob', value)}
+                          defaultValue={dayjs(values.dob._i, dateFormat)}
+                        />
+                      }
                     </ConfigProvider>
                   </Form.Item>
                 </Col>
@@ -371,8 +396,12 @@ const EditEmployee = () => {
                           onBlur={handleBlur}
                           defaultValue={values.gender}
                         >
-                          <Select.Option value="male">Male</Select.Option>
-                          <Select.Option value="female">Female</Select.Option>
+                          <Select.Option value="male">
+                            {t('employee.male')}
+                          </Select.Option>
+                          <Select.Option value="female">
+                            {t('employee.female')}
+                          </Select.Option>
                         </Select>
                       </Form.Item>
                     </Col>
@@ -391,8 +420,12 @@ const EditEmployee = () => {
                           onBlur={handleBlur}
                           defaultValue={values.status}
                         >
-                          <Select.Option value={true}>Active</Select.Option>
-                          <Select.Option value={false}>Inactive</Select.Option>
+                          <Select.Option value={'active'}>
+                            {t('employee.active')}
+                          </Select.Option>
+                          <Select.Option value={'inactive'}>
+                            {t('employee.inactive')}
+                          </Select.Option>
                         </Select>
                       </Form.Item>
                     </Col>
@@ -418,8 +451,8 @@ const EditEmployee = () => {
                           value={values.position}
                         >
                           {positions?.map(pos => (
-                            <Select.Option key={pos} value={pos}>
-                              {pos}
+                            <Select.Option key={pos.id} value={pos.name}>
+                              {pos.name}
                             </Select.Option>
                           ))}
                         </Select>
@@ -427,9 +460,6 @@ const EditEmployee = () => {
                     </Col>
                     <Col xs={24} md={12}>
                       <SelectManager />
-                    </Col>
-                    <Col xs={24} md={12}>
-                      {/* <SelectManager /> */}
                     </Col>
                   </Row>
                 </Col>
@@ -563,7 +593,7 @@ const EditEmployee = () => {
                   name="is_manager"
                   onChange={e => setFieldValue('is_manager', e.target.checked)}
                   onBlur={handleBlur}
-                  checked={values.is_manager}
+                  checked={values.is_manager || false}
                 ></Checkbox>
               </Form.Item>
 
@@ -573,20 +603,13 @@ const EditEmployee = () => {
                   listType="picture"
                   accept="image/*"
                   maxCount={1}
-                  beforeUpload={handleUpload}
+                  defaultFileList={[{ url: employee?.avatar, name: 'Avatar' }]}
+                  beforeUpload={checkFile}
                   onRemove={() => setAvatar(null)}
                 >
-                  {avatar ? (
-                    <img
-                      src={avatar}
-                      alt="Avatar"
-                      style={{ width: '100px', height: '100px' }}
-                    />
-                  ) : (
-                    <Button icon={<UploadOutlined />}>
-                      {t('employee.upload_avatar')}
-                    </Button>
-                  )}
+                  <Button icon={<UploadOutlined />}>
+                    {t('employee.upload_avatar')}
+                  </Button>
                 </Upload>
               </Form.Item>
               <Form.Item>
