@@ -1,27 +1,32 @@
+/* eslint-disable no-unused-vars */
+import { useGetEmployees } from '@hooks/useEmployee'
 import { Radio, Timeline } from 'antd'
 import React, { useState, useEffect } from 'react'
+import moment from 'moment'
+import { useGetProjects } from '@hooks/useProject'
 
 const TimeLineProject = () => {
   const [mode, setMode] = useState('alternate')
-  const [userData, setUserData] = useState([])
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('https://reqres.in/api/users?page=2')
-        const data = await response.json()
-        setUserData(data.data) // Lưu trữ dữ liệu người dùng từ API
-      } catch (error) {
-        console.error('Error fetching user data:', error)
-      }
-    }
-
-    fetchData()
-  }, [])
+  const { data: projects, isLoading: loadingEmployees } = useGetProjects({
+    pageSize: 10000,
+  })
 
   const onChange = e => {
     setMode(e.target.value)
   }
+
+  // Chuyển đổi dữ liệu nhân viên thành items cho Timeline
+  const timelineItems = projects?.data.map(project => ({
+    key: project.id,
+    label: project.name, // Gán nhãn là tên nhân viên
+    // Gán nội dung là ngày sinh dưới dạng chuỗi định dạng ngày tháng
+    children: (
+      <div>
+        <p>Start Date: {moment(project.start_date).format('DD/MM/YYYY')}</p>
+        <p>End Date: {moment(project.end_date).format('DD/MM/YYYY')}</p>
+      </div>
+    ),
+  }))
 
   return (
     <div>
@@ -30,15 +35,8 @@ const TimeLineProject = () => {
         <Radio value="right">Right</Radio>
         <Radio value="alternate">Alternate</Radio>
       </Radio.Group>
-      <Timeline mode={mode}>
-        {userData.map(user => (
-          <Timeline.Item
-            key={user.id}
-            label={user.first_name + ' ' + user.last_name} // Gán nhãn là tên người dùng
-          >
-            {user.email} {/* Gán nội dung là email người dùng */}
-          </Timeline.Item>
-        ))}
+      <Timeline mode={mode} items={timelineItems}>
+        {/* Timeline nhận items từ timelineItems */}
       </Timeline>
     </div>
   )
