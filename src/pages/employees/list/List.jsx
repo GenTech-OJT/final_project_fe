@@ -81,7 +81,7 @@ const EmployeeList = () => {
     const value = e.target.value
     setSearchText(value)
   }
-
+  console.log('CustomTable - pagination.total:', pagination.total)
   const locale = {
     emptyText: (
       <Empty
@@ -106,12 +106,12 @@ const EmployeeList = () => {
   }
 
   const convertBooleanToString = isManager => {
-    if (isManager === 'true') {
+    if (isManager === 'true' || isManager === true) {
       return {
         color: 'success',
         label: t('employee.managers.true'),
       }
-    } else if (isManager === 'false') {
+    } else if (isManager === 'false' || isManager === false) {
       return {
         color: 'processing',
         label: t('employee.managers.false'),
@@ -244,6 +244,7 @@ const EmployeeList = () => {
           deleteRecord={deleteRecord}
           pagination={{
             total: data?.pagination.total,
+
             current: pagination.page,
             pageSize: pagination.pageSize,
           }}
