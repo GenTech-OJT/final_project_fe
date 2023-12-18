@@ -1,21 +1,25 @@
-import { EyeOutlined } from '@ant-design/icons'
 import {
-  Button,
+  Avatar,
   Card,
   Col,
   Descriptions,
   Flex,
+  List,
   Row,
-  Table,
   Tabs,
   Tag,
+  Tooltip,
 } from 'antd'
 import Title from 'antd/es/skeleton/Title'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { EyeOutlined } from '@ant-design/icons'
 import Breadcrumb from '@components/admin/Breadcrumb/Breadcrumb'
-import { useGetEmployeeById } from '@hooks/useEmployee'
+import {
+  useGetEmployeeById,
+  useGetProjectsByEmployeeId,
+} from '@hooks/useEmployee'
 import { useParams } from 'react-router-dom'
 import './Detail.css'
 
@@ -23,7 +27,13 @@ const { TabPane } = Tabs
 
 const EmployeeDetail = () => {
   const { id } = useParams()
+  const [searchText, setSearchText] = useState('')
+
   const { data: employee_details, isLoading } = useGetEmployeeById(id)
+
+  const { data: dataProject, isLoading: isLoadingProject } =
+    useGetProjectsByEmployeeId(id, searchText)
+
   const { t } = useTranslation('translation')
 
   const getStatusDotColor = () => {
@@ -33,118 +43,6 @@ const EmployeeDetail = () => {
   const capitalizeFirstLetter = string => {
     return string.charAt(0).toUpperCase() + string.slice(1)
   }
-
-  const columns = [
-    {
-      title: t('project_details.project_name'),
-      dataIndex: 'name',
-      sorter: true,
-      width: '10%',
-    },
-    {
-      title: t('project_details.manager_name'),
-      dataIndex: 'manager',
-      width: '10%',
-    },
-    {
-      title: t('project_details.start_date'),
-      dataIndex: 'start_date',
-      width: '10%',
-    },
-    {
-      title: t('project_details.end_date'),
-      dataIndex: 'end_date',
-      width: '10%',
-      render: (end_date, record) => (
-        <span>{record.status === 'Done' ? end_date : null}</span>
-      ),
-    },
-    {
-      title: t('project_details.status'),
-      dataIndex: 'status',
-      width: '10%',
-      render: status => (
-        <span>
-          {status === 'In progress' && (
-            <Tag
-              color="#2db7f5"
-              style={{ fontSize: '14px', padding: '8px 12px' }}
-            >
-              {status}
-            </Tag>
-          )}
-          {status === 'Done' && (
-            <Tag
-              color="#87d068"
-              style={{ fontSize: '14px', padding: '8px 12px' }}
-            >
-              {status}
-            </Tag>
-          )}
-        </span>
-      ),
-    },
-    {
-      title: t('project_details.action'),
-      align: 'center',
-      key: 'action',
-      width: '5%',
-      render: (_, record) => (
-        <Button
-          key={`view-${record.id}`}
-          // onClick={() => viewDetail(record)}
-          style={{ marginRight: 8 }}
-          icon={<EyeOutlined />}
-        />
-      ),
-    },
-  ]
-
-  // Hard-coded data for demonstration purposes
-  const hardCodedData = [
-    {
-      id: 'pro1',
-      name: 'Project 01',
-      description: 'A dedicated software engineer',
-      team_members: [
-        {
-          id: 'emp1',
-          name: 'Vy Nguyen',
-          position: 'Software Engineer',
-        },
-      ],
-      manager: 'John Doe',
-      start_date: '1990-01-01',
-      end_date: '1990-12-01',
-      status: 'In progress',
-      technicals: [
-        {
-          name: 'ReactJS',
-        },
-      ],
-    },
-    {
-      id: 'pro2',
-      name: 'Project 02',
-      description: 'This project is a project',
-      team_members: [
-        {
-          id: 'emp1',
-          name: 'Vy Nguyen',
-          position: 'Software Engineer',
-        },
-      ],
-      manager: 'Minh Toan',
-      start_date: '1993-01-01',
-      end_date: '1993-12-01',
-      status: 'Done',
-      technicals: [
-        {
-          name: 'Javascript',
-        },
-      ],
-    },
-  ]
 
   const breadcrumbItems = [
     {
@@ -164,35 +62,13 @@ const EmployeeDetail = () => {
     },
   ]
 
-  const [data, setData] = useState(hardCodedData) // Use hard-coded data initially
-  const [tableParams, setTableParams] = useState({
-    pagination: {
-      current: 1,
-      pageSize: 10,
-    },
-  })
-
-  const handleTableChange = (pagination, filters, sorter) => {
-    setTableParams({
-      pagination,
-      filters,
-      ...sorter,
-    })
-
-    // `dataSource` is useless since `pageSize` changed
-    if (pagination.pageSize !== tableParams.pagination?.pageSize) {
-      setData(hardCodedData) // Reset to hard-coded data when pageSize changes
-    }
-  }
-
   const displayValue = value => {
     return value !== null && value !== undefined ? value : ''
   }
 
-  if (isLoading || !employee_details) {
-    return <div> Loading...</div>
+  if (isLoading || !employee_details || isLoadingProject) {
+    return <div>Loading...</div>
   }
-
   // Function to get vibrant colors
   const getTagColor = index => {
     const colors = [
@@ -283,7 +159,6 @@ const EmployeeDetail = () => {
             </Row>
           </Card>
 
-          {/* ///// */}
           <Row gutter={{ xs: 8, sm: 12, md: 16, lg: 24 }}>
             <Col md={24} lg={24}>
               <Card
@@ -415,14 +290,62 @@ const EmployeeDetail = () => {
         {/* next page */}
 
         <TabPane tab={<span>{t('employee_details.project')}</span>} key="3">
-          {/* Content for Project tab */}
-          <Table
-            columns={columns}
-            rowKey={record => record.id}
-            dataSource={data}
-            pagination={tableParams.pagination}
-            loading={isLoading}
-            onChange={handleTableChange}
+          <List
+            grid={{
+              gutter: 16,
+              column: 4,
+            }}
+            dataSource={dataProject}
+            renderItem={item => {
+              console.log(item, 'item')
+              return (
+                <List.Item>
+                  <Card
+                    title={item.name}
+                    extra={
+                      <a href="#">
+                        <EyeOutlined />
+                      </a>
+                    }
+                    actions={[
+                      <span key={'start_date'}>{item.start_date}</span>,
+                    ]}
+                  >
+                    <Row gutter={[16, 16]}>
+                      <Col span={24}>
+                        {item.status === 'Pending' && (
+                          <Tag color="#e5b804" status="success">
+                            {item.status}
+                          </Tag>
+                        )}
+                        {item.status === 'In Progress' && (
+                          <Tag color="#0044cc">{item.status}</Tag>
+                        )}
+                        {item.status === 'Cancelled' && (
+                          <Tag color="#f31e1e">{item.status}</Tag>
+                        )}
+                        {item.status === 'Done' && (
+                          <Tag color="#01b301">{item.status}</Tag>
+                        )}
+                      </Col>
+                      <Col span={24}>{item.description}</Col>
+                      <Col span={24}>
+                        <Avatar.Group key={'avatar'} maxCount={3}>
+                          {item.employees.map(employee => (
+                            <Tooltip title={employee?.name} key={employee?.id}>
+                              <Avatar
+                                key={employee?.id}
+                                src={employee?.avatar}
+                              />
+                            </Tooltip>
+                          ))}
+                        </Avatar.Group>
+                      </Col>
+                    </Row>
+                  </Card>
+                </List.Item>
+              )
+            }}
           />
         </TabPane>
       </Tabs>
