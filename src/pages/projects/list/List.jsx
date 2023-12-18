@@ -96,6 +96,8 @@ const ProjectList = () => {
       dataIndex: 'manager',
       key: 'manager',
       sorter: true,
+      width: '15%',
+      render: manager => manager?.name || 'N/A',
     },
     {
       title: t('project_details.team_member'),
