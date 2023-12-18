@@ -9,6 +9,7 @@ import {
   List,
   Row,
   Tabs,
+  Tag,
   Tooltip,
 } from 'antd'
 import Title from 'antd/es/skeleton/Title'
@@ -363,33 +364,49 @@ const EmployeeDetail = () => {
               column: 4,
             }}
             dataSource={dataProject}
-            renderItem={item => (
-              <List.Item>
-                <Card
-                  title={item.name}
-                  extra={
-                    <a href="#">
-                      <EyeOutlined />
-                    </a>
-                  }
-                  actions={[
-                    <Avatar.Group key={'avatar'} maxCount={2}>
-                      {item.employees.map(employee => {
-                        console.log(employee, 'employee')
-                        return (
-                          <Tooltip title={employee?.name} key={employee?.id}>
-                            <Avatar key={employee?.id} src={employee?.avatar} />
-                          </Tooltip>
-                        )
-                      })}
-                    </Avatar.Group>,
-                    <span key={'start_date'}>{item.start_date}</span>,
-                  ]}
-                >
-                  {item.description}
-                </Card>
-              </List.Item>
-            )}
+            renderItem={item => {
+              console.log(item, 'item')
+              return (
+                <List.Item>
+                  <Card
+                    title={item.name}
+                    extra={
+                      <a href="#">
+                        <EyeOutlined />
+                      </a>
+                    }
+                    actions={[
+                      <span key={'start_date'}>{item.start_date}</span>,
+                    ]}
+                  >
+                    <Row gutter={[16, 16]}>
+                      <Col span={24}>
+                        <Tag color="#f50">{item.status}</Tag>
+                      </Col>
+                      <Col span={24}>{item.description}</Col>
+                      <Col span={24}>
+                        <Avatar.Group key={'avatar'} maxCount={3}>
+                          {item.employees.map(employee => {
+                            console.log(employee, 'employee')
+                            return (
+                              <Tooltip
+                                title={employee?.name}
+                                key={employee?.id}
+                              >
+                                <Avatar
+                                  key={employee?.id}
+                                  src={employee?.avatar}
+                                />
+                              </Tooltip>
+                            )
+                          })}
+                        </Avatar.Group>
+                      </Col>
+                    </Row>
+                  </Card>
+                </List.Item>
+              )
+            }}
           />
         </TabPane>
       </Tabs>
