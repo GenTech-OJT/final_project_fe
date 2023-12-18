@@ -220,7 +220,6 @@ const EmployeeDetail = () => {
   return (
     <div className="page-container">
       <Breadcrumb items={breadcrumbItems} />
-      <h2>{t('employee_details.title')}</h2>
       <Title className="page-title">EMPLOYEE DETAIL</Title>
 
       <Tabs
@@ -231,15 +230,13 @@ const EmployeeDetail = () => {
       >
         <TabPane tab={<span> {t('employee_details.profile')}</span>} key="1">
           {/* Content for Profile tab */}
-
           {/* Hoang res */}
           <Card style={{ backgroundColor: 'rgb(245, 245, 245)' }}>
-            <Row gutter={{ sm: 24, md: 24 }}>
-              <Col sm={24} lg={12} className="avatar_status">
+            <Row gutter={{ sm: 24, md: 24, xs: 24 }} className="info_employee">
+              <Col sm={12} lg={12}>
                 <Flex>
                   <img
-                    // src={employee_details.avatar}
-                    src="https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg"
+                    src={employee_details.avatar}
                     alt="Employee Avatar"
                     className="avt"
                   />
@@ -262,29 +259,33 @@ const EmployeeDetail = () => {
                   </div>
                 </Flex>
               </Col>
-              <Col sm={24} lg={12}>
-                <Row>
+              <Col sm={12} lg={12} className="simple_info">
+                <Row style={{ marginBottom: '5px' }}>
                   <p className="employee_label">
                     {t('employee_details.employee_code')}
                     {' : '}
                   </p>
                   <p className="employee_info">{employee_details.code}</p>
                 </Row>
-                <Row>
+                <Row style={{ marginBottom: '5px' }}>
                   <p className="employee_label">
                     {t('employee_details.line_manager')}
                     {' : '}
                   </p>
                   <p className="employee_info">
                     {capitalizeFirstLetter(
-                      displayValue(employee_details.line_manager)
+                      displayValue(employee_details.manager)
                     )}
                   </p>
                 </Row>
-                <Row>
+                <Row style={{ marginBottom: '5px' }}>
                   <p className="employee_label">Email :</p>
                   {/* <p className="employee_info">{employee_details.email}</p> */}
-                  <p className="employee_info">nhatnhatnhar27@gmail.com</p>
+                  <p className="employee_info">
+                    {capitalizeFirstLetter(
+                      displayValue(employee_details.email)
+                    )}
+                  </p>
                 </Row>
               </Col>
             </Row>

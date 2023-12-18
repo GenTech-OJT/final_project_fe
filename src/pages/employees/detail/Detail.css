@@ -121,3 +121,12 @@
     margin-bottom: 30px;
   }
 }
+
+@media (max-width: 891px) {
+  .info_employee {
+    width: 150%;
+    flex-direction: column;
+    gap: 20px;
+    margin: 10px 0 !important;
+  }
+}
