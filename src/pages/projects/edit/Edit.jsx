@@ -15,7 +15,6 @@ import { Formik } from 'formik'
 import * as Yup from 'yup'
 import moment from 'moment'
 import dayjs from 'dayjs'
-
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router'
 import { showToast } from '@components/toast/ToastCustom'
@@ -97,29 +96,43 @@ const EditProject = () => {
       ],
     }))
 
-    setRemoveTeamMembers(prevRemoveTeamMembers => {
-      const uniqueMemberIds = new Set([
-        ...prevRemoveTeamMembers.map(member => member.id),
-        ...membersToRemove.map(member => member.id),
-      ])
+    setNewTeamMembers(formattedNewMembers)
 
-      // Remove member IDs that are already present in newTeamMembers
-      const updatedRemoveTeamMembers = Array.from(uniqueMemberIds).filter(
-        id => !newTeamMembers.some(newMember => newMember.id === id)
-      )
+    const formattedRemoveMembers = membersToRemove.map(member => {
+      const lastPeriodIndex = member.periods.length - 1
 
-      return updatedRemoveTeamMembers.map(
-        id =>
-          prevRemoveTeamMembers.find(member => member.id === id) ||
-          membersToRemove.find(member => member.id === id)
-      )
+      // Check if there are periods for the member
+      if (lastPeriodIndex >= 0) {
+        const modifiedPeriods = member.periods.map((period, index) => {
+          if (index === lastPeriodIndex) {
+            // Modify the last period to set leaving_time to null
+            return {
+              joining_time: period.joining_time,
+              leaving_time: moment().format('YYYY-MM-DD HH:mm:ss'),
+            }
+          } else {
+            return period
+          }
+        })
+
+        return {
+          id: member.id,
+          periods: modifiedPeriods,
+        }
+      } else {
+        // If no periods, return as is
+        return member
+      }
     })
+
+    setRemoveTeamMembers(prevRemoveTeamMembers =>
+      prevRemoveTeamMembers.concat(formattedRemoveMembers)
+    )
 
     setTeamMembers(prevTeamMembers =>
       prevTeamMembers.filter(member => selectedValues.includes(member.id))
     )
 
-    setNewTeamMembers(formattedNewMembers)
     setFieldValue('employees', selectedMembers)
   }
 
