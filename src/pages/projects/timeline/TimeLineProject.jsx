@@ -1,15 +1,19 @@
 /* eslint-disable no-unused-vars */
-import { useGetProjects } from '@hooks/useProject'
+import { useGetProjectById, useGetProjects } from '@hooks/useProject'
 import { Radio, Timeline, Tooltip } from 'antd'
 import moment from 'moment'
 import { useState } from 'react'
-
+import './Timeline.css'
+import { useParams } from 'react-router'
 const TimeLineProject = () => {
+  const { id } = useParams()
+  console.log(id)
   const [mode, setMode] = useState('alternate')
   const { data: projects, isLoading: loadingEmployees } = useGetProjects({
     pageSize: 10000,
   })
-
+  const { data: project_id, isLoading } = useGetProjectById(id)
+  console.log(project_id)
   const onChange = e => {
     setMode(e.target.value)
   }
@@ -19,19 +23,25 @@ const TimeLineProject = () => {
     const employeesTooltipContent = project.employees
       ? project.employees
           .map(employee => {
-            const joiningTime = employee.periods?.[0]?.joining_time
-            const leavingTime = employee.periods?.[0]?.leaving_time
-            return `ID: ${employee.id}, Joining Time: ${moment(
-              joiningTime
-            ).format('DD/MM/YYYY')}, Leaving Time: ${
-              leavingTime
-                ? moment(leavingTime).format('DD/MM/YYYY')
-                : 'Still Active'
-            }`
+            const periodsContent = employee.periods
+              ? employee.periods
+                  .map(period => {
+                    const joiningTime = period.joining_time
+                    const leavingTime = period.leaving_time
+                    return `Joining Time: ${moment(joiningTime).format(
+                      'DD/MM/YYYY'
+                    )}, Leaving Time: ${
+                      leavingTime
+                        ? moment(leavingTime).format('DD/MM/YYYY')
+                        : 'Null'
+                    }`
+                  })
+                  .join('\n')
+              : ''
+            return `ID: ${employee.id}\n${periodsContent}`
           })
           .join('\n')
       : ''
-
     return {
       key: project.id,
       label: project.name,
@@ -47,12 +57,7 @@ const TimeLineProject = () => {
   })
 
   return (
-    <div>
-      <Radio.Group onChange={onChange} value={mode}>
-        <Radio value="left">Left</Radio>
-        <Radio value="right">Right</Radio>
-        <Radio value="alternate">Alternate</Radio>
-      </Radio.Group>
+    <div className="timeline-container">
       <Timeline mode={mode} items={timelineItems}>
         {/* Timeline nhận items từ timelineItems */}
       </Timeline>
