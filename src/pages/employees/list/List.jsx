@@ -138,6 +138,27 @@ const EmployeeList = () => {
       dataIndex: 'name',
       key: 'name',
       sorter: true,
+      render: (_, record) => (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <img
+            src={record.avatar}
+            alt="Avatar"
+            style={{
+              width: 30,
+              height: 30,
+              borderRadius: '50%',
+              marginRight: 8,
+            }}
+          />
+          {record.name}
+        </div>
+      ),
     },
     {
       title: t('table_header.status'),
