@@ -33,77 +33,57 @@ const Dashboard = () => {
     <div className="dashboard">
       <BreadCrumb items={breadcrumbItems} />
       <Row gutter={{ xs: 8, sm: 12, md: 16, lg: 24 }}>
-        <Col xs={24} sm={12} md={6}>
-          <Card style={{ backgroundColor: '#f0f0f0' }}>
+        <Col xs={24} sm={12} md={8}>
+          <Card style={{ border: '3px solid #f0f0f0' }}>
             <Flex justify="space-between">
               <Statistic
                 title={t('dashboard_page.employees')}
                 value={data?.employeeCount}
                 className="custom-statistic"
               ></Statistic>
-              <UserOutlined className="custom-icon" style={{ color: '#555' }} />
+              <UserOutlined className="custom-icon-1" />
             </Flex>
           </Card>
         </Col>
-        <Col xs={24} sm={12} md={6}>
-          <Card style={{ backgroundColor: '#f0f0f0' }}>
+        <Col xs={24} sm={12} md={8}>
+          <Card style={{ border: '3px solid #f0f0f0' }}>
             <Flex justify="space-between">
               <Statistic
                 title={t('dashboard_page.project')}
                 value={data?.projectCount}
                 className="custom-statistic"
               ></Statistic>
-              <ProjectOutlined
-                className="custom-icon"
-                style={{ color: '#555' }}
-              />
+              <ProjectOutlined className="custom-icon-2" />
             </Flex>
           </Card>
         </Col>
-        <Col xs={24} sm={12} md={6}>
-          <Card style={{ backgroundColor: '#f0f0f0' }}>
-            <Flex justify="space-between">
-              <Statistic
-                title={t('dashboard_page.skills')}
-                value={data?.skillsArray.length}
-                className="custom-statistic"
-              ></Statistic>
-              <ToolOutlined className="custom-icon" style={{ color: '#555' }} />
-            </Flex>
-          </Card>
-        </Col>
-        <Col xs={24} sm={12} md={6}>
-          <Card style={{ backgroundColor: '#f0f0f0' }}>
+        <Col xs={24} sm={12} md={8}>
+          <Card style={{ border: '3px solid #f0f0f0' }}>
             <Flex justify="space-between">
               <Statistic
                 title={t('dashboard_page.position')}
                 value={data?.positionCount}
                 className="custom-statistic"
               ></Statistic>
-              <TeamOutlined className="custom-icon" style={{ color: '#555' }} />
+              <TeamOutlined className="custom-icon-3" />
             </Flex>
           </Card>
         </Col>
       </Row>
       <Row>
-        <Col xs={24} sm={12} md={12} style={{ padding: '10px' }}>
-          <Card>
-            <ChartPie data={data?.skillsArray} />
-            <Meta
-              title={t('dashboard_page.note_piechart')}
-              style={{ textAlign: 'center' }}
-            ></Meta>
-          </Card>
-        </Col>
-        <Col xs={24} sm={12} md={12} style={{ padding: '10px' }}>
-          <Card>
-            <ChartBar />
-            <Meta
-              title={t('dashboard_page.note_barchart')}
-              style={{ textAlign: 'center' }}
-            ></Meta>
-          </Card>
-        </Col>
+        <Card
+          style={{
+            width: '100%',
+            marginTop: '20px',
+            border: '3px solid #f0f0f0',
+          }}
+        >
+          <ChartPie data={data?.skillsArray} />
+          <Meta
+            title={t('dashboard_page.note_piechart')}
+            style={{ textAlign: 'center' }}
+          ></Meta>
+        </Card>
       </Row>
     </div>
   )
