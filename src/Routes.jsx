@@ -12,6 +12,9 @@ const EmployeeEdit = lazy(() => import('@pages/employees/edit/Edit'))
 const EmployeeDetail = lazy(() => import('@pages/employees/detail/Detail'))
 const Projects = lazy(() => import('@pages/projects/list/List'))
 const NotFoundPage = lazy(() => import('@pages/notFound/NotFound'))
+const ProjectCreate = lazy(() => import('@pages/projects/create/Create'))
+const ProjectEdit = lazy(() => import('@pages/projects/edit/Edit'))
+const ProjectDetail = lazy(() => import('@pages/projects/detail/Detail'))
 
 const AppRoutes = () => {
   const dispatch = useDispatch()
@@ -52,6 +55,9 @@ const AppRoutes = () => {
         <Route path="employees/create" element={<EmployeeCreate />} />
         <Route path="employees/detail/:id" element={<EmployeeDetail />} />
         <Route path="employees/edit/:id" element={<EmployeeEdit />} />
+        <Route path="projects/create" element={<ProjectCreate />} />
+        <Route path="projects/detail/:id" element={<ProjectDetail />} />
+        <Route path="projects/edit/:id" element={<ProjectEdit />} />
       </Route>
     </Routes>
   )

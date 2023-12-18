@@ -38,7 +38,9 @@
     "create_employee_fail": "Tạo nhân viên thất bại, vui lòng thử lại!",
     "Employee_deleted_successfully": "Xóa nhân viên thành công",
     "Employee_deleted_fail": "Xóa nhân viên thất bại, vui lòng thử lại!",
-    "edit_employee_success": "Cập nhật nhân viên Thành Công"
+    "edit_employee_success": "Cập nhật nhân viên Thành Công",
+    "create_project_success": "Tạo dự án thành công",
+    "create_project_fail": "Lỗi khi tạo dự án. Vui lòng thử lại!"
   },
   "validate": {
     "name_validate": "Vui lòng nhập tên hợp lệ",
@@ -60,6 +62,17 @@
     "skills_validate": "Phải có ít nhất một kinh nghiệm!",
     "skill_require": "Vui lòng nhập kỹ năng!",
     "skill_validate": "Vui lòng nhập đúng kí tự"
+  },
+  "project_validate": {
+    "name_require": "Vui lòng nhập tên dự án",
+    "name_max": "Tên phải có tối đa 128 ký tự.",
+    "name_valid": "Vui lòng nhập một tên dự án hợp lệ",
+    "manager_require": "Vui lòng chọn quản lý",
+    "employees_require": "Vui lòng chọn ít nhất một thành viên!",
+    "technical_require": "Vui lòng chọn ít nhất một công nghệ!",
+    "start_day_require": "Vui lòng chọn ngày bắt đầu!",
+    "end_day_require": "Vui lòng chọn ngày kết thúc!",
+    "end_day_min": "Ngày kết thúc phải sau ngày bắt đầu!"
   },
   "breadcrumbs": {
     "projects": "Danh sách dự án",
@@ -106,6 +119,22 @@
       "true": "Quản Lí",
       "false": "Nhân Viên"
     }
+  },
+  "project": {
+    "name": "Tên dự án",
+    "manager": "Quản lý",
+    "start_date": "Ngày bắt đầu",
+    "end_date": "Ngày kết thúc",
+    "team_members": "Thành viên",
+    "technicals": "Công nghệ",
+    "status": "Trạng thái",
+    "description": "Mô tả",
+    "pending_status": "Chờ xử lý",
+    "in_progress_status": "Đang tiến hành",
+    "cancelled_status": "Đã hủy",
+    "done_status": "Đã hoàn thành",
+    "technical_placeholder": "Lựa chọn công nghệ",
+    "team_members_placeholder": "Lựa chọn thành viên"
   },
   "sign_in_page": {
     "enter_sign_in": "Vui lòng nhập thông tin chi tiết của bạn dưới đây để đăng nhập.",

@@ -1,6 +1,5 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import { getLoginApi } from '@api/authApi'
-import { QUERY_KEY } from '@constants/reactQuery'
 import { useNavigate } from 'react-router-dom'
 import { showToast } from '@components/toast/ToastCustom'
 import { useTranslation } from 'react-i18next'

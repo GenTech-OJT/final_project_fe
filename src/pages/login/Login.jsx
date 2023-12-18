@@ -1,22 +1,15 @@
-import { useDispatch } from 'react-redux'
-import { Form, Input, Button, message, Typography, Select, Space } from 'antd'
-import { useNavigate } from 'react-router-dom'
+import { Form, Input, Button, Typography, Select, Space } from 'antd'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import { LockOutlined, MailOutlined } from '@ant-design/icons'
-import { showToast } from '@components/toast/ToastCustom'
 import './Login.css'
 import { useLogin } from '@hooks/useAuth'
-import { login } from '@redux/Slice/authSlice'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 const { Text, Title } = Typography
 
 const Login = () => {
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-
   const initialValues = {
     email: '',
     password: '',
