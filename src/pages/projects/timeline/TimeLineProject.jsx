@@ -143,7 +143,11 @@ const generateEmployeeTimelineItems = (project, t) => {
                 : null
               return {
                 key: `${employee.id}-${period.joining_time}`,
-                label: `${getEmployeeName(employee.name)}`,
+                label: (
+                  <p style={{ marginLeft: '15px', marginRight: '15px' }}>
+                    {getEmployeeName(employee.name)}
+                  </p>
+                ),
                 children: (
                   <Card
                     style={{
