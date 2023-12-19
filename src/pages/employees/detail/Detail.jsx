@@ -24,7 +24,7 @@ import {
 } from '@hooks/useEmployee'
 import moment from 'moment'
 import { useParams } from 'react-router-dom'
-import { CustomSearch } from '../../../components/custom/CustomTable'
+import { CustomSearch } from '@components/custom/CustomTable'
 import './Detail.css'
 
 const { TabPane } = Tabs
@@ -319,7 +319,6 @@ const EmployeeDetail = () => {
                         <CalendarOutlined />{' '}
                         {moment(item.start_date).format('YYYY-MM-DD')}
                       </span>,
-                      // <span key="date">{item.start_date}</span>,
                     ]}
                   >
                     <Row gutter={[16, 16]}>
