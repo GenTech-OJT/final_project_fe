@@ -46,7 +46,13 @@ const TimeLineProject = () => {
         {
           key: 'start',
           label: (
-            <p style={{ marginRight: '15px', marginLeft: '15px' }}>
+            <p
+              style={{
+                marginRight: '15px',
+                marginLeft: '15px',
+                fontWeight: 'bold',
+              }}
+            >
               {project.name}
             </p>
           ),
@@ -67,7 +73,13 @@ const TimeLineProject = () => {
         {
           key: 'end',
           label: (
-            <p style={{ marginLeft: '15px', marginRight: '15px' }}>
+            <p
+              style={{
+                marginLeft: '15px',
+                marginRight: '15px',
+                fontWeight: 'bold',
+              }}
+            >
               {project.name}
             </p>
           ),
@@ -144,7 +156,13 @@ const generateEmployeeTimelineItems = (project, t) => {
               return {
                 key: `${employee.id}-${period.joining_time}`,
                 label: (
-                  <p style={{ marginLeft: '15px', marginRight: '15px' }}>
+                  <p
+                    style={{
+                      marginLeft: '15px',
+                      marginRight: '15px',
+                      fontWeight: 'bold',
+                    }}
+                  >
                     {getEmployeeName(employee.name)}
                   </p>
                 ),
