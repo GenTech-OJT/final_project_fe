@@ -124,6 +124,7 @@
     "avatar": "Avatar",
     "skill_placeholder": "Skill",
     "experience_placeholder": "Experience (Years)",
+    "none_of_these": "None of these Manager",
     "managers": {
       "true": "Manager",
       "false": "Employee"

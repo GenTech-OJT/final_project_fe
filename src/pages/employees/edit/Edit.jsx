@@ -440,6 +440,9 @@ const EditEmployee = () => {
                         help={
                           errors.manager && touched.manager && errors.manager
                         }
+                        style={{
+                          display: values.is_manager ? 'none' : 'block',
+                        }}
                       >
                         <Select
                           name="manager"
@@ -449,10 +452,20 @@ const EditEmployee = () => {
                               description={t('employee.no_data')}
                             />
                           }
-                          onChange={value => setFieldValue('manager', value)}
+                          onChange={value => {
+                            setFieldValue('manager', value)
+                            // Kiểm tra nếu người dùng chọn Manager thì ẩn trường is_manager
+                            if (value && value === 'manager_id') {
+                              setFieldValue('is_manager', false)
+                            }
+                          }}
                           onBlur={handleBlur}
                           value={values.manager} // Update this line to use form values
+                          disabled={values.is_manager}
                         >
+                          <Select.Option key="none" value={null}>
+                            {t('employee.none_of_these')}
+                          </Select.Option>
                           {managers?.map(m => (
                             <Select.Option key={m.id} value={m.id}>
                               {m.name}
@@ -591,9 +604,21 @@ const EditEmployee = () => {
               <Form.Item label={t('employee.is_manager')} name="is_manager">
                 <Checkbox
                   name="is_manager"
-                  onChange={e => setFieldValue('is_manager', e.target.checked)}
+                  onChange={e => {
+                    const checked = e.target.checked
+                    setFieldValue('is_manager', checked)
+
+                    // Nếu is_manager được chọn, set giá trị của manager về null hoặc giá trị khác thích hợp
+                    if (checked) {
+                      setFieldValue('manager', null) // hoặc set giá trị khác như ''
+                    }
+                  }}
                   onBlur={handleBlur}
-                  checked={values.is_manager || false}
+                  checked={
+                    values.is_manager ||
+                    (values.manager && values.manager === 'manager_id')
+                  }
+                  disabled={values.manager && values.manager === 'manager_id'}
                 ></Checkbox>
               </Form.Item>
 
