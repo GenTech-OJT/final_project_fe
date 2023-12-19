@@ -4,6 +4,7 @@ import {
   Col,
   Descriptions,
   Flex,
+  List,
   Row,
   Space,
   Tabs,
@@ -297,7 +298,7 @@ const EmployeeDetail = () => {
 
                           {employee_details.skills.map((skill, index) => (
                             <Tag
-                              key={index}
+                              key={skill.name}
                               color={getTagColor(index)}
                               style={{ padding: '5px' }}
                             >

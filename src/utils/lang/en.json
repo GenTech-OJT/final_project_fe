@@ -6,7 +6,7 @@
     "active": "Active",
     "inactive": "Inactive",
     "login": "Log in",
-    "edit": "Edit",
+    "edit": "Update",
     "create_project": "Create Project"
   },
   "side_menu": {
@@ -40,7 +40,9 @@
     "Employee_deleted_fail": "Error deleting employee. Please try again!",
     "edit_employee_success": "Update employee successfully",
     "create_project_success": "Project created successfully",
-    "create_project_fail": "Error creating project. Please try again!"
+    "create_project_fail": "Error creating project. Please try again!",
+    "Update_project_success": "Project update successfully",
+    "Update_project_fail": "Error update project. Please try again!"
   },
   "validate": {
     "name_validate": "Please input a valid name!",
@@ -187,7 +189,9 @@
     "skills": "Skills",
     "employees": "Employees",
     "position": "Position",
-    "project": "Project"
+    "project": "Project",
+    "note_piechart": "Pie Chart about Skills of employees",
+    "note_barchart": "Bar Chart about Projects in stages every 2 months"
   },
   "pagination": {
     "of": "of",

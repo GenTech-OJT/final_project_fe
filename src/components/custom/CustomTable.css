@@ -38,11 +38,17 @@
 
 .ant-table-content {
   background-color: white !important;
-  width: 100% !important;
+  width: 200px !important;
 }
 
 .ant-pagination {
   padding: 0 15px;
+}
+
+@media only screen and (max-width: 1135px) {
+  .table-header-responsive {
+    min-width: 1150px !important;
+  }
 }
 
 @media screen and (min-width: 360px) and (max-width: 436px) {

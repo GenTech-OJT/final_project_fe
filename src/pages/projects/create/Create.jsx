@@ -40,9 +40,8 @@ const CreateProject = () => {
   const [endDate, setEndDate] = useState()
   const [teamMembers, setTeamMembers] = useState([])
   const [technicals, setTechnicals] = useState([])
-  const navigate = useNavigate()
-
   const [datePickerLocale, setDatePickerLocale] = useState(enUS)
+  const navigate = useNavigate()
   const forceUpdate = useForceUpdate()
 
   useEffect(() => {
@@ -117,14 +116,6 @@ const CreateProject = () => {
       ...values,
       employees: teamMembers.map(m => ({
         id: m.id,
-        name: m.name,
-        avatar: m.avatar,
-        periods: [
-          {
-            joining_time: moment().format('YYYY-MM-DD HH:mm:ss'),
-            leaving_time: null,
-          },
-        ],
       })),
       technical: technicals.map(t => ({
         id: t.id,
@@ -138,7 +129,7 @@ const CreateProject = () => {
       await createProjectApi(formattedValues, {
         onSuccess: () => {
           showToast(t('message.create_project_success'), 'success')
-          navigate('/admin/employees')
+          navigate('/admin/projects')
         },
         onError: () => {
           showToast(t('message.create_project_fail'), 'error')
@@ -206,7 +197,7 @@ const CreateProject = () => {
                     defaultValue={values.manager}
                   >
                     {managers?.map(m => (
-                      <Select.Option key={m.id} value={m.name}>
+                      <Select.Option key={m.id} value={m.id}>
                         {m.name}
                       </Select.Option>
                     ))}
