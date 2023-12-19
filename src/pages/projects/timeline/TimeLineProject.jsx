@@ -17,8 +17,7 @@ import './Timeline.css'
 const TimeLineProject = () => {
   const { id } = useParams()
   const { data: project } = useGetProjectById(id)
-
-  const [mode, setMode] = useState('alternate')
+  const mode = useState('alternate')[0]
 
   const [reverse, setReverse] = useState(false)
 
