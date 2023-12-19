@@ -146,7 +146,7 @@ const EmployeeDetail = () => {
                   </p>
                   <p className="employee_info">
                     {capitalizeFirstLetter(
-                      displayValue(employee_details.manager)
+                      displayValue(employee_details.manager.name)
                     )}
                   </p>
                 </Row>
