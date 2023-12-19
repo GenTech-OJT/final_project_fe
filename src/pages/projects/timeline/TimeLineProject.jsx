@@ -17,7 +17,6 @@ import './Timeline.css'
 const TimeLineProject = () => {
   const { id } = useParams()
   const { data: project } = useGetProjectById(id)
-  console.log(project?.employees)
 
   const [mode] = useState('alternate')
 
