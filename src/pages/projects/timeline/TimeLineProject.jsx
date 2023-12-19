@@ -4,12 +4,13 @@ import {
   MenuUnfoldOutlined,
   UserOutlined,
 } from '@ant-design/icons'
-import 'aos/dist/aos.css' // Import CSS của AOS
-import AOS from 'aos'
 import { useGetProjectById } from '@hooks/useProject'
 import { Button, Card, Col, Row, Timeline } from 'antd'
+import AOS from 'aos'
+import 'aos/dist/aos.css' // Import CSS của AOS
 import moment from 'moment'
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router'
 import './Timeline.css'
 
@@ -39,18 +40,23 @@ const TimeLineProject = () => {
   const onChange = e => {
     setMode(e.target.value)
   }
-
+  const { t } = useTranslation('translation')
   const timelineItems = project
     ? [
         {
           key: 'start',
-          label: project.name,
+          label: (
+            <p style={{ marginRight: '15px', marginLeft: '15px' }}>
+              {project.name}
+            </p>
+          ),
           children: (
             <Row justify="start" align="middle" style={{ margin: '20px 0' }}>
               <Col span={24}>
-                <p>{`Start Date: ${moment(project.start_date).format(
-                  'DD/MM/YYYY'
-                )}`}</p>
+                <p>
+                  {t('project.start_date')}: &nbsp;
+                  {moment(project.start_date).format('DD/MM/YYYY')}
+                </p>
               </Col>
             </Row>
           ),
@@ -60,13 +66,22 @@ const TimeLineProject = () => {
         ...generateEmployeeTimelineItems(project),
         {
           key: 'end',
-          label: project.name,
+          label: (
+            <p style={{ marginLeft: '15px', marginRight: '15px' }}>
+              {project.name}
+            </p>
+          ),
           children: (
-            <Row justify="end" align="middle" style={{ margin: '20px 0' }}>
+            <Row
+              justify="end"
+              align="middle"
+              style={{ margin: '20px 0', marginRight: '10px' }}
+            >
               <Col span={24}>
-                <p>{`End Date: ${moment(project.end_date).format(
-                  'DD/MM/YYYY'
-                )}`}</p>
+                <p>
+                  {t('project.end_date')}: &nbsp;
+                  {moment(project.end_date).format('DD/MM/YYYY')}
+                </p>
               </Col>
             </Row>
           ),
@@ -82,24 +97,18 @@ const TimeLineProject = () => {
     <Card
       className="timeline-card"
       bordered={false}
-      title="Project Timeline"
+      title={t('title.timeline')}
       style={{
         width: '90%', // Chỉnh sửa độ rộng tùy thuộc vào thiết bị
         maxWidth: '800px', // Giới hạn độ rộng tối đa
         margin: 'auto',
         marginTop: '20px',
         borderRadius: '20px',
-        boxShadow: 'rgba(0, 0, 0, 0.1) 0px 4px 12px',
+        boxShadow: 'rgba(0, 0, 0, 0.1) 0px 10px 15px',
         padding: '16px',
-        overflowY: 'auto', // Thêm thanh cuộn dọc
       }}
     >
-      <Timeline
-        pending="Recording..."
-        reverse={reverse}
-        mode={mode}
-        items={timelineItems}
-      >
+      <Timeline reverse={reverse} mode={mode} items={timelineItems}>
         {/* Timeline receives items from timelineItems */}
       </Timeline>
 
@@ -120,8 +129,10 @@ const TimeLineProject = () => {
 }
 
 const generateEmployeeTimelineItems = project => {
+  const { t } = useTranslation('translation')
   const getRandomColor = () =>
     `#${Math.floor(Math.random() * 16777215).toString(16)}`
+
   return project.employees
     ? project.employees.flatMap(employee => {
         const employeeIcon = (
@@ -130,7 +141,11 @@ const generateEmployeeTimelineItems = project => {
         return employee.periods
           ? employee.periods.map(period => ({
               key: `${employee.id}-${period.joining_time}`,
-              label: `${getEmployeeName(employee.name)}`,
+              label: (
+                <p style={{ marginLeft: '15px', marginRight: '15px' }}>
+                  {getEmployeeName(employee.name)}
+                </p>
+              ),
               children: (
                 <Card
                   style={{
@@ -141,22 +156,23 @@ const generateEmployeeTimelineItems = project => {
                     marginTop: '20px',
                     borderRadius: '20px',
                     boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)',
+                    background: 'rgb(240, 240, 255)',
                   }}
                   data-aos="zoom-in-down"
                   data-aos-duration="1500"
                 >
                   <Row gutter={[16, 16]}>
                     <Col span={24}>
-                      <p
-                        style={{ margin: '7px 0', textAlign: 'center  ' }}
-                      >{`Joining Time: ${moment(period.joining_time).format(
-                        'DD/MM/YYYY'
-                      )}`}</p>
-                      <p
-                        style={{ margin: '7px 0', textAlign: 'center  ' }}
-                      >{`Leaving Time: ${moment(
-                        period.leaving_time || project.end_date
-                      ).format('DD/MM/YYYY')}`}</p>
+                      <p style={{ margin: '7px 0', textAlign: 'center  ' }}>
+                        {t('project.joining_time')}: &nbsp;
+                        {moment(period.joining_time).format('DD/MM/YYYY')}
+                      </p>
+                      <p style={{ margin: '7px 0', textAlign: 'center  ' }}>
+                        {t('project.leaving_time')}: &nbsp;
+                        {moment(period.leaving_time || project.end_date).format(
+                          'DD/MM/YYYY'
+                        )}
+                      </p>
                     </Col>
                   </Row>
                 </Card>
