@@ -7,7 +7,8 @@
     "inactive": "Vô Hiệu Hóa",
     "login": "Đăng Nhập",
     "edit": "Cập nhật",
-    "create_project": "Tạo Dự Án"
+    "create_project": "Tạo Dự Án",
+    "export_csv": "Xuất CV"
   },
   "side_menu": {
     "project_management_label": "Dự án",
@@ -44,7 +45,9 @@
     "Update_project_success": "Cập nhật thông tin dự án thành công",
     "Update_project_fail": "Lỗi khi cập nhật thông tin dự án. Vui lòng thử lại!",
     "delete_project_success": "Xóa dự án thành công",
-    "delete_project_fail": "Lỗi khi xóa dự án. Vui lòng thử lại!"
+    "delete_project_fail": "Lỗi khi xóa dự án. Vui lòng thử lại!",
+    "yes": "Có",
+    "no": "Không"
   },
   "validate": {
     "name_validate": "Vui lòng nhập tên hợp lệ",
@@ -55,6 +58,7 @@
     "email_invalid": "Định dạng email không hợp lệ!",
     "password": "Vui lòng nhập mật khẩu của bạn!",
     "phone_validate": "Vui lòng nhập số điện thoại!",
+    "phone_matches": "Số điện thoại chỉ nên chứa các ký tự số!",
     "phone_valid": "Vui lòng nhập số điện thoại hợp lệ gồm 10 chữ số",
     "code_validate": "Vui lòng nhập mã!",
     "card_require": "Vui lòng nhập Chứng minh nhân dân!",
@@ -141,7 +145,8 @@
     "technical_placeholder": "Lựa chọn công nghệ",
     "team_members_placeholder": "Lựa chọn thành viên",
     "joining_time": "Ngày Tham Gia",
-    "leaving_time": "Ngày Rời Đi"
+    "leaving_time": "Ngày Rời Đi",
+    "reverse": "Đảo Chiều"
   },
   "sign_in_page": {
     "enter_sign_in": "Vui lòng nhập thông tin chi tiết của bạn dưới đây để đăng nhập.",
@@ -202,7 +207,7 @@
   },
   "pagination": {
     "of": "trên",
-    "items": "nhân viên",
+    "items": "dữ liệu",
     "previous_page": "Trang Trước",
     "next_page": "Trang Sau",
     "pageSize": "Trang"

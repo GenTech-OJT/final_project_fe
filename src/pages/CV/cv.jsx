@@ -13,21 +13,19 @@ import { useParams } from 'react-router-dom'
 import '../../pages/CV/cv.css'
 import { useGetEmployeeById } from '@hooks/useEmployee'
 import { useGetProjectsByEmployeeId } from '@hooks/useEmployee'
+import { useTranslation } from 'react-i18next'
 
 const ExportDocx = () => {
   const { id } = useParams()
-
   const { data: employeeDetails, isLoading: loadingEmployeeDetails } =
     useGetEmployeeById(id)
   const { data: employeeProjects, isLoading: loadingEmployeeProjects } =
     useGetProjectsByEmployeeId(id)
+  const { t } = useTranslation('translation')
 
   if (loadingEmployeeDetails || loadingEmployeeProjects) {
     return <div>loading...</div>
   }
-
-  console.log(employeeDetails)
-  console.log(employeeProjects)
 
   // Hàm tạo tài liệu Docx
   const createDocument = () => {
@@ -331,13 +329,13 @@ const ExportDocx = () => {
 
   const handleExport = () => {
     const doc = createDocument()
-    saveDocumentToFile(doc, 'example.docx')
+    saveDocumentToFile(doc, 'cv.docx')
   }
 
   return (
     <div className="export-container">
       <Button type="primary" onClick={handleExport}>
-        Export Docx File
+        {t('button_input.export_csv')}
       </Button>
     </div>
   )
