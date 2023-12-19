@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import { EditOutlined, EyeOutlined } from '@ant-design/icons'
+import { DeleteOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons'
 import { CustomSearch, CustomTable } from '@components/custom/CustomTable'
 import { Avatar, Button, Empty, Tooltip } from 'antd'
 import { useState } from 'react'
@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router'
 import Breadcrumb from '../../../components/admin/Breadcrumb/Breadcrumb'
 import '../../../components/custom/CustomTable.css'
 import { useGetProjects } from '@hooks/useProject'
-
+import DeleteProject from '../delete/Delete'
 const ProjectList = () => {
   const navigate = useNavigate()
   const { t } = useTranslation('translation')
@@ -148,19 +148,13 @@ const ProjectList = () => {
             style={{ marginRight: 8 }}
             icon={<EditOutlined />}
           />
-          {/* <DeleteEmployee key={`delete-${record.id}`}
-            onClick={() => deleteRecord(record.id)}
-            style={{ marginRight: 8 }}
-            employeeId={record.id}
-            icon={<DeleteOutlined />} /> */}
-
-          {/* <DeleteEmployee
+          <DeleteProject
             key={`delete-${record.id}`}
             onClick={() => deleteRecord(record.id)}
             style={{ marginRight: 8 }}
             icon={<DeleteOutlined />}
-            employeeId={record.id}
-          /> */}
+            projectId={record.id}
+          />
         </>
       ),
     },
