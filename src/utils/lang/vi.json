@@ -166,6 +166,7 @@
     "active": "Kích hoạt",
     "inactive": "Vô hiệu hóa",
     "is_manager": "Vai trò",
+    "no_description": "Không có mô tả",
     "genders": {
       "male": "Nam",
       "female": "Nữ"
@@ -174,7 +175,8 @@
       "true": "Quản lí",
       "false": "Nhân viên"
     },
-    "years": "năm"
+    "years": "năm",
+    "no_projects": "Không có dự án được phân công"
   },
   "project_details": {
     "project_name": "Tên dự án",

@@ -166,6 +166,7 @@
     "active": "Active",
     "inactive": "Inactive",
     "is_manager": "Role",
+    "no_description": "No description",
     "genders": {
       "male": "Male",
       "female": "Female"
@@ -174,7 +175,8 @@
       "true": "Manager",
       "false": "Employee"
     },
-    "years": "years"
+    "years": "years",
+    "no_projects": "No projects assigned"
   },
   "project_details": {
     "project_name": "Project Name",
