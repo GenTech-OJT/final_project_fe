@@ -1,10 +1,5 @@
 /* eslint-disable no-unused-vars */
-import {
-  AppstoreOutlined,
-  MenuUnfoldOutlined,
-  SwapOutlined,
-  UserOutlined,
-} from '@ant-design/icons'
+import { AppstoreOutlined, SwapOutlined, UserOutlined } from '@ant-design/icons'
 import { useGetProjectById } from '@hooks/useProject'
 import { Avatar, Button, Card, Col, Row, Timeline } from 'antd'
 import AOS from 'aos'
