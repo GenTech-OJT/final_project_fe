@@ -121,6 +121,7 @@ const CreateEmployee = () => {
     code: Yup.string().required(t('validate.code_validate')),
     phone: Yup.string()
       .required(t('validate.phone_validate'))
+      .matches(/^[0-9]+$/, t('validate.phone_matches'))
       .min(9, t('validate.phone_valid'))
       .max(10, t('validate.phone_valid')),
     identity: Yup.string()
@@ -149,7 +150,6 @@ const CreateEmployee = () => {
   const handleFormSubmit = async values => {
     const formattedValues = {
       ...values,
-      phone: '+84' + values.phone,
       dob: moment(values.dob.$d).format('YYYY-MM-DD'),
     }
 
@@ -266,7 +266,6 @@ const CreateEmployee = () => {
                 >
                   <Input
                     name="phone"
-                    type="number"
                     value={values.phone}
                     onChange={handleChange}
                     onBlur={handleBlur}

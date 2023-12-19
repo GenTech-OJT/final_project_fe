@@ -42,7 +42,9 @@
     "create_project_success": "Project created successfully",
     "create_project_fail": "Error creating project. Please try again!",
     "Update_project_success": "Project update successfully",
-    "Update_project_fail": "Error update project. Please try again!"
+    "Update_project_fail": "Error update project. Please try again!",
+    "Project_deleted_successfully": "Project deleted successfully",
+    "Project_deleted_fail": "Error deleting project. Please try again!"
   },
   "validate": {
     "name_validate": "Please input a valid name!",
@@ -166,6 +168,7 @@
     "active": "Active",
     "inactive": "Inactive",
     "is_manager": "Role",
+    "no_description": "No description",
     "genders": {
       "male": "Male",
       "female": "Female"
@@ -174,7 +177,8 @@
       "true": "Manager",
       "false": "Employee"
     },
-    "years": "years"
+    "years": "years",
+    "no_projects": "No projects assigned"
   },
   "project_details": {
     "project_name": "Project Name",

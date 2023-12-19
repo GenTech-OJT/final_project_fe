@@ -97,6 +97,13 @@ const EditEmployee = () => {
     forceUpdate()
   }, [forceUpdate])
 
+  let isManagerFormat
+  if (employee?.is_manager === true || employee?.is_manager === 'true') {
+    isManagerFormat = true
+  } else {
+    isManagerFormat = false
+  }
+
   const initialValues = {
     name: employee?.name,
     email: employee?.email,
@@ -107,7 +114,7 @@ const EditEmployee = () => {
 
     gender: employee?.gender,
     status: employee?.status,
-    is_manager: !!employee?.is_manager,
+    is_manager: isManagerFormat,
 
     position: employee?.position,
     manager: employee?.manager,

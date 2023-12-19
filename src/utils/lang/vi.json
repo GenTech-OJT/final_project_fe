@@ -42,7 +42,9 @@
     "create_project_success": "Tạo dự án thành công",
     "create_project_fail": "Lỗi khi tạo dự án. Vui lòng thử lại!",
     "Update_project_success": "Cập nhật thông tin dự án thành công",
-    "Update_project_fail": "Lỗi khi cập nhật thông tin dự án. Vui lòng thử lại!"
+    "Update_project_fail": "Lỗi khi cập nhật thông tin dự án. Vui lòng thử lại!",
+    "delete_project_success": "Xóa dự án thành công",
+    "delete_project_fail": "Lỗi khi xóa dự án. Vui lòng thử lại!"
   },
   "validate": {
     "name_validate": "Vui lòng nhập tên hợp lệ",
@@ -166,6 +168,7 @@
     "active": "Kích hoạt",
     "inactive": "Vô hiệu hóa",
     "is_manager": "Vai trò",
+    "no_description": "Không có mô tả",
     "genders": {
       "male": "Nam",
       "female": "Nữ"
@@ -174,7 +177,8 @@
       "true": "Quản lí",
       "false": "Nhân viên"
     },
-    "years": "năm"
+    "years": "năm",
+    "no_projects": "Không có dự án được phân công"
   },
   "project_details": {
     "project_name": "Tên dự án",
