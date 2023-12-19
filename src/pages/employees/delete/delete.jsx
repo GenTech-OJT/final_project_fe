@@ -45,8 +45,8 @@ const DeleteEmployee = ({ employeeId }) => {
         visible={isModalVisible}
         onOk={handleDelete}
         onCancel={handleCancel}
-        okText="Yes"
-        cancelText="No"
+        okText={t('message.yes')}
+        cancelText={t('message.no')}
       ></Modal>
     </>
   )
