@@ -17,7 +17,6 @@ import './Timeline.css'
 const TimeLineProject = () => {
   const { id } = useParams()
   const { data: project } = useGetProjectById(id)
-  const mode = useState('alternate')[0]
 
   const [reverse, setReverse] = useState(false)
 
@@ -115,7 +114,7 @@ const TimeLineProject = () => {
         padding: '16px',
       }}
     >
-      <Timeline reverse={reverse} mode={mode} items={timelineItems}>
+      <Timeline reverse={reverse} mode="alternate" items={timelineItems}>
         {/* Timeline receives items from timelineItems */}
       </Timeline>
 
