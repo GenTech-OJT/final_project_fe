@@ -93,7 +93,6 @@ const EmployeeDetail = () => {
   return (
     <div className="page-container">
       <Breadcrumb items={breadcrumbItems} />
-      <Title className="page-title">EMPLOYEE DETAIL</Title>
 
       <Tabs
         defaultActiveKey="1"
@@ -310,8 +309,8 @@ const EmployeeDetail = () => {
                         style={{ cursor: 'default' }}
                       >
                         {item.employees.map(employee => (
-                          <Tooltip title={employee.name} key={employee.id}>
-                            <Avatar src={employee.avatar} />
+                          <Tooltip title={employee?.name} key={employee?.id}>
+                            <Avatar src={employee?.avatar} />
                           </Tooltip>
                         ))}
                       </Avatar.Group>,
