@@ -141,8 +141,11 @@ const TimeLineProject = () => {
 }
 
 const generateEmployeeTimelineItems = (project, t) => {
-  const getRandomColor = () =>
-    `#${Math.floor(Math.random() * 16777215).toString(16)}`
+  const getRandomColor = () => {
+    const array = new Uint32Array(1)
+    window.crypto.getRandomValues(array)
+    return `#${(array[0] & 0xffffff).toString(16).padStart(6, '0')}`
+  }
   return project.employees
     ? project.employees.flatMap(employee => {
         const employeeIcon = (
