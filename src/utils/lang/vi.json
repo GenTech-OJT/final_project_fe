@@ -7,7 +7,8 @@
     "inactive": "Vô Hiệu Hóa",
     "login": "Đăng Nhập",
     "edit": "Cập nhật",
-    "create_project": "Tạo Dự Án"
+    "create_project": "Tạo Dự Án",
+    "export_csv": "Xuất CV"
   },
   "side_menu": {
     "project_management_label": "Dự án",
@@ -55,6 +56,7 @@
     "email_invalid": "Định dạng email không hợp lệ!",
     "password": "Vui lòng nhập mật khẩu của bạn!",
     "phone_validate": "Vui lòng nhập số điện thoại!",
+    "phone_matches": "Số điện thoại chỉ nên chứa các ký tự số!",
     "phone_valid": "Vui lòng nhập số điện thoại hợp lệ gồm 10 chữ số",
     "code_validate": "Vui lòng nhập mã!",
     "card_require": "Vui lòng nhập Chứng minh nhân dân!",

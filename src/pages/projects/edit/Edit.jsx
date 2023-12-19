@@ -21,7 +21,7 @@ import { showToast } from '@components/toast/ToastCustom'
 import Breadcrumb from '@components/admin/Breadcrumb/Breadcrumb'
 import { useUpdateProject, useGetProjectById } from '@hooks/useProject'
 import { useGetManagers } from '@hooks/useManager'
-import { useGetEmployees } from '@hooks/useEmployee'
+import { useGetEmployees, useGetEmployeeById } from '@hooks/useEmployee'
 import { useGetTechnicals } from '@hooks/useTechnical'
 import enUS from 'antd/locale/en_US'
 import viVN from 'antd/locale/vi_VN'
@@ -40,6 +40,8 @@ const EditProject = () => {
   })
   const { data: technicalsDB, isLoading: loadingTechnicalsDB } =
     useGetTechnicals()
+  const { data: managerDetail, isLoading: loadingManagerDetail } =
+    useGetEmployeeById(projectDetail?.manager)
   const { t } = useTranslation('translation')
   const [endDate, setEndDate] = useState()
   const [teamMembers, setTeamMembers] = useState([])
@@ -79,7 +81,8 @@ const EditProject = () => {
     loadingManager ||
     loadingEmployees ||
     loadingTechnicalsDB ||
-    loadingProject
+    loadingProject ||
+    loadingManagerDetail
   ) {
     return <Spin spinning={true} fullscreen />
   }
@@ -115,7 +118,7 @@ const EditProject = () => {
 
   const initialValues = {
     name: projectDetail.name,
-    manager: projectDetail.manager,
+    manager: managerDetail.name,
     employees: selectListTeamMembers,
     status: projectDetail.status,
     start_date: dayjs(projectDetail.start_date, dateFormat),

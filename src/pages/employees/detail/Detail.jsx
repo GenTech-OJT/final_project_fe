@@ -26,6 +26,7 @@ import moment from 'moment'
 import { useParams } from 'react-router-dom'
 import { CustomSearch } from '@components/custom/CustomTable'
 import './Detail.css'
+import ExportDocx from '@pages/CV/cv'
 
 const { TabPane } = Tabs
 
@@ -93,7 +94,7 @@ const EmployeeDetail = () => {
   return (
     <div className="page-container">
       <Breadcrumb items={breadcrumbItems} />
-
+      <ExportDocx />
       <Tabs
         defaultActiveKey="1"
         tabPosition="top"
