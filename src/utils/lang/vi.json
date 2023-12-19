@@ -143,7 +143,8 @@
     "technical_placeholder": "Lựa chọn công nghệ",
     "team_members_placeholder": "Lựa chọn thành viên",
     "joining_time": "Ngày Tham Gia",
-    "leaving_time": "Ngày Rời Đi"
+    "leaving_time": "Ngày Rời Đi",
+    "reverse": "Đảo Chiều"
   },
   "sign_in_page": {
     "enter_sign_in": "Vui lòng nhập thông tin chi tiết của bạn dưới đây để đăng nhập.",
@@ -204,7 +205,7 @@
   },
   "pagination": {
     "of": "trên",
-    "items": "nhân viên",
+    "items": "dữ liệu",
     "previous_page": "Trang Trước",
     "next_page": "Trang Sau",
     "pageSize": "Trang"

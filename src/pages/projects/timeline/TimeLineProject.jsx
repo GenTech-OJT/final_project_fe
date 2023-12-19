@@ -2,6 +2,7 @@
 import {
   AppstoreOutlined,
   MenuUnfoldOutlined,
+  SwapOutlined,
   UserOutlined,
 } from '@ant-design/icons'
 import { useGetProjectById } from '@hooks/useProject'
@@ -128,7 +129,7 @@ const TimeLineProject = () => {
         }}
         onClick={handleClick}
       >
-        {<MenuUnfoldOutlined />} REVERSE
+        {<SwapOutlined />} {t('project.reverse')}
       </Button>
     </Card>
   )

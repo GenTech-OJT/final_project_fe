@@ -25,6 +25,7 @@ export const useCreateEmployee = () => {
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.EMPLOYEES] })
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.DASHBOARD] })
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.MANAGERS] })
     },
     onError: (error, variables, context) => {},
     onSettled: (data, error, variables, context) => {},
@@ -55,6 +56,7 @@ export const useUpdateEmployee = () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEY.EMPLOYEES, variables.id],
       })
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.MANAGERS] })
     },
     onError: (error, variables, context) => {},
     onSettled: (data, error, variables, context) => {},
@@ -69,6 +71,7 @@ export const useDeleteEmployee = () => {
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.EMPLOYEES] })
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.DASHBOARD] })
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.MANAGERS] })
     },
     onError: (error, variables, context) => {},
     onSettled: (data, error, variables, context) => {},
