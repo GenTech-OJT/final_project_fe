@@ -7,7 +7,8 @@
     "inactive": "Inactive",
     "login": "Log in",
     "edit": "Update",
-    "create_project": "Create Project"
+    "create_project": "Create Project",
+    "export_csv": "Export CV"
   },
   "side_menu": {
     "project_management_label": "Projects",
@@ -57,6 +58,7 @@
     "email_invalid": "Invalid email format!",
     "password": "Please input your password!",
     "phone_validate": "Please input phone number!",
+    "phone_matches": "Phone number should only contain numeric characters!",
     "phone_valid": "Please enter a valid 10-digit phone number!",
     "code_validate": "Please input code!",
     "card_require": "Please input the Citizen Identity Card!",
@@ -143,7 +145,8 @@
     "technical_placeholder": "Select technical",
     "team_members_placeholder": "Select team member",
     "joining_time": "Joining Time",
-    "leaving_time": "Leaving Time"
+    "leaving_time": "Leaving Time",
+    "reverse": "REVERSE"
   },
   "sign_in_page": {
     "enter_sign_in": "Please enter your details below to sign in.",
