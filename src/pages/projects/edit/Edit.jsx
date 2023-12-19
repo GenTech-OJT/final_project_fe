@@ -41,8 +41,6 @@ const EditProject = () => {
   })
   const { data: technicalsDB, isLoading: loadingTechnicalsDB } =
     useGetTechnicals()
-  const { data: managerDetail, isLoading: loadingManagerDetail } =
-    useGetEmployeeById(projectDetail?.manager)
   const { t } = useTranslation('translation')
   const [endDate, setEndDate] = useState()
   const [teamMembers, setTeamMembers] = useState([])
@@ -82,8 +80,7 @@ const EditProject = () => {
     loadingManager ||
     loadingEmployees ||
     loadingTechnicalsDB ||
-    loadingProject ||
-    loadingManagerDetail
+    loadingProject
   ) {
     return <Spin spinning={true} fullscreen />
   }
@@ -119,7 +116,7 @@ const EditProject = () => {
 
   const initialValues = {
     name: projectDetail.name,
-    manager: managerDetail.name,
+    manager: projectDetail.manager,
     employees: selectListTeamMembers,
     status: projectDetail.status,
     start_date: dayjs(projectDetail.start_date, dateFormat),
