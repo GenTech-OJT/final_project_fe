@@ -300,8 +300,8 @@ const EmployeeDetail = () => {
           </Row>
           <Row gutter={[16, 16]}>
             {dataProject.length > 0 ? (
-              dataProject.map((item, index) => (
-                <Col xs={24} sm={12} md={8} lg={6} key={index}>
+              dataProject.map(item => (
+                <Col xs={24} sm={12} md={8} lg={6} key={item.id}>
                   <Card
                     actions={[
                       <Avatar.Group
