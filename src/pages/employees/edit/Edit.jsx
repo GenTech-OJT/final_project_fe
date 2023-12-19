@@ -48,6 +48,7 @@ const EditEmployee = () => {
   const [datePickerLocale, setDatePickerLocale] = useState(enUS)
   const { data: positions } = useGetPositions()
   const { data: managers } = useGetManagers()
+  const [filteredManagers, setFilteredManagers] = useState([])
 
   const { mutateAsync: updateEmployeeApi, isPending } = useUpdateEmployee()
   const forceUpdate = useForceUpdate()
@@ -69,7 +70,15 @@ const EditEmployee = () => {
   } else {
     isManagerFormat = false
   }
+  useEffect(() => {
+    const filteredList = managers?.filter(
+      manager => manager.manager !== employee?.manager?.id
+    )
+    // console.log(managers)
+    // console.log(employee?.manager?.id)
 
+    setFilteredManagers(filteredList)
+  }, [managers, employee?.manager?.id])
   const initialValues = {
     name: employee?.name,
     email: employee?.email,
@@ -83,7 +92,7 @@ const EditEmployee = () => {
     is_manager: isManagerFormat,
 
     position: employee?.position,
-    manager: employee?.manager?.id,
+    manager: employee?.manager?.name || employee?.manager?.id || '',
     skills: employee?.skills?.map(skill => ({
       skill: skill.name,
       experience: skill.year,
@@ -145,6 +154,9 @@ const EditEmployee = () => {
       ...values,
 
       dob: values.dob.format('YYYY-MM-DD'),
+      manager:
+        managers.find(manager => manager.name === values.manager)?.id ||
+        values.manager,
     }
     const formData = new FormData()
     Object.entries(formattedValues).forEach(([key, value]) => {
@@ -440,9 +452,6 @@ const EditEmployee = () => {
                         help={
                           errors.manager && touched.manager && errors.manager
                         }
-                        style={{
-                          display: values.is_manager ? 'none' : 'block',
-                        }}
                       >
                         <Select
                           name="manager"
@@ -452,21 +461,11 @@ const EditEmployee = () => {
                               description={t('employee.no_data')}
                             />
                           }
-                          onChange={value => {
-                            setFieldValue('manager', value)
-                            // Kiểm tra nếu người dùng chọn Manager thì ẩn trường is_manager
-                            if (value && value === 'manager_id') {
-                              setFieldValue('is_manager', false)
-                            }
-                          }}
+                          onChange={value => setFieldValue('manager', value)}
                           onBlur={handleBlur}
-                          value={values.manager} // Update this line to use form values
-                          disabled={values.is_manager}
+                          value={values.manager}
                         >
-                          <Select.Option key="none" value={null}>
-                            {t('employee.none_of_these')}
-                          </Select.Option>
-                          {managers?.map(m => (
+                          {filteredManagers?.map(m => (
                             <Select.Option key={m.id} value={m.id}>
                               {m.name}
                             </Select.Option>
@@ -604,21 +603,9 @@ const EditEmployee = () => {
               <Form.Item label={t('employee.is_manager')} name="is_manager">
                 <Checkbox
                   name="is_manager"
-                  onChange={e => {
-                    const checked = e.target.checked
-                    setFieldValue('is_manager', checked)
-
-                    // Nếu is_manager được chọn, set giá trị của manager về null hoặc giá trị khác thích hợp
-                    if (checked) {
-                      setFieldValue('manager', null) // hoặc set giá trị khác như ''
-                    }
-                  }}
+                  onChange={e => setFieldValue('is_manager', e.target.checked)}
                   onBlur={handleBlur}
-                  checked={
-                    values.is_manager ||
-                    (values.manager && values.manager === 'manager_id')
-                  }
-                  disabled={values.manager && values.manager === 'manager_id'}
+                  checked={values.is_manager || false}
                 ></Checkbox>
               </Form.Item>
 
