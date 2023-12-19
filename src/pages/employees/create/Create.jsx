@@ -423,7 +423,7 @@ const CreateEmployee = () => {
                         defaultValue={values.manager}
                       >
                         {managers?.map(m => (
-                          <Select.Option key={m.id} value={m.name}>
+                          <Select.Option key={m.id} value={m.id}>
                             {m.name}
                           </Select.Option>
                         ))}
