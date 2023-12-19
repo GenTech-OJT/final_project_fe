@@ -99,7 +99,7 @@ const ProjectList = () => {
       key: 'manager',
       sorter: true,
       width: '170px',
-      render: manager => manager?.name || 'N/A',
+      render: manager => manager?.name,
     },
     {
       title: t('project_details.team_member'),

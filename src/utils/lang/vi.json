@@ -92,7 +92,8 @@
   "title": {
     "create_employee": "TẠO NHÂN VIÊN",
     "edit_employee": "CHỈNH SỬA NHÂN VIÊN",
-    "sign_in": "ĐĂNG NHẬP"
+    "sign_in": "ĐĂNG NHẬP",
+    "timeline": "Mốc thời gian dự án"
   },
   "employee": {
     "name_employee": "Họ Và Tên",
@@ -140,7 +141,9 @@
     "cancelled_status": "Đã hủy",
     "done_status": "Đã hoàn thành",
     "technical_placeholder": "Lựa chọn công nghệ",
-    "team_members_placeholder": "Lựa chọn thành viên"
+    "team_members_placeholder": "Lựa chọn thành viên",
+    "joining_time": "Ngày Tham Gia",
+    "leaving_time": "Ngày Rời Đi"
   },
   "sign_in_page": {
     "enter_sign_in": "Vui lòng nhập thông tin chi tiết của bạn dưới đây để đăng nhập.",
@@ -170,6 +173,7 @@
     "active": "Kích hoạt",
     "inactive": "Vô hiệu hóa",
     "is_manager": "Vai trò",
+    "no_description": "Không có mô tả",
     "genders": {
       "male": "Nam",
       "female": "Nữ"
@@ -178,7 +182,8 @@
       "true": "Quản lí",
       "false": "Nhân viên"
     },
-    "years": "năm"
+    "years": "năm",
+    "no_projects": "Không có dự án được phân công"
   },
   "project_details": {
     "project_name": "Tên dự án",

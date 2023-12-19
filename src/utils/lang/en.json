@@ -92,7 +92,8 @@
   "title": {
     "create_employee": "CREATE EMPLOYEE",
     "edit_employee": "EDIT EMPLOYEE",
-    "sign_in": "SIGN IN"
+    "sign_in": "SIGN IN",
+    "timeline": "Project Timeline"
   },
   "employee": {
     "name_employee": "Name",
@@ -140,7 +141,9 @@
     "cancelled_status": "Cancelled",
     "done_status": "Done",
     "technical_placeholder": "Select technical",
-    "team_members_placeholder": "Select team member"
+    "team_members_placeholder": "Select team member",
+    "joining_time": "Joining Time",
+    "leaving_time": "Leaving Time"
   },
   "sign_in_page": {
     "enter_sign_in": "Please enter your details below to sign in.",
@@ -170,6 +173,7 @@
     "active": "Active",
     "inactive": "Inactive",
     "is_manager": "Role",
+    "no_description": "No description",
     "genders": {
       "male": "Male",
       "female": "Female"
@@ -178,7 +182,8 @@
       "true": "Manager",
       "false": "Employee"
     },
-    "years": "years"
+    "years": "years",
+    "no_projects": "No projects assigned"
   },
   "project_details": {
     "project_name": "Project Name",
