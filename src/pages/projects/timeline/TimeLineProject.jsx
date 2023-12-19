@@ -63,7 +63,7 @@ const TimeLineProject = () => {
           date: moment(project.start_date),
           dot: <AppstoreOutlined style={{ fontSize: '20px', color: 'blue' }} />,
         },
-        ...generateEmployeeTimelineItems(project),
+        ...generateEmployeeTimelineItems(project, t),
         {
           key: 'end',
           label: (
@@ -128,58 +128,56 @@ const TimeLineProject = () => {
   )
 }
 
-const generateEmployeeTimelineItems = project => {
-  const { t } = useTranslation('translation')
+const generateEmployeeTimelineItems = (project, t) => {
   const getRandomColor = () =>
     `#${Math.floor(Math.random() * 16777215).toString(16)}`
-
   return project.employees
     ? project.employees.flatMap(employee => {
         const employeeIcon = (
           <UserOutlined style={{ fontSize: '20px', color: getRandomColor() }} />
         )
         return employee.periods
-          ? employee.periods.map(period => ({
-              key: `${employee.id}-${period.joining_time}`,
-              label: (
-                <p style={{ marginLeft: '15px', marginRight: '15px' }}>
-                  {getEmployeeName(employee.name)}
-                </p>
-              ),
-              children: (
-                <Card
-                  style={{
-                    height: 'auto', // Chỉnh chiều cao tự động để thẻ phù hợp với nội dung
-                    width: '90%', // Điều chỉnh chiều rộng tùy thuộc vào thiết bị
-                    maxWidth: '600px',
-                    margin: 'auto',
-                    marginTop: '20px',
-                    borderRadius: '20px',
-                    boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)',
-                    background: 'rgb(240, 240, 255)',
-                  }}
-                  data-aos="zoom-in-down"
-                  data-aos-duration="1500"
-                >
-                  <Row gutter={[16, 16]}>
-                    <Col span={24}>
-                      <p style={{ margin: '7px 0', textAlign: 'center  ' }}>
-                        {t('project.joining_time')}: &nbsp;
-                        {moment(period.joining_time).format('DD/MM/YYYY')}
-                      </p>
-                      <p style={{ margin: '7px 0', textAlign: 'center  ' }}>
-                        {t('project.leaving_time')}: &nbsp;
-                        {moment(period.leaving_time || project.end_date).format(
-                          'DD/MM/YYYY'
+          ? employee.periods.map(period => {
+              const leavingTime = period.leaving_time
+                ? moment(period.leaving_time).format('DD/MM/YYYY')
+                : null
+              return {
+                key: `${employee.id}-${period.joining_time}`,
+                label: `${getEmployeeName(employee.name)}`,
+                children: (
+                  <Card
+                    style={{
+                      height: 'auto',
+                      width: '90%',
+                      maxWidth: '600px',
+                      margin: 'auto',
+                      marginTop: '20px',
+                      borderRadius: '20px',
+                      boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)',
+                      background: 'rgb(240, 240, 255)',
+                    }}
+                    data-aos="zoom-in-down"
+                    data-aos-duration="1500"
+                  >
+                    <Row gutter={[16, 16]}>
+                      <Col span={24}>
+                        <p style={{ margin: '7px 0', textAlign: 'center  ' }}>
+                          {t('project.joining_time')}: &nbsp;
+                          {moment(period.joining_time).format('DD/MM/YYYY')}
+                        </p>
+                        {leavingTime !== null && ( // Kiểm tra leavingTime khác null
+                          <p style={{ margin: '7px 0', textAlign: 'center  ' }}>
+                            {t('project.leaving_time')}: &nbsp; {leavingTime}
+                          </p>
                         )}
-                      </p>
-                    </Col>
-                  </Row>
-                </Card>
-              ),
-              date: moment(period.joining_time),
-              dot: employeeIcon,
-            }))
+                      </Col>
+                    </Row>
+                  </Card>
+                ),
+                date: moment(period.joining_time),
+                dot: employeeIcon,
+              }
+            })
           : []
       })
     : []
