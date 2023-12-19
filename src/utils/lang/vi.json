@@ -45,7 +45,9 @@
     "Update_project_success": "Cập nhật thông tin dự án thành công",
     "Update_project_fail": "Lỗi khi cập nhật thông tin dự án. Vui lòng thử lại!",
     "delete_project_success": "Xóa dự án thành công",
-    "delete_project_fail": "Lỗi khi xóa dự án. Vui lòng thử lại!"
+    "delete_project_fail": "Lỗi khi xóa dự án. Vui lòng thử lại!",
+    "yes": "Có",
+    "no": "Không"
   },
   "validate": {
     "name_validate": "Vui lòng nhập tên hợp lệ",

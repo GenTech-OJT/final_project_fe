@@ -45,7 +45,9 @@
     "Update_project_success": "Project update successfully",
     "Update_project_fail": "Error update project. Please try again!",
     "Project_deleted_successfully": "Project deleted successfully",
-    "Project_deleted_fail": "Error deleting project. Please try again!"
+    "Project_deleted_fail": "Error deleting project. Please try again!",
+    "yes": "Yes",
+    "no": "No"
   },
   "validate": {
     "name_validate": "Please input a valid name!",
