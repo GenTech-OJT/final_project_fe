@@ -110,10 +110,34 @@
   margin: 5px 10px;
 }
 
-.pie-chart-container {
-  width: 100%;
-  max-width: 400px;
-  margin: 0 auto;
+.pro_description,
+.pro_title {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.pro_description {
+  -webkit-line-clamp: 3;
+}
+
+.pro_title {
+  -webkit-line-clamp: 1;
+}
+
+.pro_date {
+  cursor: default;
+}
+.pro_date:hover {
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.pro_eye {
+  color: rgba(0, 0, 0, 0.45);
+  font-size: 16px;
+}
+.pro_eye:hover {
+  color: #4096ff !important;
 }
 
 @media only screen and (max-width: 992px) {

@@ -6,7 +6,7 @@
     "active": "Active",
     "inactive": "Inactive",
     "login": "Log in",
-    "edit": "Edit",
+    "edit": "Update",
     "create_project": "Create Project"
   },
   "side_menu": {
@@ -40,7 +40,11 @@
     "Employee_deleted_fail": "Error deleting employee. Please try again!",
     "edit_employee_success": "Update employee successfully",
     "create_project_success": "Project created successfully",
-    "create_project_fail": "Error creating project. Please try again!"
+    "create_project_fail": "Error creating project. Please try again!",
+    "Update_project_success": "Project update successfully",
+    "Update_project_fail": "Error update project. Please try again!",
+    "Project_deleted_successfully": "Project deleted successfully",
+    "Project_deleted_fail": "Error deleting project. Please try again!"
   },
   "validate": {
     "name_validate": "Please input a valid name!",
@@ -167,6 +171,7 @@
     "active": "Active",
     "inactive": "Inactive",
     "is_manager": "Role",
+    "no_description": "No description",
     "genders": {
       "male": "Male",
       "female": "Female"
@@ -175,7 +180,8 @@
       "true": "Manager",
       "false": "Employee"
     },
-    "years": "years"
+    "years": "years",
+    "no_projects": "No projects assigned"
   },
   "project_details": {
     "project_name": "Project Name",
@@ -190,7 +196,9 @@
     "skills": "Skills",
     "employees": "Employees",
     "position": "Position",
-    "project": "Project"
+    "project": "Project",
+    "note_piechart": "Pie Chart about Skills of employees",
+    "note_barchart": "Bar Chart about Projects in stages every 2 months"
   },
   "pagination": {
     "of": "of",

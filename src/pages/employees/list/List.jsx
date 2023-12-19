@@ -106,12 +106,12 @@ const EmployeeList = () => {
   }
 
   const convertBooleanToString = isManager => {
-    if (isManager === 'true') {
+    if (isManager === 'true' || isManager === true) {
       return {
         color: 'success',
         label: t('employee.managers.true'),
       }
-    } else if (isManager === 'false') {
+    } else if (isManager === 'false' || isManager === false) {
       return {
         color: 'processing',
         label: t('employee.managers.false'),

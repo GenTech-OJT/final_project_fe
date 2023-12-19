@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import { EditOutlined, EyeOutlined } from '@ant-design/icons'
+import { DeleteOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons'
 import { CustomSearch, CustomTable } from '@components/custom/CustomTable'
 import { Avatar, Button, Empty, Tooltip } from 'antd'
 import { useState } from 'react'
@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router'
 import Breadcrumb from '../../../components/admin/Breadcrumb/Breadcrumb'
 import '../../../components/custom/CustomTable.css'
 import { useGetProjects } from '@hooks/useProject'
-
+import DeleteProject from '../delete/Delete'
 const ProjectList = () => {
   const navigate = useNavigate()
   const { t } = useTranslation('translation')
@@ -81,6 +81,7 @@ const ProjectList = () => {
       align: 'center',
       dataIndex: 'id',
       key: 'id',
+      width: 100,
       sorter: true,
     },
     {
@@ -88,6 +89,7 @@ const ProjectList = () => {
       align: 'center',
       dataIndex: 'name',
       key: 'name',
+      width: 150,
       sorter: true,
     },
     {
@@ -96,11 +98,14 @@ const ProjectList = () => {
       dataIndex: 'manager',
       key: 'manager',
       sorter: true,
+      width: '170px',
+      render: manager => manager?.name || 'N/A',
     },
     {
       title: t('project_details.team_member'),
       dataIndex: 'employees',
       key: 'employees',
+      width: 140,
       render: employees => (
         <Avatar.Group maxCount={2} size="small">
           {employees.map(employee => (
@@ -143,19 +148,13 @@ const ProjectList = () => {
             style={{ marginRight: 8 }}
             icon={<EditOutlined />}
           />
-          {/* <DeleteEmployee key={`delete-${record.id}`}
-            onClick={() => deleteRecord(record.id)}
-            style={{ marginRight: 8 }}
-            employeeId={record.id}
-            icon={<DeleteOutlined />} /> */}
-
-          {/* <DeleteEmployee
+          <DeleteProject
             key={`delete-${record.id}`}
             onClick={() => deleteRecord(record.id)}
             style={{ marginRight: 8 }}
             icon={<DeleteOutlined />}
-            employeeId={record.id}
-          /> */}
+            projectId={record.id}
+          />
         </>
       ),
     },

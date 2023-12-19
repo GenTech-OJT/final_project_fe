@@ -16,6 +16,7 @@ const CustomTable = ({
 }) => {
   return (
     <Table
+      className="table-header-responsive"
       columns={columns}
       dataSource={data}
       bordered={false}

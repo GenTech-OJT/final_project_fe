@@ -65,3 +65,17 @@ export const deleteEmployeeApi = async id => {
 
   return response.data
 }
+
+export const getProjectsByEmployeeIdApi = async (id, searchText) => {
+  const response = await axios.get(`${API_URL.EMPLOYEES}/${id}/projects`, {
+    params: {
+      q: searchText,
+    },
+  })
+
+  if (response.status !== 200) {
+    throw new Error(`HTTP error! Status: ${response.status}`)
+  }
+
+  return response.data
+}
