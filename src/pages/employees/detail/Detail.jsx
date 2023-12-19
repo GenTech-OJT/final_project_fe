@@ -145,9 +145,10 @@ const EmployeeDetail = () => {
                     {' : '}
                   </p>
                   <p className="employee_info">
-                    {capitalizeFirstLetter(
-                      displayValue(employee_details.manager.name)
-                    )}
+                    {employee_details.manager &&
+                      capitalizeFirstLetter(
+                        displayValue(employee_details.manager.name)
+                      )}
                   </p>
                 </Row>
                 <Row style={{ marginBottom: '5px' }}>
