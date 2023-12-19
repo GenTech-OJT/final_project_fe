@@ -217,6 +217,7 @@ const EmployeeList = () => {
 
   return (
     <div className="employeeLayout">
+      ;
       <Breadcrumb items={breadcrumbItems} />
       <br />
       <Button
