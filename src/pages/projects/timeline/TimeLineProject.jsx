@@ -5,7 +5,7 @@ import {
   UserOutlined,
 } from '@ant-design/icons'
 import { useGetProjectById } from '@hooks/useProject'
-import { Button, Card, Col, Row, Timeline } from 'antd'
+import { Avatar, Button, Card, Col, Row, Timeline } from 'antd'
 import AOS from 'aos'
 import 'aos/dist/aos.css' // Import CSS của AOS
 import moment from 'moment'
@@ -194,7 +194,7 @@ const generateEmployeeTimelineItems = (project, t) => {
                   </Card>
                 ),
                 date: moment(period.joining_time),
-                dot: employeeIcon,
+                dot: <Avatar src={employee?.avatar} /> ?? employeeIcon,
               }
             })
           : []
