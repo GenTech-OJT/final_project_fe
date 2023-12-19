@@ -43,9 +43,6 @@ const EditProject = () => {
   const { t } = useTranslation('translation')
   const [endDate, setEndDate] = useState()
   const [teamMembers, setTeamMembers] = useState([])
-  const [removeTeamMembers, setRemoveTeamMembers] = useState([])
-  const [newTeamMembers, setNewTeamMembers] = useState([])
-  const [listUpdateTeamMembers, setListUpdateTeamMembers] = useState([])
   const [technicals, setTechnicals] = useState([])
   const [datePickerLocale, setDatePickerLocale] = useState(enUS)
   const navigate = useNavigate()
@@ -66,97 +63,17 @@ const EditProject = () => {
 
   useEffect(() => {
     if (!loadingProject) {
-      const formattedTeamMembers = projectDetail.employees.map(employee => ({
-        id: employee.id,
-        periods: employee.periods,
-      }))
+      const selectListTeamMembers =
+        projectDetail.employees
+          ?.filter(e =>
+            e?.periods?.some(period => period.leaving_time === null)
+          )
+          .map(e => e) || []
 
-      setTeamMembers(formattedTeamMembers)
+      setTeamMembers(selectListTeamMembers)
       setTechnicals(projectDetail.technical)
     }
   }, [loadingManager, loadingEmployees, loadingTechnicalsDB, loadingProject])
-
-  useEffect(() => {
-    const combinedListUpdateTeamMembers = [
-      ...teamMembers,
-      ...removeTeamMembers,
-      ...newTeamMembers,
-    ]
-
-    // Remove duplicates based on member IDs
-    const uniqueListUpdateTeamMembers = Array.from(
-      new Set(combinedListUpdateTeamMembers.map(member => member.id))
-    ).map(id => {
-      return combinedListUpdateTeamMembers.find(member => member.id === id)
-    })
-
-    setListUpdateTeamMembers(uniqueListUpdateTeamMembers)
-  }, [teamMembers, removeTeamMembers, newTeamMembers])
-
-  const handleSelectChange = (selectedValues, option) => {
-    const selectedMembers = employees?.data.filter(employee =>
-      selectedValues.includes(employee.id)
-    )
-
-    // Find members in teamMembers but not in newTeamMembers
-    const membersToRemove = teamMembers.filter(
-      member => !selectedValues.includes(member.id)
-    )
-
-    // Find members in newTeamMembers but not in teamMembers
-    const newMembersToAdd = selectedMembers.filter(
-      newMember => !teamMembers.some(member => member.id === newMember.id)
-    )
-
-    const formattedNewMembers = newMembersToAdd.map(member => ({
-      id: member.id,
-      periods: [
-        {
-          joining_time: moment().format('YYYY-MM-DD HH:mm:ss'),
-          leaving_time: null,
-        },
-      ],
-    }))
-
-    setNewTeamMembers(formattedNewMembers)
-
-    const formattedRemoveMembers = membersToRemove.map(member => {
-      const lastPeriodIndex = member.periods.length - 1
-
-      // Check if there are periods for the member
-      if (lastPeriodIndex >= 0) {
-        const modifiedPeriods = member.periods.map((period, index) => {
-          if (index === lastPeriodIndex) {
-            // Modify the last period to set leaving_time to null
-            return {
-              joining_time: period.joining_time,
-              leaving_time: moment().format('YYYY-MM-DD HH:mm:ss'),
-            }
-          } else {
-            return period
-          }
-        })
-
-        return {
-          id: member.id,
-          periods: modifiedPeriods,
-        }
-      } else {
-        // If no periods, return as is
-        return member
-      }
-    })
-
-    setRemoveTeamMembers(prevRemoveTeamMembers =>
-      prevRemoveTeamMembers.concat(formattedRemoveMembers)
-    )
-
-    setTeamMembers(prevTeamMembers =>
-      prevTeamMembers.filter(member => selectedValues.includes(member.id))
-    )
-
-    setFieldValue('employees', selectedMembers)
-  }
 
   if (
     loadingManager ||
@@ -179,9 +96,9 @@ const EditProject = () => {
       route: '/admin/projects',
     },
     {
-      key: 'create',
-      title: t('breadcrumbs.create'),
-      route: `/admin/employees/create`,
+      key: 'edit',
+      title: t('breadcrumbs.edit'),
+      route: `/admin/projects/edit/${id}`,
     },
   ]
 
@@ -226,7 +143,9 @@ const EditProject = () => {
   const handleFormSubmit = async values => {
     const formattedValues = {
       ...values,
-      employees: listUpdateTeamMembers,
+      employees: teamMembers.map(m => ({
+        id: m.id,
+      })),
       technical: technicals.map(t => ({
         id: t.id,
         name: t.name,
@@ -408,7 +327,13 @@ const EditProject = () => {
                     maxTagCount={3}
                     defaultValue={values.employees}
                     onBlur={handleBlur}
-                    onChange={handleSelectChange}
+                    onChange={selectedValues => {
+                      const selectedMembers = employees?.data.filter(employee =>
+                        selectedValues.includes(employee.id)
+                      )
+                      setTeamMembers(selectedMembers)
+                      setFieldValue('employees', selectedMembers)
+                    }}
                   >
                     {employees?.data?.map(e => (
                       <Select.Option key={e.id} value={e.id}>

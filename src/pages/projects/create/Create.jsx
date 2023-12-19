@@ -116,12 +116,6 @@ const CreateProject = () => {
       ...values,
       employees: teamMembers.map(m => ({
         id: m.id,
-        periods: [
-          {
-            joining_time: moment().format('YYYY-MM-DD HH:mm:ss'),
-            leaving_time: null,
-          },
-        ],
       })),
       technical: technicals.map(t => ({
         id: t.id,
