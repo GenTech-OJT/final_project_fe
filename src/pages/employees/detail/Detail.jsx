@@ -4,7 +4,6 @@ import {
   Col,
   Descriptions,
   Flex,
-  List,
   Row,
   Space,
   Tabs,
@@ -13,16 +12,18 @@ import {
   Typography,
 } from 'antd'
 import Title from 'antd/es/skeleton/Title'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { EyeOutlined } from '@ant-design/icons'
+import { CalendarOutlined, EyeOutlined } from '@ant-design/icons'
 import Breadcrumb from '@components/admin/Breadcrumb/Breadcrumb'
 import {
   useGetEmployeeById,
   useGetProjectsByEmployeeId,
 } from '@hooks/useEmployee'
+import moment from 'moment'
 import { useParams } from 'react-router-dom'
+import { CustomSearch } from '../../../components/custom/CustomTable'
 import './Detail.css'
 
 const { TabPane } = Tabs
@@ -37,6 +38,28 @@ const EmployeeDetail = () => {
     useGetProjectsByEmployeeId(id, searchText)
 
   const { t } = useTranslation('translation')
+
+  const [activeTab, setActiveTab] = useState('1') // State to keep track of active tab
+
+  useEffect(() => {
+    const storedActiveTab = localStorage.getItem('activeTab')
+    if (storedActiveTab) {
+      setActiveTab(storedActiveTab)
+    }
+  }, [])
+
+  const handleTabChange = (key, e) => {
+    e.preventDefault()
+    setActiveTab(key)
+    // Store the active tab in localStorage
+    localStorage.setItem('activeTab', key)
+  }
+
+  const handleChange = e => {
+    e.preventDefault()
+    const value = e.target.value
+    setSearchText(value)
+  }
 
   const getStatusDotColor = () => {
     return employee_details.status === 'active' ? 'green' : 'red'
@@ -94,6 +117,8 @@ const EmployeeDetail = () => {
       <Title className="page-title">EMPLOYEE DETAIL</Title>
 
       <Tabs
+        activeKey={activeTab}
+        onChange={handleTabChange}
         defaultActiveKey="1"
         tabPosition="top"
         animated={true}
@@ -292,19 +317,28 @@ const EmployeeDetail = () => {
         {/* next page */}
 
         <TabPane tab={<span>{t('employee_details.project')}</span>} key="3">
+          <CustomSearch handleChange={handleChange} />
           <Row gutter={[16, 16]}>
             {dataProject.map((item, index) => (
               <Col xs={24} sm={12} md={8} lg={6} key={index}>
                 <Card
                   actions={[
-                    <Avatar.Group maxCount={2} key="avatar">
+                    <Avatar.Group
+                      maxCount={2}
+                      key="avatar"
+                      style={{ cursor: 'default' }}
+                    >
                       {item.employees.map(employee => (
                         <Tooltip title={employee.name} key={employee.id}>
                           <Avatar src={employee.avatar} />
                         </Tooltip>
                       ))}
                     </Avatar.Group>,
-                    <span key="date">{item.start_date}</span>,
+                    <span key={'date'} className="pro_date">
+                      <CalendarOutlined />{' '}
+                      {moment(item.start_date).format('YYYY-MM-DD')}
+                    </span>,
+                    // <span key="date">{item.start_date}</span>,
                   ]}
                 >
                   <Row gutter={[16, 16]}>
@@ -317,13 +351,33 @@ const EmployeeDetail = () => {
                         }}
                       >
                         <Tag color="error">{item.currentEmployee.position}</Tag>
-                        <Typography.Text ellipsis>...</Typography.Text>
+                        {/* <Typography.Text ellipsis>...</Typography.Text> */}
+                        <a href="#" className="pro_eye">
+                          <EyeOutlined />
+                        </a>
                       </Space>
                     </Col>
                     <Col span={24}>
-                      <Typography.Title level={4}>{item.name}</Typography.Title>
+                      <Typography.Title level={4} className="pro_title">
+                        {item.name}
+                      </Typography.Title>
+                      {item.status === 'Pending' && (
+                        <Tag color="#faad14">Pending</Tag>
+                      )}
+                      {item.status === 'In Progress' && (
+                        <Tag color="#1677ff">In Progress</Tag>
+                      )}
+                      {item.status === 'Cancelled' && (
+                        <Tag color="#ff4d4f">Cancelled</Tag>
+                      )}
+                      {item.status === 'Done' && (
+                        <Tag color="#52c41a">Done</Tag>
+                      )}
                     </Col>
-                    <Col span={24}>{item.description}</Col>
+
+                    <Col span={24} className="pro_description">
+                      {item.description}
+                    </Col>
                     <Col span={24}></Col>
                   </Row>
                 </Card>
