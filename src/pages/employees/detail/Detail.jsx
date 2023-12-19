@@ -1,11 +1,9 @@
 import {
   Avatar,
-  Button,
   Card,
   Col,
   Descriptions,
   Flex,
-  Input,
   List,
   Row,
   Tabs,
@@ -16,15 +14,14 @@ import Title from 'antd/es/skeleton/Title'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { useParams } from 'react-router-dom'
-import Chartpie from '@components/Chartpie/Chartpie'
+import { EyeOutlined } from '@ant-design/icons'
 import Breadcrumb from '@components/admin/Breadcrumb/Breadcrumb'
 import {
   useGetEmployeeById,
   useGetProjectsByEmployeeId,
 } from '@hooks/useEmployee'
+import { useParams } from 'react-router-dom'
 import './Detail.css'
-import { EyeOutlined } from '@ant-design/icons'
 
 const { TabPane } = Tabs
 
@@ -47,53 +44,6 @@ const EmployeeDetail = () => {
     return string.charAt(0).toUpperCase() + string.slice(1)
   }
 
-  // Hard-coded data for demonstration purposes
-  const hardCodedData = [
-    {
-      id: 'pro1',
-      name: 'Project 01',
-      description: 'A dedicated software engineer',
-      team_members: [
-        {
-          id: 'emp1',
-          name: 'Vy Nguyen',
-          position: 'Software Engineer',
-        },
-      ],
-      manager: 'John Doe',
-      start_date: '1990-01-01',
-      end_date: '1990-12-01',
-      status: 'In progress',
-      technicals: [
-        {
-          name: 'ReactJS',
-        },
-      ],
-    },
-    {
-      id: 'pro2',
-      name: 'Project 02',
-      description: 'This project is a project',
-      team_members: [
-        {
-          id: 'emp1',
-          name: 'Vy Nguyen',
-          position: 'Software Engineer',
-        },
-      ],
-      manager: 'Minh Toan',
-      start_date: '1993-01-01',
-      end_date: '1993-12-01',
-      status: 'Done',
-      technicals: [
-        {
-          name: 'Javascript',
-        },
-      ],
-    },
-    // Add more data as needed
-  ]
-
   const breadcrumbItems = [
     {
       key: 'dashboard',
@@ -112,28 +62,6 @@ const EmployeeDetail = () => {
     },
   ]
 
-  console.log(dataProject, 'dataProject')
-
-  // Function to generate data for Chartpie from employee skills
-  const generateChartData = skills => {
-    const labels = skills.map(skill => {
-      const skillName = skill.name || '' // Default to an empty string if name is null or undefined
-      return `${skillName.charAt(0).toUpperCase()}${skillName.slice(1)} - ${
-        skill.year
-      } ${t('employee_details.years')}`
-    })
-
-    const data = skills.map(skill => skill.year)
-
-    return {
-      labels,
-      datasets: [
-        {
-          data,
-        },
-      ],
-    }
-  }
   const displayValue = value => {
     return value !== null && value !== undefined ? value : ''
   }
@@ -141,11 +69,26 @@ const EmployeeDetail = () => {
   if (isLoading || !employee_details || isLoadingProject) {
     return <div>Loading...</div>
   }
+  // Function to get vibrant colors
+  const getTagColor = index => {
+    const colors = [
+      '#2a9d8f',
+      '#6A8EAE',
+      '#5a189a',
+      '#d90429',
+      '#BFEBE5',
+      '#CFCFCF',
+      '#DFDFDF',
+      '#EFEFEF',
+      '#F9F9F9',
+      '#FFFFFF',
+    ]
+    return colors[index % colors.length]
+  }
 
   return (
     <div className="page-container">
       <Breadcrumb items={breadcrumbItems} />
-      <h2>{t('employee_details.title')}</h2>
       <Title className="page-title">EMPLOYEE DETAIL</Title>
 
       <Tabs
@@ -156,15 +99,12 @@ const EmployeeDetail = () => {
       >
         <TabPane tab={<span> {t('employee_details.profile')}</span>} key="1">
           {/* Content for Profile tab */}
-
-          {/* Hoang res */}
           <Card style={{ backgroundColor: 'rgb(245, 245, 245)' }}>
-            <Row gutter={{ sm: 24, md: 24 }}>
-              <Col sm={24} lg={12} className="avatar_status">
+            <Row gutter={{ sm: 24, md: 24 }} className="info_employee">
+              <Col sm={24} lg={12}>
                 <Flex>
                   <img
-                    // src={employee_details.avatar}
-                    src="https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg"
+                    src={employee_details.avatar}
                     alt="Employee Avatar"
                     className="avt"
                   />
@@ -187,37 +127,40 @@ const EmployeeDetail = () => {
                   </div>
                 </Flex>
               </Col>
-              <Col sm={24} lg={12}>
-                <Row>
+              <Col sm={24} lg={12} className="simple_info">
+                <Row style={{ marginBottom: '5px' }}>
                   <p className="employee_label">
                     {t('employee_details.employee_code')}
                     {' : '}
                   </p>
                   <p className="employee_info">{employee_details.code}</p>
                 </Row>
-                <Row>
+                <Row style={{ marginBottom: '5px' }}>
                   <p className="employee_label">
                     {t('employee_details.line_manager')}
                     {' : '}
                   </p>
                   <p className="employee_info">
                     {capitalizeFirstLetter(
-                      displayValue(employee_details.line_manager)
+                      displayValue(employee_details.manager)
                     )}
                   </p>
                 </Row>
-                <Row>
+                <Row style={{ marginBottom: '5px' }}>
                   <p className="employee_label">Email :</p>
                   {/* <p className="employee_info">{employee_details.email}</p> */}
-                  <p className="employee_info">nhatnhatnhar27@gmail.com</p>
+                  <p className="employee_info">
+                    {capitalizeFirstLetter(
+                      displayValue(employee_details.email)
+                    )}
+                  </p>
                 </Row>
               </Col>
             </Row>
           </Card>
 
-          {/* ///// */}
           <Row gutter={{ xs: 8, sm: 12, md: 16, lg: 24 }}>
-            <Col md={24} lg={12}>
+            <Col md={24} lg={24}>
               <Card
                 style={{
                   marginTop: 20,
@@ -225,16 +168,16 @@ const EmployeeDetail = () => {
                   backgroundColor: ' rgb(245, 245, 245)',
                 }}
               >
-                <Row gutter={16} justify="center" align="middle">
+                <Row gutter={16} justify="center" align="middle" column={2}>
                   <Col span={23}>
                     <p className="title">
                       {t('employee_details.personal_info')}
                     </p>
                     <hr className="profile_line" />
 
-                    <Col span={26}>
+                    <Col span={24}>
                       <Descriptions
-                        column={1}
+                        column={2}
                         bordered
                         className="custom-descriptions"
                       >
@@ -314,45 +257,34 @@ const EmployeeDetail = () => {
                             displayValue(employee_details.description)
                           )}
                         </Descriptions.Item>
+
+                        {/* Add a new Descriptions.Item for Skills */}
+                        <Descriptions.Item
+                          label={
+                            <span style={{ fontWeight: 'bold' }}>Skills</span>
+                          }
+                          span={2} // span to cover two columns
+                          className="custom-label"
+                        >
+                          {/* Map through employee_details.skills and display each skill as a Tag */}
+
+                          {employee_details.skills.map((skill, index) => (
+                            <Tag
+                              key={skill.name}
+                              color={getTagColor(index)}
+                              style={{ padding: '5px' }}
+                            >
+                              {capitalizeFirstLetter(skill.name)} - {skill.year}{' '}
+                              years
+                            </Tag>
+                          ))}
+                        </Descriptions.Item>
                       </Descriptions>
                     </Col>
                   </Col>
                 </Row>
               </Card>
             </Col>
-            <Col md={24} lg={12}>
-              <Card
-                style={{
-                  marginTop: 20,
-                  width: '100%',
-                  backgroundColor: 'rgb(245, 245, 245)',
-                }}
-              >
-                {/* Skills Content */}
-                <p className="title">{t('employee_details.skill')}</p>
-                <hr className="profile_line" />
-                {/* Add your skill-related content here */}
-                <Row gutter={16} justify="center" align="middle">
-                  <Col span={22}>
-                    {employee_details.skills &&
-                    employee_details.skills.length > 0 ? (
-                      <div>
-                        <Chartpie
-                          data={generateChartData(employee_details.skills)}
-                        />
-                      </div>
-                    ) : (
-                      <p>No skills available</p>
-                    )}
-                  </Col>
-                </Row>
-              </Card>
-            </Col>
-          </Row>
-
-          <Row gutter={16}>
-            <Col span={12}></Col>
-            <Col span={12}>{/* New Card for Skills */}</Col>
           </Row>
         </TabPane>
         {/* next page */}
@@ -381,25 +313,32 @@ const EmployeeDetail = () => {
                   >
                     <Row gutter={[16, 16]}>
                       <Col span={24}>
-                        <Tag color="#f50">{item.status}</Tag>
+                        {item.status === 'Pending' && (
+                          <Tag color="#e5b804" status="success">
+                            {item.status}
+                          </Tag>
+                        )}
+                        {item.status === 'In Progress' && (
+                          <Tag color="#0044cc">{item.status}</Tag>
+                        )}
+                        {item.status === 'Cancelled' && (
+                          <Tag color="#f31e1e">{item.status}</Tag>
+                        )}
+                        {item.status === 'Done' && (
+                          <Tag color="#01b301">{item.status}</Tag>
+                        )}
                       </Col>
                       <Col span={24}>{item.description}</Col>
                       <Col span={24}>
                         <Avatar.Group key={'avatar'} maxCount={3}>
-                          {item.employees.map(employee => {
-                            console.log(employee, 'employee')
-                            return (
-                              <Tooltip
-                                title={employee?.name}
+                          {item.employees.map(employee => (
+                            <Tooltip title={employee?.name} key={employee?.id}>
+                              <Avatar
                                 key={employee?.id}
-                              >
-                                <Avatar
-                                  key={employee?.id}
-                                  src={employee?.avatar}
-                                />
-                              </Tooltip>
-                            )
-                          })}
+                                src={employee?.avatar}
+                              />
+                            </Tooltip>
+                          ))}
                         </Avatar.Group>
                       </Col>
                     </Row>

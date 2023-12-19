@@ -110,12 +110,6 @@
   margin: 5px 10px;
 }
 
-.pie-chart-container {
-  width: 100%;
-  max-width: 400px;
-  margin: 0 auto;
-}
-
 @media only screen and (max-width: 992px) {
   .avatar_status {
     margin-bottom: 30px;
