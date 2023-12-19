@@ -76,8 +76,7 @@ const ProjectList = () => {
   }
   const hasLeavingTime = employee => {
     return (
-      employee.periods &&
-      employee.periods.some(period => period.leaving_time === null)
+      employee?.periods?.some(period => period.leaving_time === null) || false
     )
   }
 
