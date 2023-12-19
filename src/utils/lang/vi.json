@@ -124,6 +124,8 @@
     "avatar": "Hình đại diện",
     "skill_placeholder": "Kĩ năng",
     "experience_placeholder": "Kinh nghiệm (Năm)",
+    "none_of_these": "Không chọn người Quản Lí",
+
     "managers": {
       "true": "Quản Lí",
       "false": "Nhân Viên"

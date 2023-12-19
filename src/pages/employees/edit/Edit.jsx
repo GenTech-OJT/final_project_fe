@@ -23,7 +23,7 @@ import enUS from 'antd/locale/en_US'
 import viVN from 'antd/locale/vi_VN'
 import 'dayjs/locale/vi'
 import 'dayjs/locale/en-au'
-import { Formik, useField, useFormikContext } from 'formik'
+import { Formik } from 'formik'
 import * as Yup from 'yup'
 import moment from 'moment'
 import { useTranslation } from 'react-i18next'
@@ -36,49 +36,7 @@ import { useGetManagers } from '@hooks/useManager'
 import Breadcrumb from '@components/admin/Breadcrumb/Breadcrumb'
 import dayjs from 'dayjs'
 const dateFormat = 'YYYY-MM-DD'
-const SelectManager = () => {
-  const { data } = useGetManagers()
-  const { setFieldValue, values } = useFormikContext()
-  const [managers, setManagers] = useState([])
-  const { t } = useTranslation('translation')
 
-  useEffect(() => {
-    if (data) {
-      const managerNames = data?.map(m => m.name)
-      setManagers(managerNames)
-    }
-  }, [data])
-
-  const [field, meta] = useField('manager')
-
-  return (
-    <Form.Item
-      label={t('employee.manager')}
-      name="manager"
-      validateStatus={meta.error && meta.touched ? 'error' : ''}
-      help={meta.error && meta.touched && meta.error}
-    >
-      <Select
-        {...field}
-        notFoundContent={
-          <Empty
-            image={Empty.PRESENTED_IMAGE_SIMPLE}
-            description={t('employee.no_data')}
-          />
-        }
-        onChange={value => setFieldValue('manager', value)}
-        onBlur={field.onBlur}
-        defaultValue={values.manager}
-      >
-        {managers.map(m => (
-          <Select.Option key={m} value={m}>
-            {m}
-          </Select.Option>
-        ))}
-      </Select>
-    </Form.Item>
-  )
-}
 const EditEmployee = () => {
   const { id } = useParams()
   const navigate = useNavigate()
@@ -89,9 +47,10 @@ const EditEmployee = () => {
   const { data: employee, isLoading } = useGetEmployeeById(id)
   const [datePickerLocale, setDatePickerLocale] = useState(enUS)
   const { data: positions } = useGetPositions()
-  const { mutateAsync: updateEmployeeApi } = useUpdateEmployee()
-  const forceUpdate = useForceUpdate()
+  const { data: managers } = useGetManagers()
 
+  const { mutateAsync: updateEmployeeApi, isPending } = useUpdateEmployee()
+  const forceUpdate = useForceUpdate()
   useEffect(() => {
     const savedLanguage = localStorage.getItem('selectedLanguage')
 
@@ -124,7 +83,7 @@ const EditEmployee = () => {
     is_manager: isManagerFormat,
 
     position: employee?.position,
-    manager: employee?.manager,
+    manager: employee?.manager?.id,
     skills: employee?.skills?.map(skill => ({
       skill: skill.name,
       experience: skill.year,
@@ -154,7 +113,6 @@ const EditEmployee = () => {
     status: Yup.string(),
     position: Yup.string(),
     is_manager: Yup.bool(),
-    manager: Yup.string(),
     skills: Yup.array()
       .of(
         Yup.object().shape({
@@ -473,7 +431,48 @@ const EditEmployee = () => {
                       </Form.Item>
                     </Col>
                     <Col xs={24} md={12}>
-                      <SelectManager />
+                      <Form.Item
+                        label={t('employee.manager')}
+                        name="manager"
+                        validateStatus={
+                          errors.manager && touched.manager ? 'error' : ''
+                        }
+                        help={
+                          errors.manager && touched.manager && errors.manager
+                        }
+                        style={{
+                          display: values.is_manager ? 'none' : 'block',
+                        }}
+                      >
+                        <Select
+                          name="manager"
+                          notFoundContent={
+                            <Empty
+                              image={Empty.PRESENTED_IMAGE_SIMPLE}
+                              description={t('employee.no_data')}
+                            />
+                          }
+                          onChange={value => {
+                            setFieldValue('manager', value)
+                            // Kiểm tra nếu người dùng chọn Manager thì ẩn trường is_manager
+                            if (value && value === 'manager_id') {
+                              setFieldValue('is_manager', false)
+                            }
+                          }}
+                          onBlur={handleBlur}
+                          value={values.manager} // Update this line to use form values
+                          disabled={values.is_manager}
+                        >
+                          <Select.Option key="none" value={null}>
+                            {t('employee.none_of_these')}
+                          </Select.Option>
+                          {managers?.map(m => (
+                            <Select.Option key={m.id} value={m.id}>
+                              {m.name}
+                            </Select.Option>
+                          ))}
+                        </Select>
+                      </Form.Item>
                     </Col>
                   </Row>
                 </Col>
@@ -605,9 +604,21 @@ const EditEmployee = () => {
               <Form.Item label={t('employee.is_manager')} name="is_manager">
                 <Checkbox
                   name="is_manager"
-                  onChange={e => setFieldValue('is_manager', e.target.checked)}
+                  onChange={e => {
+                    const checked = e.target.checked
+                    setFieldValue('is_manager', checked)
+
+                    // Nếu is_manager được chọn, set giá trị của manager về null hoặc giá trị khác thích hợp
+                    if (checked) {
+                      setFieldValue('manager', null) // hoặc set giá trị khác như ''
+                    }
+                  }}
                   onBlur={handleBlur}
-                  checked={values.is_manager || false}
+                  checked={
+                    values.is_manager ||
+                    (values.manager && values.manager === 'manager_id')
+                  }
+                  disabled={values.manager && values.manager === 'manager_id'}
                 ></Checkbox>
               </Form.Item>
 
@@ -627,7 +638,7 @@ const EditEmployee = () => {
                 </Upload>
               </Form.Item>
               <Form.Item>
-                <Button type="primary" htmlType="submit">
+                <Button loading={isPending} type="primary" htmlType="submit">
                   {t('button_input.edit')}
                 </Button>
               </Form.Item>
