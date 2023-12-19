@@ -36,49 +36,7 @@ import { useGetManagers } from '@hooks/useManager'
 import Breadcrumb from '@components/admin/Breadcrumb/Breadcrumb'
 import dayjs from 'dayjs'
 const dateFormat = 'YYYY-MM-DD'
-const SelectManager = () => {
-  const { data } = useGetManagers()
-  const { setFieldValue, values } = useFormikContext()
-  const [managers, setManagers] = useState([])
-  const { t } = useTranslation('translation')
 
-  useEffect(() => {
-    if (data) {
-      const managerNames = data?.map(m => m.name)
-      setManagers(managerNames)
-    }
-  }, [data])
-
-  const [field, meta] = useField('manager')
-
-  return (
-    <Form.Item
-      label={t('employee.manager')}
-      name="manager"
-      validateStatus={meta.error && meta.touched ? 'error' : ''}
-      help={meta.error && meta.touched && meta.error}
-    >
-      <Select
-        {...field}
-        notFoundContent={
-          <Empty
-            image={Empty.PRESENTED_IMAGE_SIMPLE}
-            description={t('employee.no_data')}
-          />
-        }
-        onChange={value => setFieldValue('manager', value)}
-        onBlur={field.onBlur}
-        defaultValue={values.manager}
-      >
-        {managers.map(m => (
-          <Select.Option key={m} value={m}>
-            {m}
-          </Select.Option>
-        ))}
-      </Select>
-    </Form.Item>
-  )
-}
 const EditEmployee = () => {
   const { id } = useParams()
   const navigate = useNavigate()
@@ -89,9 +47,10 @@ const EditEmployee = () => {
   const { data: employee, isLoading } = useGetEmployeeById(id)
   const [datePickerLocale, setDatePickerLocale] = useState(enUS)
   const { data: positions } = useGetPositions()
-  const { mutateAsync: updateEmployeeApi } = useUpdateEmployee()
-  const forceUpdate = useForceUpdate()
+  const { data: managers } = useGetManagers()
 
+  const { mutateAsync: updateEmployeeApi, isPending } = useUpdateEmployee()
+  const forceUpdate = useForceUpdate()
   useEffect(() => {
     const savedLanguage = localStorage.getItem('selectedLanguage')
 
@@ -124,7 +83,7 @@ const EditEmployee = () => {
     is_manager: isManagerFormat,
 
     position: employee?.position,
-    manager: employee?.manager,
+    manager: employee?.manager?.id,
     skills: employee?.skills?.map(skill => ({
       skill: skill.name,
       experience: skill.year,
@@ -154,7 +113,6 @@ const EditEmployee = () => {
     status: Yup.string(),
     position: Yup.string(),
     is_manager: Yup.bool(),
-    manager: Yup.string(),
     skills: Yup.array()
       .of(
         Yup.object().shape({
@@ -473,7 +431,35 @@ const EditEmployee = () => {
                       </Form.Item>
                     </Col>
                     <Col xs={24} md={12}>
-                      <SelectManager />
+                      <Form.Item
+                        label={t('employee.manager')}
+                        name="manager"
+                        validateStatus={
+                          errors.manager && touched.manager ? 'error' : ''
+                        }
+                        help={
+                          errors.manager && touched.manager && errors.manager
+                        }
+                      >
+                        <Select
+                          name="manager"
+                          notFoundContent={
+                            <Empty
+                              image={Empty.PRESENTED_IMAGE_SIMPLE}
+                              description={t('employee.no_data')}
+                            />
+                          }
+                          onChange={value => setFieldValue('manager', value)}
+                          onBlur={handleBlur}
+                          value={values.manager} // Update this line to use form values
+                        >
+                          {managers?.map(m => (
+                            <Select.Option key={m.id} value={m.id}>
+                              {m.name}
+                            </Select.Option>
+                          ))}
+                        </Select>
+                      </Form.Item>
                     </Col>
                   </Row>
                 </Col>
@@ -627,7 +613,7 @@ const EditEmployee = () => {
                 </Upload>
               </Form.Item>
               <Form.Item>
-                <Button type="primary" htmlType="submit">
+                <Button loading={isPending} type="primary" htmlType="submit">
                   {t('button_input.edit')}
                 </Button>
               </Form.Item>
