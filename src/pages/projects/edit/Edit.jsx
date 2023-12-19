@@ -10,6 +10,7 @@ import {
   Select,
   Spin,
   Badge,
+  Empty,
 } from 'antd'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
@@ -227,6 +228,12 @@ const EditProject = () => {
                 >
                   <Select
                     name="manager"
+                    notFoundContent={
+                      <Empty
+                        image={Empty.PRESENTED_IMAGE_SIMPLE}
+                        description={t('employee.no_data')}
+                      />
+                    }
                     onChange={value => setFieldValue('manager', value)}
                     onBlur={handleBlur}
                     defaultValue={values.manager}
@@ -326,6 +333,12 @@ const EditProject = () => {
                   <Select
                     mode="multiple"
                     name="employees"
+                    notFoundContent={
+                      <Empty
+                        image={Empty.PRESENTED_IMAGE_SIMPLE}
+                        description={t('employee.no_data')}
+                      />
+                    }
                     placeholder={t('project.team_members_placeholder')}
                     maxTagCount={3}
                     defaultValue={values.employees}
@@ -361,6 +374,12 @@ const EditProject = () => {
                   <Select
                     mode="multiple"
                     name="technical"
+                    notFoundContent={
+                      <Empty
+                        image={Empty.PRESENTED_IMAGE_SIMPLE}
+                        description={t('employee.no_data')}
+                      />
+                    }
                     placeholder={t('project.technical_placeholder')}
                     maxTagCount={3}
                     defaultValue={values.technical}

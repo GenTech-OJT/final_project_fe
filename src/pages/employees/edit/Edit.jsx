@@ -12,6 +12,7 @@ import {
   Row,
   ConfigProvider,
   message,
+  Empty,
 } from 'antd'
 import {
   MinusCircleOutlined,
@@ -59,6 +60,12 @@ const SelectManager = () => {
     >
       <Select
         {...field}
+        notFoundContent={
+          <Empty
+            image={Empty.PRESENTED_IMAGE_SIMPLE}
+            description={t('employee.no_data')}
+          />
+        }
         onChange={value => setFieldValue('manager', value)}
         onBlur={field.onBlur}
         defaultValue={values.manager}
