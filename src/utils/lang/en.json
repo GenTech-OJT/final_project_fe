@@ -37,9 +37,7 @@
     "create_employee_success": "Employee created successfully",
     "create_employee_fail": "Error creating employee. Please try again!",
     "Employee_deleted_successfully": "Employee deleted successfully",
-    "Employee_deleted_fail": "Error deleting employee. Please try again!",
-    "Projects_deleted_successfully": "Project deleted successfully",
-    "Projects_deleted_fail": "Error deleting project. Please try again!"
+    "Employee_deleted_fail": "Error deleting employee. Please try again!"
   },
   "validate": {
     "name_validate": "Please input a valid name!",
@@ -55,11 +53,23 @@
     "card_require": "Please input the Citizen Identity Card!",
     "card_validate": "Please input a valid Citizen Identity Card!",
     "dob_validate": "Please select Date of Birth!",
-    "skill_validate": "Please input skill!",
     "experience_require": "Please input experience!",
     "experience_validate": "Experience must be a number!",
     "skills_require": "Must have skill",
-    "skills_validate": "Must have at least 1 skill"
+    "skills_validate": "Must have at least 1 skill",
+    "skill_require": "Please input skill!",
+    "skill_validate": "Skill name must be a string!"
+  },
+  "project_validate": {
+    "name_require": "Please input project name",
+    "name_max": "Name must be at most 128 characters long.",
+    "name_valid": "Please enter a valid project name",
+    "manager_require": "Please select manager",
+    "employees_require": "Please select at least one team member!",
+    "technical_require": "Please select at least one technical!",
+    "start_day_require": "Please provide a start date!",
+    "end_day_require": "Please provide an end date!",
+    "end_day_min": "End date must be later than start date!"
   },
   "breadcrumbs": {
     "employee_details": "Employee Details",
@@ -107,6 +117,22 @@
       "false": "Employee"
     }
   },
+  "project": {
+    "name": "Project Name",
+    "manager": "Manager",
+    "start_date": "Start Date",
+    "end_date": "End Date",
+    "team_members": "Team Members",
+    "technicals": "Technicals",
+    "status": "Status",
+    "description": "Description",
+    "pending_status": "Pending",
+    "in_progress_status": "In progress",
+    "cancelled_status": "Cancelled",
+    "done_status": "Done",
+    "technical_placeholder": "Select technical",
+    "team_members_placeholder": "Select team member"
+  },
   "sign_in_page": {
     "enter_sign_in": "Please enter your details below to sign in.",
     "email": "Email",
@@ -120,6 +146,7 @@
     "logout": "Logout"
   },
   "employee_details": {
+    "title": "Detail Employee",
     "profile": "Profile",
     "skill": "Skill",
     "project": "Project",
@@ -133,7 +160,16 @@
     "identity_code": "Identity Code",
     "active": "Active",
     "inactive": "Inactive",
-    "is_manager": "Is manager"
+    "is_manager": "Role",
+    "genders": {
+      "male": "Male",
+      "female": "Female"
+    },
+    "is_managers": {
+      "true": "Manager",
+      "false": "Employee"
+    },
+    "years": "years"
   },
   "project_details": {
     "project_name": "Project Name",

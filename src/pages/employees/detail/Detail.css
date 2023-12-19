@@ -2,9 +2,11 @@
   display: flex;
   align-items: center;
 }
+
 .employee_name {
   font-weight: 500;
-  font-size: 25px;
+  font-size: 23px;
+  margin: 0;
 }
 
 .employee_title {
@@ -15,24 +17,28 @@
   font-size: 16px;
   font-weight: 500;
   color: #167ec5;
-  margin-bottom: 2px;
+  margin: 0 0 2px;
 }
 
 .avt {
-  max-width: 100px;
+  width: 100px;
   border-radius: 50%;
+  height: 100px;
 }
 
 .vertical-line {
   border-left: 1px solid #b3b2b2af;
-  height: 60px;
-  margin-left: 110px;
+  height: 70px;
+  margin-left: 80px;
+  display: flex;
+  align-self: center;
 }
 
 .employee_label {
   color: rgb(105, 105, 105);
   font-size: 16px;
   font-weight: 500;
+  margin: 0;
 }
 
 .info {
@@ -43,6 +49,7 @@
 .title {
   font-weight: 500;
   font-size: 20px;
+  margin-top: 0;
 }
 
 .profile_line {
@@ -76,7 +83,7 @@
 }
 
 .employee_info {
-  margin-left: 20px;
+  margin-left: 15px !important;
   font-size: 16px;
 }
 
@@ -100,11 +107,17 @@
 }
 
 .status-text {
-  margin-left: 10px;
+  margin: 5px 10px;
 }
 
 .pie-chart-container {
   width: 100%;
   max-width: 400px;
   margin: 0 auto;
+}
+
+@media only screen and (max-width: 992px) {
+  .avatar_status {
+    margin-bottom: 30px;
+  }
 }
