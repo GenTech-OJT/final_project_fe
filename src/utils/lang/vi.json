@@ -6,7 +6,7 @@
     "active": "Kích Hoạt",
     "inactive": "Vô Hiệu Hóa",
     "login": "Đăng Nhập",
-    "edit": "Chỉnh sửa",
+    "edit": "Cập nhật",
     "create_project": "Tạo Dự Án"
   },
   "side_menu": {
@@ -40,7 +40,9 @@
     "Employee_deleted_fail": "Xóa nhân viên thất bại, vui lòng thử lại!",
     "edit_employee_success": "Cập nhật nhân viên Thành Công",
     "create_project_success": "Tạo dự án thành công",
-    "create_project_fail": "Lỗi khi tạo dự án. Vui lòng thử lại!"
+    "create_project_fail": "Lỗi khi tạo dự án. Vui lòng thử lại!",
+    "Update_project_success": "Cập nhật thông tin dự án thành công",
+    "Update_project_fail": "Lỗi khi cập nhật thông tin dự án. Vui lòng thử lại!"
   },
   "validate": {
     "name_validate": "Vui lòng nhập tên hợp lệ",
