@@ -1,13 +1,13 @@
 /* eslint-disable no-undef */
 import { DeleteOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons'
 import { CustomSearch, CustomTable } from '@components/custom/CustomTable'
+import { useGetProjects } from '@hooks/useProject'
 import { Avatar, Button, Empty, Tooltip } from 'antd'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 import Breadcrumb from '../../../components/admin/Breadcrumb/Breadcrumb'
 import '../../../components/custom/CustomTable.css'
-import { useGetProjects } from '@hooks/useProject'
 import DeleteProject from '../delete/Delete'
 const ProjectList = () => {
   const navigate = useNavigate()
@@ -74,6 +74,12 @@ const ProjectList = () => {
       })
     }
   }
+  const hasLeavingTime = employee => {
+    return (
+      employee.periods &&
+      employee.periods.some(period => period.leaving_time === null)
+    )
+  }
 
   const columns = [
     {
@@ -108,7 +114,7 @@ const ProjectList = () => {
       width: 140,
       render: employees => (
         <Avatar.Group maxCount={2} size="small">
-          {employees.map(employee => (
+          {employees.filter(hasLeavingTime).map(employee => (
             <Tooltip title={employee.name} key={employee.id}>
               <Avatar src={employee.avatar} />
             </Tooltip>
