@@ -159,7 +159,10 @@
     "team_members_placeholder": "Lựa chọn thành viên",
     "joining_time": "Ngày Tham Gia",
     "leaving_time": "Ngày Rời Đi",
-    "reverse": "Đảo Chiều"
+    "reverse": "Đảo Chiều",
+    "member": "Thành viên",
+    "timeline": "Lịch sử",
+    "detail": "Chi tiết"
   },
   "sign_in_page": {
     "enter_sign_in": "Vui lòng nhập thông tin chi tiết của bạn dưới đây để đăng nhập.",
@@ -199,7 +202,8 @@
       "false": "Nhân viên"
     },
     "years": "năm",
-    "no_projects": "Không có dự án được phân công"
+    "no_projects": "Không có dự án được phân công",
+    "no_manager": "Không có người quản lí"
   },
   "project_details": {
     "project_name": "Tên dự án",

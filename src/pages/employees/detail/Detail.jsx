@@ -80,22 +80,101 @@ const EmployeeDetail = () => {
   if (isLoading || !employee_details || isLoadingProject) {
     return <Spin spinning={true} fullscreen />
   }
-  // Function to get vibrant colors
+  // Function to get colors
   const getTagColor = index => {
     const colors = [
       '#2a9d8f',
+      '#7cb518',
       '#6A8EAE',
-      '#5a189a',
+      '#944bbb',
+      '#219ebc',
+      '#e76f51',
+      '#f47795',
+      '#ff9100',
       '#d90429',
-      '#BFEBE5',
-      '#CFCFCF',
-      '#DFDFDF',
-      '#EFEFEF',
-      '#F9F9F9',
-      '#FFFFFF',
+      '#ef7a85',
     ]
     return colors[index % colors.length]
   }
+
+  const employeeDetailsDescriptions = [
+    {
+      key: 'gender',
+      label: t('employee_details.gender'),
+      children: capitalizeFirstLetter(
+        displayValue(t(`employee_details.genders.${employee_details?.gender}`))
+      ),
+      labelStyle: { fontWeight: 'bold' },
+    },
+    {
+      key: 'identity_code',
+      label: t('employee_details.identity_code'),
+      children: employee_details?.identity,
+      labelStyle: { fontWeight: 'bold' },
+    },
+    {
+      key: 'phone_number',
+      label: t('employee_details.phone_number'),
+      children: employee_details?.phone,
+      labelStyle: { fontWeight: 'bold' },
+    },
+    {
+      key: 'dob',
+      label: t('employee_details.dob'),
+      children: employee_details?.dob,
+      labelStyle: { fontWeight: 'bold' },
+    },
+    {
+      key: 'is_manager',
+      label: t('employee_details.is_manager'),
+      children: capitalizeFirstLetter(
+        displayValue(
+          t(`employee_details.is_managers.${employee_details?.is_manager}`)
+        )
+      ),
+      labelStyle: { fontWeight: 'bold' },
+    },
+    {
+      key: 'line_manager',
+      label: t('employee_details.line_manager'),
+      children: capitalizeFirstLetter(
+        displayValue(employee_details?.manager?.name) ||
+          t('employee_details.no_manager')
+      ),
+      labelStyle: { fontWeight: 'bold' },
+      span: 2,
+    },
+    {
+      key: 'skill',
+      label: t('employee_details.skill'),
+      labelStyle: { fontWeight: 'bold' },
+      children: (
+        <div>
+          {employee_details.skills.map((skill, index) => (
+            <Tag
+              key={skill.name}
+              color={getTagColor(index)}
+              style={{ padding: '5px', marginBottom: '5px' }}
+            >
+              {capitalizeFirstLetter(skill.name)} - {skill.year}{' '}
+              {t('employee_details.years')}
+            </Tag>
+          ))}
+        </div>
+      ),
+      span: 3,
+    },
+    {
+      key: 'description_employee',
+      label: t('employee_details.description_employee'),
+      children: capitalizeFirstLetter(
+        displayValue(employee_details?.description) ||
+          t('employee_details.no_description')
+      ),
+      span: 3,
+      labelStyle: { fontWeight: 'bold' },
+    },
+  ]
 
   return (
     <div className="page-container">
@@ -123,7 +202,7 @@ const EmployeeDetail = () => {
                   <div className="employee_title">
                     <p className="employee_name">{employee_details?.name}</p>
                     <p className="employee_position">
-                      {employee_details.position}
+                      {employee_details?.position}
                     </p>
                     <div className="status-show">
                       <div
@@ -131,7 +210,7 @@ const EmployeeDetail = () => {
                         style={{ backgroundColor: getStatusDotColor() }}
                       ></div>
                       <p className="status-text">
-                        {employee_details.status === 'active'
+                        {employee_details?.status === 'active'
                           ? t('employee_details.active')
                           : t('employee_details.inactive')}
                       </p>
@@ -139,32 +218,20 @@ const EmployeeDetail = () => {
                   </div>
                 </Flex>
               </Col>
-              <Col sm={24} lg={12} className="simple_info">
+              <Col sm={24} lg={12} style={{ marginTop: '15px' }}>
                 <Row style={{ marginBottom: '5px' }}>
                   <p className="employee_label">
                     {t('employee_details.employee_code')}
                     {' : '}
                   </p>
-                  <p className="employee_info">{employee_details.code}</p>
+                  <p className="employee_info">{employee_details?.code}</p>
                 </Row>
-                <Row style={{ marginBottom: '5px' }}>
-                  <p className="employee_label">
-                    {t('employee_details.line_manager')}
-                    {' : '}
-                  </p>
-                  <p className="employee_info">
-                    {employee_details.manager &&
-                      capitalizeFirstLetter(
-                        displayValue(employee_details.manager.name)
-                      )}
-                  </p>
-                </Row>
+
                 <Row style={{ marginBottom: '5px' }}>
                   <p className="employee_label">Email :</p>
-                  {/* <p className="employee_info">{employee_details.email}</p> */}
                   <p className="employee_info">
                     {capitalizeFirstLetter(
-                      displayValue(employee_details.email)
+                      displayValue(employee_details?.email)
                     )}
                   </p>
                 </Row>
@@ -189,7 +256,7 @@ const EmployeeDetail = () => {
                     <hr className="profile_line" />
 
                     <Col span={24}>
-                      <Descriptions
+                      {/* <Descriptions
                         column={2}
                         bordered
                         className="custom-descriptions"
@@ -205,7 +272,7 @@ const EmployeeDetail = () => {
                           {capitalizeFirstLetter(
                             displayValue(
                               t(
-                                `employee_details.genders.${employee_details.gender}`
+                                `employee_details.genders.${employee_details?.gender}`
                               )
                             )
                           )}
@@ -218,7 +285,7 @@ const EmployeeDetail = () => {
                           }
                           className="custom-label"
                         >
-                          {employee_details.identity}
+                          {employee_details?.identity}
                         </Descriptions.Item>
                         <Descriptions.Item
                           label={
@@ -228,7 +295,7 @@ const EmployeeDetail = () => {
                           }
                           className="custom-label"
                         >
-                          {employee_details.phone}
+                          {employee_details?.phone}
                         </Descriptions.Item>
 
                         <Descriptions.Item
@@ -239,7 +306,7 @@ const EmployeeDetail = () => {
                           }
                           className="custom-label"
                         >
-                          {employee_details.dob}
+                          {employee_details?.dob}
                         </Descriptions.Item>
                         <Descriptions.Item
                           label={
@@ -252,7 +319,7 @@ const EmployeeDetail = () => {
                           {capitalizeFirstLetter(
                             displayValue(
                               t(
-                                `employee_details.is_managers.${employee_details.is_manager}`
+                                `employee_details.is_managers.${employee_details?.is_manager}`
                               )
                             )
                           )}
@@ -267,21 +334,20 @@ const EmployeeDetail = () => {
                           className="custom-label"
                         >
                           {capitalizeFirstLetter(
-                            displayValue(employee_details.description) ||
+                            displayValue(employee_details?.description) ||
                               t('employee_details.no_description')
                           )}
                         </Descriptions.Item>
 
-                        {/* Add a new Descriptions.Item for Skills */}
                         <Descriptions.Item
                           label={
-                            <span style={{ fontWeight: 'bold' }}>Skills</span>
+                            <span style={{ fontWeight: 'bold' }}>
+                              {t('employee_details.skill')}
+                            </span>
                           }
                           span={2} // span to cover two columns
                           className="custom-label"
                         >
-                          {/* Map through employee_details.skills and display each skill as a Tag */}
-
                           {employee_details.skills.map((skill, index) => (
                             <Tag
                               key={skill.name}
@@ -293,7 +359,12 @@ const EmployeeDetail = () => {
                             </Tag>
                           ))}
                         </Descriptions.Item>
-                      </Descriptions>
+                      </Descriptions> */}
+                      <Descriptions
+                        layout="vertical"
+                        bordered
+                        items={employeeDetailsDescriptions}
+                      />
                     </Col>
                   </Col>
                 </Row>
@@ -355,23 +426,32 @@ const EmployeeDetail = () => {
                           {item.name}
                         </Typography.Title>
                         {item.status === 'Pending' && (
-                          <Tag color="#faad14">Pending</Tag>
+                          <Tag color="#faad14">
+                            {t('project.pending_status')}
+                          </Tag>
                         )}
                         {item.status === 'In Progress' && (
-                          <Tag color="#1677ff">In Progress</Tag>
+                          <Tag color="#1677ff">
+                            {t('project.in_progress_status')}
+                          </Tag>
                         )}
                         {item.status === 'Cancelled' && (
-                          <Tag color="#ff4d4f">Cancelled</Tag>
+                          <Tag color="#ff4d4f">
+                            {t('project.cancelled_status')}
+                          </Tag>
                         )}
                         {item.status === 'Done' && (
-                          <Tag color="#52c41a">Done</Tag>
+                          <Tag color="#52c41a">{t('project.done_status')}</Tag>
                         )}
                       </Col>
 
                       <Col span={24} className="pro_description">
-                        {item.description}
+                        {item.description ? (
+                          item.description
+                        ) : (
+                          <span>{t('employee_details.no_description')}</span>
+                        )}
                       </Col>
-                      <Col span={24}></Col>
                     </Row>
                   </Card>
                 </Col>

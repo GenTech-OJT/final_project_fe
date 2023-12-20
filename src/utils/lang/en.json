@@ -158,7 +158,11 @@
     "team_members_placeholder": "Select team member",
     "joining_time": "Joining Time",
     "leaving_time": "Leaving Time",
-    "reverse": "REVERSE"
+    "reverse": "REVERSE",
+    "details": "Details",
+    "member": "Members",
+    "timeline": "Timeline",
+    "detail": "Detail"
   },
   "sign_in_page": {
     "enter_sign_in": "Please enter your details below to sign in.",
@@ -175,7 +179,7 @@
   "employee_details": {
     "title": "Detail Employee",
     "profile": "Profile",
-    "skill": "Skill",
+    "skill": "Skills",
     "project": "Project",
     "employee_code": "Employee Code ",
     "line_manager": "Line Manager ",
@@ -198,7 +202,8 @@
       "false": "Employee"
     },
     "years": "years",
-    "no_projects": "No projects assigned"
+    "no_projects": "No projects assigned",
+    "no_manager": "There is no manager"
   },
   "project_details": {
     "project_name": "Project Name",
