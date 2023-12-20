@@ -15,6 +15,7 @@ import {
 import moment from 'moment'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router'
+import TimeLineProject from '../timeline/TimeLineProject'
 
 const DetailProject = () => {
   const { t } = useTranslation('translation')
@@ -111,7 +112,7 @@ const DetailProject = () => {
       key: 'start_date',
 
       label: t('project.start_date'),
-      children: moment(projectDetail?.st_date).format('YYYY-MM-DD'),
+      children: moment(projectDetail?.start_date).format('YYYY-MM-DD'),
     },
     {
       key: 'end_date',
@@ -197,7 +198,9 @@ const DetailProject = () => {
           </Row>
         </TabPane>
 
-        <TabPane tab={t('project.timeline')} key="TimeLine"></TabPane>
+        <TabPane tab={t('project.timeline')} key="TimeLine">
+          <TimeLineProject />
+        </TabPane>
       </Tabs>
     </>
   )
