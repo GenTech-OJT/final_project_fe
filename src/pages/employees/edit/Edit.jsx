@@ -121,6 +121,8 @@ const EditEmployee = () => {
     gender: Yup.string(),
     status: Yup.string(),
     position: Yup.string(),
+    manager: Yup.string(),
+
     is_manager: Yup.bool(),
     skills: Yup.array()
       .of(
