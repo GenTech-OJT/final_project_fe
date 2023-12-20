@@ -7,7 +7,8 @@
     "inactive": "Inactive",
     "login": "Log in",
     "edit": "Update",
-    "create_project": "Create Project"
+    "create_project": "Create Project",
+    "export_csv": "Export CV"
   },
   "side_menu": {
     "project_management_label": "Projects",
@@ -44,7 +45,11 @@
     "Update_project_success": "Project update successfully",
     "Update_project_fail": "Error update project. Please try again!",
     "Project_deleted_successfully": "Project deleted successfully",
-    "Project_deleted_fail": "Error deleting project. Please try again!"
+    "Project_deleted_fail": "Error deleting project. Please try again!",
+    "yes": "Yes",
+    "no": "No",
+    "Delete_employee_fail_manager": "This employee is the manager of project {{projectName}}",
+    "Delete_employee_fail_employees": "This employee is the only employee of the project {{projectName}}"
   },
   "validate": {
     "name_validate": "Please input a valid name!",
@@ -55,6 +60,7 @@
     "email_invalid": "Invalid email format!",
     "password": "Please input your password!",
     "phone_validate": "Please input phone number!",
+    "phone_matches": "Phone number should only contain numeric characters!",
     "phone_valid": "Please enter a valid 10-digit phone number!",
     "code_validate": "Please input code!",
     "card_require": "Please input the Citizen Identity Card!",
@@ -90,7 +96,8 @@
   "title": {
     "create_employee": "CREATE EMPLOYEE",
     "edit_employee": "EDIT EMPLOYEE",
-    "sign_in": "SIGN IN"
+    "sign_in": "SIGN IN",
+    "timeline": "Project Timeline"
   },
   "employee": {
     "name_employee": "Name",
@@ -119,6 +126,7 @@
     "avatar": "Avatar",
     "skill_placeholder": "Skill",
     "experience_placeholder": "Experience (Years)",
+    "none_of_these": "None of these Manager",
     "managers": {
       "true": "Manager",
       "false": "Employee"
@@ -138,7 +146,10 @@
     "cancelled_status": "Cancelled",
     "done_status": "Done",
     "technical_placeholder": "Select technical",
-    "team_members_placeholder": "Select team member"
+    "team_members_placeholder": "Select team member",
+    "joining_time": "Joining Time",
+    "leaving_time": "Leaving Time",
+    "reverse": "REVERSE"
   },
   "sign_in_page": {
     "enter_sign_in": "Please enter your details below to sign in.",

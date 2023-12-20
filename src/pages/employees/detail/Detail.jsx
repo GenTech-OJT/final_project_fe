@@ -26,6 +26,7 @@ import moment from 'moment'
 import { useParams } from 'react-router-dom'
 import { CustomSearch } from '@components/custom/CustomTable'
 import './Detail.css'
+import ExportDocx from '@pages/CV/cv'
 
 const { TabPane } = Tabs
 
@@ -93,8 +94,7 @@ const EmployeeDetail = () => {
   return (
     <div className="page-container">
       <Breadcrumb items={breadcrumbItems} />
-      <Title className="page-title">EMPLOYEE DETAIL</Title>
-
+      <ExportDocx />
       <Tabs
         defaultActiveKey="1"
         tabPosition="top"
@@ -145,9 +145,10 @@ const EmployeeDetail = () => {
                     {' : '}
                   </p>
                   <p className="employee_info">
-                    {capitalizeFirstLetter(
-                      displayValue(employee_details.manager)
-                    )}
+                    {employee_details.manager &&
+                      capitalizeFirstLetter(
+                        displayValue(employee_details.manager.name)
+                      )}
                   </p>
                 </Row>
                 <Row style={{ marginBottom: '5px' }}>
@@ -310,8 +311,8 @@ const EmployeeDetail = () => {
                         style={{ cursor: 'default' }}
                       >
                         {item.employees.map(employee => (
-                          <Tooltip title={employee.name} key={employee.id}>
-                            <Avatar src={employee.avatar} />
+                          <Tooltip title={employee?.name} key={employee?.id}>
+                            <Avatar src={employee?.avatar} />
                           </Tooltip>
                         ))}
                       </Avatar.Group>,

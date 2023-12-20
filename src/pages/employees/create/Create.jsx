@@ -13,6 +13,7 @@ import {
   Spin,
   Upload,
   message,
+  Empty,
 } from 'antd'
 import {
   MinusCircleOutlined,
@@ -411,12 +412,18 @@ const CreateEmployee = () => {
                     >
                       <Select
                         name="manager"
+                        notFoundContent={
+                          <Empty
+                            image={Empty.PRESENTED_IMAGE_SIMPLE}
+                            description={t('employee.no_data')}
+                          />
+                        }
                         onChange={value => setFieldValue('manager', value)}
                         onBlur={handleBlur}
                         defaultValue={values.manager}
                       >
                         {managers?.map(m => (
-                          <Select.Option key={m.id} value={m.name}>
+                          <Select.Option key={m.id} value={m.id}>
                             {m.name}
                           </Select.Option>
                         ))}
