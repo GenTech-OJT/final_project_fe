@@ -1,15 +1,14 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { QUERY_KEY } from '@constants/reactQuery'
 import {
-  getEmployeesApi,
   createEmployeeApi,
-  getEmployeeByIdApi,
-  updateEmployeeApi,
   deleteEmployeeApi,
+  getEmployeeByIdApi,
+  getEmployeesApi,
   getProjectsByEmployeeIdApi,
+  updateEmployeeApi,
 } from '@api/employeeApi'
-import { useNavigate } from 'react-router-dom'
 import { showToast } from '@components/toast/ToastCustom'
+import { QUERY_KEY } from '@constants/reactQuery'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 
 export const useGetEmployees = params => {
@@ -21,6 +20,7 @@ export const useGetEmployees = params => {
 
 export const useCreateEmployee = () => {
   const queryClient = useQueryClient()
+  const { t } = useTranslation('translation')
 
   return useMutation({
     mutationFn: data => createEmployeeApi(data),
@@ -30,27 +30,45 @@ export const useCreateEmployee = () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.EMPLOYEE_PROJECTS] })
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.MANAGERS] })
     },
-    onError: (error, variables, context) => {},
-    onSettled: (data, error, variables, context) => {},
-  })
-}
-
-export const useGetEmployeeById = id => {
-  const navigate = useNavigate()
-
-  return useQuery({
-    queryKey: [QUERY_KEY.EMPLOYEES, id],
-    queryFn: () => getEmployeeByIdApi(id),
-    onSuccess: (data, variables, context) => {},
     onError: (error, variables, context) => {
-      navigate('/404')
+      if (error.response) {
+        switch (error.response.data.status) {
+          case 'code_exists':
+            showToast(t('message.code_exist'), 'warning')
+            break
+          case 'email_exists':
+            showToast(t('message.email_exist'), 'warning')
+            break
+          case 'phone_exists':
+            showToast(t('message.phone_exist'), 'warning')
+            break
+          case 'identity_exists':
+            showToast(t('message.identity_exist'), 'warning')
+            break
+
+          default:
+            break
+        }
+      }
     },
     onSettled: (data, error, variables, context) => {},
   })
 }
 
+export const useGetEmployeeById = id => {
+  return useQuery({
+    queryKey: [QUERY_KEY.EMPLOYEES, id],
+    queryFn: () => getEmployeeByIdApi(id),
+    onSuccess: (data, variables, context) => {},
+    onError: (error, variables, context) => {},
+    onSettled: (data, error, variables, context) => {},
+    retry: false,
+  })
+}
+
 export const useUpdateEmployee = () => {
   const queryClient = useQueryClient()
+  const { t } = useTranslation('translation')
 
   return useMutation({
     mutationFn: ({ id, data }) => updateEmployeeApi(id, data),
@@ -62,7 +80,35 @@ export const useUpdateEmployee = () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.EMPLOYEE_PROJECTS] })
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.MANAGERS] })
     },
-    onError: (error, variables, context) => {},
+    onError: (error, variables, context) => {
+      if (error.response) {
+        switch (error.response.data.status) {
+          case 'code_exists':
+            showToast(t('message.code_exist'), 'warning')
+            break
+          case 'email_exists':
+            showToast(t('message.email_exist'), 'warning')
+            break
+          case 'phone_exists':
+            showToast(t('message.phone_exist'), 'warning')
+            break
+          case 'identity_exists':
+            showToast(t('message.identity_exist'), 'warning')
+            break
+          case 'employee_in_project':
+            showToast(
+              t('message.employee_in_project', {
+                projectName: error.response.data.project_name,
+              }),
+              'error'
+            )
+            break
+
+          default:
+            break
+        }
+      }
+    },
     onSettled: (data, error, variables, context) => {},
   })
 }
@@ -78,10 +124,10 @@ export const useDeleteEmployee = () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.DASHBOARD] })
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.EMPLOYEE_PROJECTS] })
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.MANAGERS] })
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.PROJECTS] })
     },
     onError: (error, variables, context) => {
       if (error.response) {
-        console.log(error.response.data)
         if (error.response.data.status === 'required_manager') {
           showToast(
             t('message.Delete_employee_fail_manager', {

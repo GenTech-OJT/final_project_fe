@@ -12,10 +12,10 @@ import {
   Tooltip,
   Typography,
 } from 'antd'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { CalendarOutlined, EyeOutlined } from '@ant-design/icons'
+import { CalendarOutlined, EyeOutlined, UserOutlined } from '@ant-design/icons'
 import Breadcrumb from '@components/admin/Breadcrumb/Breadcrumb'
 import { CustomSearch } from '@components/custom/CustomTable'
 import {
@@ -24,7 +24,7 @@ import {
 } from '@hooks/useEmployee'
 import ExportDocx from '@pages/CV/cv'
 import moment from 'moment'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import './Detail.css'
 
 const { TabPane } = Tabs
@@ -32,8 +32,15 @@ const { TabPane } = Tabs
 const EmployeeDetail = () => {
   const { id } = useParams()
   const [searchText, setSearchText] = useState('')
+  const navigate = useNavigate()
 
-  const { data: employee_details, isLoading } = useGetEmployeeById(id)
+  const { data: employee_details, isLoading, isError } = useGetEmployeeById(id)
+
+  useEffect(() => {
+    if (isError) {
+      navigate('/404')
+    }
+  }, [isError, navigate])
 
   const { data: dataProject, isLoading: isLoadingProject } =
     useGetProjectsByEmployeeId(id, searchText)
@@ -106,10 +113,12 @@ const EmployeeDetail = () => {
             <Row gutter={{ sm: 24, md: 24 }} className="info_employee">
               <Col sm={24} lg={12}>
                 <Flex>
-                  <img
-                    src={employee_details?.avatar}
+                  <Avatar
+                    src={employee_details.avatar}
                     alt="Employee Avatar"
                     className="avt"
+                    icon={<UserOutlined />}
+                    size={95}
                   />
                   <div className="employee_title">
                     <p className="employee_name">{employee_details?.name}</p>

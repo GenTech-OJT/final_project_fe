@@ -71,14 +71,17 @@ const EditEmployee = () => {
     isManagerFormat = false
   }
   useEffect(() => {
-    const filteredList = managers?.filter(
-      manager => manager.manager !== employee?.manager?.id
-    )
-    // console.log(managers)
-    // console.log(employee?.manager?.id)
+    const filteredList = managers?.filter(managerId => {
+      // Loại bỏ manager hiện tại nếu is_manager là true
+      return (
+        managerId.manager !== employee?.manager?.id &&
+        (!employee?.is_manager || managerId.id !== employee?.id)
+      )
+    })
 
     setFilteredManagers(filteredList)
-  }, [managers, employee?.manager?.id])
+  }, [managers, employee?.manager?.id, employee?.id, employee?.is_manager])
+
   const initialValues = {
     name: employee?.name,
     email: employee?.email,
@@ -121,8 +124,6 @@ const EditEmployee = () => {
     gender: Yup.string(),
     status: Yup.string(),
     position: Yup.string(),
-    manager: Yup.string(),
-
     is_manager: Yup.bool(),
     skills: Yup.array()
       .of(
@@ -181,8 +182,7 @@ const EditEmployee = () => {
       showToast(t('message.edit_employee_success'), 'success')
       navigate('/admin/employees')
     } catch (error) {
-      console.error('Error creating employee:', error)
-      showToast(t('message.create_employee_fail'), 'error')
+      showToast(t('message.edit_employee_fail'), 'error')
     }
   }
 
@@ -467,6 +467,9 @@ const EditEmployee = () => {
                           onBlur={handleBlur}
                           value={values.manager}
                         >
+                          <Select.Option key="none" value={null}>
+                            {t('employee.none_of_these')}
+                          </Select.Option>
                           {filteredManagers?.map(m => (
                             <Select.Option key={m.id} value={m.id}>
                               {m.name}

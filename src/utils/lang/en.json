@@ -25,6 +25,7 @@
     "action": "Action"
   },
   "message": {
+    "status_update_failed": "Change status failed!",
     "activated_successfully": "Activated Successfully",
     "deactivated_successfully": "Deactivated Successfully",
     "notfound_content": "The page you are trying to access cannot be found at the moment.",
@@ -40,6 +41,7 @@
     "Employee_deleted_successfully": "Employee deleted successfully",
     "Employee_deleted_fail": "Error deleting employee. Please try again!",
     "edit_employee_success": "Update employee successfully",
+    "edit_employee_fail": "Error update employee. Please try again!",
     "create_project_success": "Project created successfully",
     "create_project_fail": "Error creating project. Please try again!",
     "Update_project_success": "Project update successfully",
@@ -48,8 +50,13 @@
     "Project_deleted_fail": "Error deleting project. Please try again!",
     "yes": "Yes",
     "no": "No",
-    "Delete_employee_fail_manager": "This employee is the manager of project {{projectName}}",
-    "Delete_employee_fail_employees": "This employee is the only employee of the project {{projectName}}"
+    "Delete_employee_fail_manager": "This employee is the manager of project {{projectName}}!",
+    "Delete_employee_fail_employees": "This employee is the only employee of the project {{projectName}}!",
+    "code_exist": "Code already exists!",
+    "email_exist": "Mail already exists!",
+    "phone_exist": "Phone already exists!",
+    "identity_exist": "Identity already exists!",
+    "employee_in_project": "This employee is in the project {{projectName}} so cannot be inactive!"
   },
   "validate": {
     "name_validate": "Please input a valid name!",

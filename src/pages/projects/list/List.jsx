@@ -1,5 +1,10 @@
 /* eslint-disable no-undef */
-import { DeleteOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons'
+import {
+  DeleteOutlined,
+  EditOutlined,
+  EyeOutlined,
+  UserOutlined,
+} from '@ant-design/icons'
 import { CustomSearch, CustomTable } from '@components/custom/CustomTable'
 import { useGetProjects } from '@hooks/useProject'
 import { Avatar, Button, Empty, Tooltip } from 'antd'
@@ -115,7 +120,7 @@ const ProjectList = () => {
         <Avatar.Group maxCount={2} size="small">
           {employees.filter(hasLeavingTime).map(employee => (
             <Tooltip title={employee.name} key={employee.id}>
-              <Avatar src={employee.avatar} />
+              <Avatar src={employee.avatar} icon={<UserOutlined />} />
             </Tooltip>
           ))}
         </Avatar.Group>

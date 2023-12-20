@@ -25,6 +25,7 @@
     "action": "Thao Tác"
   },
   "message": {
+    "status_update_failed": "Cập nhật trạng thái thất bại, vui lòng thử lại!",
     "activated_successfully": "Đã Kích Hoạt Thành Công",
     "deactivated_successfully": "Đã Vô Hiệu Hóa Thành Công",
     "notfound_content": "Trang bạn đang cố truy cập không thể được tìm thấy vào lúc này.",
@@ -40,6 +41,7 @@
     "Employee_deleted_successfully": "Xóa nhân viên thành công",
     "Employee_deleted_fail": "Xóa nhân viên thất bại, vui lòng thử lại!",
     "edit_employee_success": "Cập nhật nhân viên Thành Công",
+    "edit_employee_fail": "Lỗi khi cập nhật nhân viên. Vui lòng thử lại!!",
     "create_project_success": "Tạo dự án thành công",
     "create_project_fail": "Lỗi khi tạo dự án. Vui lòng thử lại!",
     "Update_project_success": "Cập nhật thông tin dự án thành công",
@@ -48,8 +50,13 @@
     "delete_project_fail": "Lỗi khi xóa dự án. Vui lòng thử lại!",
     "yes": "Có",
     "no": "Không",
-    "Delete_employee_fail_manager": "Nhân viên này đang là quản lý của dự án {{projectName}}",
-    "Delete_employee_fail_employees": "Nhân viên này đang là nhân viên duy nhất của dự án {{projectName}}"
+    "Delete_employee_fail_manager": "Nhân viên này đang là quản lý của dự án {{projectName}}!",
+    "Delete_employee_fail_employees": "Nhân viên này đang là nhân viên duy nhất của dự án {{projectName}}!",
+    "code_exist": "Mã đã tồn tại!",
+    "email_exist": "Mail đã tồn tại!",
+    "phone_exist": "Sđt đã tồn tại!",
+    "identity_exist": "CCCD đã tồn tại!",
+    "employee_in_project": "Nhân viên này đang ở trong dự án {{projectName}} nên không thể vô hiệu hoá!"
   },
   "validate": {
     "name_validate": "Vui lòng nhập tên hợp lệ",
