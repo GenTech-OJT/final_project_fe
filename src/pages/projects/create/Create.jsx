@@ -85,6 +85,10 @@ const CreateProject = () => {
     },
   ]
 
+  const activeEmployees = employees?.data?.filter(
+    employee => employee.status === 'active'
+  )
+
   const initialValues = {
     name: '',
     manager: '',
@@ -316,7 +320,7 @@ const CreateProject = () => {
                       setFieldValue('employees', selectedMembers)
                     }}
                   >
-                    {employees?.data?.map(e => (
+                    {activeEmployees?.map(e => (
                       <Select.Option key={e.id} value={e.id}>
                         {e.name}
                       </Select.Option>
