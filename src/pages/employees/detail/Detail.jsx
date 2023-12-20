@@ -387,7 +387,10 @@ const EmployeeDetail = () => {
                       >
                         {item.employees.map(employee => (
                           <Tooltip title={employee?.name} key={employee?.id}>
-                            <Avatar src={employee?.avatar} />
+                            <Avatar
+                              icon={<UserOutlined />}
+                              src={employee?.avatar}
+                            />
                           </Tooltip>
                         ))}
                       </Avatar.Group>,
