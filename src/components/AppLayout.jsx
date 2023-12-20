@@ -17,12 +17,14 @@ import logoImage from '../assets/img/GenTech-Logo.png'
 import { setSelectedKey } from '../redux/Slice/menuSlice'
 import './AppLayout.css'
 import Spinner from './admin/Spinner/Spinner'
+import Modal from 'antd/lib/modal/Modal'
 
 const { Header, Sider, Content } = Layout
 
 const AppLayout = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false)
   const [isImageSmall, setIsImageSmall] = useState(false)
+  const [showLogoutModal, setShowLogoutModal] = useState(false)
   const {
     token: { colorBgContainer },
   } = theme.useToken()
@@ -61,8 +63,29 @@ const AppLayout = ({ children }) => {
   const handleClick = () => {
     navigate('/admin/dashboard')
   }
+  const handleLogout = () => {
+    setShowLogoutModal(true)
+  }
   return (
     <Layout style={{ minHeight: '100vh' }}>
+      <Modal
+        title={t('title.logout_Modal')}
+        okText={t('message.yes')}
+        cancelText={t('message.no')}
+        visible={showLogoutModal}
+        onOk={() => {
+          dispatch(logout())
+          localStorage.removeItem('accessToken')
+          localStorage.removeItem('refreshToken')
+          showToast(t('message.logout'), 'success')
+          setShowLogoutModal(false)
+        }}
+        onCancel={() => {
+          setShowLogoutModal(false)
+        }}
+      >
+        <p>{t('message.logout_Modal_Message')}</p>
+      </Modal>
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <Header
           style={{
@@ -90,10 +113,7 @@ const AppLayout = ({ children }) => {
           selectedKeys={[selectedKey]}
           onClick={item => {
             if (item.key === '/logout') {
-              dispatch(logout())
-              localStorage.removeItem('accessToken')
-              localStorage.removeItem('refreshToken')
-              showToast(t('message.logout'), 'success')
+              handleLogout()
             } else {
               localStorage.setItem('selectedKey', item.key)
               dispatch(setSelectedKey(item.key))

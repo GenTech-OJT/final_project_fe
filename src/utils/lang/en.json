@@ -58,7 +58,8 @@
     "phone_exist": "Phone already exists!",
     "identity_exist": "Identity already exists!",
     "employee_in_project": "This employee is in the project {{projectName}} so cannot be inactive!",
-    "employee_in_manager": "This employee is the manager of employee {{employeeName}}!"
+    "employee_in_manager": "This employee is the manager of employee {{employeeName}}!",
+    "logout_Modal_Message": "Do you want to log out?"
   },
   "validate": {
     "name_validate": "Please input a valid name!",
@@ -106,7 +107,8 @@
     "create_employee": "CREATE EMPLOYEE",
     "edit_employee": "EDIT EMPLOYEE",
     "sign_in": "SIGN IN",
-    "timeline": "Project Timeline"
+    "timeline": "Project Timeline",
+    "logout_Modal": "Confirm logout"
   },
   "employee": {
     "name_employee": "Name",
