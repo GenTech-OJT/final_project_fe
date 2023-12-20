@@ -42,9 +42,7 @@ export const useGetEmployeeById = id => {
     queryKey: [QUERY_KEY.EMPLOYEES, id],
     queryFn: () => getEmployeeByIdApi(id),
     onSuccess: (data, variables, context) => {},
-    onError: (error, variables, context) => {
-      navigate('/404')
-    },
+    onError: (error, variables, context) => {},
     onSettled: (data, error, variables, context) => {},
   })
 }
@@ -78,6 +76,7 @@ export const useDeleteEmployee = () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.DASHBOARD] })
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.EMPLOYEE_PROJECTS] })
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.MANAGERS] })
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.PROJECTS] })
     },
     onError: (error, variables, context) => {
       if (error.response) {
