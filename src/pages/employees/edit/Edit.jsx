@@ -324,7 +324,6 @@ const EditEmployee = () => {
                     <Input
                       name="identity"
                       value={values.identity}
-                      disabled={true}
                       onChange={handleChange}
                       onBlur={handleBlur}
                     />
