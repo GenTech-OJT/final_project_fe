@@ -1,3 +1,4 @@
+import { UserOutlined } from '@ant-design/icons'
 import Breadcrumb from '@components/admin/Breadcrumb/Breadcrumb'
 import { useGetEmployeeById } from '@hooks/useEmployee'
 import { useGetProjectById } from '@hooks/useProject'
@@ -33,11 +34,8 @@ const DetailProject = () => {
 
   const joinedEmployees = projectDetail?.employees || []
 
-  console.log(projectDetail)
   let badgeStatus
   const status = projectDetail.status
-  const technicalNames =
-    projectDetail.technical?.map(technical => technical.name) || []
 
   if (status === 'In Progress') {
     badgeStatus = (
@@ -67,9 +65,9 @@ const DetailProject = () => {
     return colors[index % colors.length]
   }
 
-  const technicalTags = technicalNames.map(technicalName => (
-    <Tag key={technicalName.id} color={getTagColor(technicalName.id)}>
-      {technicalName.name}
+  const technicalTags = projectDetail.technical.map(t => (
+    <Tag key={t.id} color={getTagColor(t.id)}>
+      {t.name}
     </Tag>
   ))
 
@@ -96,6 +94,7 @@ const DetailProject = () => {
       key: 'name',
       label: t('project.name'),
       children: projectDetail?.name,
+      labelStyle: { fontWeight: 'bold' },
     },
     {
       key: 'manager',
@@ -107,11 +106,13 @@ const DetailProject = () => {
         </div>
       ),
       span: 2,
+      labelStyle: { fontWeight: 'bold' },
     },
     {
       key: 'start_date',
-
       label: t('project.start_date'),
+      labelStyle: { fontWeight: 'bold' },
+
       children: moment(projectDetail?.start_date).format('YYYY-MM-DD'),
     },
     {
@@ -119,18 +120,21 @@ const DetailProject = () => {
       label: t('project.end_date'),
       children: moment(projectDetail?.end_date).format('YYYY-MM-DD'),
       span: 2,
+      labelStyle: { fontWeight: 'bold' },
     },
     {
       key: 'status',
       label: t('project.status'),
       children: badgeStatus,
       span: 2,
+      labelStyle: { fontWeight: 'bold' },
     },
     {
       key: 'technicals',
       label: t('project.technicals'),
       children: <Space>{technicalTags}</Space>,
       span: 2,
+      labelStyle: { fontWeight: 'bold' },
     },
     {
       key: 'descriptions',
@@ -140,6 +144,7 @@ const DetailProject = () => {
       ) : (
         <span>{t('employee_details.no_description')}</span>
       ),
+      labelStyle: { fontWeight: 'bold' },
     },
   ]
 
@@ -157,7 +162,7 @@ const DetailProject = () => {
           <Row gutter={[16, 16]}>
             <Col xs={24} sm={12} lg={12} xl={12}>
               <Card
-                title="Project Manager"
+                title={t('project_details.project_manager')}
                 bordered
                 style={{
                   backgroundColor: '#f0f2f5',
@@ -175,7 +180,7 @@ const DetailProject = () => {
             </Col>
             <Col xs={24} sm={12} lg={12} xl={12}>
               <Card
-                title="Team Members"
+                title={t('project_details.team_member')}
                 bordered
                 style={{
                   backgroundColor: '#f0f2f5',
@@ -188,7 +193,7 @@ const DetailProject = () => {
                       key={employee.id}
                       style={{ display: 'flex', alignItems: 'center' }}
                     >
-                      <Avatar src={employee?.avatar} />
+                      <Avatar icon={<UserOutlined />} src={employee?.avatar} />
                       <div style={{ marginLeft: '8px' }}>{employee.name}</div>
                     </div>
                   ))}

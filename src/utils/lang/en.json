@@ -214,7 +214,8 @@
     "start_date": "Start Date",
     "end_date": "End Date",
     "status": "Status",
-    "action": "Action"
+    "action": "Action",
+    "project_manager": "Project Manager"
   },
   "dashboard_page": {
     "skills": "Skills",
