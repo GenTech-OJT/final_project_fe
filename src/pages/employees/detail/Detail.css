@@ -145,3 +145,9 @@
     margin-bottom: 30px;
   }
 }
+
+@media only screen and (max-width: 1509px) {
+  .card-responsive-role {
+    height: 45px;
+  }
+}

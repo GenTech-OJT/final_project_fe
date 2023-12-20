@@ -46,6 +46,7 @@ const EmployeeDetail = () => {
 
   const { t } = useTranslation('translation')
 
+  console.log(dataProject)
   const getStatusDotColor = () => {
     return employee_details.status === 'active' ? 'green' : 'red'
   }
@@ -395,7 +396,7 @@ const EmployeeDetail = () => {
                         ))}
                       </Avatar.Group>,
                       <span key={'date'} className="pro_date">
-                        <CalendarOutlined />{' '}
+                        <CalendarOutlined />
                         {moment(item.start_date).format('YYYY-MM-DD')}
                       </span>,
                     ]}
@@ -409,9 +410,13 @@ const EmployeeDetail = () => {
                             justifyContent: 'space-between',
                           }}
                         >
-                          <Tag color="error">
-                            {item.currentEmployee.position}
-                          </Tag>
+                          <Typography.Title
+                            level={4}
+                            className="pro_title"
+                            style={{ margin: 0 }}
+                          >
+                            {item.name}
+                          </Typography.Title>
                           <a
                             href={`/admin/projects/detail/${item.id}`}
                             className="pro_eye"
@@ -420,10 +425,8 @@ const EmployeeDetail = () => {
                           </a>
                         </Space>
                       </Col>
-                      <Col span={24}>
-                        <Typography.Title level={4} className="pro_title">
-                          {item.name}
-                        </Typography.Title>
+
+                      <Col>
                         {item.status === 'Pending' && (
                           <Tag color="#faad14">
                             {t('project.pending_status')}
@@ -443,7 +446,19 @@ const EmployeeDetail = () => {
                           <Tag color="#52c41a">{t('project.done_status')}</Tag>
                         )}
                       </Col>
-
+                      <Col span={24} className="card-responsive-role">
+                        {item.currentEmployee.role.map((role, index) => (
+                          <Tag
+                            style={{ marginBottom: '5px' }}
+                            key={index}
+                            color={
+                              role === 'Project Manager' ? 'green' : 'error'
+                            }
+                          >
+                            {role}
+                          </Tag>
+                        ))}
+                      </Col>
                       <Col
                         style={{ height: '70px' }}
                         span={24}
