@@ -176,8 +176,8 @@ const generateEmployeeTimelineItems = (project, t) => {
                       boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)',
                       background: 'rgb(240, 240, 255)',
                     }}
-                    data-aos="zoom-in-down"
-                    data-aos-duration="1500"
+                    // data-aos="zoom-in-down"
+                    // data-aos-duration="1500"
                   >
                     <Row gutter={[16, 16]}>
                       <Col span={24}>
