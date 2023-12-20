@@ -105,7 +105,7 @@ const CreateEmployee = () => {
     status: 'active',
     is_manager: false,
     position: defaultPosition,
-    manager: '',
+    manager: null,
     skills: [{ skill: '', experience: '' }],
     description: '',
   }
@@ -133,7 +133,6 @@ const CreateEmployee = () => {
     status: Yup.string(),
     position: Yup.string(),
     is_manager: Yup.bool(),
-    manager: Yup.string(),
     skills: Yup.array()
       .of(
         Yup.object().shape({
