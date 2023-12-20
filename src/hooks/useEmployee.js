@@ -20,6 +20,7 @@ export const useGetEmployees = params => {
 
 export const useCreateEmployee = () => {
   const queryClient = useQueryClient()
+  const { t } = useTranslation('translation')
 
   return useMutation({
     mutationFn: data => createEmployeeApi(data),
@@ -29,7 +30,27 @@ export const useCreateEmployee = () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.EMPLOYEE_PROJECTS] })
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.MANAGERS] })
     },
-    onError: (error, variables, context) => {},
+    onError: (error, variables, context) => {
+      if (error.response) {
+        switch (error.response.data.status) {
+          case 'code_exists':
+            showToast(t('message.code_exist'), 'warning')
+            break
+          case 'email_exists':
+            showToast(t('message.email_exist'), 'warning')
+            break
+          case 'phone_exists':
+            showToast(t('message.phone_exist'), 'warning')
+            break
+          case 'identity_exists':
+            showToast(t('message.identity_exist'), 'warning')
+            break
+
+          default:
+            break
+        }
+      }
+    },
     onSettled: (data, error, variables, context) => {},
   })
 }
@@ -47,6 +68,7 @@ export const useGetEmployeeById = id => {
 
 export const useUpdateEmployee = () => {
   const queryClient = useQueryClient()
+  const { t } = useTranslation('translation')
 
   return useMutation({
     mutationFn: ({ id, data }) => updateEmployeeApi(id, data),
@@ -58,7 +80,27 @@ export const useUpdateEmployee = () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.EMPLOYEE_PROJECTS] })
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.MANAGERS] })
     },
-    onError: (error, variables, context) => {},
+    onError: (error, variables, context) => {
+      if (error.response) {
+        switch (error.response.data.status) {
+          case 'code_exists':
+            showToast(t('message.code_exist'), 'warning')
+            break
+          case 'email_exists':
+            showToast(t('message.email_exist'), 'warning')
+            break
+          case 'phone_exists':
+            showToast(t('message.phone_exist'), 'warning')
+            break
+          case 'identity_exists':
+            showToast(t('message.identity_exist'), 'warning')
+            break
+
+          default:
+            break
+        }
+      }
+    },
     onSettled: (data, error, variables, context) => {},
   })
 }

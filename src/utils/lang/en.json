@@ -49,7 +49,11 @@
     "yes": "Yes",
     "no": "No",
     "Delete_employee_fail_manager": "This employee is the manager of project {{projectName}}",
-    "Delete_employee_fail_employees": "This employee is the only employee of the project {{projectName}}"
+    "Delete_employee_fail_employees": "This employee is the only employee of the project {{projectName}}",
+    "code_exist": "Code already exists!",
+    "email_exist": "Mail already exists!",
+    "phone_exist": "Phone already exists!",
+    "identity_exists": "Identity already exists!"
   },
   "validate": {
     "name_validate": "Please input a valid name!",

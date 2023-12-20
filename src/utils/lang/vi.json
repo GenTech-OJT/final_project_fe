@@ -49,7 +49,11 @@
     "yes": "Có",
     "no": "Không",
     "Delete_employee_fail_manager": "Nhân viên này đang là quản lý của dự án {{projectName}}",
-    "Delete_employee_fail_employees": "Nhân viên này đang là nhân viên duy nhất của dự án {{projectName}}"
+    "Delete_employee_fail_employees": "Nhân viên này đang là nhân viên duy nhất của dự án {{projectName}}",
+    "code_exist": "Mã đã tồn tại!",
+    "email_exist": "Mail đã tồn tại!",
+    "phone_exist": "Sđt đã tồn tại!",
+    "identity_exists": "CCCD đã tồn tại!"
   },
   "validate": {
     "name_validate": "Vui lòng nhập tên hợp lệ",
