@@ -17,7 +17,6 @@ import { useTranslation } from 'react-i18next'
 
 import { CalendarOutlined, EyeOutlined, UserOutlined } from '@ant-design/icons'
 import Breadcrumb from '@components/admin/Breadcrumb/Breadcrumb'
-import { CustomSearch } from '@components/custom/CustomTable'
 import {
   useGetEmployeeById,
   useGetProjectsByEmployeeId,
@@ -375,9 +374,6 @@ const EmployeeDetail = () => {
         {/* next page */}
 
         <TabPane tab={<span>{t('employee_details.project')}</span>} key="3">
-          <Row>
-            <CustomSearch />
-          </Row>
           <Row gutter={[16, 16]}>
             {dataProject.length > 0 ? (
               dataProject.map(item => (
@@ -445,7 +441,11 @@ const EmployeeDetail = () => {
                         )}
                       </Col>
 
-                      <Col span={24} className="pro_description">
+                      <Col
+                        style={{ height: '70px' }}
+                        span={24}
+                        className="pro_description"
+                      >
                         {item.description ? (
                           item.description
                         ) : (
