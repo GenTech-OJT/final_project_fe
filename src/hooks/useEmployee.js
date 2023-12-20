@@ -1,13 +1,13 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { QUERY_KEY } from '@constants/reactQuery'
 import {
-  getEmployeesApi,
   createEmployeeApi,
-  getEmployeeByIdApi,
-  updateEmployeeApi,
   deleteEmployeeApi,
+  getEmployeeByIdApi,
+  getEmployeesApi,
   getProjectsByEmployeeIdApi,
+  updateEmployeeApi,
 } from '@api/employeeApi'
+import { QUERY_KEY } from '@constants/reactQuery'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
 
 export const useGetEmployees = params => {
@@ -75,6 +75,7 @@ export const useDeleteEmployee = () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.DASHBOARD] })
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.EMPLOYEE_PROJECTS] })
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.MANAGERS] })
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.PROJECTS] })
     },
     onError: (error, variables, context) => {},
     onSettled: (data, error, variables, context) => {},
