@@ -103,7 +103,14 @@ export const useUpdateEmployee = () => {
               'error'
             )
             break
-
+          case 'employee_in_manager':
+            showToast(
+              t('message.employee_in_manager', {
+                employeeName: error.response.data.employee_name,
+              }),
+              'error'
+            )
+            break
           default:
             break
         }

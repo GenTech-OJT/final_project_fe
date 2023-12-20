@@ -94,6 +94,7 @@ const DetailProject = () => {
       key: 'name',
       label: t('project.name'),
       children: projectDetail?.name,
+      labelStyle: { fontWeight: 'bold' },
     },
     {
       key: 'manager',
@@ -105,11 +106,13 @@ const DetailProject = () => {
         </div>
       ),
       span: 2,
+      labelStyle: { fontWeight: 'bold' },
     },
     {
       key: 'start_date',
-
       label: t('project.start_date'),
+      labelStyle: { fontWeight: 'bold' },
+
       children: moment(projectDetail?.start_date).format('YYYY-MM-DD'),
     },
     {
@@ -117,18 +120,21 @@ const DetailProject = () => {
       label: t('project.end_date'),
       children: moment(projectDetail?.end_date).format('YYYY-MM-DD'),
       span: 2,
+      labelStyle: { fontWeight: 'bold' },
     },
     {
       key: 'status',
       label: t('project.status'),
       children: badgeStatus,
       span: 2,
+      labelStyle: { fontWeight: 'bold' },
     },
     {
       key: 'technicals',
       label: t('project.technicals'),
       children: <Space>{technicalTags}</Space>,
       span: 2,
+      labelStyle: { fontWeight: 'bold' },
     },
     {
       key: 'descriptions',
@@ -138,6 +144,7 @@ const DetailProject = () => {
       ) : (
         <span>{t('employee_details.no_description')}</span>
       ),
+      labelStyle: { fontWeight: 'bold' },
     },
   ]
 

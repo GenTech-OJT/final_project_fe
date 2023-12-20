@@ -40,6 +40,7 @@
     "create_employee_fail": "Error creating employee. Please try again!",
     "Employee_deleted_successfully": "Employee deleted successfully",
     "Employee_deleted_fail": "Error deleting employee. Please try again!",
+    "upload_avatar_employee_fail": "Error upload avatar. Please try again!",
     "edit_employee_success": "Update employee successfully",
     "edit_employee_fail": "Error update employee. Please try again!",
     "create_project_success": "Project created successfully",
@@ -56,7 +57,8 @@
     "email_exist": "Mail already exists!",
     "phone_exist": "Phone already exists!",
     "identity_exist": "Identity already exists!",
-    "employee_in_project": "This employee is in the project {{projectName}} so cannot be inactive!"
+    "employee_in_project": "This employee is in the project {{projectName}} so cannot be inactive!",
+    "employee_in_manager": "This employee is the manager of employee {{employeeName}}!"
   },
   "validate": {
     "name_validate": "Please input a valid name!",

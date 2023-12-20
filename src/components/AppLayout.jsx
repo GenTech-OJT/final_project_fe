@@ -173,6 +173,8 @@ const AppLayout = ({ children }) => {
             padding: 24,
             minHeight: 280,
             background: colorBgContainer,
+            overflow: 'auto',
+            maxHeight: '100vh',
           }}
         >
           <Suspense fallback={<Spinner />}>{children}</Suspense>
