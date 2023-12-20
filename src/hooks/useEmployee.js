@@ -36,14 +36,13 @@ export const useCreateEmployee = () => {
 }
 
 export const useGetEmployeeById = id => {
-  const navigate = useNavigate()
-
   return useQuery({
     queryKey: [QUERY_KEY.EMPLOYEES, id],
     queryFn: () => getEmployeeByIdApi(id),
     onSuccess: (data, variables, context) => {},
     onError: (error, variables, context) => {},
     onSettled: (data, error, variables, context) => {},
+    retry: false,
   })
 }
 

@@ -51,6 +51,7 @@ const AppRoutes = () => {
           )
         }
       />
+      <Route path="/404" element={<NotFoundPage />} />
       <Route path="/admin" element={<PrivateRoute component={<Admin />} />}>
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="projects" element={<Projects />} />
