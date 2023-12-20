@@ -12,21 +12,20 @@ import {
   Tooltip,
   Typography,
 } from 'antd'
-import Title from 'antd/es/skeleton/Title'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { CalendarOutlined, EyeOutlined } from '@ant-design/icons'
+import { CalendarOutlined, EyeOutlined, UserOutlined } from '@ant-design/icons'
 import Breadcrumb from '@components/admin/Breadcrumb/Breadcrumb'
+import { CustomSearch } from '@components/custom/CustomTable'
 import {
   useGetEmployeeById,
   useGetProjectsByEmployeeId,
 } from '@hooks/useEmployee'
+import ExportDocx from '@pages/CV/cv'
 import moment from 'moment'
 import { useNavigate, useParams } from 'react-router-dom'
-import { CustomSearch } from '@components/custom/CustomTable'
 import './Detail.css'
-import ExportDocx from '@pages/CV/cv'
 
 const { TabPane } = Tabs
 
@@ -114,10 +113,12 @@ const EmployeeDetail = () => {
             <Row gutter={{ sm: 24, md: 24 }} className="info_employee">
               <Col sm={24} lg={12}>
                 <Flex>
-                  <img
+                  <Avatar
                     src={employee_details.avatar}
                     alt="Employee Avatar"
                     className="avt"
+                    icon={<UserOutlined />}
+                    size={95}
                   />
                   <div className="employee_title">
                     <p className="employee_name">{employee_details?.name}</p>

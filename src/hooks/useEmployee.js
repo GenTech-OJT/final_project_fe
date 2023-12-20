@@ -1,14 +1,14 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { QUERY_KEY } from '@constants/reactQuery'
 import {
-  getEmployeesApi,
   createEmployeeApi,
-  getEmployeeByIdApi,
-  updateEmployeeApi,
   deleteEmployeeApi,
+  getEmployeeByIdApi,
+  getEmployeesApi,
   getProjectsByEmployeeIdApi,
+  updateEmployeeApi,
 } from '@api/employeeApi'
 import { showToast } from '@components/toast/ToastCustom'
+import { QUERY_KEY } from '@constants/reactQuery'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 
 export const useGetEmployees = params => {
