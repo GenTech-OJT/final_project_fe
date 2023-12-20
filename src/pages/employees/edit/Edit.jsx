@@ -49,7 +49,6 @@ const EditEmployee = () => {
   const { data: positions } = useGetPositions()
   const { data: managers } = useGetManagers()
   const [filteredManagers, setFilteredManagers] = useState([])
-  const [filteredManagers, setFilteredManagers] = useState([])
 
   const { mutateAsync: updateEmployeeApi, isPending } = useUpdateEmployee()
   const forceUpdate = useForceUpdate()
@@ -469,6 +468,9 @@ const EditEmployee = () => {
                           onBlur={handleBlur}
                           value={values.manager}
                         >
+                          <Select.Option key="none" value={null}>
+                            {t('employee.none_of_these')}
+                          </Select.Option>
                           {filteredManagers?.map(m => (
                             <Select.Option key={m.id} value={m.id}>
                               {m.name}
