@@ -1,8 +1,8 @@
+import Breadcrumb from '@components/admin/Breadcrumb/Breadcrumb'
 import { useGetEmployeeById } from '@hooks/useEmployee'
 import { useGetProjectById } from '@hooks/useProject'
 import {
   Avatar,
-  Badge,
   Card,
   Col,
   Descriptions,
@@ -15,9 +15,6 @@ import {
 import moment from 'moment'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router'
-import Breadcrumb from '../../../components/admin/Breadcrumb/Breadcrumb'
-
-const CustomBadge = ({ status, text }) => <Badge status={status} text={text} />
 
 const DetailProject = () => {
   const { t } = useTranslation('translation')
@@ -33,7 +30,6 @@ const DetailProject = () => {
     return <Spin spinning={true} fullscreen />
   }
 
-  const isManager = managerDetails?.manager
   const joinedEmployees = projectDetail?.employees || []
 
   console.log(projectDetail)
@@ -201,9 +197,7 @@ const DetailProject = () => {
           </Row>
         </TabPane>
 
-        <TabPane tab={t('project.timeline')} key="TimeLine">
-          <div>Content of Tab Pane 2</div>
-        </TabPane>
+        <TabPane tab={t('project.timeline')} key="TimeLine"></TabPane>
       </Tabs>
     </>
   )

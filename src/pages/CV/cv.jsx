@@ -1,19 +1,21 @@
+import {
+  useGetEmployeeById,
+  useGetProjectsByEmployeeId,
+} from '@hooks/useEmployee'
 import { Button } from 'antd'
 import {
   Document,
-  Paragraph,
-  TextRun,
-  Table,
-  TableRow,
-  TableCell,
   Packer,
+  Paragraph,
+  Table,
+  TableCell,
+  TableRow,
+  TextRun,
   WidthType,
 } from 'docx'
+import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
 import '../../pages/CV/cv.css'
-import { useGetEmployeeById } from '@hooks/useEmployee'
-import { useGetProjectsByEmployeeId } from '@hooks/useEmployee'
-import { useTranslation } from 'react-i18next'
 
 const ExportDocx = () => {
   const { id } = useParams()
@@ -150,7 +152,9 @@ const ExportDocx = () => {
                       },
                     }),
                     new TextRun({
-                      text: `Description: ${employeeProjects.description}\n`,
+                      text: employeeProjects.description
+                        ? `${employeeProjects.description}\n`
+                        : 'No Description',
                       font: {
                         name: 'Meiryo',
                       },

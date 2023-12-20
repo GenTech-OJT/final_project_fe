@@ -200,7 +200,8 @@
       "false": "Nhân viên"
     },
     "years": "năm",
-    "no_projects": "Không có dự án được phân công"
+    "no_projects": "Không có dự án được phân công",
+    "no_manager": "Không có người quản lí"
   },
   "project_details": {
     "project_name": "Tên dự án",

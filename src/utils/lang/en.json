@@ -200,7 +200,8 @@
       "false": "Employee"
     },
     "years": "years",
-    "no_projects": "No projects assigned"
+    "no_projects": "No projects assigned",
+    "no_manager": "There is no manager"
   },
   "project_details": {
     "project_name": "Project Name",

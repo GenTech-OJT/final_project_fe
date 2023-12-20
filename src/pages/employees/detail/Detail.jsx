@@ -97,6 +97,85 @@ const EmployeeDetail = () => {
     return colors[index % colors.length]
   }
 
+  const employeeDetailsDescriptions = [
+    {
+      key: 'gender',
+      label: t('employee_details.gender'),
+      children: capitalizeFirstLetter(
+        displayValue(t(`employee_details.genders.${employee_details?.gender}`))
+      ),
+      labelStyle: { fontWeight: 'bold' },
+    },
+    {
+      key: 'identity_code',
+      label: t('employee_details.identity_code'),
+      children: employee_details?.identity,
+      labelStyle: { fontWeight: 'bold' },
+    },
+    {
+      key: 'phone_number',
+      label: t('employee_details.phone_number'),
+      children: employee_details?.phone,
+      labelStyle: { fontWeight: 'bold' },
+    },
+    {
+      key: 'dob',
+      label: t('employee_details.dob'),
+      children: employee_details?.dob,
+      labelStyle: { fontWeight: 'bold' },
+    },
+    {
+      key: 'is_manager',
+      label: t('employee_details.is_manager'),
+      children: capitalizeFirstLetter(
+        displayValue(
+          t(`employee_details.is_managers.${employee_details?.is_manager}`)
+        )
+      ),
+      labelStyle: { fontWeight: 'bold' },
+    },
+    {
+      key: 'line_manager',
+      label: t('employee_details.line_manager'),
+      children: capitalizeFirstLetter(
+        displayValue(employee_details?.manager?.name) ||
+          t('employee_details.no_manager')
+      ),
+      labelStyle: { fontWeight: 'bold' },
+      span: 2,
+    },
+    {
+      key: 'skill',
+      label: t('employee_details.skill'),
+      labelStyle: { fontWeight: 'bold' },
+      children: (
+        <div>
+          {employee_details.skills.map((skill, index) => (
+            <Tag
+              key={skill.name}
+              color={getTagColor(index)}
+              style={{ padding: '5px', marginBottom: '5px' }}
+            >
+              {capitalizeFirstLetter(skill.name)} - {skill.year}{' '}
+              {t('employee_details.years')}
+            </Tag>
+          ))}
+        </div>
+      ),
+      span: 3,
+    },
+    {
+      key: 'description_employee',
+      label: t('employee_details.description_employee'),
+      children: capitalizeFirstLetter(
+        displayValue(employee_details?.description) ||
+          t('employee_details.no_description')
+      ),
+      span: 3,
+      labelStyle: { fontWeight: 'bold' },
+    },
+  ]
+
   return (
     <div className="page-container">
       <Breadcrumb items={breadcrumbItems} />
@@ -139,7 +218,7 @@ const EmployeeDetail = () => {
                   </div>
                 </Flex>
               </Col>
-              <Col sm={24} lg={12} className="simple_info">
+              <Col sm={24} lg={12} style={{ marginTop: '15px' }}>
                 <Row style={{ marginBottom: '5px' }}>
                   <p className="employee_label">
                     {t('employee_details.employee_code')}
@@ -147,21 +226,9 @@ const EmployeeDetail = () => {
                   </p>
                   <p className="employee_info">{employee_details?.code}</p>
                 </Row>
-                <Row style={{ marginBottom: '5px' }}>
-                  <p className="employee_label">
-                    {t('employee_details.line_manager')}
-                    {' : '}
-                  </p>
-                  <p className="employee_info">
-                    {employee_details.manager &&
-                      capitalizeFirstLetter(
-                        displayValue(employee_details.manager.name)
-                      )}
-                  </p>
-                </Row>
+
                 <Row style={{ marginBottom: '5px' }}>
                   <p className="employee_label">Email :</p>
-                  {/* <p className="employee_info">{employee_details.email}</p> */}
                   <p className="employee_info">
                     {capitalizeFirstLetter(
                       displayValue(employee_details?.email)
@@ -189,7 +256,7 @@ const EmployeeDetail = () => {
                     <hr className="profile_line" />
 
                     <Col span={24}>
-                      <Descriptions
+                      {/* <Descriptions
                         column={2}
                         bordered
                         className="custom-descriptions"
@@ -272,7 +339,6 @@ const EmployeeDetail = () => {
                           )}
                         </Descriptions.Item>
 
-                        {/* Add a new Descriptions.Item for Skills */}
                         <Descriptions.Item
                           label={
                             <span style={{ fontWeight: 'bold' }}>
@@ -282,8 +348,6 @@ const EmployeeDetail = () => {
                           span={2} // span to cover two columns
                           className="custom-label"
                         >
-                          {/* Map through employee_details.skills and display each skill as a Tag */}
-
                           {employee_details.skills.map((skill, index) => (
                             <Tag
                               key={skill.name}
@@ -295,7 +359,12 @@ const EmployeeDetail = () => {
                             </Tag>
                           ))}
                         </Descriptions.Item>
-                      </Descriptions>
+                      </Descriptions> */}
+                      <Descriptions
+                        layout="vertical"
+                        bordered
+                        items={employeeDetailsDescriptions}
+                      />
                     </Col>
                   </Col>
                 </Row>

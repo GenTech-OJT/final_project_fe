@@ -141,6 +141,11 @@ const generateEmployeeTimelineItems = (project, t) => {
         const employeeIcon = (
           <UserOutlined style={{ fontSize: '20px', color: getRandomColor() }} />
         )
+        const dot = employee?.avatar ? (
+          <Avatar src={employee.avatar} />
+        ) : (
+          employeeIcon
+        )
         return employee.periods
           ? employee.periods.map(period => {
               const leavingTime = period.leaving_time
@@ -190,7 +195,7 @@ const generateEmployeeTimelineItems = (project, t) => {
                   </Card>
                 ),
                 date: moment(period.joining_time),
-                dot: <Avatar src={employee?.avatar} /> ?? employeeIcon,
+                dot: dot,
               }
             })
           : []
