@@ -56,7 +56,8 @@
     "email_exist": "Mail already exists!",
     "phone_exist": "Phone already exists!",
     "identity_exist": "Identity already exists!",
-    "employee_in_project": "This employee is in the project {{projectName}} so cannot be inactive!"
+    "employee_in_project": "This employee is in the project {{projectName}} so cannot be inactive!",
+    "employee_in_manager": "This employee is the manager of employee {{employeeName}}!"
   },
   "validate": {
     "name_validate": "Please input a valid name!",

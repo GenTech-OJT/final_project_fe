@@ -56,7 +56,8 @@
     "email_exist": "Mail đã tồn tại!",
     "phone_exist": "Sđt đã tồn tại!",
     "identity_exist": "CCCD đã tồn tại!",
-    "employee_in_project": "Nhân viên này đang ở trong dự án {{projectName}} nên không thể vô hiệu hoá!"
+    "employee_in_project": "Nhân viên này đang ở trong dự án {{projectName}} nên không thể vô hiệu hoá!",
+    "employee_in_manager": "Nhân viên này đang là quản lí của nhân viên {{employeeName}}!"
   },
   "validate": {
     "name_validate": "Vui lòng nhập tên hợp lệ",
