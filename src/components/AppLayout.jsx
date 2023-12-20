@@ -62,6 +62,7 @@ const AppLayout = ({ children }) => {
   }
   const handleClick = () => {
     navigate('/admin/dashboard')
+    dispatch(setSelectedKey('/admin/dashboard'))
   }
   const handleLogout = () => {
     setShowLogoutModal(true)
