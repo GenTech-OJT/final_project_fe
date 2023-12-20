@@ -47,7 +47,9 @@
     "Project_deleted_successfully": "Project deleted successfully",
     "Project_deleted_fail": "Error deleting project. Please try again!",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "Delete_employee_fail_manager": "This employee is the manager of project {{projectName}}",
+    "Delete_employee_fail_employees": "This employee is the only employee of the project {{projectName}}"
   },
   "validate": {
     "name_validate": "Please input a valid name!",

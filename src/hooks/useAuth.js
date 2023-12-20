@@ -7,11 +7,20 @@ import { login } from '@redux/Slice/authSlice'
 import store from '@redux/store'
 import { useDispatch } from 'react-redux'
 import { setSelectedKey } from '@redux/Slice/menuSlice'
+import { useEffect } from 'react'
 
 export const useLogin = () => {
   const navigate = useNavigate()
   const { t } = useTranslation('translation')
   const dispatch = useDispatch()
+  useEffect(() => {
+    const accessToken = localStorage.getItem('accessToken')
+
+    if (accessToken) {
+      dispatch(setSelectedKey('/admin/dashboard'))
+      navigate('/admin/dashboard')
+    }
+  }, [])
 
   return useMutation({
     mutationFn: ({ email, password }) => getLoginApi({ email, password }),

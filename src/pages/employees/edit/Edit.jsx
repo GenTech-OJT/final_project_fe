@@ -49,6 +49,7 @@ const EditEmployee = () => {
   const { data: positions } = useGetPositions()
   const { data: managers } = useGetManagers()
   const [filteredManagers, setFilteredManagers] = useState([])
+  const [filteredManagers, setFilteredManagers] = useState([])
 
   const { mutateAsync: updateEmployeeApi, isPending } = useUpdateEmployee()
   const forceUpdate = useForceUpdate()
@@ -124,7 +125,6 @@ const EditEmployee = () => {
     gender: Yup.string(),
     status: Yup.string(),
     position: Yup.string(),
-
     is_manager: Yup.bool(),
     skills: Yup.array()
       .of(

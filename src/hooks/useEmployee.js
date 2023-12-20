@@ -9,6 +9,8 @@ import {
   getProjectsByEmployeeIdApi,
 } from '@api/employeeApi'
 import { useNavigate } from 'react-router-dom'
+import { showToast } from '@components/toast/ToastCustom'
+import { useTranslation } from 'react-i18next'
 
 export const useGetEmployees = params => {
   return useQuery({
@@ -67,6 +69,7 @@ export const useUpdateEmployee = () => {
 
 export const useDeleteEmployee = () => {
   const queryClient = useQueryClient()
+  const { t } = useTranslation('translation')
 
   return useMutation({
     mutationFn: id => deleteEmployeeApi(id),
@@ -76,7 +79,26 @@ export const useDeleteEmployee = () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.EMPLOYEE_PROJECTS] })
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.MANAGERS] })
     },
-    onError: (error, variables, context) => {},
+    onError: (error, variables, context) => {
+      if (error.response) {
+        console.log(error.response.data)
+        if (error.response.data.status === 'required_manager') {
+          showToast(
+            t('message.Delete_employee_fail_manager', {
+              projectName: error.response.data.project_name,
+            }),
+            'error'
+          )
+        } else {
+          showToast(
+            t('message.Delete_employee_fail_employees', {
+              projectName: error.response.data.project_name,
+            }),
+            'error'
+          )
+        }
+      }
+    },
     onSettled: (data, error, variables, context) => {},
   })
 }
