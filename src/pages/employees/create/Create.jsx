@@ -137,7 +137,9 @@ const CreateEmployee = () => {
     skills: Yup.array()
       .of(
         Yup.object().shape({
-          skill: Yup.string().required(t('validate.skill_validate')),
+          skill: Yup.string()
+            .required(t('validate.skill_require'))
+            .matches(/^([a-zA-Z]\s*)+$/, t('validate.skill_validate')),
           experience: Yup.string()
             .required(t('validate.experience_require'))
             .matches(/^\d+(\.\d+)?$/, t('validate.experience_validate')),
