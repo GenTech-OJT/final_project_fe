@@ -12,21 +12,20 @@ import {
   Tooltip,
   Typography,
 } from 'antd'
-import Title from 'antd/es/skeleton/Title'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { CalendarOutlined, EyeOutlined } from '@ant-design/icons'
 import Breadcrumb from '@components/admin/Breadcrumb/Breadcrumb'
+import { CustomSearch } from '@components/custom/CustomTable'
 import {
   useGetEmployeeById,
   useGetProjectsByEmployeeId,
 } from '@hooks/useEmployee'
+import ExportDocx from '@pages/CV/cv'
 import moment from 'moment'
 import { useParams } from 'react-router-dom'
-import { CustomSearch } from '@components/custom/CustomTable'
 import './Detail.css'
-import ExportDocx from '@pages/CV/cv'
 
 const { TabPane } = Tabs
 
@@ -74,19 +73,19 @@ const EmployeeDetail = () => {
   if (isLoading || !employee_details || isLoadingProject) {
     return <Spin spinning={true} fullscreen />
   }
-  // Function to get vibrant colors
+  // Function to get colors
   const getTagColor = index => {
     const colors = [
       '#2a9d8f',
+      '#7cb518',
       '#6A8EAE',
-      '#5a189a',
+      '#944bbb',
+      '#219ebc',
+      '#e76f51',
+      '#f47795',
+      '#ff9100',
       '#d90429',
-      '#BFEBE5',
-      '#CFCFCF',
-      '#DFDFDF',
-      '#EFEFEF',
-      '#F9F9F9',
-      '#FFFFFF',
+      '#ef7a85',
     ]
     return colors[index % colors.length]
   }
@@ -108,14 +107,14 @@ const EmployeeDetail = () => {
               <Col sm={24} lg={12}>
                 <Flex>
                   <img
-                    src={employee_details.avatar}
+                    src={employee_details?.avatar}
                     alt="Employee Avatar"
                     className="avt"
                   />
                   <div className="employee_title">
                     <p className="employee_name">{employee_details?.name}</p>
                     <p className="employee_position">
-                      {employee_details.position}
+                      {employee_details?.position}
                     </p>
                     <div className="status-show">
                       <div
@@ -123,7 +122,7 @@ const EmployeeDetail = () => {
                         style={{ backgroundColor: getStatusDotColor() }}
                       ></div>
                       <p className="status-text">
-                        {employee_details.status === 'active'
+                        {employee_details?.status === 'active'
                           ? t('employee_details.active')
                           : t('employee_details.inactive')}
                       </p>
@@ -137,7 +136,7 @@ const EmployeeDetail = () => {
                     {t('employee_details.employee_code')}
                     {' : '}
                   </p>
-                  <p className="employee_info">{employee_details.code}</p>
+                  <p className="employee_info">{employee_details?.code}</p>
                 </Row>
                 <Row style={{ marginBottom: '5px' }}>
                   <p className="employee_label">
@@ -156,7 +155,7 @@ const EmployeeDetail = () => {
                   {/* <p className="employee_info">{employee_details.email}</p> */}
                   <p className="employee_info">
                     {capitalizeFirstLetter(
-                      displayValue(employee_details.email)
+                      displayValue(employee_details?.email)
                     )}
                   </p>
                 </Row>
@@ -197,7 +196,7 @@ const EmployeeDetail = () => {
                           {capitalizeFirstLetter(
                             displayValue(
                               t(
-                                `employee_details.genders.${employee_details.gender}`
+                                `employee_details.genders.${employee_details?.gender}`
                               )
                             )
                           )}
@@ -210,7 +209,7 @@ const EmployeeDetail = () => {
                           }
                           className="custom-label"
                         >
-                          {employee_details.identity}
+                          {employee_details?.identity}
                         </Descriptions.Item>
                         <Descriptions.Item
                           label={
@@ -220,7 +219,7 @@ const EmployeeDetail = () => {
                           }
                           className="custom-label"
                         >
-                          {employee_details.phone}
+                          {employee_details?.phone}
                         </Descriptions.Item>
 
                         <Descriptions.Item
@@ -231,7 +230,7 @@ const EmployeeDetail = () => {
                           }
                           className="custom-label"
                         >
-                          {employee_details.dob}
+                          {employee_details?.dob}
                         </Descriptions.Item>
                         <Descriptions.Item
                           label={
@@ -244,7 +243,7 @@ const EmployeeDetail = () => {
                           {capitalizeFirstLetter(
                             displayValue(
                               t(
-                                `employee_details.is_managers.${employee_details.is_manager}`
+                                `employee_details.is_managers.${employee_details?.is_manager}`
                               )
                             )
                           )}
@@ -259,7 +258,7 @@ const EmployeeDetail = () => {
                           className="custom-label"
                         >
                           {capitalizeFirstLetter(
-                            displayValue(employee_details.description) ||
+                            displayValue(employee_details?.description) ||
                               t('employee_details.no_description')
                           )}
                         </Descriptions.Item>
@@ -267,7 +266,9 @@ const EmployeeDetail = () => {
                         {/* Add a new Descriptions.Item for Skills */}
                         <Descriptions.Item
                           label={
-                            <span style={{ fontWeight: 'bold' }}>Skills</span>
+                            <span style={{ fontWeight: 'bold' }}>
+                              {t('employee_details.skill')}
+                            </span>
                           }
                           span={2} // span to cover two columns
                           className="custom-label"
@@ -347,23 +348,32 @@ const EmployeeDetail = () => {
                           {item.name}
                         </Typography.Title>
                         {item.status === 'Pending' && (
-                          <Tag color="#faad14">Pending</Tag>
+                          <Tag color="#faad14">
+                            {t('project.pending_status')}
+                          </Tag>
                         )}
                         {item.status === 'In Progress' && (
-                          <Tag color="#1677ff">In Progress</Tag>
+                          <Tag color="#1677ff">
+                            {t('project.in_progress_status')}
+                          </Tag>
                         )}
                         {item.status === 'Cancelled' && (
-                          <Tag color="#ff4d4f">Cancelled</Tag>
+                          <Tag color="#ff4d4f">
+                            {t('project.cancelled_status')}
+                          </Tag>
                         )}
                         {item.status === 'Done' && (
-                          <Tag color="#52c41a">Done</Tag>
+                          <Tag color="#52c41a">{t('project.done_status')}</Tag>
                         )}
                       </Col>
 
                       <Col span={24} className="pro_description">
-                        {item.description}
+                        {item.description ? (
+                          item.description
+                        ) : (
+                          <span>{t('employee_details.no_description')}</span>
+                        )}
                       </Col>
-                      <Col span={24}></Col>
                     </Row>
                   </Card>
                 </Col>

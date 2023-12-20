@@ -1,12 +1,27 @@
-import React from 'react'
-import { Tabs, Badge, Descriptions, Spin } from 'antd'
-import { useNavigate, useParams } from 'react-router'
-import { useGetProjectById } from '@hooks/useProject'
 import { useGetEmployeeById } from '@hooks/useEmployee'
+import { useGetProjectById } from '@hooks/useProject'
+import {
+  Avatar,
+  Badge,
+  Card,
+  Col,
+  Descriptions,
+  Row,
+  Space,
+  Spin,
+  Tabs,
+  Tag,
+} from 'antd'
+import moment from 'moment'
+import { useTranslation } from 'react-i18next'
+import { useParams } from 'react-router'
+import Breadcrumb from '../../../components/admin/Breadcrumb/Breadcrumb'
 
 const CustomBadge = ({ status, text }) => <Badge status={status} text={text} />
 
 const DetailProject = () => {
+  const { t } = useTranslation('translation')
+
   const { id } = useParams()
   const { data: projectDetail, isLoading: loadingProject } =
     useGetProjectById(id)
@@ -18,6 +33,9 @@ const DetailProject = () => {
     return <Spin spinning={true} fullscreen />
   }
 
+  const isManager = managerDetails?.manager
+  const joinedEmployees = projectDetail?.employees || []
+
   console.log(projectDetail)
   let badgeStatus
   const status = projectDetail.status
@@ -25,90 +43,169 @@ const DetailProject = () => {
     projectDetail.technical?.map(technical => technical.name) || []
 
   if (status === 'In Progress') {
-    badgeStatus = <CustomBadge status="processing" text="In Progress" />
+    badgeStatus = (
+      <Tag color="processing">{t('project.in_progress_status')}</Tag>
+    )
   } else if (status === 'Pending') {
-    badgeStatus = <CustomBadge status="warning" text="Pending" />
+    badgeStatus = <Tag color="warning">{t('project.pending_status')}</Tag>
   } else if (status === 'Cancelled') {
-    badgeStatus = <CustomBadge status="error" text="Cancelled" />
+    badgeStatus = <Tag color="error">{t('project.cancelled_status')}</Tag>
   } else if (status === 'Done') {
-    badgeStatus = <CustomBadge status="success" text="Done" />
+    badgeStatus = <Tag color="success">{t('project.done_status')}</Tag>
   }
+
+  const getTagColor = index => {
+    const colors = [
+      '#2a9d8f',
+      '#7cb518',
+      '#6A8EAE',
+      '#944bbb',
+      '#219ebc',
+      '#e76f51',
+      '#f47795',
+      '#ff9100',
+      '#d90429',
+      '#ef7a85',
+    ]
+    return colors[index % colors.length]
+  }
+
+  const technicalTags = technicalNames.map((technicalName, index) => (
+    <Tag key={index} color={getTagColor(index)}>
+      {technicalName}
+    </Tag>
+  ))
+
+  const breadcrumbItems = [
+    {
+      key: 'dashboard',
+      title: t('breadcrumbs.dashboard'),
+      route: '/admin/dashboard',
+    },
+    {
+      key: 'employees',
+      title: t('breadcrumbs.projects'),
+      route: '/admin/projects',
+    },
+    {
+      key: 'detail',
+      title: t('breadcrumbs.project_details'),
+      route: `/admin/projects/detail/${id}`,
+    },
+  ]
 
   const descritptions = [
     {
       key: 'name',
-      label: 'Project Name',
-      children: projectDetail.name,
+      label: t('project.name'),
+      children: projectDetail?.name,
     },
     {
       key: 'manager',
-      label: 'Manager',
-      children: managerDetails.name,
+      label: t('project.manager'),
+      children: (
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <Avatar src={managerDetails?.avatar} />
+          <span style={{ marginLeft: '8px' }}>{managerDetails?.name}</span>
+        </div>
+      ),
       span: 2,
     },
     {
       key: 'start_date',
-      label: 'Start Date',
-      children: projectDetail.start_date,
+
+      label: t('project.start_date'),
+      children: moment(projectDetail?.st_date).format('YYYY-MM-DD'),
     },
     {
       key: 'end_date',
-      label: 'End Date',
-      children: projectDetail.end_date,
+      label: t('project.end_date'),
+      children: moment(projectDetail?.end_date).format('YYYY-MM-DD'),
       span: 2,
     },
     {
       key: 'status',
-      label: 'Status',
+      label: t('project.status'),
       children: badgeStatus,
-      span: 3,
-    },
-    {
-      key: 'team_members',
-      label: 'Team Members',
-      children: 'Hoang, Vy',
       span: 2,
     },
     {
       key: 'technicals',
-      label: 'Technicals',
-      children: <>{technicalNames.join(', ')}</>,
+      label: t('project.technicals'),
+      children: <Space>{technicalTags}</Space>,
+      span: 2,
     },
     {
       key: 'descriptions',
-      label: 'Descriptions',
-      children: projectDetail.description,
-    },
-  ]
-
-  const tabs = [
-    {
-      key: 'Details',
-      label: 'Details',
-      content: (
-        <Descriptions
-          title="Project Details"
-          layout="vertical"
-          bordered
-          items={descritptions}
-        />
+      label: t('project.description'),
+      children: projectDetail.description ? (
+        projectDetail.description
+      ) : (
+        <span>{t('employee_details.no_description')}</span>
       ),
-    },
-    {
-      key: 'TimeLine',
-      label: 'TimeLine',
-      content: <div>Content of Tab Pane 2</div>,
     },
   ]
 
   return (
-    <Tabs defaultActiveKey="Details">
-      {tabs.map(t => (
-        <TabPane tab={t.label} key={t.key}>
-          {t.content}
+    <>
+      <Breadcrumb items={breadcrumbItems} />
+
+      <Tabs defaultActiveKey="Details">
+        <TabPane tab={t('project.detail')} key="Details">
+          <Descriptions layout="vertical" bordered items={descritptions} />
         </TabPane>
-      ))}
-    </Tabs>
+
+        {/* Add a TabPane for displaying joined members */}
+        <TabPane tab={t('project.member')} key="Members">
+          <Row gutter={[16, 16]}>
+            <Col xs={24} sm={12} lg={12} xl={12}>
+              <Card
+                title="Project Manager"
+                bordered
+                style={{
+                  backgroundColor: '#f0f2f5',
+                  marginBottom: '30px',
+                  border: '1px solid #bfbfbf',
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <Avatar src={managerDetails?.avatar} />
+                  <div style={{ marginLeft: '8px' }}>
+                    {managerDetails?.name}
+                  </div>
+                </div>
+              </Card>
+            </Col>
+            <Col xs={24} sm={12} lg={12} xl={12}>
+              <Card
+                title="Team Members"
+                bordered
+                style={{
+                  backgroundColor: '#f0f2f5',
+                  border: '1px solid #bfbfbf',
+                }}
+              >
+                <Space size={16} direction="vertical">
+                  {joinedEmployees.map(employee => (
+                    <div
+                      key={employee.id}
+                      style={{ display: 'flex', alignItems: 'center' }}
+                    >
+                      <Avatar src={employee?.avatar} />
+                      <div style={{ marginLeft: '8px' }}>{employee.name}</div>
+                    </div>
+                  ))}
+                </Space>
+              </Card>
+            </Col>
+          </Row>
+        </TabPane>
+
+        <TabPane tab={t('project.timeline')} key="TimeLine">
+          <div>Content of Tab Pane 2</div>
+        </TabPane>
+      </Tabs>
+    </>
   )
 }
 
