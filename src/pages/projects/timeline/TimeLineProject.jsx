@@ -2,10 +2,8 @@
 import { AppstoreOutlined, SwapOutlined, UserOutlined } from '@ant-design/icons'
 import { useGetProjectById } from '@hooks/useProject'
 import { Avatar, Button, Card, Col, Row, Timeline } from 'antd'
-import AOS from 'aos'
-import 'aos/dist/aos.css' // Import CSS của AOS
 import moment from 'moment'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router'
 import './Timeline.css'
@@ -19,16 +17,6 @@ const TimeLineProject = () => {
   const handleClick = () => {
     setReverse(!reverse)
   }
-  useEffect(() => {
-    AOS.init({}) // Khởi tạo AOS
-
-    // Thêm các sự kiện theo scroll nếu cần
-    window.addEventListener('scroll', AOS.refresh)
-
-    return () => {
-      window.removeEventListener('scroll', AOS.refresh)
-    }
-  }, [])
 
   const { t } = useTranslation('translation')
   const timelineItems = project
@@ -176,8 +164,6 @@ const generateEmployeeTimelineItems = (project, t) => {
                       boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)',
                       background: 'rgb(240, 240, 255)',
                     }}
-                    // data-aos="zoom-in-down"
-                    // data-aos-duration="1500"
                   >
                     <Row gutter={[16, 16]}>
                       <Col span={24}>
