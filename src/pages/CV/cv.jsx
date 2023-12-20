@@ -38,10 +38,10 @@ const ExportDocx = () => {
               children: [
                 new TextRun({
                   text: `${employeeDetails.name.toUpperCase()}\n`,
+                  size: 24,
                   bold: true,
                   font: {
                     name: 'Meiryo',
-                    size: 24,
                   },
                 }),
 
@@ -49,7 +49,6 @@ const ExportDocx = () => {
                   text: `Phone: ${employeeDetails.phone}\n`,
                   font: {
                     name: 'Meiryo',
-                    size: 24,
                   },
                   break: 1,
                 }),
@@ -57,7 +56,6 @@ const ExportDocx = () => {
                   text: `Email: ${employeeDetails.email}\n`,
                   font: {
                     name: 'Meiryo',
-                    size: 24,
                   },
                   break: 1,
                 }),
@@ -69,10 +67,10 @@ const ExportDocx = () => {
               children: [
                 new TextRun({
                   text: 'WORKING EXPERIENCE\n',
+                  size: 24,
                   bold: true,
                   font: {
                     name: 'Meiryo',
-                    size: 24,
                   },
                   break: 1,
                 }),
@@ -84,7 +82,6 @@ const ExportDocx = () => {
                   bold: true,
                   font: {
                     name: 'Meiryo',
-                    size: 24,
                   },
                   break: 1,
                 }),
@@ -97,7 +94,6 @@ const ExportDocx = () => {
                   }\n`,
                   font: {
                     name: 'Meiryo',
-                    size: 24,
                   },
                   break: 1,
                 }),
@@ -106,7 +102,6 @@ const ExportDocx = () => {
                   text: `${employeeDetails.position}\n`,
                   font: {
                     name: 'Meiryo',
-                    size: 24,
                   },
                   break: 1,
                 }),
@@ -116,7 +111,6 @@ const ExportDocx = () => {
                     : 'No Description',
                   font: {
                     name: 'Meiryo',
-                    size: 24,
                   },
                   break: 1,
                 }),
@@ -126,7 +120,6 @@ const ExportDocx = () => {
                     .join(', ')}\n`,
                   font: {
                     name: 'Meiryo',
-                    size: 24,
                   },
                   break: 1,
                 }),
@@ -136,6 +129,7 @@ const ExportDocx = () => {
               children: [
                 new TextRun({
                   text: 'TYPICAL PROJECTS\n',
+                  size: 24,
                   bold: true,
                   font: {
                     name: 'Meiryo',
@@ -153,14 +147,12 @@ const ExportDocx = () => {
                       bold: true,
                       font: {
                         name: 'Meiryo',
-                        size: 24,
                       },
                     }),
                     new TextRun({
                       text: `Description: ${employeeProjects.description}\n`,
                       font: {
                         name: 'Meiryo',
-                        size: 24,
                       },
                       break: 1,
                     }),
@@ -170,7 +162,6 @@ const ExportDocx = () => {
                         .join(', ')}\n`,
                       font: {
                         name: 'Meiryo',
-                        size: 24,
                       },
                       break: 1,
                     }),
@@ -182,24 +173,22 @@ const ExportDocx = () => {
               children: [
                 new TextRun({
                   text: '\nTECHNICAL SKILLS/QUALIFICATIONS\n',
+                  size: 24,
                   bold: true,
                   font: {
                     name: 'Meiryo',
-                    size: 24,
                   },
                   break: 1,
                 }),
               ],
             }),
 
-            // Tạo bảng kỹ năng
             new Table({
               width: {
                 size: 100,
                 type: WidthType.PERCENTAGE,
               },
               rows: [
-                // Thêm hàng tiêu đề cho bảng
                 new TableRow({
                   children: [
                     new TableCell({
@@ -210,7 +199,6 @@ const ExportDocx = () => {
                               text: 'Skill',
                               font: {
                                 name: 'Meiryo',
-                                size: 24,
                               },
                             }),
                           ],
@@ -225,7 +213,6 @@ const ExportDocx = () => {
                               text: 'Experience (in years)',
                               font: {
                                 name: 'Meiryo',
-                                size: 24,
                               },
                             }),
                           ],
@@ -234,7 +221,6 @@ const ExportDocx = () => {
                     }),
                   ],
                 }),
-                // Thêm từng kỹ năng từ mảng skills vào bảng
                 ...employeeDetails.skills.map(
                   skill =>
                     new TableRow({
@@ -247,7 +233,6 @@ const ExportDocx = () => {
                                   text: skill.name,
                                   font: {
                                     name: 'Meiryo',
-                                    size: 24,
                                   },
                                 }),
                               ],
@@ -262,7 +247,6 @@ const ExportDocx = () => {
                                   text: skill.year,
                                   font: {
                                     name: 'Meiryo',
-                                    size: 24,
                                   },
                                 }),
                               ],
@@ -272,7 +256,6 @@ const ExportDocx = () => {
                       ],
                     })
                 ),
-                // Thêm hàng mô tả cuối cùng vào bảng kỹ năng
                 new TableRow({
                   children: [
                     new TableCell({
@@ -281,9 +264,9 @@ const ExportDocx = () => {
                           children: [
                             new TextRun({
                               text: 'Legends – Experience is a number of years that the candidate has significant experience within that respective skill. Level is: 1. Basic Capabilities, 2. Advanced Capabilities, 3. Demonstrated Expertise or 4. Teaching/Lead Capabilities. ',
+                              italics: true,
                               font: {
                                 name: 'Meiryo',
-                                size: 24,
                               },
                             }),
                           ],
@@ -298,13 +281,20 @@ const ExportDocx = () => {
             new Paragraph({
               children: [
                 new TextRun({
-                  text: 'IMPORTANT CONFIDENTIALITY NOTICE: This document contains confidential and or legally privileged information. ST United reserves all rights hereunder. When distributed or transmitted, it is intended solely for the authorized use of the addressee or intended recipient. Access to this information by anyone else is unauthorized. Disclosure, copying, distribution or any action or omission taken in reliance on it is prohibited and may be unlawful. Please, report any exceptions hereto immediately to hello@stunited.vn',
-
+                  text: 'IMPORTANT CONFIDENTIALITY NOTICE: This document contains confidential and or legally privileged information. ST United reserves all rights hereunder. When distributed or transmitted, it is intended solely for the authorized use of the addressee or intended recipient. Access to this information by anyone else is unauthorized. Disclosure, copying, distribution or any action or omission taken in reliance on it is prohibited and may be unlawful. Please, report any exceptions hereto immediately to',
+                  italics: true,
                   font: {
                     name: 'Meiryo',
-                    size: 24,
                   },
                   break: 1,
+                }),
+                new TextRun({
+                  text: ' hello@stunited.vn',
+                  color: '990011',
+                  italics: true,
+                  font: {
+                    name: 'Meiryo',
+                  },
                 }),
               ],
             }),
@@ -316,12 +306,12 @@ const ExportDocx = () => {
     return doc
   }
 
-  const saveDocumentToFile = async (doc, fileName) => {
+  const saveDocumentToFile = async doc => {
     const blob = await Packer.toBlob(doc)
     const url = URL.createObjectURL(blob)
     const link = document.createElement('a')
     link.href = url
-    link.download = fileName
+    link.download = `CV-${employeeDetails.name}.docx`
     document.body.appendChild(link)
     link.click()
     document.body.removeChild(link)
