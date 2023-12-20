@@ -71,16 +71,20 @@ const EditEmployee = () => {
     isManagerFormat = false
   }
   useEffect(() => {
-    const filteredList = managers?.filter(managerId => {
-      // Loại bỏ manager hiện tại nếu is_manager là true
-      return (
-        managerId.manager !== employee?.manager?.id &&
-        (!employee?.is_manager || managerId.id !== employee?.id)
-      )
+    const filteredList = managers?.filter(manager => {
+      if (employee?.is_manager) {
+        // Lấy tất cả các managers khác với employee hiện tại có is_manager là true
+        return manager.id !== employee?.id && manager.is_manager
+      } else {
+        // Loại bỏ employee khỏi danh sách manager khi is_manager là false
+        return (
+          manager.id !== employee?.id && manager.id !== employee?.manager?.id
+        )
+      }
     })
 
     setFilteredManagers(filteredList)
-  }, [managers, employee?.manager?.id, employee?.id, employee?.is_manager])
+  }, [managers, employee?.id, employee?.is_manager, employee?.manager?.id])
 
   const initialValues = {
     name: employee?.name,
@@ -96,6 +100,7 @@ const EditEmployee = () => {
 
     position: employee?.position,
     manager: employee?.manager?.name || employee?.manager?.id || '',
+
     skills: employee?.skills?.map(skill => ({
       skill: skill.name,
       experience: skill.year,
@@ -145,7 +150,7 @@ const EditEmployee = () => {
     const isImage = file.type.startsWith('image/')
 
     if (!isImage) {
-      message.error('You can only upload image files!')
+      message.error(t('message.upload_avatar_employee_fail'))
     } else {
       setAvatar(file)
     }
@@ -182,6 +187,7 @@ const EditEmployee = () => {
       showToast(t('message.edit_employee_success'), 'success')
       navigate('/admin/employees')
     } catch (error) {
+      console.error('Error updating employee:', error)
       showToast(t('message.edit_employee_fail'), 'error')
     }
   }
@@ -323,7 +329,6 @@ const EditEmployee = () => {
                     <Input
                       name="identity"
                       value={values.identity}
-                      disabled={true}
                       onChange={handleChange}
                       onBlur={handleBlur}
                     />
