@@ -182,8 +182,7 @@ const EditEmployee = () => {
       showToast(t('message.edit_employee_success'), 'success')
       navigate('/admin/employees')
     } catch (error) {
-      console.error('Error creating employee:', error)
-      showToast(t('message.create_employee_fail'), 'error')
+      showToast(t('message.edit_employee_fail'), 'error')
     }
   }
 

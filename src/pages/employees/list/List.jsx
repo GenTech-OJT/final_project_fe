@@ -67,13 +67,12 @@ const EmployeeList = () => {
             showToast(successMessage, 'success')
           },
           onError: error => {
-            console.log(error)
-            showToast(t('status_update_failed'), 'error')
+            showToast(t('message.status_update_failed'), 'error')
           },
         }
       )
     } catch (error) {
-      showToast(t('status_update_failed'), 'error')
+      showToast(t('message.status_update_failed'), 'error')
     }
   }
 

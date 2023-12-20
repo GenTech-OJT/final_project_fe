@@ -95,6 +95,14 @@ export const useUpdateEmployee = () => {
           case 'identity_exists':
             showToast(t('message.identity_exist'), 'warning')
             break
+          case 'employee_in_project':
+            showToast(
+              t('message.employee_in_project', {
+                projectName: error.response.data.project_name,
+              }),
+              'error'
+            )
+            break
 
           default:
             break
@@ -120,7 +128,6 @@ export const useDeleteEmployee = () => {
     },
     onError: (error, variables, context) => {
       if (error.response) {
-        console.log(error.response.data)
         if (error.response.data.status === 'required_manager') {
           showToast(
             t('message.Delete_employee_fail_manager', {
