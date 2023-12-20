@@ -2,7 +2,7 @@ import { Breadcrumb as BreadcrumbAntd } from 'antd'
 import PropTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { setSelectedKey } from '../../../redux/Slice/menuSlice'
+import { setSelectedKey } from '@redux/Slice/menuSlice'
 
 const { Item } = BreadcrumbAntd
 
