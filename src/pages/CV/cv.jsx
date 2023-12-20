@@ -306,12 +306,12 @@ const ExportDocx = () => {
     return doc
   }
 
-  const saveDocumentToFile = async doc => {
+  const saveDocumentToFile = async (doc, fileName) => {
     const blob = await Packer.toBlob(doc)
     const url = URL.createObjectURL(blob)
     const link = document.createElement('a')
     link.href = url
-    link.download = `CV-${employeeDetails.name}.docx`
+    link.download = fileName
     document.body.appendChild(link)
     link.click()
     document.body.removeChild(link)
@@ -319,7 +319,7 @@ const ExportDocx = () => {
 
   const handleExport = () => {
     const doc = createDocument()
-    saveDocumentToFile(doc, 'cv.docx')
+    saveDocumentToFile(doc, `CV-${employeeDetails.name}.docx`)
   }
 
   return (
