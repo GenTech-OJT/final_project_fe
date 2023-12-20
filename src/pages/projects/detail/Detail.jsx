@@ -66,9 +66,9 @@ const DetailProject = () => {
     return colors[index % colors.length]
   }
 
-  const technicalTags = technicalNames.map((technicalName, index) => (
-    <Tag key={index} color={getTagColor(index)}>
-      {technicalName}
+  const technicalTags = technicalNames.map(technicalName => (
+    <Tag key={technicalName.id} color={getTagColor(technicalName.id)}>
+      {technicalName.name}
     </Tag>
   ))
 
