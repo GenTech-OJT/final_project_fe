@@ -13,7 +13,7 @@ import {
   Typography,
 } from 'antd'
 import Title from 'antd/es/skeleton/Title'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { CalendarOutlined, EyeOutlined } from '@ant-design/icons'
@@ -23,7 +23,7 @@ import {
   useGetProjectsByEmployeeId,
 } from '@hooks/useEmployee'
 import moment from 'moment'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { CustomSearch } from '@components/custom/CustomTable'
 import './Detail.css'
 import ExportDocx from '@pages/CV/cv'
@@ -33,8 +33,15 @@ const { TabPane } = Tabs
 const EmployeeDetail = () => {
   const { id } = useParams()
   const [searchText, setSearchText] = useState('')
+  const navigate = useNavigate()
 
-  const { data: employee_details, isLoading } = useGetEmployeeById(id)
+  const { data: employee_details, isLoading, isError } = useGetEmployeeById(id)
+
+  useEffect(() => {
+    if (isError) {
+      navigate('/404')
+    }
+  }, [isError, navigate])
 
   const { data: dataProject, isLoading: isLoadingProject } =
     useGetProjectsByEmployeeId(id, searchText)

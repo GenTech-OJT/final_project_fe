@@ -8,7 +8,6 @@ import {
   deleteEmployeeApi,
   getProjectsByEmployeeIdApi,
 } from '@api/employeeApi'
-import { useNavigate } from 'react-router-dom'
 import { showToast } from '@components/toast/ToastCustom'
 import { useTranslation } from 'react-i18next'
 
@@ -36,14 +35,13 @@ export const useCreateEmployee = () => {
 }
 
 export const useGetEmployeeById = id => {
-  const navigate = useNavigate()
-
   return useQuery({
     queryKey: [QUERY_KEY.EMPLOYEES, id],
     queryFn: () => getEmployeeByIdApi(id),
     onSuccess: (data, variables, context) => {},
     onError: (error, variables, context) => {},
     onSettled: (data, error, variables, context) => {},
+    retry: false,
   })
 }
 
