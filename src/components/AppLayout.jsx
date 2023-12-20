@@ -58,6 +58,9 @@ const AppLayout = ({ children }) => {
   const handleImageSize = () => {
     setIsImageSmall(!isImageSmall)
   }
+  const handleClick = () => {
+    navigate('/admin/dashboard')
+  }
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -72,7 +75,12 @@ const AppLayout = ({ children }) => {
           <img
             src={logoImage}
             alt="Logo"
-            style={{ height: isImageSmall ? '20px' : '50px' }}
+            style={{
+              height: isImageSmall ? '20px' : '50px',
+              cursor: 'pointer',
+            }}
+            onKeyDown={handleClick}
+            onClick={handleClick}
           />
         </Header>
         <Menu
