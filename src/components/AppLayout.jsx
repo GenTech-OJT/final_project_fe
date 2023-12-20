@@ -79,6 +79,7 @@ const AppLayout = ({ children }) => {
               height: isImageSmall ? '20px' : '50px',
               cursor: 'pointer',
             }}
+            onKeyDown={handleClick}
             onClick={handleClick}
           />
         </Header>
