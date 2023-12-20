@@ -71,14 +71,17 @@ const EditEmployee = () => {
     isManagerFormat = false
   }
   useEffect(() => {
-    const filteredList = managers?.filter(
-      manager => manager.manager !== employee?.manager?.id
-    )
-    // console.log(managers)
-    // console.log(employee?.manager?.id)
+    const filteredList = managers?.filter(managerId => {
+      // Loại bỏ manager hiện tại nếu is_manager là true
+      return (
+        managerId.manager !== employee?.manager?.id &&
+        (!employee?.is_manager || managerId.id !== employee?.id)
+      )
+    })
 
     setFilteredManagers(filteredList)
-  }, [managers, employee?.manager?.id])
+  }, [managers, employee?.manager?.id, employee?.id, employee?.is_manager])
+
   const initialValues = {
     name: employee?.name,
     email: employee?.email,
@@ -121,7 +124,6 @@ const EditEmployee = () => {
     gender: Yup.string(),
     status: Yup.string(),
     position: Yup.string(),
-    manager: Yup.string(),
 
     is_manager: Yup.bool(),
     skills: Yup.array()
