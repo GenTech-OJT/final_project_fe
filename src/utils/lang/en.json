@@ -53,7 +53,7 @@
     "code_exist": "Code already exists!",
     "email_exist": "Mail already exists!",
     "phone_exist": "Phone already exists!",
-    "identity_exists": "Identity already exists!"
+    "identity_exist": "Identity already exists!"
   },
   "validate": {
     "name_validate": "Please input a valid name!",
