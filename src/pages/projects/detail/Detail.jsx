@@ -1,3 +1,4 @@
+import { UserOutlined } from '@ant-design/icons'
 import Breadcrumb from '@components/admin/Breadcrumb/Breadcrumb'
 import { useGetEmployeeById } from '@hooks/useEmployee'
 import { useGetProjectById } from '@hooks/useProject'
@@ -33,11 +34,8 @@ const DetailProject = () => {
 
   const joinedEmployees = projectDetail?.employees || []
 
-  console.log(projectDetail)
   let badgeStatus
   const status = projectDetail.status
-  const technicalNames =
-    projectDetail.technical?.map(technical => technical.name) || []
 
   if (status === 'In Progress') {
     badgeStatus = (
@@ -67,9 +65,9 @@ const DetailProject = () => {
     return colors[index % colors.length]
   }
 
-  const technicalTags = technicalNames.map(technicalName => (
-    <Tag key={technicalName.id} color={getTagColor(technicalName.id)}>
-      {technicalName.name}
+  const technicalTags = projectDetail.technical.map(t => (
+    <Tag key={t.id} color={getTagColor(t.id)}>
+      {t.name}
     </Tag>
   ))
 
@@ -157,7 +155,7 @@ const DetailProject = () => {
           <Row gutter={[16, 16]}>
             <Col xs={24} sm={12} lg={12} xl={12}>
               <Card
-                title="Project Manager"
+                title={t('project_details.project_manager')}
                 bordered
                 style={{
                   backgroundColor: '#f0f2f5',
@@ -175,7 +173,7 @@ const DetailProject = () => {
             </Col>
             <Col xs={24} sm={12} lg={12} xl={12}>
               <Card
-                title="Team Members"
+                title={t('project_details.team_member')}
                 bordered
                 style={{
                   backgroundColor: '#f0f2f5',
@@ -188,7 +186,7 @@ const DetailProject = () => {
                       key={employee.id}
                       style={{ display: 'flex', alignItems: 'center' }}
                     >
-                      <Avatar src={employee?.avatar} />
+                      <Avatar icon={<UserOutlined />} src={employee?.avatar} />
                       <div style={{ marginLeft: '8px' }}>{employee.name}</div>
                     </div>
                   ))}

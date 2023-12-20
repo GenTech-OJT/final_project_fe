@@ -210,7 +210,8 @@
     "start_date": "Ngày bắt đầu",
     "end_date": "Ngày kết thúc",
     "status": "Trạng thái",
-    "action": "Hành động"
+    "action": "Hành động",
+    "project_manager": "Quản lí dự án"
   },
   "dashboard_page": {
     "skills": "Kỹ Năng",
