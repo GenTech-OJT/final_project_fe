@@ -114,6 +114,10 @@ const EditProject = () => {
   )
   const dateFormat = 'YYYY-MM-DD HH:mm:ss'
 
+  const activeEmployees = employees?.data?.filter(
+    employee => employee.status === 'active'
+  )
+
   const initialValues = {
     name: projectDetail.name,
     manager: projectDetail.manager,
@@ -348,7 +352,7 @@ const EditProject = () => {
                       setFieldValue('employees', selectedMembers)
                     }}
                   >
-                    {employees?.data?.map(e => (
+                    {activeEmployees?.map(e => (
                       <Select.Option key={e.id} value={e.id}>
                         {e.name}
                       </Select.Option>
