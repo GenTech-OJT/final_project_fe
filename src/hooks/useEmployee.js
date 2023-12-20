@@ -6,8 +6,10 @@ import {
   getProjectsByEmployeeIdApi,
   updateEmployeeApi,
 } from '@api/employeeApi'
+import { showToast } from '@components/toast/ToastCustom'
 import { QUERY_KEY } from '@constants/reactQuery'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
 export const useGetEmployees = params => {
@@ -40,9 +42,7 @@ export const useGetEmployeeById = id => {
     queryKey: [QUERY_KEY.EMPLOYEES, id],
     queryFn: () => getEmployeeByIdApi(id),
     onSuccess: (data, variables, context) => {},
-    onError: (error, variables, context) => {
-      navigate('/404')
-    },
+    onError: (error, variables, context) => {},
     onSettled: (data, error, variables, context) => {},
   })
 }
@@ -67,6 +67,7 @@ export const useUpdateEmployee = () => {
 
 export const useDeleteEmployee = () => {
   const queryClient = useQueryClient()
+  const { t } = useTranslation('translation')
 
   return useMutation({
     mutationFn: id => deleteEmployeeApi(id),
@@ -77,7 +78,26 @@ export const useDeleteEmployee = () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.MANAGERS] })
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.PROJECTS] })
     },
-    onError: (error, variables, context) => {},
+    onError: (error, variables, context) => {
+      if (error.response) {
+        console.log(error.response.data)
+        if (error.response.data.status === 'required_manager') {
+          showToast(
+            t('message.Delete_employee_fail_manager', {
+              projectName: error.response.data.project_name,
+            }),
+            'error'
+          )
+        } else {
+          showToast(
+            t('message.Delete_employee_fail_employees', {
+              projectName: error.response.data.project_name,
+            }),
+            'error'
+          )
+        }
+      }
+    },
     onSettled: (data, error, variables, context) => {},
   })
 }
